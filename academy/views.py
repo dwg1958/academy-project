@@ -6,6 +6,10 @@ from django.shortcuts import render
 def homepage(request):
 	return render(request, 'homepage.html', {'name':'David'})
 
+def aboutpage(request):
+	textreceived = request.GET['fname']
+	return render(request, 'about.html', {'name': textreceived})
+
 
 def hithere(request):
 	return HttpResponse('Hello')

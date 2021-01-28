@@ -1,4 +1,11 @@
 
 <h1>Hello World</h1>
 
-Hi there {{name}}
+Hi there {{name}} 
+<br/><br/><br/>
+
+<form action=" {% url 'about' %}" method="" accept-charset="utf-8">
+	<label for="fname">First name:</label>
+	<input type="text" id="fname" name="fname"><br><br>
+	<input type="submit" value="Submit">
+</form>
