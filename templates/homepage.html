@@ -1,11 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v4.1.1">
+    <title>GPGrandstand Academy</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{{BASE_DIR}}/media/images/Avatar.png" />
 
-<h1>Hello World</h1>
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
+    <!-- Load Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
-Hi there {{name}} 
-<br/><br/><br/>
+    <!-- Custom styles for this template
+    <link href="album.css" rel="stylesheet">
+    -->
 
-<form action=" {% url 'about' %}" method="" accept-charset="utf-8">
-	<label for="fname">First name:</label>
-	<input type="text" id="fname" name="fname"><br><br>
-	<input type="submit" value="Submit">
-</form>
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+      .jumbotron{
+
+        position: relative;
+        background: gray;
+        width:100%;
+        height: 100%;
+        margin-bottom: 0rem;
+      }
+    </style>
+
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/">My Team </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Events
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="/">Latest</a>
+                <a class="dropdown-item" href="/">Formula1</a>
+                <a class="dropdown-item" href="/">Formula2</a>
+                <a class="dropdown-item" href="/">Formula 3</a>
+                <a class="dropdown-item" href="/">W Series</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/">League</a>
+            </li>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="">Settings</a>
+            </li>
+          </ul>
+        </div>
+
+        <a class="navbar-brand" href="#">
+          <img src="/media/images/Avatar.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+          David Griff
+        </a>
+
+      </nav>
+    </header>
+
+<main role="main">
+
+	<section class="jumbotron text-center text-white">
+  	<div class="container">
+  		<h1>GPGrandstand Driver Academy</h1>
+  		<p class="text-red">Fantasy Formula Everything</p>
+  	</div>
+	</section>
+
+	<h1 class = "text-center pt-0">Hello World</h1>
+	<div class = "text-center pt-0">
+    <p>You are a retired 7-times world champion, sadly deprived of a drive by a skinflint team and ever-decreasing budgets...</p>
+    <p>Sitting on your number-2 yacht in Monaco one day with your close band of multi-millionaire friends built over
+      an illustrious career, the idea of {{yourname}}’s Driver Academy is born. </p>
+    <p>They offer you a budget of $110 million to bring on the best new talent through the junior formulas.
+      You set out to recruit the best drivers and team managers you can find and build your academy...</p>
+		<br/><br/><br/>
+
+		<form action=" {% url 'about' %}" method="" accept-charset="utf-8">
+			<label for="fname">First name:</label>
+			<input type="text" id="fname" name="fname"><br><br>
+			<input type="submit" value="Submit">
+			<br /><br /><br />
+		</form>
+	</div>
+
+</main>
+
+<footer class="text-muted  bg-dark">
+  <div class="container">
+
+    <br />
+    <p class="container text-center text-light" >🅒 GPGrandstand {% now "Y" %}</p>
+    <br />
+  </div>
+</footer>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
+<!--
+  THIS POINTS TO CDN BOOTSTRAP ASSETS
+-->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous"></script>
+
+</html>
