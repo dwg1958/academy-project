@@ -1,12 +1,30 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Competitors
+from .models import Competitor
+from .models import Event
+from .models import Result
 
 #Show record details in admin table
 #https://www.geeksforgeeks.org/customize-django-admin-interface/
 class CompetitorAdmin(admin.ModelAdmin):
     list_display = ('surname', 'firstname', 'formula', 'role')#, 'is_active')
+
+    def active(self, obj):
+        return obj.is_active == 1
+
+    active.boolean = True
+
+class EventAdmin(admin.ModelAdmin):
+    list_display = ('name', 'date', 'formula')#, 'is_active')
+
+    def active(self, obj):
+        return obj.is_active == 1
+
+    active.boolean = True
+
+class ResultAdmin(admin.ModelAdmin):
+    list_display = ('eventID', 'competitor', 'formula', 'position')#, 'is_active')
 
     def active(self, obj):
         return obj.is_active == 1
@@ -26,4 +44,6 @@ class CompetitorAdmin(admin.ModelAdmin):
 #    admin.site.add_action(make_inactive, "Make Inactive")
 
 # Tell admin site to show it for editing
-admin.site.register(Competitors, CompetitorAdmin)
+admin.site.register(Competitor, CompetitorAdmin)
+admin.site.register(Event, EventAdmin)
+admin.site.register(Result, ResultAdmin)
