@@ -27,4 +27,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.homepage),
     path('about/', views.aboutpage, name='about'),
+    path('season/', include('season.urls')),   # send ANYTHING blog to a new urls.py program
+    path('season', include('season.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

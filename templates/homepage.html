@@ -13,33 +13,9 @@
     <!-- Load Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
-    <!-- Custom styles for this template
-    <link href="album.css" rel="stylesheet">
-    -->
-
+    <!-- Local Style Sheet -->
     <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
 
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-      .jumbotron{
-
-        position: relative;
-        background: gray;
-        width:100%;
-        height: 100%;
-        margin-bottom: 0rem;
-      }
     </style>
 
   </head>
@@ -61,7 +37,7 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item" href="/">Latest</a>
-                <a class="dropdown-item" href="/">Formula1</a>
+                <a class="dropdown-item" href="/season/tables">Formula1</a>
                 <a class="dropdown-item" href="/">Formula2</a>
                 <a class="dropdown-item" href="/">Formula 3</a>
                 <a class="dropdown-item" href="/">W Series</a>
@@ -78,7 +54,7 @@
         </div>
 
         <a class="navbar-brand" href="#">
-          <img src="/media/images/Avatar.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+          <img src="/media/webpageImages/Avatar.jpg" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
           David Griff
         </a>
 
@@ -94,8 +70,8 @@
   	</div>
 	</section>
 
-	<h1 class = "text-center pt-0">Hello World</h1>
-	<div class = "text-center pt-0">
+	<h1 class = "text-center pt-0" style="margin:30px;">Just Imagine..</h1>
+	<div class = "text-center pt-0" style="width:600px; margin:auto">
     <p>You are a retired 7-times world champion, sadly deprived of a drive by a skinflint team and ever-decreasing budgets...</p>
     <p>Sitting on your number-2 yacht in Monaco one day with your close band of multi-millionaire friends built over
       an illustrious career, the idea of {{yourname}}’s Driver Academy is born. </p>
@@ -104,7 +80,7 @@
 		<br/><br/><br/>
 
 		<form action=" {% url 'about' %}" method="" accept-charset="utf-8">
-			<label for="fname">First name:</label>
+			<label for="fname">Sign in:</label>
 			<input type="text" id="fname" name="fname"><br><br>
 			<input type="submit" value="Submit">
 			<br /><br /><br />
