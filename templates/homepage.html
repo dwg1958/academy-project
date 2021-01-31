@@ -1,4 +1,5 @@
 <!doctype html>
+{% load static %}
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -7,15 +8,15 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v4.1.1">
     <title>GPGrandstand Academy</title>
-    <link rel="shortcut icon" type="image/x-icon" href="{{BASE_DIR}}/media/images/Avatar.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="/media/images/Avatar.png" />
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
     <!-- Load Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
+    <link href="{% static '/css/academy.css' %}" rel="stylesheet">
     <!-- Local Style Sheet -->
     <style>
-
     </style>
 
   </head>
@@ -64,10 +65,10 @@
 <main role="main">
 
 	<section class="jumbotron text-center text-white">
-  	<div class="container">
-  		<h1>GPGrandstand Driver Academy</h1>
-  		<p class="text-red">Fantasy Formula Everything</p>
-  	</div>
+     	<div class="container">
+     		<h1>GPGrandstand Driver Academy</h1>
+     		<p class="text-red">Fantasy Formula Everything</p>
+     	</div>
 	</section>
 
 	<h1 class = "text-center pt-0" style="margin:30px;">Just Imagine..</h1>
@@ -97,11 +98,10 @@
     <br />
   </div>
 </footer>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-
 <!--
   THIS POINTS TO CDN BOOTSTRAP ASSETS
 -->
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous"></script>
 
 </html>
