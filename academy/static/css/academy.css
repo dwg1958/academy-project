@@ -32,3 +32,12 @@ td {
     vertical-align: middle;
     display: table-cell;
 }
+
+a.na v-link  {
+   margin-left: 18px;
+   font-size: 1.1rem;
+}
+a.sidebar-sticky{
+   margin-left: 18px;
+   font-size: 2rem;
+}
