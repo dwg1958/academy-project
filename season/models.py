@@ -9,8 +9,8 @@ class Competitor(models.Model):
     role                 = models.CharField(max_length=1)
     formula              = models.CharField(max_length=1)
     team                 = models.CharField(max_length=20)
-    value                = models.DecimalField(max_digits=4, decimal_places=1)
-    nationality          = models.CharField(max_length=20)
+    value                = models.DecimalField(max_digits=4, decimal_places=1, default = 0)
+    nationality          = models.CharField(max_length=20, blank=True)
     birthdate            = models.DateField(auto_now=False, auto_now_add=False)
     wins                 = models.IntegerField(default = 0)
     poles                = models.IntegerField(default = 0)
@@ -22,10 +22,14 @@ class Competitor(models.Model):
     webLink              = models.CharField(max_length=30, blank=True)
     instaHandle          = models.CharField(max_length=30, blank=True)
     twitterHandle        = models.CharField(max_length=30, blank=True)
+    short_bio            = models.TextField(default=" ")
 
     class Meta:
         # Add verbose name
         verbose_name = 'Driver or Manager'
+
+    def birthday_pretty(self):
+        return self.birthdate.strftime('%b %e, %Y')
 
 class Event(models.Model):
     name                 = models.CharField(max_length=20)

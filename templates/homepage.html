@@ -38,10 +38,10 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item" href="/">Latest</a>
-                <a class="dropdown-item" href="/season/tables">Formula1</a>
-                <a class="dropdown-item" href="/">Formula2</a>
-                <a class="dropdown-item" href="/">Formula 3</a>
-                <a class="dropdown-item" href="/">W Series</a>
+                <a class="dropdown-item" href="/season/tables/1">Formula 1</a>
+                <a class="dropdown-item" href="/season/tables/2">Formula 2</a>
+                <a class="dropdown-item" href="/season/tables/3">Formula 3</a>
+                <a class="dropdown-item" href="/season/tables/4">W Series</a>
               </div>
             </li>
             <li class="nav-item">
@@ -71,23 +71,25 @@
      	</div>
 	</section>
 
-	<h1 class = "text-center pt-0" style="margin:30px;">Just Imagine..</h1>
-	<div class = "text-center pt-0" style="width:600px; margin:auto">
-    <p>You are a retired 7-times world champion, sadly deprived of a drive by a skinflint team and ever-decreasing budgets...</p>
-    <p>Sitting on your number-2 yacht in Monaco one day with your close band of multi-millionaire friends built over
-      an illustrious career, the idea of {{yourname}}’s Driver Academy is born. </p>
-    <p>They offer you a budget of $110 million to bring on the best new talent through the junior formulas.
-      You set out to recruit the best drivers and team managers you can find and build your academy...</p>
-		<br/><br/><br/>
+   <div class="container">
+   	<h1 class = "text-center pt-0" style="margin:30px;">Just Imagine..</h1>
+   	<div class = "text-left pt-0" style="padding: 10%; ">
+       <p>You are a retired 7-times world champion, sadly deprived of a drive by a skinflint team and ever-decreasing budgets...</p>
+       <p>Sitting on your number-2 yacht in Monaco one day with your close band of multi-millionaire friends built over
+         an illustrious career, the idea of {{yourname}}’s Driver Academy is born. </p>
+       <p>They offer you a budget of $110 million to bring on the best new talent through the junior formulas.
+         You set out to recruit the best drivers and team managers you can find and build your academy...</p>
+   		<br/><br/><br/>
 
-		<form action=" {% url 'about' %}" method="" accept-charset="utf-8">
-			<label for="fname">Sign in:</label>
-			<input type="text" id="fname" name="fname"><br><br>
-			<input type="submit" value="Submit">
-			<br /><br /><br />
-		</form>
-	</div>
+   		<form action = "{% url 'about' %}" method="" accept-charset="utf-8" class = "text-center pt-0">
+   			<label for="fname">Sign in:</label>
+   			<input type="text" id="fname" name="fname"><br><br>
+   			<input type="submit" value="Submit">
+   			<br /><br /><br />
+   		</form>
 
+   	</div>
+   </div>
 </main>
 
 <footer class="text-muted  bg-dark">

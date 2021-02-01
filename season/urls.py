@@ -11,6 +11,8 @@ urlpatterns = [
 
     path( '', views.tables, name = "tables"),
     path( 'tables', views.tables, name = "tables"),
+    path( 'tables/', views.tables, name = "tables"),
+    path('tables/<formula>/', views.tableformula, name = "tableformula")
 #    path( '<int:blog_id>/', views.oneblog, name = "oneblog"),
 
 ]

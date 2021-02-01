@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 
 def homepage(request):
-	return render(request, 'homepage.html', {'name':'David'})
+	return render(request, 'homepage.html', {'yourname':'David'})
 
 def aboutpage(request):
 	textreceived = request.GET['fname']
