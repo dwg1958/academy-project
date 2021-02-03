@@ -16,13 +16,13 @@
 
 .jumbotron{
     position: relative;
-    background: black;
+    background: #444444;
     width:100%;
     height: 100%;
     margin-bottom: 0rem;
     padding-top: 20px;
     padding-bottom: 10px;
-    
+
 }
 .collapse.navbar-collapse{
    padding-left: 20px;
