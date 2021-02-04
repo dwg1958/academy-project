@@ -168,11 +168,11 @@
                   </tr>
                   <tr>
                      <td>&nbsp;&nbsp;&nbsp;Wins</td>
-                     <td>{{ person.wins }}</td>
+                     <td>{{ person.winsPreviousSeasons }}</td>
                   </tr>
                   <tr>
                      <td>&nbsp;&nbsp;&nbsp;Poles</td>
-                     <td>{{ person.poles }}</td>
+                     <td>{{ person.pointsPreviousSeasons }}</td>
                   </tr>
                   <tr>
                      <td>&nbsp;&nbsp;&nbsp;Championships</td>
@@ -201,23 +201,19 @@
                      <td colspan = 2 class="bg-dark" style="color:white"><b>Personal</b></td>
                   </tr>
                   <tr>
-                     <td>Nationality</td>
+                     <td>&nbsp;&nbsp;&nbsp;Nationality</td>
                      <td>{{ person.nationality }}</td>
                   </tr>
                   <tr>
-                     <td>Birth Date</td>
-                     <td>{{ person.birthdate }}</td>
-                  </tr>
-                  <tr>
-                     <td>Web Link</td>
+                     <td>&nbsp;&nbsp;&nbsp;Web Site</td>
                      <td>{{ person.webLink }}</td>
                   </tr>
                   <tr>
-                     <td>Instagram</td>
+                     <td>&nbsp;&nbsp;&nbsp;Instagram</td>
                      <td>{{ person.instaHandle }}</td>
                   </tr>
                   <tr>
-                     <td>Twitter</td>
+                     <td>&nbsp;&nbsp;&nbsp;Twitter</td>
                      <td>{{ person.twitterHandle }}</td>
                   </tr>
                   <tr>
@@ -242,10 +238,8 @@
             <tr>
                <th>Driver</th>
                <th> </th>
-               <th>Number</th>
                <th>Team</th>
                <th>Value</th>
-               <th>Nationality</th>
                <th>Points</th>
             </tr>
           </thead>
@@ -254,10 +248,8 @@
                <tr>
                   <td><a href="/season/tables/{{formula}}?per={{driver.surname}}"><img class = "image-fluid " src="{{driver.mugshot.url}}"  height=50px /></a></td>
                   <td> <b> {{driver.surname}}, {{driver.firstname}} </b> </td>
-                  <td>{{driver.raceNumber}}</td>
                   <td>{{driver.team}}</td>
                   <td>{{driver.value}}</td>
-                  <td>{{driver.birthday_pretty}}</td>
                   <td>{{driver.pointsThisSeason}}</td>
                </tr>
             {% endfor%}
@@ -274,7 +266,6 @@
                <th> </th>
                <th>Team</th>
                <th>Value</th>
-               <th>Nationality</th>
                <th>Points</th>
             </tr>
           </thead>
@@ -285,7 +276,6 @@
                   <td> <b> {{manager.surname}}, {{manager.firstname}} </b> </td>
                   <td>{{manager.team}}</td>
                   <td>{{manager.value}}</td>
-                  <td>{{manager.birthday_pretty}}</td>
                   <td>{{manager.pointsThisSeason}}</td>
                </tr>
             {% endfor%}
