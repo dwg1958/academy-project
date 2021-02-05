@@ -2,8 +2,8 @@ from django.contrib import admin
 
 # Register your models here.
 from .models import Competitor
-#from .models import Event
-#from .models import Result
+from .models import Event
+from .models import Result
 from .models import ScoringEvent
 from .models import AcademyScoringMatrix
 from .models import ScoringMatches
@@ -18,21 +18,21 @@ class CompetitorAdmin(admin.ModelAdmin):
 
     active.boolean = True
 
-#class EventAdmin(admin.ModelAdmin):
-#    list_display = ('name', 'date', 'formula')#, 'is_active')
-#
-#    def active(self, obj):
-#        return obj.is_active == 1
-#
-#    active.boolean = True
+class EventAdmin(admin.ModelAdmin):
+    list_display = ('name', 'date', 'formulas')#, 'is_active')
 
-#class ResultAdmin(admin.ModelAdmin):
-#    list_display = ('eventID', 'competitor', 'formula', 'position')#, 'is_active')
+    def active(self, obj):
+        return obj.is_active == 1
 
-#    def active(self, obj):
-#        return obj.is_active == 1
-#
-#    active.boolean = True
+    active.boolean = True
+
+class ResultAdmin(admin.ModelAdmin):
+    list_display = ('scoringEvent_ID', 'competitor_ID', 'eventType', 'finishPosition')#, 'is_active')
+
+    def active(self, obj):
+        return obj.is_active == 1
+
+    active.boolean = True
 
 class ScoringEventAdmin(admin.ModelAdmin):
     list_display = ('event_ID', 'name', 'formula', 'eventType', 'startDateTime', 'endDateTime')#, 'is_active')
@@ -72,8 +72,8 @@ class ScoringMatchesAdmin(admin.ModelAdmin):
 
 # Tell admin site to show it for editing
 admin.site.register(Competitor, CompetitorAdmin)
-#admin.site.register(Event, EventAdmin)
-#admin.site.register(Result, ResultAdmin)
+admin.site.register(Event, EventAdmin)
+admin.site.register(Result, ResultAdmin)
 admin.site.register(ScoringEvent, ScoringEventAdmin)
 admin.site.register(AcademyScoringMatrix, AcademyScoringMatrixAdmin)
 admin.site.register(ScoringMatches, ScoringMatchesAdmin)

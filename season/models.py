@@ -31,15 +31,15 @@ class Competitor(models.Model):
     #def birthday_pretty(self):
     #    return self.birthdate.strftime('%b %e, %Y')
 
-#class Event(models.Model):
-#    name                 = models.CharField(max_length=40)
-#    date                 = models.DateField(auto_now=False, auto_now_add=False)
-#    circuit              = models.CharField(max_length=20)
-#    country              = models.CharField(max_length=20)
-#    formulas             = models.CharField(max_length=20)
+class Event(models.Model):
+    name                 = models.CharField(max_length=40)
+    date                 = models.DateField(auto_now=False, auto_now_add=False)
+    circuit              = models.CharField(max_length=20)
+    country              = models.CharField(max_length=20)
+    formulas             = models.CharField(max_length=40)
 
-#    def eventDate_Pretty(self):
-#        return event.date.strftime('%b %e, %Y')
+    def eventDate_Pretty(self):
+        return event.date.strftime('%b %e, %Y')
 
 class ScoringEvent(models.Model):
     event_ID             = models.IntegerField()
@@ -52,17 +52,17 @@ class ScoringEvent(models.Model):
     def scoringEventDate_Pretty(self):
         return event.startDTime.strftime('%b %e, %Y')
 
-#class Result(models.Model):
-#    scoringEvent_ID      = models.IntegerField()
-#    competitor_ID        = models.IntegerField()
-#    eventType            = models.CharField(max_length=1)
-#    finishPosition       = models.IntegerField()
-#    startPosition        = models.IntegerField()
-#    lapsComplete         = models.IntegerField()
-#    formulaPoints        = models.IntegerField()
-#    pole                 = models.BooleanField(default=False)
-#    fastestLap           = models.BooleanField(default=False)
-#    placesGainedLost     = models.IntegerField()
+class Result(models.Model):
+    scoringEvent_ID      = models.IntegerField()
+    competitor_ID        = models.IntegerField()
+    eventType            = models.CharField(max_length=1)
+    finishPosition       = models.IntegerField()
+    startPosition        = models.IntegerField()
+    lapsComplete         = models.IntegerField()
+    formulaPoints        = models.IntegerField()
+    pole                 = models.BooleanField(default=False)
+    fastestLap           = models.BooleanField(default=False)
+    placesGainedLost     = models.IntegerField()
 
 class AcademyScoringMatrix(models.Model):
     pointsType           = models.CharField(max_length=1)
