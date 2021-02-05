@@ -11,7 +11,7 @@ from .models import ScoringMatches
 #Show record details in admin table
 #https://www.geeksforgeeks.org/customize-django-admin-interface/
 class CompetitorAdmin(admin.ModelAdmin):
-    list_display = ('surname', 'firstname', 'formula', 'role')#, 'is_active')
+    list_display = ('id','surname', 'firstname', 'formula', 'role')#, 'is_active')
 
     def active(self, obj):
         return obj.is_active == 1
@@ -19,7 +19,7 @@ class CompetitorAdmin(admin.ModelAdmin):
     active.boolean = True
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('name', 'date', 'formulas')#, 'is_active')
+    list_display = ('id','name', 'date', 'formulas')#, 'is_active')
 
     def active(self, obj):
         return obj.is_active == 1
@@ -27,7 +27,7 @@ class EventAdmin(admin.ModelAdmin):
     active.boolean = True
 
 class ResultAdmin(admin.ModelAdmin):
-    list_display = ('scoringEvent_ID', 'competitor_ID', 'eventType', 'finishPosition')#, 'is_active')
+    list_display = ('id','scoringEvent_ID', 'competitor_ID', 'eventType', 'finishPosition')#, 'is_active')
 
     def active(self, obj):
         return obj.is_active == 1
@@ -35,7 +35,7 @@ class ResultAdmin(admin.ModelAdmin):
     active.boolean = True
 
 class ScoringEventAdmin(admin.ModelAdmin):
-    list_display = ('event_ID', 'name', 'formula', 'eventType', 'startDateTime', 'endDateTime')#, 'is_active')
+    list_display = ('id','event_ID', 'name', 'formula', 'eventType', 'startDateTime', 'endDateTime')#, 'is_active')
 
     def active(self, obj):
         return obj.is_active == 1
@@ -43,7 +43,7 @@ class ScoringEventAdmin(admin.ModelAdmin):
     active.boolean = True
 
 class AcademyScoringMatrixAdmin(admin.ModelAdmin):
-    list_display = ('pointsType', 'formula', 'role', 'multiplier')#, 'is_active')
+    list_display = ('id','pointsType', 'formula', 'role', 'multiplier')#, 'is_active')
 
     def active(self, obj):
         return obj.is_active == 1
@@ -51,7 +51,7 @@ class AcademyScoringMatrixAdmin(admin.ModelAdmin):
     active.boolean = True
 
 class ScoringMatchesAdmin(admin.ModelAdmin):
-    list_display = ('player_ID', 'result_ID', 'points_Type', 'academyPoints')#, 'is_active')
+    list_display = ('id','player_ID', 'result_ID', 'points_Type', 'academyPoints')#, 'is_active')
 
     def active(self, obj):
         return obj.is_active == 1
