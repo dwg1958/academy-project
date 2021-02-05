@@ -2,8 +2,11 @@ from django.contrib import admin
 
 # Register your models here.
 from .models import Competitor
-from .models import Event
-from .models import Result
+#from .models import Event
+#from .models import Result
+from .models import ScoringEvent
+from .models import AcademyScoringMatrix
+from .models import ScoringMatches
 
 #Show record details in admin table
 #https://www.geeksforgeeks.org/customize-django-admin-interface/
@@ -15,16 +18,40 @@ class CompetitorAdmin(admin.ModelAdmin):
 
     active.boolean = True
 
-class EventAdmin(admin.ModelAdmin):
-    list_display = ('name', 'date', 'formula')#, 'is_active')
+#class EventAdmin(admin.ModelAdmin):
+#    list_display = ('name', 'date', 'formula')#, 'is_active')
+#
+#    def active(self, obj):
+#        return obj.is_active == 1
+#
+#    active.boolean = True
+
+#class ResultAdmin(admin.ModelAdmin):
+#    list_display = ('eventID', 'competitor', 'formula', 'position')#, 'is_active')
+
+#    def active(self, obj):
+#        return obj.is_active == 1
+#
+#    active.boolean = True
+
+class ScoringEventAdmin(admin.ModelAdmin):
+    list_display = ('event_ID', 'name', 'formula', 'eventType', 'startDateTime', 'endDateTime')#, 'is_active')
 
     def active(self, obj):
         return obj.is_active == 1
 
     active.boolean = True
 
-class ResultAdmin(admin.ModelAdmin):
-    list_display = ('eventID', 'competitor', 'formula', 'position')#, 'is_active')
+class AcademyScoringMatrixAdmin(admin.ModelAdmin):
+    list_display = ('pointsType', 'formula', 'role', 'multiplier')#, 'is_active')
+
+    def active(self, obj):
+        return obj.is_active == 1
+
+    active.boolean = True
+
+class ScoringMatchesAdmin(admin.ModelAdmin):
+    list_display = ('player_ID', 'result_ID', 'points_Type', 'academyPoints')#, 'is_active')
 
     def active(self, obj):
         return obj.is_active == 1
@@ -45,5 +72,8 @@ class ResultAdmin(admin.ModelAdmin):
 
 # Tell admin site to show it for editing
 admin.site.register(Competitor, CompetitorAdmin)
-admin.site.register(Event, EventAdmin)
-admin.site.register(Result, ResultAdmin)
+#admin.site.register(Event, EventAdmin)
+#admin.site.register(Result, ResultAdmin)
+admin.site.register(ScoringEvent, ScoringEventAdmin)
+admin.site.register(AcademyScoringMatrix, AcademyScoringMatrixAdmin)
+admin.site.register(ScoringMatches, ScoringMatchesAdmin)
