@@ -11,7 +11,7 @@ def tables(request):
 def tableformula(request, formula):
 
     # Go find drivers in this formula only
-    if formula == "4":
+    if formula == "4" or formula == "W":
         formula = "W"
         formulaname = "W Series"
     else:
@@ -35,3 +35,13 @@ def tableformula(request, formula):
     #"pers_data": pers_data,
 
     return render(request, 'season/tables.html', {'personality':pers_data, 'competitors': competitors,'managers':managers,'formulaname':formulaname, 'formula':formula, 'showPersonal':showPersonal})
+
+def maketeam(request):
+#	textreceived = request.GET['fname']
+#    competitors = Competitor.objects
+    return render(request, 'season/maketeam.html') #, {'competitors': competitors})
+
+def teampicker(request):
+#	textreceived = request.GET['fname']
+#    competitors = Competitor.objects
+    return render(request, 'season/teampicker.html')#', {'competitors': competitors})

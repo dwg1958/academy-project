@@ -1,6 +1,16 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
+class TeamProfile(models.Model):
+    user_ID                = models.OneToOneField(User, on_delete = models.CASCADE)
+    teamName               = models.CharField(max_length=20)
+    teamLogo               = models.ImageField(upload_to='mugshots/', default="siteimages/blankUser.jpg")
+    dateStarted            = models.DateField(auto_now=False, auto_now_add=False)
+
+    def __str__(self):
+        return self.user_ID.username + " - " + self.teamName
+
 class Competitor(models.Model):
     mugshot                = models.ImageField(upload_to='mugshots/')
     surname                = models.CharField(max_length=20)

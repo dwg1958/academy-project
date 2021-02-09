@@ -7,9 +7,18 @@ from .models import Result
 from .models import ScoringEvent
 from .models import AcademyScoringMatrix
 from .models import ScoringMatches
+from .models import TeamProfile
 
 #Show record details in admin table
 #https://www.geeksforgeeks.org/customize-django-admin-interface/
+class TeamProfileAdmin(admin.ModelAdmin):
+    list_display = ( 'user_ID', 'teamName', 'dateStarted')#, 'is_active')
+
+    def active(self, obj):
+        return obj.is_active == 1
+
+    active.boolean = True
+
 class CompetitorAdmin(admin.ModelAdmin):
     list_display = ('id','surname', 'firstname', 'formula', 'role')#, 'is_active')
 
@@ -77,3 +86,4 @@ admin.site.register(Result, ResultAdmin)
 admin.site.register(ScoringEvent, ScoringEventAdmin)
 admin.site.register(AcademyScoringMatrix, AcademyScoringMatrixAdmin)
 admin.site.register(ScoringMatches, ScoringMatchesAdmin)
+admin.site.register(TeamProfile, TeamProfileAdmin)

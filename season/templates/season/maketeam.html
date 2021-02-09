@@ -1,0 +1,82 @@
+
+
+<h1>Register</h1>
+
+
+{% if message %}
+   <center><h3 style="color:green">{{ message }}</h3></center>
+{% endif %}
+
+
+<form action = "{% url 'register' %}" method="POST" accept-charset="utf-8" class = "text-center pt-0">
+   {% csrf_token %}
+   <br />
+   <table class = "">
+      <tr>
+         <td width="50%">
+            <label form="fname">Your user name:</label>
+         </td>
+         <td>
+            <input type="text" id="username" name="username"><br><br>
+         </td>
+      </tr>
+      <tr>
+         <td>
+            <label form="fname">Your First Name :</label>
+         </td>
+         <td>
+            <input type="text" id="firstname" name="firstname"><br><br>
+         </td>
+      </tr>
+      <tr>
+         <td>
+            <label form="fname">Your Last Name :</label>
+         </td>
+         <td>
+            <input type="text" id="lastname" name="lastname"><br><br>
+         </td>
+      </tr>
+      <tr>
+         <td>
+            <label form="fname">Your email:</label>
+         </td>
+         <td>
+            <input type="text" id="email" name="email"><br><br>
+         </td>
+      </tr>
+      <tr>
+         <td>
+            <label form="fname">Your password :</label>
+         </td>
+         <td>
+            <input type="password" id="password1" name="password1"><br><br>
+         </td>
+      </tr>
+      <tr>
+         <td>
+            <label form="fname">Repeat password :</label>
+         </td>
+         <td>
+            <input type="password" id="password2" name="password2">
+         </td>
+      </tr>
+
+   </table>
+   <br><br><input type="submit" value="Submit" class = "center">
+   <br /><br /><br />
+</form>
+
+
+<h1> Make my Team </h1>
+<br />
+<br />
+Define my team name and learn about the rules
+<br />
+<br />
+
+When ready, send off to the team-picker page
+
+<br />
+<br />
+
+<a href = "{% url 'teampicker' %}"> Now go pick your Roster</a>
