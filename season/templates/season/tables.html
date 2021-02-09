@@ -1,353 +1,225 @@
-{% load static %}
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Jekyll v4.1.1">
-    <title>GPG Academy Teams</title>
+{% extends 'base.html' %}
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
-    <!-- Load Bootstrap-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <link href="{% static '/academy/css/academy.css' %}" rel="stylesheet">
-    <link href="{% static '/academy/css/dashboard.css' %}" rel="stylesheet">
-
-   <!-- Local Style Sheet -->
-   <style>
-      a{color:white}
-      a:hover{color:gray}
-   </style>
-
-  </head>
-  <body>
-     <header>
-       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-           <span class="navbar-toggler-icon"></span>
-         </button>
-
-         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-           <ul class="navbar-nav ml-auto">
-             <li class="nav-item">
-               <a class="nav-link" href="/" style="margin-left: 18px; font-size: 1.2rem;">My Team </a>
-             </li>
-             <li class="nav-item dropdown">
-               <a class="nav-link dropdown-toggle" href="#" style="margin-left: 18px; font-size: 1.2rem;" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                 Events
-               </a>
-               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                 <a class="dropdown-item" href="/">Latest</a>
-                 <a class="dropdown-item" href="/season/tables/1">Formula 1</a>
-                 <a class="dropdown-item" href="/season/tables/2">Formula 2</a>
-                 <a class="dropdown-item" href="/season/tables/3">Formula 3</a>
-                 <a class="dropdown-item" href="/season/tables/4">W Series</a>
-               </div>
-             </li>
-             <li class="nav-item">
-               <a class="nav-link" href="/" style="margin-left: 18px; font-size: 1.2rem;">League</a>
-             </li>
-             </li>
-             <li class="nav-item active">
-               <a class="nav-link" href="" style="margin-left: 18px; font-size: 1.2rem;">Settings</a>
-             </li>
-           </ul>
-         </div>
-
-         <a class="navbar-brand" href="#">
-           <img src="{% static '/academy/webPageImages/Avatar.jpg' %}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
-           David Griff
-         </a>
-
-       </nav>
-     </header>
+{% block content %}
+<style>
+   a{color:white}
+   a:hover{color:gray}
+</style>
 
 <div class="container-fluid">
-  <div class="row">
-    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar-dark collapse">
-      <div class="sidebar-sticky pt-3">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link" href="/season/tables/1">  <!-- active -->
-              <span data-feather="flag"></span>
-              Formula 1 <!--<span class="sr-only">(current)</span> -->
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/season/tables/2">
-              <span data-feather="flag"></span>
-              Formula 2
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/season/tables/3">
-              <span data-feather="flag"></span>
-              Formula 3
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/season/tables/W">
-              <span data-feather="flag"></span>
-              W Series
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="bar-chart-2"></span>
-              My Totals
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="award"></span>
-              League
-            </a>
-          </li>
-        </ul>
+   <div class="row">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar-dark collapse">
+         <div class="sidebar-sticky pt-3">
+            <ul class="nav flex-column">
+               <li class="nav-item">
+                  <a class="nav-link" href="/season/tables/1">  <!-- active -->
+                     <span data-feather="flag"></span>
+                     Formula 1 <!--<span class="sr-only">(current)</span> -->
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="/season/tables/2">
+                     <span data-feather="flag"></span>
+                     Formula 2
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="/season/tables/3">
+                     <span data-feather="flag"></span>
+                     Formula 3
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="/season/tables/W">
+                     <span data-feather="flag"></span>
+                     W Series
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="#">
+                     <span data-feather="bar-chart-2"></span>
+                     My Totals
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="#">
+                     <span data-feather="award"></span>
+                     League
+                  </a>
+               </li>
+            </ul>
 
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>Saved reports</span>
-          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-            <span data-feather="plus-circle"></span>
-          </a>
-        </h6>
-        <ul class="nav flex-column mb-2">
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Last Season
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
-
-
-
-
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Competitors - {{ formulaname }} </h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-          <div class="btn-group mr-2">
-             <a class="btn btn-sm btn-outline-secondary" data-toggle="collapse" href="#PersonalData" role="button" aria-expanded="false" aria-controls="PersonalData">Driver Details</a>
-             <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#PersonalChart" aria-expanded="false" aria-controls="PersonalChart">Season's Progress</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- THIS IS THE GRAPH -->
-     <div class="container collapse multi-collapse" id = "PersonalChart">
-     <canvas class="my-4 w-100" id="myChart" width="900" height="380">
-
-      </canvas>
-   </div>
-<!--  Top Driver details area ----------------------->
-
-      {% for person in personality %}
-       <div class="container collapse multi-collapse {{showPersonal}}" id = "PersonalData">
-         <div class="row">
-           <div class="col-sm-4">
-              <div class="card" style="">
-                <img class="card-img-top text-center pt-4" src="{{person.mugshot.url}}" alt="Card image cap" style="margin:auto; width:250px;">
-                <div class="card-body">
-                  <h5 class="card-title text-center">{{ person.firstname }} {{ person.surname }}</h5>
-
-                </div>
-              </div>
-           </div>
-           <div class="table-responsive col-sm-8">
-             <table class="table table-sm">
-               <tbody>
-
-                  <tr>
-                     <td colspan = 2 class="bg-dark" style="color:white"><b>Career</b></td>
-                  </tr>
-                  <tr>
-                     <td>&nbsp;&nbsp;&nbsp;Wins</td>
-                     <td>{{ person.winsPreviousSeasons }}</td>
-                  </tr>
-                  <tr>
-                     <td>&nbsp;&nbsp;&nbsp;Poles</td>
-                     <td>{{ person.pointsPreviousSeasons }}</td>
-                  </tr>
-                  <tr>
-                     <td>&nbsp;&nbsp;&nbsp;Championships</td>
-                     <td>{{ person.championships }}</td>
-                  </tr>
-                  <tr>
-                     <td colspan = 2 class="bg-dark" style="color:white"><b>This Season</b></td>
-                  </tr>
-                  <tr>
-                     <td>&nbsp;&nbsp;&nbsp;Points</td>
-                     <td>{{ person.pointsThisSeason }}</td>
-                  </tr>
-                  <tr>
-                     <td>&nbsp;&nbsp;&nbsp;Wins</td>
-                     <td>{{ person.winsThisSeason }}</td>
-                  </tr>
-                  <tr>
-                     <td>&nbsp;&nbsp;&nbsp;Poles</td>
-                     <td>{{ person.polesThisSeason }}</td>
-                  </tr>
-                  <tr>
-                     <td>&nbsp;&nbsp;&nbsp;Positions Gained / Lost</td>
-                     <td>{{ person.gainLossThisseason }}</td>
-                  </tr>
-                  <tr>
-                     <td colspan = 2 class="bg-dark" style="color:white"><b>Personal</b></td>
-                  </tr>
-                  <tr>
-                     <td>&nbsp;&nbsp;&nbsp;Nationality</td>
-                     <td>{{ person.nationality }}</td>
-                  </tr>
-                  <tr>
-                     <td>&nbsp;&nbsp;&nbsp;Web Site</td>
-                     <td>{{ person.webLink }}</td>
-                  </tr>
-                  <tr>
-                     <td>&nbsp;&nbsp;&nbsp;Instagram</td>
-                     <td>{{ person.instaHandle }}</td>
-                  </tr>
-                  <tr>
-                     <td>&nbsp;&nbsp;&nbsp;Twitter</td>
-                     <td>{{ person.twitterHandle }}</td>
-                  </tr>
-                  <tr>
-                     <td colspan="2"><br />{{ person.short_bio }}</td>
-                  </tr>
-
-               </tbody>
-             </table>
-           </div>
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+               <span>Saved reports</span>
+               <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+                  <span data-feather="plus-circle"></span>
+               </a>
+            </h6>
+            <ul class="nav flex-column mb-2">
+               <li class="nav-item">
+                  <a class="nav-link" href="#">
+                     <span data-feather="file-text"></span>
+                     Last Season
+                  </a>
+               </li>
+            </ul>
          </div>
-       </div>
-       {%endfor%}
+      </nav>
+
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Competitors - {{ formulaname }} </h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+               <div class="btn-group mr-2">
+                  <a class="btn btn-sm btn-outline-secondary" data-toggle="collapse" href="#PersonalData" role="button" aria-expanded="false" aria-controls="PersonalData">Driver Details</a>
+                  <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#PersonalChart" aria-expanded="false" aria-controls="PersonalChart">Season's Progress</button>
+               </div>
+            </div>
+         </div>
+
+         <!-- THIS IS THE GRAPH -->
+         <div class="container collapse multi-collapse" id = "PersonalChart">
+            <canvas class="my-4 w-100" id="myChart" width="900" height="380">
+
+            </canvas>
+         </div>
+         <!--  Top Driver details area ----------------------->
+
+         {% for person in personality %}
+         <div class="container collapse multi-collapse {{showPersonal}}" id = "PersonalData">
+            <div class="row">
+               <div class="col-sm-4">
+                  <div class="card" style="">
+                     <img class="card-img-top text-center pt-4" src="{{person.mugshot.url}}" alt="Card image cap" style="margin:auto; width:250px;">
+                     <div class="card-body">
+                        <h5 class="card-title text-center">{{ person.firstname }} {{ person.surname }}</h5>
+
+                     </div>
+                  </div>
+               </div>
+               <div class="table-responsive col-sm-8">
+                  <table class="table table-sm">
+                     <tbody>
+
+                        <tr>
+                           <td colspan = 2 class="bg-dark" style="color:white"><b>Career</b></td>
+                        </tr>
+                        <tr>
+                           <td>&nbsp;&nbsp;&nbsp;Wins</td>
+                           <td>{{ person.winsPreviousSeasons }}</td>
+                        </tr>
+                        <tr>
+                           <td>&nbsp;&nbsp;&nbsp;Poles</td>
+                           <td>{{ person.pointsPreviousSeasons }}</td>
+                        </tr>
+                        <tr>
+                           <td>&nbsp;&nbsp;&nbsp;Championships</td>
+                           <td>{{ person.championships }}</td>
+                        </tr>
+                        <tr>
+                           <td colspan = 2 class="bg-dark" style="color:white"><b>This Season</b></td>
+                        </tr>
+                        <tr>
+                           <td>&nbsp;&nbsp;&nbsp;Points</td>
+                           <td>{{ person.pointsThisSeason }}</td>
+                        </tr>
+                        <tr>
+                           <td>&nbsp;&nbsp;&nbsp;Wins</td>
+                           <td>{{ person.winsThisSeason }}</td>
+                        </tr>
+                        <tr>
+                           <td>&nbsp;&nbsp;&nbsp;Poles</td>
+                           <td>{{ person.polesThisSeason }}</td>
+                        </tr>
+                        <tr>
+                           <td>&nbsp;&nbsp;&nbsp;Positions Gained / Lost</td>
+                           <td>{{ person.gainLossThisseason }}</td>
+                        </tr>
+                        <tr>
+                           <td colspan = 2 class="bg-dark" style="color:white"><b>Personal</b></td>
+                        </tr>
+                        <tr>
+                           <td>&nbsp;&nbsp;&nbsp;Nationality</td>
+                           <td>{{ person.nationality }}</td>
+                        </tr>
+                        <tr>
+                           <td>&nbsp;&nbsp;&nbsp;Web Site</td>
+                           <td>{{ person.webLink }}</td>
+                        </tr>
+                        <tr>
+                           <td>&nbsp;&nbsp;&nbsp;Instagram</td>
+                           <td>{{ person.instaHandle }}</td>
+                        </tr>
+                        <tr>
+                           <td>&nbsp;&nbsp;&nbsp;Twitter</td>
+                           <td>{{ person.twitterHandle }}</td>
+                        </tr>
+                        <tr>
+                           <td colspan="2"><br />{{ person.short_bio }}</td>
+                        </tr>
+
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+         {%endfor%}
 
 
 
-<!-- --- TABLES ------------>
+         <!-- --- TABLES ------------>
 
-      <h2>Drivers</h2>
-      <div class="table-responsive">
-        <table class="table table-striped table-sm">
-          <thead>
-            <tr>
-               <th>Driver</th>
-               <th> </th>
-               <th>Team</th>
-               <th>Value</th>
-               <th>Points</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for driver in competitors.all %}
-               <tr>
-                  <td><a href="/season/tables/{{formula}}?per={{driver.surname}}"><img class = "image-fluid " src="{{driver.mugshot.url}}"  height=50px /></a></td>
-                  <td> <b> {{driver.surname}}, {{driver.firstname}} </b> </td>
-                  <td>{{driver.team}}</td>
-                  <td>{{driver.value}}</td>
-                  <td>{{driver.pointsThisSeason}}</td>
-               </tr>
-            {% endfor%}
-          </tbody>
-        </table>
+         <h2>Drivers</h2>
+         <div class="table-responsive">
+            <table class="table table-striped table-sm">
+               <thead>
+                  <tr>
+                     <th>Driver</th>
+                     <th> </th>
+                     <th>Team</th>
+                     <th>Value</th>
+                     <th>Points</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  {% for driver in competitors.all %}
+                  <tr>
+                     <td><a href="/season/tables/{{formula}}?per={{driver.surname}}"><img class = "image-fluid " src="{{driver.mugshot.url}}"  height=50px /></a></td>
+                     <td> <b> {{driver.surname}}, {{driver.firstname}} </b> </td>
+                     <td>{{driver.team}}</td>
+                     <td>{{driver.value}}</td>
+                     <td>{{driver.pointsThisSeason}}</td>
+                  </tr>
+                  {% endfor%}
+               </tbody>
+            </table>
+         </div>
+         <!----------------------------------->
+         <h2>Managers</h2>
+         <div class="table-responsive">
+            <table class="table table-striped table-sm">
+               <thead>
+                  <tr>
+                     <th>Manager</th>
+                     <th> </th>
+                     <th>Team</th>
+                     <th>Value</th>
+                     <th>Points</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  {% for manager in managers.all %}
+                  <tr>
+                     <td><img class = "image-fluid " src="{{manager.mugshot.url}}"  height=50px /></td>
+                     <td> <b> {{manager.surname}}, {{manager.firstname}} </b> </td>
+                     <td>{{manager.team}}</td>
+                     <td>{{manager.value}}</td>
+                     <td>{{manager.pointsThisSeason}}</td>
+                  </tr>
+                  {% endfor%}
+               </tbody>
+            </table>
+         </div>
       </div>
-<!----------------------------------->
-      <h2>Managers</h2>
-      <div class="table-responsive">
-       <table class="table table-striped table-sm">
-          <thead>
-            <tr>
-               <th>Manager</th>
-               <th> </th>
-               <th>Team</th>
-               <th>Value</th>
-               <th>Points</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for manager in managers.all %}
-               <tr>
-                  <td><img class = "image-fluid " src="{{manager.mugshot.url}}"  height=50px /></td>
-                  <td> <b> {{manager.surname}}, {{manager.firstname}} </b> </td>
-                  <td>{{manager.team}}</td>
-                  <td>{{manager.value}}</td>
-                  <td>{{manager.pointsThisSeason}}</td>
-               </tr>
-            {% endfor%}
-          </tbody>
-       </table>
-      </div>
-
-    </main>
-  </div>
-</div>
-<!-- THIS POINTS TO CDN BOOTSTRAP ASSETS -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-
-<!--  <script src="/static/js/dashboard.js"></script>  -->
-<script>
-   /* globals Chart:false, feather:false */
-
-   (function () {
-     'use strict'
-
-     feather.replace()
-
-     // Graphs
-     var ctx = document.getElementById('myChart')
-     // eslint-disable-next-line no-unused-vars
-     var myChart = new Chart(ctx, {
-       type: 'line',
-       data: {
-         labels: [
-           'Abu Dhabi',
-           'Argentina',
-           'Mexico',
-           'USA',
-           'Austria',
-           'British',
-           'Dutch'
-         ],
-         datasets: [{
-           data: [
-             25,
-             20,
-             0,
-             4,
-             10,
-             6,
-             15
-           ],
-           lineTension: 0,
-           backgroundColor: 'transparent',
-           borderColor: '#007bff',
-           borderWidth: 4,
-           pointBackgroundColor: '#007bff'
-         }]
-       },
-       options: {
-         scales: {
-           yAxes: [{
-             ticks: {
-               beginAtZero: false
-             }
-           }]
-         },
-         legend: {
-           display: false
-         }
-       }
-     })
-   })()
-
-</script>
-</body>
-</html>
+   </div>
+   {% endblock %}
