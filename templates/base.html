@@ -66,16 +66,27 @@
                      </a>
                      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="#">Change my Password</a>
-                        <a class="dropdown-item" href="{% url 'logout'%}">Logout</a>
+                        <a class="dropdown-item" href="javascript:{document.getElementById('logout').submit()}" onclick="">Logout</a>
+                            <form id="logout" method="POST" action="{% url 'logout' %}">
+                              {% csrf_token %}
+                              <input type="hidden" />
+                            </form>
+                        </a>
                      </div>
                   </li>
                </ul>
             </div>
+            {% if user.is_authenticated %}
+               <a class="navbar-brand" style="margin-right: 15px; font-size: 1.4rem;" href="#">
+                  {{user.first_name}} &nbsp; {{user.TeamProfile.teamName}}
+                  <img src="{% static 'academy/webPageImages/Avatar.jpg' %}" width="40" height="40" class="d-inline-block align-top" alt="" loading="lazy">
+               </a>
+            {% else %}
+               <a class="navbar-brand" href="{% url 'login' %}">
+                  <img src="{% static 'academy/webPageImages/blankUser.jpg' %}" width="40" height="40" class="d-inline-block align-top" alt="" loading="lazy">
+               </a>
+            {% endif %}
 
-            <a class="navbar-brand" href="#">
-               <img src="{% static 'academy/webPageImages/Avatar.jpg' %}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
-               David Griff
-            </a>
 
          </nav>
       </header>
