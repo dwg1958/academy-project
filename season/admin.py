@@ -28,15 +28,16 @@ class CompetitorAdmin(admin.ModelAdmin):
     active.boolean = True
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('id','name', 'date', 'formulas')#, 'is_active')
+    list_display = ('id','name', 'date', 'formulas', 'startDateTime', 'endDateTime')#, 'is_active')
 
     def active(self, obj):
         return obj.is_active == 1
 
     active.boolean = True
 
+
 class ResultAdmin(admin.ModelAdmin):
-    list_display = ('id','scoringEvent_ID', 'competitor_ID', 'eventType', 'finishPosition')#, 'is_active')
+    list_display = ('id','scoringEvent_ID', 'competitor_ID', 'finishPosition')#, 'is_active')
 
     def active(self, obj):
         return obj.is_active == 1
@@ -44,7 +45,7 @@ class ResultAdmin(admin.ModelAdmin):
     active.boolean = True
 
 class ScoringEventAdmin(admin.ModelAdmin):
-    list_display = ('id','event_ID', 'name', 'formula', 'eventType', 'startDateTime', 'endDateTime')#, 'is_active')
+    list_display = ('id','event_ID', 'name', 'formula',  'eventType')#, 'is_active')
 
     def active(self, obj):
         return obj.is_active == 1
