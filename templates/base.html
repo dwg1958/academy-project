@@ -15,6 +15,10 @@
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
    <link href="{% static '/academy/css/academy.css' %}" rel="stylesheet">
    <link href="{% static '/academy/css/dashboard.css' %}" rel="stylesheet">
+<!---------------------- CSS BLOCK  ------------------->
+   {% block css %}
+   {% endblock %}
+<!---------------------- CSS BLOCK  ------------------->
 </head>
 
 <body>
@@ -74,11 +78,24 @@
                         </a>
                      </div>
                   </li>
+                  {% if request.user.is_staff %}
+                  <li class="nav-item dropdown">
+                     <a class="nav-link dropdown-toggle" href="#" style="margin-left: 18px; font-size: 1.2rem;" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Admin
+                     </a>
+                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{% url 'addcompetitors' %}">Competitors</a>
+                        <a class="dropdown-item" href="{% url 'addevents' %}">Events</a>
+                        <a class="dropdown-item" href="{% url 'addscoringevents' %}">Scoring Events</a>
+                        <a class="dropdown-item" href="{% url 'addresults' %}">Results</a>
+                     </div>
+                  </li>
+                  {% endif %}
                </ul>
             </div>
             {% if user.is_authenticated %}
                <a class="navbar-brand" style="margin-right: 15px; font-size: 1.4rem;" href="#">
-                  {{user.first_name}} &nbsp; {{user.TeamProfile.teamName}}
+                  {{user.first_name}} {{user.last_name}} {{self.season_teamprofile.teamName}}
                   <img src="{% static 'academy/webPageImages/Avatar.jpg' %}" width="40" height="40" class="d-inline-block align-top" alt="" loading="lazy">
                </a>
             {% else %}
@@ -90,10 +107,10 @@
 
          </nav>
       </header>
-
+<!---------------------- CONTENT BLOCK  ------------------->
       {% block content %}
       {% endblock %}
-
+<!---------------------- CONTENT BLOCK  ------------------->
       <main role="main">
       </main>
    </body>
@@ -102,6 +119,10 @@
 
          <br />
          <p class="container text-center text-light" >🅒 GPGrandstand {% now "Y" %}</p>
+<!---------------------- FOOTER BLOCK  ------------------->
+         {% block footer %}
+         {% endblock %}
+<!---------------------- FOOTER BLOCK  ------------------->
          <br />
       </div>
    </footer>
@@ -113,59 +134,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 <script src="{% static '/academy/js/dashboard.js' %}"></script>
-<script>
-   /* globals Chart:false, feather:false */
 
-   (function () {
-     'use strict'
-
-     feather.replace()
-
-     // Graphs
-     var ctx = document.getElementById('myChart')
-     // eslint-disable-next-line no-unused-vars
-     var myChart = new Chart(ctx, {
-       type: 'line',
-       data: {
-         labels: [
-           'Abu Dhabi',
-           'Argentina',
-           'Mexico',
-           'USA',
-           'Austria',
-           'British',
-           'Dutch'
-         ],
-         datasets: [{
-           data: [
-             25,
-             20,
-             0,
-             4,
-             10,
-             6,
-             15
-           ],
-           lineTension: 0,
-           backgroundColor: 'transparent',
-           borderColor: '#007bff',
-           borderWidth: 4,
-           pointBackgroundColor: '#007bff'
-         }]
-       },
-       options: {
-         scales: {
-           yAxes: [{
-             ticks: {
-               beginAtZero: false
-             }
-           }]
-         },
-         legend: {
-           display: false
-         }
-       }
-     })
-   })()
-
-</script>
+<!---------------------- JAVASCRIPT BLOCK  ------------------->
+{% block javascript %}
+{% endblock %}
+<!---------------------- JAVASCRIPT BLOCK  ------------------->

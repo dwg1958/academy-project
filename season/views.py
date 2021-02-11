@@ -8,6 +8,7 @@ def tables(request):
     competitors = Competitor.objects
     return render(request, 'season/tables.html', {'competitors': competitors})
 
+####################################
 def tableformula(request, formula):
 
     # Go find drivers in this formula only
@@ -36,12 +37,28 @@ def tableformula(request, formula):
 
     return render(request, 'season/tables.html', {'personality':pers_data, 'competitors': competitors,'managers':managers,'formulaname':formulaname, 'formula':formula, 'showPersonal':showPersonal})
 
+###################################
 def maketeam(request):
 #	textreceived = request.GET['fname']
 #    competitors = Competitor.objects
     return render(request, 'season/maketeam.html') #, {'competitors': competitors})
 
+###################################
 def teampicker(request):
-#	textreceived = request.GET['fname']
-#    competitors = Competitor.objects
-    return render(request, 'season/teampicker.html')#', {'competitors': competitors})
+    return render(request, 'season/teampicker.html')
+
+####################################
+def addcompetitors(request):
+    return render(request, 'season/add_competitors.html')
+
+####################################
+def addevents(request):
+    return render(request, 'season/add_events.html')
+
+####################################
+def addscoringevents(request):
+    return render(request, 'season/add_scoring_events.html')
+
+####################################
+def addresults(request):
+    return render(request, 'season/add_results.html')

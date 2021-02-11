@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block css %}
 <style>
    a{color:white}
    a:hover{color:gray}
 </style>
+{% endblock %}
+
+
+{% block content %}
 
 <div class="container-fluid">
    <div class="row">
@@ -222,4 +226,64 @@
          </div>
       </div>
    </div>
-   {% endblock %}
+{% endblock %}
+
+
+{% block javascript %}
+   <script>
+      /* globals Chart:false, feather:false */
+
+      (function () {
+        'use strict'
+
+        feather.replace()
+
+        // Graphs
+        var ctx = document.getElementById('myChart')
+        // eslint-disable-next-line no-unused-vars
+        var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: [
+              'Abu Dhabi',
+              'Argentina',
+              'Mexico',
+              'USA',
+              'Austria',
+              'British',
+              'Dutch'
+            ],
+            datasets: [{
+              data: [
+                25,
+                20,
+                0,
+                4,
+                10,
+                6,
+                15
+              ],
+              lineTension: 0,
+              backgroundColor: 'transparent',
+              borderColor: '#007bff',
+              borderWidth: 4,
+              pointBackgroundColor: '#007bff'
+            }]
+          },
+          options: {
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: false
+                }
+              }]
+            },
+            legend: {
+              display: false
+            }
+          }
+        })
+      })()
+
+   </script>
+{% endblock %}
