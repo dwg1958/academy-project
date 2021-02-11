@@ -76,6 +76,7 @@ class ScoringEvent(models.Model):
     name                 = models.CharField(max_length=40)
     formula              = models.CharField(max_length=1, choices=FORMULA)
     eventType            = models.CharField(max_length=1)
+    startDateTime        = models.DateTimeField(auto_now=False, auto_now_add=False)
 
     def __str__(self):
         return self.name
