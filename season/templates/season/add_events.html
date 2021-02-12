@@ -1,11 +1,104 @@
 {% extends 'base.html' %}
+{% load static %}
 
+{% block css%}
+<style>
+   td{
+      padding-top:10px;
+      padding-left:20px;
+   }
+   .bigtable td, .bigtable th{
+      border: 1px solid black;
+      border-collapse: collapse;
+      width: 100%
+      max-width: 15%;
+      min-width: 15%;
+      padding: 5px;
+   }
+</style>
+<link href="{% static '/academy/css/datetimepicker.css' %}" rel="stylesheet">
+{% endblock %}
+
+<!--------------------------------------------------------------->
 {% block content %}
 
-   <h1> Add Events </h1>
+
    <br />
    <br />
-   <br />
+   <div class="container">
+      <h1> Add Events </h1>
+      <div class="row">
+         <div class="col">  </div>
+         <div class="col-4 center">
+            <form action="{% url 'addevents' %}" enctype="multipart/form-data" method="post">
+               {% csrf_token %}
+               <table class="inputtable">
+                  <tr>
+                     <td>
+                        {{ event_form.as_table }}
+                     </td></tr><tr><td colspan = "2"><br />
+                        <center><input type="submit" name="submit" value="ADD"></center>
+                     </td>
+                  </tr>
+               </table>
+            </form>
+         </div>
+         <div class="col"> </div>
+      </div>
+      <hr />
+   </div>
+
    <br />
 
+
+
+   <div class="container">
+      <h1 style="padding-top:20px; padding-bottom:20px;"> Events </h1>
+      <table class="bigtable">
+         <tr>
+            <th> Name </th>
+            <th> Date / time </th>
+            <th> circuit </th>
+            <th> country </th>
+            <th> formulas </th>
+            <th> startDateTime </th>
+            <th> endDateTime </th>
+         </tr>
+         {% for event in allevents%}
+         <tr>
+            <td class="name"> {{event.name}} </td>
+            <td> {{event.date}} </td>
+            <td> {{event.circuit}} </td>
+            <td> {{event.country}} </td>
+            <td> {{event.formulas}} </td>
+            <td> {{event.startDateTime}} </td>
+            <td> {{event.endDateTime}} </td>
+
+         </tr>
+         {% endfor %}
+      </table>
+
+
+   </div>
+
+   <br />
+
+{% endblock %}
+<!--   <input type="button" onclick="alert('Hello World!')" value="Click Me!">  -->
+
+{% block javascript%}
+   <script src="{% static '/academy/js/datetimepicker.js' %}"></script>
+   <script>
+      $(function () {
+         $("#id_endDateTime").datetimepicker({
+            format: 'd/m/Y H:i',
+         });
+         $("#id_startDateTime").datetimepicker({
+            format: 'd/m/Y H:i',
+         });
+         $("#id_date").datetimepicker({
+            format: 'd/m/Y',
+         });
+      });
+   </script>
 {% endblock %}

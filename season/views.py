@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, get_list_or_404
-from .models import Competitor
+from .models import Competitor, Event
+from .forms import EventForm
 
 # Create your views here.
 def tables(request):
@@ -51,9 +52,29 @@ def teampicker(request):
 def addcompetitors(request):
     return render(request, 'season/add_competitors.html')
 
-####################################
+
+####### ADD/VIEW EVENTS ######
 def addevents(request):
-    return render(request, 'season/add_events.html')
+    new_event = None
+    if request.method == 'POST':
+        # A comment was posted
+        event_form = EventForm(data=request.POST)
+        if event_form.is_valid():
+            # Create Event object but don't save to database yet
+            new_event = event_form.save(commit=False)
+            # Assign the current parent record to the data set
+            # new_event.whatever = whatever
+            # Save the event to the database
+            new_event.save()
+            event_form = EventForm()
+    else:
+        event_form = EventForm()
+
+    # Fill lower table with all extant data
+    allevents = Event.objects.all()
+
+    return render(request, 'season/add_events.html',{'new_event': new_event,'event_form': event_form, 'allevents':allevents})
+
 
 ####################################
 def addscoringevents(request):

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class TeamProfile(models.Model):
-    user_ID                = models.OneToOneField(User, on_delete = models.CASCADE)
+    user_ID                = models.OneToOneField(User, on_delete = models.CASCADE, related_name='team')
     teamName               = models.CharField(max_length=20)
     teamLogo               = models.ImageField(upload_to='mugshots/', default="siteimages/blankUser.png")
     dateStarted            = models.DateField(auto_now=False, auto_now_add=False)
