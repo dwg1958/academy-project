@@ -18,10 +18,14 @@ class Competitor(models.Model):
     ('3', 'Formula 3'),
     ('W', 'W Series' ),
     )
+    ROLE = (
+    ('D', 'Driver'),
+    ('M', 'Manager'),
+    )
     mugshot                = models.ImageField(upload_to='mugshots/')
     surname                = models.CharField(max_length=20)
     firstname              = models.CharField(max_length=20)
-    role                   = models.CharField(max_length=1, default = 'D')
+    role                   = models.CharField(max_length=1, choices=ROLE)
     formula                = models.CharField(max_length=1, choices=FORMULA)
     team                   = models.CharField(max_length=20, blank=True)
     value                  = models.DecimalField(max_digits=4, decimal_places=1, default = 0)
@@ -46,6 +50,7 @@ class Competitor(models.Model):
     class Meta:
         # Add verbose name
         verbose_name = 'Driver or Manager'
+        ordering = ('-value',)
 
     #def birthday_pretty(self):
     #    return self.birthdate.strftime('%b %e, %Y')
@@ -58,6 +63,9 @@ class Event(models.Model):
     formulas             = models.CharField(max_length=40)
     startDateTime        = models.DateTimeField(auto_now=False, auto_now_add=False)
     endDateTime          = models.DateTimeField(auto_now=False, auto_now_add=False)
+
+    class Meta:
+        ordering = ('date',)
 
     def __str__(self):
         return self.name
