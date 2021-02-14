@@ -1,0 +1,16 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Register</h3><br/>
+
+{% if message %}
+   <center><h5 style="color:green">{{ message }}</h5></center>
+{% endif %}
+
+<form action = "{% url 'login' %}" method="POST" accept-charset="utf-8" class = "text-center pt-0">
+   {% csrf_token %}
+
+</form>
+{% endblock %}

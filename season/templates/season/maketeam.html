@@ -1,5 +1,15 @@
 
+{% extends 'base.html' %}
 
+{% block css %}
+<style>
+   a{color:white}
+   a:hover{color:gray}
+</style>
+{% endblock %}
+
+
+{% block content %}
 <h1>Register</h1>
 
 
@@ -80,3 +90,5 @@ When ready, send off to the team-picker page
 <br />
 
 <a href = "{% url 'teampicker' %}"> Now go pick your Roster</a>
+
+{% endblock %}

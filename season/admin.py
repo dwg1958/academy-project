@@ -12,7 +12,8 @@ from .models import TeamProfile
 #Show record details in admin table
 #https://www.geeksforgeeks.org/customize-django-admin-interface/
 class TeamProfileAdmin(admin.ModelAdmin):
-    list_display = ( 'user_ID', 'teamName', 'dateStarted')#, 'is_active')
+    list_display  = ( 'user_ID', 'teamName', 'dateStarted')#, 'is_active')
+    search_fields = ('teamName',)
 
     def active(self, obj):
         return obj.is_active == 1
@@ -20,7 +21,9 @@ class TeamProfileAdmin(admin.ModelAdmin):
     active.boolean = True
 
 class CompetitorAdmin(admin.ModelAdmin):
-    list_display = ('id','surname', 'firstname', 'formula', 'role')#, 'is_active')
+    list_display  = ('id','surname', 'firstname', 'formula', 'role', 'value')#, 'is_active')
+    search_fields = ('surname', 'firstname', 'formula',)
+    list_filter   = ('formula',)
 
     def active(self, obj):
         return obj.is_active == 1
@@ -28,7 +31,7 @@ class CompetitorAdmin(admin.ModelAdmin):
     active.boolean = True
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('id','name', 'date', 'formulas', 'startDateTime', 'endDateTime')#, 'is_active')
+    list_display = ('id','name', 'date', 'formulas', 'startDateTime', 'endDateTime')
 
     def active(self, obj):
         return obj.is_active == 1
@@ -37,7 +40,7 @@ class EventAdmin(admin.ModelAdmin):
 
 
 class ResultAdmin(admin.ModelAdmin):
-    list_display = ('id','scoringEvent_ID', 'competitor_ID', 'finishPosition')#, 'is_active')
+    list_display  = ('id','scoringEvent_ID', 'competitor_ID', 'finishPosition', 'startPosition', 'fastestLap')
 
     def active(self, obj):
         return obj.is_active == 1
@@ -45,7 +48,7 @@ class ResultAdmin(admin.ModelAdmin):
     active.boolean = True
 
 class ScoringEventAdmin(admin.ModelAdmin):
-    list_display = ('id','event_ID', 'name', 'formula',  'eventType')#, 'is_active')
+    list_display = ('id','event_ID', 'name', 'formula',  'eventType')
 
     def active(self, obj):
         return obj.is_active == 1
@@ -53,7 +56,7 @@ class ScoringEventAdmin(admin.ModelAdmin):
     active.boolean = True
 
 class AcademyScoringMatrixAdmin(admin.ModelAdmin):
-    list_display = ('id','pointsType', 'formula', 'role', 'multiplier')#, 'is_active')
+    list_display = ('id','pointsType', 'formula', 'role', 'multiplier')
 
     def active(self, obj):
         return obj.is_active == 1
@@ -61,13 +64,13 @@ class AcademyScoringMatrixAdmin(admin.ModelAdmin):
     active.boolean = True
 
 class ScoringMatchesAdmin(admin.ModelAdmin):
-    list_display = ('id','player_ID', 'result_ID', 'points_Type', 'academyPoints')#, 'is_active')
+    list_display = ('id','player_ID', 'result_ID', 'points_Type', 'academyPoints')
 
     def active(self, obj):
         return obj.is_active == 1
 
     active.boolean = True
-    
+
 ############################################################
 # Add active/inactive flags in table list to change record field 'is_active'
 #    def make_active(modeladmin, request, queryset):

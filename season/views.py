@@ -63,7 +63,7 @@ def addevents(request):
             # Create Event object but don't save to database yet
             new_event = event_form.save(commit=False)
             # Assign the current parent record to the data set
-            # new_event.whatever = whatever
+            # new_event.whatever = whatever  # Add extra data
             # Save the event to the database
             new_event.save()
             event_form = EventForm()

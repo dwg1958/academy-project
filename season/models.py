@@ -6,7 +6,7 @@ class TeamProfile(models.Model):
     user_ID                = models.OneToOneField(User, on_delete = models.CASCADE, related_name='team')
     teamName               = models.CharField(max_length=20)
     teamLogo               = models.ImageField(upload_to='mugshots/', default="siteimages/blankUser.png")
-    dateStarted            = models.DateField(auto_now=False, auto_now_add=False)
+    dateStarted            = models.DateField(auto_now=True)
 
     def __str__(self):
         return self.user_ID.username + " - " + self.teamName
@@ -80,10 +80,18 @@ class ScoringEvent(models.Model):
     ('3', 'Formula 3'),
     ('W', 'W Series' ),
     )
-    event_ID             = models.ForeignKey(Event, null=True, on_delete=models.SET_NULL)
+    RACETYPE = (
+    ('Q', 'Qualifying'),
+    ('R', 'Race'),
+    ('1', 'Race 1'),
+    ('2', 'Race 2' ),
+    ('F', 'Feature Race'),
+    ('S', 'Sprint Race' ),
+    )
+    event_ID             = models.ForeignKey(Event, null=True, on_delete=models.SET_NULL, related_name='scoringEvent')
     name                 = models.CharField(max_length=40)
     formula              = models.CharField(max_length=1, choices=FORMULA)
-    eventType            = models.CharField(max_length=1)
+    eventType            = models.CharField(max_length=1, choices=RACETYPE)
     startDateTime        = models.DateTimeField(auto_now=False, auto_now_add=False)
 
     def __str__(self):
@@ -93,16 +101,14 @@ class ScoringEvent(models.Model):
         return event.startDTime.strftime('%b %e, %Y')
 
 class Result(models.Model):
-    scoringEvent_ID      = models.ForeignKey(ScoringEvent, null=True, on_delete=models.SET_NULL)
+    scoringEvent_ID      = models.ForeignKey(ScoringEvent, null=True, on_delete=models.SET_NULL, related_name='result')
     competitor_ID        = models.ForeignKey(Competitor, null=True, on_delete=models.SET_NULL)
     finishPosition       = models.IntegerField()
-    startPosition        = models.IntegerField()
-    lapOrRaceTime        = models.IntegerField()
-    lapsComplete         = models.IntegerField()
-    formulaPoints        = models.IntegerField()
-    pole                 = models.BooleanField(default=False)
+    startPosition        = models.IntegerField(default = 0)
+    lapsComplete         = models.IntegerField(default = 0)
+    formulaPoints        = models.IntegerField(default = 0)
     fastestLap           = models.BooleanField(default=False)
-    placesGainedLost     = models.IntegerField()
+    placesGainedLost     = models.IntegerField(default = 0)
 
 
 class AcademyScoringMatrix(models.Model):
@@ -112,13 +118,26 @@ class AcademyScoringMatrix(models.Model):
     ('3', 'Formula 3'),
     ('W', 'W Series' ),
     )
+    RACETYPE = (
+    ('Q', 'Qualifying'),
+    ('R', 'Race'),
+    ('1', 'Race 1'),
+    ('2', 'Race 2' ),
+    ('F', 'Feature Race'),
+    ('S', 'Sprint Race' ),
+    )
+    POINTSTYPE = (
+    ('P', 'Position'),
+    ('F', 'Fastest Lap'),
+    ('G', 'Places Gained / Lost'),
+    )
     pointsType           = models.CharField(max_length=1)
     formula              = models.CharField(max_length=1, choices=FORMULA)
     role                 = models.CharField(max_length=1)
     multiplier           = models.DecimalField(max_digits=6, decimal_places=2)
 
 class ScoringMatches(models.Model):
-    player_ID            = models.ForeignKey(TeamProfile, null=True, on_delete=models.SET_NULL)
-    result_ID            = models.ForeignKey(Result, null=True, on_delete=models.SET_NULL)
+    player_ID            = models.ForeignKey(TeamProfile, null=True, on_delete=models.SET_NULL, related_name='player')
+    result_ID            = models.ForeignKey(Result, null=True, on_delete=models.SET_NULL, related_name='result')
     points_Type          = models.CharField(max_length=1)
     academyPoints        = models.IntegerField()
