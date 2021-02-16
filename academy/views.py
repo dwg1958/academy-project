@@ -10,7 +10,7 @@ def homepage(request):
 def aboutpage(request):
 	#textreceived = request.GET['fname']
 	return render(request, 'about.html')#, {'name': textreceived})
-
+'''
 def register(request):
 	if request.method == 'POST':
 		#register data received
@@ -30,7 +30,8 @@ def register(request):
 	else:
 		#show blank form
 		return render(request, 'season/maketeam.html')
-
+'''
+'''
 def login(request):
 	#register data received
 	if request.method == 'POST':
@@ -42,12 +43,13 @@ def login(request):
 			return render(request, 'login.html', {'message':"Sorry, I can't find that user and password.."  })
 	else:
 		return render(request, 'login.html')
-
+'''
+'''
 def logout(request):
 	if request.method == 'POST':
 			auth.logout(request)
 			return redirect('home')
-
+'''
 
 # Reset password################################
 '''

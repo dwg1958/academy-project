@@ -102,7 +102,7 @@ class ScoringEvent(models.Model):
 
 class Result(models.Model):
     scoringEvent_ID      = models.ForeignKey(ScoringEvent, null=True, on_delete=models.SET_NULL, related_name='result')
-    competitor_ID        = models.ForeignKey(Competitor, null=True, on_delete=models.SET_NULL)
+    competitor_ID        = models.ForeignKey(Competitor, null=True, on_delete=models.SET_NULL, related_name='competitor')
     finishPosition       = models.IntegerField()
     startPosition        = models.IntegerField(default = 0)
     lapsComplete         = models.IntegerField(default = 0)
@@ -110,6 +110,8 @@ class Result(models.Model):
     fastestLap           = models.BooleanField(default=False)
     placesGainedLost     = models.IntegerField(default = 0)
 
+    def __str__(self):
+        return  self.scoringEvent_ID.name + " - " + self.competitor_ID.surname + " - P" + str(self.finishPosition)
 
 class AcademyScoringMatrix(models.Model):
     FORMULA = (

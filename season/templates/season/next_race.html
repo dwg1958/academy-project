@@ -1,0 +1,12 @@
+<table id="next_race_table">
+  {% for race in next_races %}
+    <tr>
+      <td>
+         {{ race.name }}
+      </td>
+      <td>
+         {{race.startDateTime}}
+      </td>
+   </tr>
+  {% endfor %}
+</table>

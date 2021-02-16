@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load blog_tags %}
 {% block css %}
 <style>
    a{color:white}
@@ -159,7 +159,7 @@
                            <td>{{ person.twitterHandle }}</td>
                         </tr>
                         <tr>
-                           <td colspan="2"><br />{{ person.short_bio }}</td>
+                           <td colspan="2"><br />{{ person.short_bio|markdown }}</td>
                         </tr>
 
                      </tbody>

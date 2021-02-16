@@ -1,6 +1,6 @@
 
 {% extends 'base.html' %}
-
+{% load blog_tags %}
 {% block content %}
 
 <section class="jumbotron text-center text-white">
@@ -20,14 +20,18 @@
          <div class = "text-left pt-3" style="">
             <p>You are a retired 7-times world champion, sadly deprived of a drive by a skinflint team and ever-decreasing budgets...</p>
             <p>Sitting on your number-2 yacht in Monaco one day with your close band of multi-millionaire friends gathered over
-               an illustrious career, the idea of {%if user.is_authenticated%}{{user.first_name}}’s{%else%}your{%endif%} Driver Academy is born. </p>
-               <p>They offer you a budget of $110 million to bring on the best new talent through the junior formulas.
-                  You set out to recruit the best drivers and team managers you can find and build your academy...</p>
-               </div>
+               an illustrious career, the idea of <b>{%if user.is_authenticated%}{{user.first_name|capfirst}}’s{%else%}your{%endif%}
+                  Driver Academy </b>is born. </p>
+            <p>They offer you a budget of $110 million to bring on the best new talent through the junior formulas.
+               You set out to recruit the best drivers and team managers you can find and build your academy...</p>
+               <br />
+               <h3>Next Scoring Events:</h3>
+               {% show_next_race 3 %}
             </div>
-            <div class="col">
-               <!--spacer -->
-            </div>
+         </div>
+         <div class="col">
+            <!--spacer -->
+         </div>
          </div>
          <br/><br/><br/><br/>
          <!-- LOG IN AND REGISTRATION BUTTONS -->
@@ -40,27 +44,26 @@
                      <br /><br /><br /><br />
                   </div>
                </div>
-               <div class="col-4 ">
-                  <div class="d-grid gap-2 d-md-block col-4 mx-auto">
-                     <a class="btn btn-danger text-center" href="{% url 'maketeam'%}" role="button">JOIN</a>
-                     <br /><br /><br /><br />
-                  </div>
-               </div>
-               <div class="col"><!--spacer --></div>
-            </div>
-         </div>
-         <br />
-         {% if message %}
-         <center><h5 style="color:green">{{ message }}</h5></center>
-         {% endif %}
+            <div class="col-4 ">
+         <div class="d-grid gap-2 d-md-block col-4 mx-auto">
+         <a class="btn btn-danger text-center" href="{% url 'maketeam'%}" role="button">JOIN</a>
+         <br /><br /><br /><br />
       </div>
    </div>
+   <div class="col"><!--spacer --></div>
+   </div>
 </div>
+<br />
+{% if message %}
+   <center><h5 style="color:green">{{ message }}</h5></center>
+{% endif %}
+</div>
+
 {% endblock %}
 
-<!---------------------- FOOTER BLOCK  ------------------->
-{% block footer %}
+   <!---------------------- FOOTER BLOCK  ------------------->
+   {% block footer %}
    <div class="container">
-      <h1> <center> Work in Progress! </center></h1>
+
    </div>
-{% endblock %}
+   {% endblock %}

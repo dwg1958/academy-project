@@ -10,14 +10,15 @@
 
 
 {% block content %}
-<h1>Register</h1>
+
 
 
 {% if message %}
    <center><h3 style="color:green">{{ message }}</h3></center>
 {% endif %}
 
-
+<!--
+<h1>Register</h1>
 <form action = "{% url 'register' %}" method="POST" accept-charset="utf-8" class = "text-center pt-0">
    {% csrf_token %}
    <br />
@@ -75,7 +76,7 @@
    <br><br><input type="submit" value="Submit" class = "center">
    <br /><br /><br />
 </form>
-
+-->
 
 <h1> Make my Team </h1>
 <br />
