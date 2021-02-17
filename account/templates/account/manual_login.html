@@ -1,0 +1,29 @@
+
+<!-- Login.html - Log in using Django auth system -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<br />
+<center><h1> New Login with Auth</h1></center>
+<br />
+<br />
+<br />
+<br />
+{% if message %}
+   <center><h5 style="color:{{ messagecolour }}">{{ message }}</h5></center>
+{% endif %}
+<div class="d-flex align-items-center justify-content-center" style="height: 450px">
+   <form method="post">
+      {% csrf_token %}
+      <table>
+         {{ form.as_table }}
+      </table>
+       <p><center><input type="submit" value="Log in"></center></p>
+  </form>
+</div>
+<br />
+<br />
+
+{% endblock %}

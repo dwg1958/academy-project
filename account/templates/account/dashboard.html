@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+<!---- TITLE --------->
+{% block title%}
+Dashboard
+{% endblock %}
+
+<!---- STYLE --------->
+{% block css %}
+<style>
+   p{
+      font-size: 1.2rem;
+   }
+</style>
+{% endblock %}
+
+<!---- BODY CONTENT --------->
+{% block content %}
+<div style = "padding: 10% 0px 15% 15%;">
+   <dl class="row">
+     <dt class="col-sm-2">
+        <img src="{{ user.team.teamLogo.url }}" width="150" height="150" class="d-inline-block align-center" alt="" loading="lazy">
+     </dt>
+     <dd class="col-sm-9">
+        <h1 style = "padding: 5% 0% 0% 0%;">{{user.team.teamName}}</h1>
+        <h3>{{user.first_name}} {{user.last_name}}</h3>
+     </dd>
+   </dl>
+
+
+
+   <br />
+   <p>email: {{ user.email }} - <a href=" {% url 'password_change' %}">Change Password</a> </p>
+
+
+
+
+   <p></p>
+</div>
+{% endblock %}

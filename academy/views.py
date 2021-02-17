@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 
 def homepage(request):
-	return render(request, 'homepage.html')
+	return render(request, 'homepage.html', {'section': 'home'})
 
 def aboutpage(request):
 	#textreceived = request.GET['fname']

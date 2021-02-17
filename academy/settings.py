@@ -121,8 +121,15 @@ USE_L10N = True
 
 USE_TZ = True
 
+#Logins
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+
+
 #FOR EMAIL TESTING
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#Live system connected to GMail
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'gp@gpgrandstand.com'
 EMAIL_HOST_PASSWORD = 'mM3rce>Yzdbu'

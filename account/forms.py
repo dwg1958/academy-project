@@ -7,3 +7,8 @@ class EmailPostForm(forms.Form):
     subject    = forms.CharField(max_length=25)
     to      = forms.EmailField()
     message = forms.CharField(required=True, widget=forms.Textarea)
+
+## Login Form ####################
+class LoginForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)

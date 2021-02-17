@@ -11,7 +11,7 @@
    <meta name="author" content="">
 
 
-   <title>GPG Academy</title>
+   <title>GPG Academy | {% block title %}{% endblock%}</title>
 
    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
    <!-- Load Bootstrap-->
@@ -35,19 +35,21 @@
 
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                <ul class="navbar-nav ml-auto">
-                  <li class="nav-item">
+                  <li class="nav-item {% if section == "home" %}selected{% endif %}">
                      <a class="nav-link" href="{% url 'home' %}" style="margin-left: 18px; font-size: 1.2rem;">Home</a>
                   </li>
+                  {% if user.is_authenticated %}
                   <li class="nav-item dropdown">
                      <a class="nav-link dropdown-toggle" href="#" style="margin-left: 18px; font-size: 1.2rem;" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         My Team
                      </a>
                      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">My Team</a>
+                        <a class="dropdown-item" href="{% url 'dashboard' %}">My Team</a>
                         <a class="dropdown-item" href="#">My Results</a>
                         <a class="dropdown-item" href="#">League Table</a>
                      </div>
                   </li>
+                  {% endif %}
                   <li class="nav-item dropdown">
                      <a class="nav-link dropdown-toggle" href="#" style="margin-left: 18px; font-size: 1.2rem;" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Competitors
@@ -68,12 +70,14 @@
                         <a class="dropdown-item" href="#">Results</a>
                      </div>
                   </li>
+
+                 {% if user.is_authenticated %}
                  <li class="nav-item dropdown">
                      <a class="nav-link dropdown-toggle" href="#" style="margin-left: 18px; font-size: 1.2rem;" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Settings
                      </a>
                      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Change my Password</a>
+                        <a class="dropdown-item" href="{% url 'dashboard' %}">My Account</a>
                         <a class="dropdown-item" href="javascript:{document.getElementById('logout').submit()}" onclick="">Logout</a>
                             <form id="logout" method="POST" action="{% url 'logout' %}">
                               {% csrf_token %}
@@ -82,10 +86,11 @@
                         </a>
                      </div>
                   </li>
+                  {% endif %}
 
                   {% if request.user.is_staff %}
                   <li class="nav-item dropdown">
-                     <a class="nav-link dropdown-toggle" href="#" style="margin-left: 18px; font-size: 1.2rem;" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     <a class="nav-link dropdown-toggle selected" href="#" style="margin-left: 18px; font-size: 1.2rem;" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Admin
                      </a>
                      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -106,21 +111,32 @@
                            <div style="font-size:1.3rem">{{user.team.teamName}}</div>
                            <div style="font-size:0.8rem">{{user.first_name}} {{user.last_name}}</div>
                         </td><td style="padding-left:10px;">
-                           <img src="{% static 'academy/webPageImages/Avatar.jpg' %}" width="45" height="45" class="d-inline-block align-top" alt="" loading="lazy">
+                           <img src="{{ user.team.teamLogo.url }}" width="45" height="45" class="d-inline-block align-top" alt="" loading="lazy">
                         </td>
                      </tr>
                   </table>
                </div>
             {% else %}
-               <a class="navbar-brand" href="{% url 'login' %}">
-                  <img src="{% static 'academy/webPageImages/blankUser.jpg' %}" width="40" height="40" class="d-inline-block align-top" alt="" loading="lazy">
-               </a>
+
+               <div class="navbar-brand" style="text-align: right;">
+                  <table>
+                     <tr>
+                        <td>
+                           <a href="{% url 'login'%}"> Log in</a> or <a href="{% url 'register'%}">Join</a>
+                        </td><td style="padding-left:10px;">
+                           <img src="{% static 'academy/webPageImages/blankUser.jpg' %}" width="40" height="40" class="d-inline-block align-top" alt="" loading="lazy">
+                        </td>
+                     </tr>
+                  </table>
+
+               </div>
             {% endif %}
-
-
          </nav>
       </header>
 <!---------------------- CONTENT BLOCK  ------------------->
+         {% block page_title %}
+         {% endblock %}
+
       {% block content %}
       {% endblock %}
 <!---------------------- CONTENT BLOCK  ------------------->
@@ -132,6 +148,7 @@
 
          <br />
          <h3> <center> {% teamCountTag %} Teams active</center></h3>
+         >>>{{ section }}<<<
          <p class="container text-center text-light" >🅒 GPGrandstand {% now "Y" %}</p>
 <!---------------------- FOOTER BLOCK  ------------------->
          {% block footer %}
