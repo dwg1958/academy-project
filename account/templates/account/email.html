@@ -2,23 +2,37 @@
 
 {% extends 'base.html' %}
 
+<!--- TITLE -------->
+{% block title %}
+Emailer
+{% endblock %}
+
+<!--- CSS ---------->
+{% block css %}
+<style>
+   p{
+      font-size:1.2rem;
+   }
+</style>
+{% endblock %}
+
+<!--- BODY CONTENT -------->
 {% block content %}
 
 <br />
-<center><h1> Email form</h1></center>
-
-<div class="d-flex align-items-center justify-content-center" style="height: 450px">
+<div style = "padding: 10% 0px 15% 15%;">
 
 {% if sentOK %}
 
    <h1>E-mail successfully sent</h1>
+   <br />
    <p>
       "{{ subject }}" was successfully sent to {{ form.cleaned_data.to }}.
    </p>
-
+</div>
 {% else %}
 
-
+   <h1> GPG Emailer</h1>
    <br />
    <form method="post">
       {% csrf_token %}

@@ -39,14 +39,10 @@
                <br /><br /><br />
 
                <!--- Future Events Calendar Tag-->
-               <dl class="row">
-                  <dt class="col-sm-1"></dt>
-                  <dt class="col-sm-3" style="font-size:18px">Next Scoring Events:</dt>
-                  <dd class="col-sm-7">
-                     <p> </p>
-                     <p>{% show_next_race 3 %}</p>
-                  </dd>
-               </dl>
+               <div style = "padding: 0% 0px 3% 5%;">
+                  <h1 style = "padding: 0% 0% 0% 0%;">Next Scoring Events:</h1>
+                  <p>{% show_next_race 3 %}</p>
+               </div>
 
 
             </div>
@@ -90,6 +86,6 @@
 <!---------------------- FOOTER BLOCK  ------------------->
 {% block footer %}
 <div class="container">
-   
+
 </div>
 {% endblock %}

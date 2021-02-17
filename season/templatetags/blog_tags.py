@@ -17,7 +17,7 @@ def total_teams():
 def show_next_race(count=5):
     next_races = ScoringEvent.objects.all().order_by('startDateTime')[:count]
     for race in next_races:
-        race.name = race.name.ljust(30, ' ')
+        race.name = race.name#.ljust(30, ' ')
     return {'next_races': next_races}
 
 
