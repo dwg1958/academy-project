@@ -11,6 +11,10 @@ Log in
    p{
       font-size:1.2rem;
    }
+   td, th{
+      padding:0px 10px 15px 15px;
+      vertical-align: middle;
+   }
 </style>
 {% endblock %}
 
@@ -30,10 +34,12 @@ Log in
    <br />
    <div class="login-form">
       <form action="{% url 'login' %}" method="post">
-         {{ form.as_p }}
+         <table>
+            {{ form.as_table }}
+         </table>
          {% csrf_token %}
          <input type="hidden" name="next" value="{{ next }}" />
-         <p><input type="submit" value="Log-in"></p>
+         <p style = "padding: 3% 0px 0% 15%;"><input type="submit" value="Log-in"></p>
       </form>
       <p><a href="{% url "password_reset" %}">Forgotten your password?</a></p>
 

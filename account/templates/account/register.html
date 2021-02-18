@@ -1,0 +1,44 @@
+
+{% extends "base.html" %}
+
+<!--- TITLE -------->
+{% block title %}
+Create an account
+{% endblock %}
+
+<!--- CSS ---------->
+{% block css %}
+<style>
+   p{
+      font-size:1.2rem;
+   }
+   td, th{
+      padding:0px 10px 15px 15px;
+      vertical-align: middle;
+   }
+</style>
+{% endblock %}
+
+<!--- BODY CONTENT -------->
+{% block content %}
+
+<div style = "padding: 3% 0px 5% 15%;">
+   <h1 style = "padding: 5% 0% 5% 0%;">Create an account</h1>
+   <br />
+   <p>Please, sign up using the following form:</p>
+   <br />
+   <form method="post">
+      {% csrf_token %}
+      <table>
+         {{ user_form.as_table }}
+      </table>
+      <br />
+      <p style = "padding: 3% 0px 0% 15%;"><input type="submit" value="Create my account"></p>
+   </form>
+</div>
+{% endblock %}
+
+
+
+
+{

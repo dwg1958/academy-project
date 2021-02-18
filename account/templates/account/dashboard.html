@@ -18,23 +18,22 @@ Dashboard
 {% block content %}
 <div style = "padding: 10% 0px 15% 15%;">
    <dl class="row">
-     <dt class="col-sm-2">
-        <img src="{{ user.team.teamLogo.url }}" width="150" height="150" class="d-inline-block align-center" alt="" loading="lazy">
+     <dt class="col-sm-3">
+        <img src="{{ user.profile.photo.url }}" height="150" class="d-inline-block align-center" alt="" loading="lazy">
      </dt>
      <dd class="col-sm-9">
-        <h1 style = "padding: 5% 0% 0% 0%;">{{user.team.teamName}}</h1>
-        <h3>{{user.first_name}} {{user.last_name}}</h3>
+        <h1 style = "padding: 5% 0% 0% 0%;">{{user.first_name}} {{user.last_name}}</h1>
+        <h3>{{user.team.teamName}}</h3>
      </dd>
    </dl>
-
-
-
    <br />
-   <p>email: {{ user.email }} - <a href=" {% url 'password_change' %}">Change Password</a> </p>
-
-
-
-
-   <p></p>
+   <p><b>email:</b> {{ user.email }}
+   <p><b>Birthdate:</b> {{ user.profile.date_of_birth}}
+   <br /><br />
+   <p>
+      <a href="{% url "edit" %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Edit my Profile</a>
+      <a href="{% url 'password_change' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Change Password</a>
+   </p>
+   <p> </p>
 </div>
 {% endblock %}
