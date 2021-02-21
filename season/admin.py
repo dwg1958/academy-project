@@ -8,6 +8,7 @@ from .models import ScoringEvent
 from .models import AcademyScoringMatrix
 from .models import ScoringMatches
 from .models import TeamProfile
+from .models import TeamMember
 
 #Show record details in admin table
 #https://www.geeksforgeeks.org/customize-django-admin-interface/
@@ -15,6 +16,14 @@ class TeamProfileAdmin(admin.ModelAdmin):
     list_display  = ( 'user_ID', 'teamName', 'dateStarted')#, 'is_active')
     search_fields = ('teamName',)
 
+    def active(self, obj):
+        return obj.is_active == 1
+
+    active.boolean = True
+
+class TeamMemberAdmin(admin.ModelAdmin):
+    list_display  = ( 'team_ID', 'competitor_ID', 'position', 'dateSelected')
+    
     def active(self, obj):
         return obj.is_active == 1
 
@@ -41,6 +50,7 @@ class EventAdmin(admin.ModelAdmin):
 
 class ResultAdmin(admin.ModelAdmin):
     list_display  = ('id','scoringEvent_ID', 'competitor_ID', 'finishPosition', 'startPosition', 'fastestLap')
+    search_fields = ('scoringEvent_ID', 'finishPosition',)
 
     def active(self, obj):
         return obj.is_active == 1
@@ -48,7 +58,8 @@ class ResultAdmin(admin.ModelAdmin):
     active.boolean = True
 
 class ScoringEventAdmin(admin.ModelAdmin):
-    list_display = ('id','event_ID', 'name', 'formula',  'eventType')
+    list_display = ('id','event_ID', 'name', 'formula',  'eventType', 'startDateTime')
+    list_filter   = ('formula',)
 
     def active(self, obj):
         return obj.is_active == 1
@@ -87,9 +98,10 @@ class ScoringMatchesAdmin(admin.ModelAdmin):
 
 # Tell admin site to show it for editing
 admin.site.register(Competitor, CompetitorAdmin)
+admin.site.register(TeamProfile, TeamProfileAdmin)
+admin.site.register(TeamMember, TeamMemberAdmin)
 admin.site.register(Event, EventAdmin)
-admin.site.register(Result, ResultAdmin)
 admin.site.register(ScoringEvent, ScoringEventAdmin)
+admin.site.register(Result, ResultAdmin)
 admin.site.register(AcademyScoringMatrix, AcademyScoringMatrixAdmin)
 admin.site.register(ScoringMatches, ScoringMatchesAdmin)
-admin.site.register(TeamProfile, TeamProfileAdmin)

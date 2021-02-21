@@ -44,7 +44,7 @@
                         My Team
                      </a>
                      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{% url 'maketeam' %}">My Team</a>
+                        <a class="dropdown-item" href="{% url 'teamview' %}">My Team</a>
                         <a class="dropdown-item" href="#">My Results</a>
                         <a class="dropdown-item" href="#">League Table</a>
                      </div>
@@ -66,8 +66,9 @@
                         Events
                      </a>
                      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Calendar</a>
-                        <a class="dropdown-item" href="#">Results</a>
+                        <a class="dropdown-item" href="{% url 'showevents'        %}">Calendar</a>
+                        <a class="dropdown-item" href="{% url 'showscoringevents' %}">Weekend Events</a>
+                        <a class="dropdown-item" href="{% url 'showresults'       %}">Results</a>
                      </div>
                   </li>
 
@@ -150,7 +151,7 @@
       <main role="main">
       </main>
    </body>
-   <footer class="text-muted  bg-dark">
+   <footer id="footerBox" class="text-muted  bg-dark">
       <div class="container">
 
          <br />

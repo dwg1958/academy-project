@@ -1,6 +1,6 @@
 
 from django import forms
-from .models import Event
+from .models import Event, TeamProfile
 
 class EventForm(forms.ModelForm):
     class Meta:
@@ -9,3 +9,8 @@ class EventForm(forms.ModelForm):
         date          = forms.DateTimeField(input_formats=['%d/%m/%Y'])
         startDateTime = forms.DateTimeField(input_formats=['%d/%m/%Y %H:%M'])
         endDateTime   = forms.DateTimeField(input_formats=['%d/%m/%Y %H:%M'])
+
+class TeamProfileForm(forms.ModelForm):
+    class Meta:
+        model = TeamProfile
+        fields = ('teamName', 'teamLogo')

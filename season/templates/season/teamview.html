@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+
+<!---- TITLE --------->
+{% block title%}
+Team :{{ user.team.teamName }}
+{% endblock %}
+
+<!---- STYLE --------->
+{% block css %}
+<style>
+   p{
+      font-size: 1.2rem;
+   }
+   dl{
+      #border: 1px solid red;
+   }
+
+   dt {
+     display:table-cell;
+     vertical-align:middle;
+     width: 30%;
+     padding-right:5px;
+   }
+   dd {
+     display:table-cell;
+     vertical-align:middle;
+     width: 70%;
+     margin: 0;
+   }
+   img{
+
+      vertical-align:middle;
+   }
+   .formula{
+      font-size:1.2rem;
+      font-weight:bold;
+      color: white;
+   }
+   .title{
+      font-size:0.7rem;
+      margin:0px 5px 0px 15px;
+      color: white;
+
+   }
+   .name{
+      font-size:1.1rem;
+      margin:5px 5px 0px 15px;
+      font-weight: 700;
+      color: white;
+   }
+   .teamdiv
+   {
+
+      border-style: solid;
+      border-width:1px;
+      border-color: black;
+      padding: 10px;
+      background-color: red;
+   }
+   .container-fluid img{
+      height: 80px;
+      width: 80px;
+      margin:5px 5px 0px 15px;
+   }
+</style>
+{% endblock %}
+
+<!---- BODY CONTENT --------->
+{% block content %}
+<div style = "padding: 5% 5% 10% 5%;">
+   <dl class="row">
+     <dt class=" toppic col-sm-2">
+        <img src="{{ user.team.teamLogo.url }}" width="150" class="d-inline-block" alt="" loading="lazy">
+     </dt>
+     <dd class="col-sm-5">
+        <h1 style = "padding: 0% 0% 0% 0%;">{{user.team.teamName}}</h1>
+        <h3>{{user.first_name}} {{user.last_name}}</h3>
+     </dd>
+   </dl>
+   <br />
+   <p>This is my team..</p>
+   <br /><br />
+   <!------------------ TEAM BLOCKS ------------------------>
+   <div class="container-fluid">
+     <div class="row">
+       <!--- Formula 1 --->
+       <div class="col-sm-3 teamdiv" >
+          <p class = "formula">Formula 1</p>
+          <table>
+             <tr>
+                <td>
+                  <img src="{{ user.team.p1_1.mugshot.url}}" />
+               </td>
+               <td>
+                  <p class = "name" >{{ user.team.p1_1}}</p>
+                  <p class = "title" >Lead Driver</p>
+               </td>
+            </tr>
+            <tr>
+               <td>
+                  <img src="{{ user.team.p1_2.mugshot.url}}" />
+               </td>
+               <td>
+                  <p class = "name" >{{ user.team.p1_2}}</p>
+                  <p class = "title" >Second Driver</p>
+               </td>
+            </tr>
+            <tr>
+               <td>
+                  <img src="{{ user.team.p1_m.mugshot.url}}" />
+               </td>
+               <td>
+                  <p class = "name" >{{ user.team.p1_m}}</p>
+                  <p class = "title" >Manager</p>
+               </td>
+            </tr>
+         </table>
+         <br/>
+       </div>
+       <!--- Formula 2 --->
+       <div class="col-sm-3 teamdiv" >
+          <p class = "formula">Formula 2</p>
+          <table>
+             <tr>
+                <td>
+                  <img src="{{ user.team.p2_1.mugshot.url}}" />
+               </td>
+               <td>
+                  <p class = "name" >{{ user.team.p2_1}}</p>
+                  <p class = "title" >Lead Driver</p>
+               </td>
+            </tr>
+            <tr>
+               <td>
+                  <img src="{{ user.team.p2_2.mugshot.url}}" />
+               </td>
+               <td>
+                  <p class = "name" >{{ user.team.p2_2}}</p>
+                  <p class = "title" >Second Driver</p>
+               </td>
+            </tr>
+            <tr>
+               <td>
+                  <img src="{{ user.team.p2_m.mugshot.url}}" />
+               </td>
+               <td>
+                  <p class = "name" >{{ user.team.p2_m}}</p>
+                  <p class = "title" >Manager</p>
+               </td>
+            </tr>
+         </table>
+       </div>
+       <!--- Formula 3 --->
+       <div class="col-sm-3 teamdiv" >
+          <p class = "formula">Formula 3</p>
+          <table>
+             <tr>
+                <td>
+                  <img src="{{ user.team.p3_1.mugshot.url}}" />
+               </td>
+               <td>
+                  <p class = "name" >{{ user.team.p3_1}}</p>
+                  <p class = "title" >Lead Driver</p>
+               </td>
+            </tr>
+            <tr>
+               <td>
+                  <img src="{{ user.team.p3_2.mugshot.url}}" />
+               </td>
+               <td>
+                  <p class = "name" >{{ user.team.p3_2}}</p>
+                  <p class = "title" >Second Driver</p>
+               </td>
+            </tr>
+            <tr>
+               <td>
+                  <img src="{{ user.team.p3_m.mugshot.url}}" />
+               </td>
+               <td>
+                  <p class = "name" >{{ user.team.p3_m}}</p>
+                  <p class = "title" >Manager</p>
+               </td>
+            </tr>
+         </table>
+       </div>
+       <!--- W Series--->
+       <div class="col-sm-3 teamdiv" >
+          <p class = "formula">W Series</p>
+          <table>
+             <tr>
+                <td>
+                  <img src="{{ user.team.pw_1.mugshot.url}}" />
+               </td>
+               <td>
+                  <p class = "name" >{{ user.team.pw_1}}</p>
+                  <p class = "title" >Lead Driver</p>
+               </td>
+            </tr>
+            <tr>
+               <td>
+                  <img src="{{ user.team.pw_2.mugshot.url}}" />
+               </td>
+               <td>
+                  <p class = "name" >{{ user.team.pw_2}}</p>
+                  <p class = "title" >Second Driver</p>
+               </td>
+            </tr>
+            <tr>
+               <td>
+                  <img src="{{ user.team.pw_m.mugshot.url}}" />
+               </td>
+               <td>
+                  <p class = "name" >{{ user.team.pw_m}}</p>
+                  <p class = "title" >Manager</p>
+               </td>
+            </tr>
+         </table>
+       </div>
+     </div>
+   </div>
+
+
+   <!------------------ TEAM BLOCKS ------------------------>
+   <br /><br />
+   <p>
+      <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Edit</a>
+
+   </p>
+   <p> </p>
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!--- TITLE -------->
+{% block title %}
+Results
+{% endblock %}
+
+{% block css%}
+<style>
+   td{
+      padding-top:10px;
+      padding-left:20px;
+   }
+   .bigtable td, .bigtable th{
+      border: 1px solid black;
+      border-collapse: collapse;
+      width: 100%
+      max-width: 15%;
+      min-width: 15%;
+      padding: 5px;
+   }
+   p, td{
+      font-size:1.2rem;
+   }
+</style>
+<link href="{% static '/academy/css/datetimepicker.css' %}" rel="stylesheet">
+{% endblock %}
+
+<!--------------------------------------------------------------->
+{% block content %}
+
+<div style = "padding: 2% 0px 2% 15%;">
+   <h1 style = "padding: 1% 0% 0% 0%;"> Results </h1>
+   <br />
+   <div>
+         <table class="bigtable">
+            <tr>
+               <th> Name </th>
+               <th> Date / Time </th>
+               <th> Finish Position </th>
+               <th> Formula Points </th>
+            </tr>
+            {% for result in resultset%}
+            <tr>
+               <td> {{result.scoringEvent_ID}} </td>
+               <td> {{result.competitor_ID}} </td>
+               <td> {{result.finishPosition}} </td>
+               <td> {{result.formulaPoints}} </td>
+            </tr>
+            {% endfor %}
+         </table>
+      </div>
+     <br />
+     <center><input type="button" onclick="alert('Hello World!')" value="Click Me!"></center>
+     <br />
+  </div>
+</div>
+
+{% endblock %}

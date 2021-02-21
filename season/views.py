@@ -1,15 +1,35 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, get_list_or_404
-from .models import Competitor, Event
-from .forms import EventForm
+from .models import Competitor, Event, ScoringEvent, Result
+from django.contrib.auth.decorators import login_required
+from .forms import EventForm, TeamProfileForm
 
 # Create your views here.
+
+############################### GUEST PAGES ###################################################
+
+## Show Events
+def showevents(request):
+    # Fill lower table with all extant data
+    allevents = Event.objects.all()
+    return render(request, 'season/showevents.html',{'allevents':allevents})
+
+def showscoringevents(request):
+    allevents = ScoringEvent.objects.all()
+    return render(request, 'season/showscoringevents.html', {'allevents': allevents})
+
+def showresults(request):
+    resultset = Result.objects.order_by('scoringEvent_ID', 'finishPosition')
+
+    return render(request, 'season/showresults.html', {'resultset': resultset})
+
 def tables(request):
 #	textreceived = request.GET['fname']
     competitors = Competitor.objects
     return render(request, 'season/tables.html', {'competitors': competitors})
 
-####################################
+
+#### SHOW COMPETITOR TABLES #######
 def tableformula(request, formula):
 
     # Go find drivers in this formula only
@@ -38,15 +58,26 @@ def tableformula(request, formula):
 
     return render(request, 'season/tables.html', {'personality':pers_data, 'competitors': competitors,'managers':managers,'formulaname':formulaname, 'formula':formula, 'showPersonal':showPersonal})
 
-###################################
-def maketeam(request):
-#	textreceived = request.GET['fname']
-#    competitors = Competitor.objects
-    return render(request, 'season/maketeam.html') #, {'competitors': competitors})
 
-###################################
+
+
+############################### USER PAGES ###################################################
+
+@login_required
+##### SHOW MY TEAM ###################
+def teamview(request):
+    return render(request, 'season/teamview.html') #, {'competitors': competitors})
+
+
+
+@login_required
+### EDIT MY TEAM #@@@@@@@@@#########
 def teampicker(request):
     return render(request, 'season/teampicker.html')
+
+
+
+############################### ADMIN PAGES ###################################################
 
 ####################################
 def addcompetitors(request):

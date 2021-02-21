@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!--- TITLE -------->
+{% block title %}
+Events
+{% endblock %}
+
+{% block css%}
+<style>
+   td{
+      padding-top:10px;
+      padding-left:20px;
+   }
+   .bigtable td, .bigtable th{
+      border: 1px solid black;
+      border-collapse: collapse;
+      width: 100%
+      max-width: 15%;
+      min-width: 15%;
+      padding: 5px;
+   }
+   p, td{
+      font-size:1.2rem;
+   }
+</style>
+<link href="{% static '/academy/css/datetimepicker.css' %}" rel="stylesheet">
+{% endblock %}
+
+<!--------------------------------------------------------------->
+{% block content %}
+
+<div style = "padding: 2% 0px 2% 15%;">
+   <h1 style = "padding: 1% 0% 0% 0%;"> 2020 Events </h1>
+   <br />
+   <div>
+         <table class="bigtable">
+            <tr>
+               <th> Name </th>
+               <th> Date / Time </th>
+               <th> Formula </th>
+               <th> Type </th>
+            </tr>
+            {% for event in allevents%}
+            <tr>
+               <td> {{event.name}} </td>
+               <td> {{event.startDateTime}} </td>
+               <td> {{event.formula}} </td>
+               <td> {{event.get_eventType}} </td>
+            </tr>
+            {% endfor %}
+         </table>
+      </div>
+     <br />
+     <center><input type="button" onclick="alert('Hello World!')" value="Click Me!"></center>
+     <br />
+  </div>
+</div>
+
+{% endblock %}
