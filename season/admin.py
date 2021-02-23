@@ -13,7 +13,7 @@ from .models import TeamMember
 #Show record details in admin table
 #https://www.geeksforgeeks.org/customize-django-admin-interface/
 class TeamProfileAdmin(admin.ModelAdmin):
-    list_display  = ( 'user_ID', 'teamName', 'dateStarted')#, 'is_active')
+    list_display  = ( 'id','user_ID', 'teamName', 'p1_1','p1_2','dateStarted')#, 'is_active')
     search_fields = ('teamName',)
 
     def active(self, obj):
@@ -22,8 +22,8 @@ class TeamProfileAdmin(admin.ModelAdmin):
     active.boolean = True
 
 class TeamMemberAdmin(admin.ModelAdmin):
-    list_display  = ( 'team_ID', 'competitor_ID', 'position', 'dateSelected')
-    
+    list_display  = ( 'id','team_ID', 'competitor_ID', 'position', 'dateSelected')
+
     def active(self, obj):
         return obj.is_active == 1
 

@@ -11,22 +11,6 @@ Team :{{ user.team.teamName }}
    p{
       font-size: 1.2rem;
    }
-   dl{
-      #border: 1px solid red;
-   }
-
-   dt {
-     display:table-cell;
-     vertical-align:middle;
-     width: 30%;
-     padding-right:5px;
-   }
-   dd {
-     display:table-cell;
-     vertical-align:middle;
-     width: 70%;
-     margin: 0;
-   }
    img{
 
       vertical-align:middle;
@@ -50,10 +34,9 @@ Team :{{ user.team.teamName }}
    }
    .teamdiv
    {
-
       border-style: solid;
-      border-width:1px;
-      border-color: black;
+      border-width:3px;
+      border-color: white;
       padding: 10px;
       background-color: red;
    }
@@ -62,6 +45,12 @@ Team :{{ user.team.teamName }}
       width: 80px;
       margin:5px 5px 0px 15px;
    }
+   .btn{
+      float: right;
+   }
+   .radio-selector label{
+      font-size:1.3rem;
+      padding-left: 8px;
 </style>
 {% endblock %}
 
@@ -78,154 +67,356 @@ Team :{{ user.team.teamName }}
      </dd>
    </dl>
    <br />
-   <p>This is my team..</p>
+
+   <div class="tabs-menu">
+       <ul class="nav nav-pills">
+           <li class="nav-item">
+               <a href="#academy" class="nav-link active" data-toggle="tab">Academy</a>
+           </li>
+           <li class="nav-item">
+               <a href="#F1" class="nav-link" data-toggle="tab">Formula 1</a>
+           </li>
+           <li class="nav-item">
+               <a href="#F2" class="nav-link" data-toggle="tab">Formula 2</a>
+           </li>
+           <li class="nav-item">
+               <a href="#F3" class="nav-link" data-toggle="tab">Formula 3</a>
+           </li>
+           <li class="nav-item">
+               <a href="#WS" class="nav-link" data-toggle="tab">W Series</a>
+           </li>
+       </ul>
+       <hr/>
+       <br/>
+       <div class="tab-content">
+          <div class="tab-pane fade show active" id="academy">
+               <!------------------ TEAM DIVS ------------------------>
+               <div class="container-fluid">
+                 <div class="row">
+                   <!--- Formula 1 --->
+                   <div class="col-sm-3 teamdiv" >
+                      <p class = "formula">Formula 1</p>
+                      <table>
+                         <tr>
+                            <td>
+                              <img src="{{ user.team.p1_1.mugshot.url}}" />
+                           </td>
+                           <td>
+                              <p class = "name" >{{ user.team.p1_1}}</p>
+                              <p class = "title" >Lead Driver</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <img src="{{ user.team.p1_2.mugshot.url}}" />
+                           </td>
+                           <td>
+                              <p class = "name" >{{ user.team.p1_2}}</p>
+                              <p class = "title" >Second Driver</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <img src="{{ user.team.p1_m.mugshot.url}}" />
+                           </td>
+                           <td>
+                              <p class = "name" >{{ user.team.p1_m}}</p>
+                              <p class = "title" >Manager</p>
+                           </td>
+                        </tr>
+                     </table>
+                     <a href="#" class="btn btn-primary btn-active" role="button" aria-pressed="true">Edit</a>
+                     <br/>
+                   </div>
+                   <!--- Formula 2 --->
+                   <div class="col-sm-3 teamdiv" >
+                      <p class = "formula">Formula 2</p>
+                      <table>
+                         <tr>
+                            <td>
+                              <img src="{{ user.team.p2_1.mugshot.url}}" />
+                           </td>
+                           <td>
+                              <p class = "name" >{{ user.team.p2_1}}</p>
+                              <p class = "title" >Lead Driver</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <img src="{{ user.team.p2_2.mugshot.url}}" />
+                           </td>
+                           <td>
+                              <p class = "name" >{{ user.team.p2_2}}</p>
+                              <p class = "title" >Second Driver</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <img src="{{ user.team.p2_m.mugshot.url}}" />
+                           </td>
+                           <td>
+                              <p class = "name" >{{ user.team.p2_m}}</p>
+                              <p class = "title" >Manager</p>
+                           </td>
+                        </tr>
+                     </table>
+                     <a href="#" class="btn btn-primary btn-active" role="button" aria-pressed="true">Edit</a>
+                   </div>
+                   <!--- Formula 3 --->
+                   <div class="col-sm-3 teamdiv" >
+                      <p class = "formula">Formula 3</p>
+                      <table>
+                         <tr>
+                            <td>
+                              <img src="{{ user.team.p3_1.mugshot.url}}" />
+                           </td>
+                           <td>
+                              <p class = "name" >{{ user.team.p3_1}}</p>
+                              <p class = "title" >Lead Driver</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <img src="{{ user.team.p3_2.mugshot.url}}" />
+                           </td>
+                           <td>
+                              <p class = "name" >{{ user.team.p3_2}}</p>
+                              <p class = "title" >Second Driver</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <img src="{{ user.team.p3_m.mugshot.url}}" />
+                           </td>
+                           <td>
+                              <p class = "name" >{{ user.team.p3_m}}</p>
+                              <p class = "title" >Manager</p>
+                           </td>
+                        </tr>
+                     </table>
+                     <a href="#" class="btn btn-primary btn-active" role="button" aria-pressed="true">Edit</a>
+                   </div>
+                   <!--- W Series--->
+                   <div class="col-sm-3 teamdiv" >
+                      <p class = "formula">W Series</p>
+                      <table>
+                         <tr>
+                            <td>
+                              <img src="{{ user.team.pw_1.mugshot.url}}" />
+                           </td>
+                           <td>
+                              <p class = "name" >{{ user.team.pw_1}}</p>
+                              <p class = "title" >Lead Driver</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <img src="{{ user.team.pw_2.mugshot.url}}" />
+                           </td>
+                           <td>
+                              <p class = "name" >{{ user.team.pw_2}}</p>
+                              <p class = "title" >Second Driver</p>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <img src="{{ user.team.pw_m.mugshot.url}}" />
+                           </td>
+                           <td>
+                              <p class = "name" >{{ user.team.pw_m}}</p>
+                              <p class = "title" >Manager</p>
+                           </td>
+                        </tr>
+                     </table>
+                     <a href="#" class="btn btn-primary btn-active" role="button" aria-pressed="true">Edit</a>
+                   </div>
+                 </div>
+               </div>
+               <!------------------ TEAM DIVS ------------------------>
+            </div>
+
+            <!------------------ F1 Edit DIV ------------------------>
+            <div class="tab-pane fade" id="F1">
+               <form action="{% url 'teamview' %}?tab=F1" method="post">
+                  {% csrf_token %}
+
+                  <div style = "padding: 0% 5% 10% 5%;">
+                     <dl class="row">
+                        <dt class=" DriverSection col-sm-4">
+                           <img src="{{ user.team.p1_1.mugshot.url}}" style="height:150px;"/>
+                           <h4 class="mt-2">{{ user.team.p1_1}}</h4>
+                           <p class="text-right">Lead Driver</p>
+                           <p><b>${{ user.team.p1_1.value}}m </b>(Paid:${{ user.team.p1_1_cost}}m) </p>
+                           <br /><br />
+                           <p><input type="submit" name="submit" value="SWAP TO"></p>
+                           <!-- Form picker -->
+                           <div style="font-size:1.2rem;"></div>
+
+                        </dt>
+                        <dt class=" DriverSection col-sm-4">
+                           <img src="{{ user.team.p1_2.mugshot.url}}" style="height:150px;"/>
+                           <h4 class="mt-2">{{ user.team.p1_2}}</h4>
+                           <p class="text-right">Second Driver</p>
+                           <p><b>${{ user.team.p1_2.value}}m </b>(Paid:${{ user.team.p1_2_cost}}m) </p>
+                           <br /><br />
+                           <p><input type="submit" name="submit" value="SWAP TO"></p>
+                           <!-- Form picker -->
+                           <div style="font-size:1.2rem;"></div>
+                           <!-- Form picker -->
+                        </dt>
+                        <dt class=" DriverSection col-sm-4">
+                           <img src="{{ user.team.p1_m.mugshot.url}}" style="height:150px;"/>
+                           <h4 class="mt-2">{{ user.team.p1_m}}</h4>
+                           <p class="text-right">Manager</p>
+                           <p><b>${{ user.team.p1_m.value}}m </b>(Paid:${{ user.team.p1_m_cost}}m) </p>
+
+                           <br /><br />
+                           <p><input type="submit" name="submit" value="SWAP TO"></p>
+                           <!-- Form picker -->
+                           <div style="font-size:1.2rem;"></div>
+                        </dt>
+                     </dl>
+                  </div>
+               </form>
+            </div>
+            <!------------------ F2 Edit DIV ------------------------>
+            <div class="tab-pane fade" id="F2">
+               <div style = "padding: 0% 5% 10% 5%;">
+                  <dl class="row">
+                     <dt class=" DriverSection col-sm-4">
+                        <img src="{{ user.team.p1_1.mugshot.url}}" style="height:150px;"/>
+                        <h4 class="mt-2">{{ user.team.p1_1}}</h4>
+                        <p class="text-right">Lead Driver</p>
+                        <p><b>${{ user.team.p1_1.value}}m </b>(Paid:${{ user.team.p1_1.value}}m) </p>
+                     </dt>
+                     <dt class=" DriverSection col-sm-4">
+                        <img src="{{ user.team.p1_2.mugshot.url}}" style="height:150px;"/>
+                        <h4 class="mt-2">{{ user.team.p1_2}}</h4>
+                        <p class="text-right">Second Driver</p>
+                        <p><b>${{ user.team.p1_2.value}}m </b>(Paid:${{ user.team.p1_2.value}}m) </p>
+                     </dt>
+                     <dt class=" DriverSection col-sm-4">
+                        <img src="{{ user.team.p1_m.mugshot.url}}" style="height:150px;"/>
+                        <h4 class="mt-2">{{ user.team.p1_m}}</h4>
+                        <p class="text-right">Manager</p>
+                        <p><b>${{ user.team.p1_m.value}}m </b>(Paid:${{ user.team.p1_m.value}}m) </p>
+                     </dt>
+                  </dl>
+               </div>
+            </div>
+            <!------------------ F3 Edit DIV ------------------------>
+            <div class="tab-pane fade" id="F3">
+               <div style = "padding: 0% 5% 10% 5%;">
+                  <dl class="row">
+                     <dt class=" DriverSection col-sm-4">
+                        <img src="{{ user.team.p1_1.mugshot.url}}" style="height:150px;"/>
+                        <h4 class="mt-2">{{ user.team.p1_1}}</h4>
+                        <p class="text-right">Lead Driver</p>
+                        <p><b>${{ user.team.p1_1.value}}m </b>(Paid:${{ user.team.p1_1.value}}m) </p>
+                     </dt>
+                     <dt class=" DriverSection col-sm-4">
+                        <img src="{{ user.team.p1_2.mugshot.url}}" style="height:150px;"/>
+                        <h4 class="mt-2">{{ user.team.p1_2}}</h4>
+                        <p class="text-right">Second Driver</p>
+                        <p><b>${{ user.team.p1_2.value}}m </b>(Paid:${{ user.team.p1_2.value}}m) </p>
+                     </dt>
+                     <dt class=" DriverSection col-sm-4">
+                        <img src="{{ user.team.p1_m.mugshot.url}}" style="height:150px;"/>
+                        <h4 class="mt-2">{{ user.team.p1_m}}</h4>
+                        <p class="text-right">Manager</p>
+                        <p><b>${{ user.team.p1_m.value}}m </b>(Paid:${{ user.team.p1_m.value}}m) </p>
+                     </dt>
+                  </dl>
+               </div>
+            </div>
+            <!------------------ WS Edit DIV ------------------------>
+            <div class="tab-pane fade" id="WS">
+               <div style = "padding: 0% 5% 10% 5%;">
+                  <form action="{% url 'teamview' %}?tab=WS" method="POST" id="F1_form">
+                     {% csrf_token %}
+                     <h2>{{ teamdata.teamName }}</h2>
+                     <h3> Lead Driver : {{teamdata.p1_1}}</h3>
+                     <br /><br /><br />
+                     <div class="radio-selector">
+                        <div class="container-fluid">
+                           <div class="row">
+                              <!--- Formula 1 --->
+                              <div class="col-sm-7" >
+                                 <table class="pickertable">
+                                    <tr><th></th><th>Driver</th><th>Cost</th><th>Points</th><th>Driver 1</th><th>Driver 2</th>
+                                    {% for driver in f1drivers.all %}
+                                    <tr><td>
+                                       <img src="{{driver.mugshot.url}}" height='50px;' class="d-inline-block" alt="" loading="lazy">
+                                    </td><td>
+                                       <label for="{{driver.surname}}" > {{driver.firstname}} {{driver.surname}} </label>
+                                    </td><td style="padding-left:5px;">
+                                       ${{driver.value}}m
+                                    </td><td style="padding-left:10px;">
+                                       {{driver.pointsThisSeason}}
+                                    </td><td style="padding-left:10px;">
+                                       <input type="radio" name="p1_1" value=" {{driver.id}} " {% if teamdata.p1_1.id == driver.id %} checked {% endif %}>
+                                    </td></tr>
+                                    {% endfor%}
+                                 </table>
+                              </div>
+                              <!---Lead driver picker -->
+                              <div class="col-sm-1" style="background-color:red;" >
+                                 <table class="pickertable">
+                                    <tr><th>Lead <br />Driver</th>
+                                    </tr>
+                                 </table>
+                              </div>
+                              <!---Second driver picker -->
+                              <div class="col-sm-1" style="background-color:cyan;" >
+                                 <table class="pickertable">
+                                    <tr><th>Second <br />Driver</th>
+                                    </tr>
+                                 </table>
+                              </div>
+                              <!----------->
+                           </div>
+                        </div>
+                     <br />
+                     <p><input type="submit" name="submit" value="SWAP TO"  form="F1_form"></p>
+                  </form>
+                  ****
+
+               </div>
+            </div>
+         </div>
+    </div>
    <br /><br />
-   <!------------------ TEAM BLOCKS ------------------------>
-   <div class="container-fluid">
-     <div class="row">
-       <!--- Formula 1 --->
-       <div class="col-sm-3 teamdiv" >
-          <p class = "formula">Formula 1</p>
-          <table>
-             <tr>
-                <td>
-                  <img src="{{ user.team.p1_1.mugshot.url}}" />
-               </td>
-               <td>
-                  <p class = "name" >{{ user.team.p1_1}}</p>
-                  <p class = "title" >Lead Driver</p>
-               </td>
-            </tr>
-            <tr>
-               <td>
-                  <img src="{{ user.team.p1_2.mugshot.url}}" />
-               </td>
-               <td>
-                  <p class = "name" >{{ user.team.p1_2}}</p>
-                  <p class = "title" >Second Driver</p>
-               </td>
-            </tr>
-            <tr>
-               <td>
-                  <img src="{{ user.team.p1_m.mugshot.url}}" />
-               </td>
-               <td>
-                  <p class = "name" >{{ user.team.p1_m}}</p>
-                  <p class = "title" >Manager</p>
-               </td>
-            </tr>
-         </table>
-         <br/>
-       </div>
-       <!--- Formula 2 --->
-       <div class="col-sm-3 teamdiv" >
-          <p class = "formula">Formula 2</p>
-          <table>
-             <tr>
-                <td>
-                  <img src="{{ user.team.p2_1.mugshot.url}}" />
-               </td>
-               <td>
-                  <p class = "name" >{{ user.team.p2_1}}</p>
-                  <p class = "title" >Lead Driver</p>
-               </td>
-            </tr>
-            <tr>
-               <td>
-                  <img src="{{ user.team.p2_2.mugshot.url}}" />
-               </td>
-               <td>
-                  <p class = "name" >{{ user.team.p2_2}}</p>
-                  <p class = "title" >Second Driver</p>
-               </td>
-            </tr>
-            <tr>
-               <td>
-                  <img src="{{ user.team.p2_m.mugshot.url}}" />
-               </td>
-               <td>
-                  <p class = "name" >{{ user.team.p2_m}}</p>
-                  <p class = "title" >Manager</p>
-               </td>
-            </tr>
-         </table>
-       </div>
-       <!--- Formula 3 --->
-       <div class="col-sm-3 teamdiv" >
-          <p class = "formula">Formula 3</p>
-          <table>
-             <tr>
-                <td>
-                  <img src="{{ user.team.p3_1.mugshot.url}}" />
-               </td>
-               <td>
-                  <p class = "name" >{{ user.team.p3_1}}</p>
-                  <p class = "title" >Lead Driver</p>
-               </td>
-            </tr>
-            <tr>
-               <td>
-                  <img src="{{ user.team.p3_2.mugshot.url}}" />
-               </td>
-               <td>
-                  <p class = "name" >{{ user.team.p3_2}}</p>
-                  <p class = "title" >Second Driver</p>
-               </td>
-            </tr>
-            <tr>
-               <td>
-                  <img src="{{ user.team.p3_m.mugshot.url}}" />
-               </td>
-               <td>
-                  <p class = "name" >{{ user.team.p3_m}}</p>
-                  <p class = "title" >Manager</p>
-               </td>
-            </tr>
-         </table>
-       </div>
-       <!--- W Series--->
-       <div class="col-sm-3 teamdiv" >
-          <p class = "formula">W Series</p>
-          <table>
-             <tr>
-                <td>
-                  <img src="{{ user.team.pw_1.mugshot.url}}" />
-               </td>
-               <td>
-                  <p class = "name" >{{ user.team.pw_1}}</p>
-                  <p class = "title" >Lead Driver</p>
-               </td>
-            </tr>
-            <tr>
-               <td>
-                  <img src="{{ user.team.pw_2.mugshot.url}}" />
-               </td>
-               <td>
-                  <p class = "name" >{{ user.team.pw_2}}</p>
-                  <p class = "title" >Second Driver</p>
-               </td>
-            </tr>
-            <tr>
-               <td>
-                  <img src="{{ user.team.pw_m.mugshot.url}}" />
-               </td>
-               <td>
-                  <p class = "name" >{{ user.team.pw_m}}</p>
-                  <p class = "title" >Manager</p>
-               </td>
-            </tr>
-         </table>
-       </div>
-     </div>
-   </div>
-
-
-   <!------------------ TEAM BLOCKS ------------------------>
-   <br /><br />
-   <p>
-      <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Edit</a>
-
-   </p>
+   <p> </p>
    <p> </p>
 </div>
 {% endblock %}
+
+<!---------------------- FOOTER BLOCK  ------------------->
+{% block footer %}
+{% endblock %}
+<!---------------------- FOOTER BLOCK  ------------------->
+
+<!---------------------- JAVASCRIPT BLOCK  ------------------->
+{% block javascript %}
+   <script type="text/javascript">
+      //Pick up GET parameters
+      //example.com?param1=name&param2=&id=6
+      //$.urlParam('param1'); // name
+      $.urlParam = function(name){
+          var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+          if (results==null) {
+             return null;
+          }
+          return decodeURI(results[1]) || 0;
+       }
+
+       $(document).ready(function(){
+         //alert($.urlParam('tab'));
+         $('.nav-pills a[href="#' + $.urlParam('tab') + '"]').tab('show');
+         //gives us... $('.nav-pills a[href="#F1"]').tab('show');
+         //USAGE:  URL/season/teamview?tab=F2
+
+      });
+   </script>
+{% endblock %}
+<!---------------------- JAVASCRIPT BLOCK  ------------------->

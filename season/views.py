@@ -1,28 +1,32 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, get_list_or_404
-from .models import Competitor, Event, ScoringEvent, Result
+from .models import Competitor, Event, ScoringEvent, Result, TeamProfile
 from django.contrib.auth.decorators import login_required
 from .forms import EventForm, TeamProfileForm
+from django.contrib.auth.models import User
 
 # Create your views here.
 
 ############################### GUEST PAGES ###################################################
 
-## Show Events
+## Show Events ####################
 def showevents(request):
     # Fill lower table with all extant data
     allevents = Event.objects.all()
     return render(request, 'season/showevents.html',{'allevents':allevents})
 
+####################################
 def showscoringevents(request):
     allevents = ScoringEvent.objects.all()
     return render(request, 'season/showscoringevents.html', {'allevents': allevents})
 
+####################################
 def showresults(request):
     resultset = Result.objects.order_by('scoringEvent_ID', 'finishPosition')
 
     return render(request, 'season/showresults.html', {'resultset': resultset})
 
+####################################
 def tables(request):
 #	textreceived = request.GET['fname']
     competitors = Competitor.objects
@@ -58,24 +62,48 @@ def tableformula(request, formula):
 
     return render(request, 'season/tables.html', {'personality':pers_data, 'competitors': competitors,'managers':managers,'formulaname':formulaname, 'formula':formula, 'showPersonal':showPersonal})
 
+def test(request):
+    #resultset = Result.objects.order_by('scoringEvent_ID', 'finishPosition')
 
+    return render(request, 'season/test.html')#, {'resultset': resultset})
 
 
 ############################### USER PAGES ###################################################
 
 @login_required
-##### SHOW MY TEAM ###################
+##### SHOW AND EDIT MY TEAM ###################
 def teamview(request):
-    return render(request, 'season/teamview.html') #, {'competitors': competitors})
+
+    if(request.method == "POST"):
+        # Get the returned form into usable format via Forms
+        # OK print(request.POST['teamName'])
+        print('return p1_1',request.POST['p1_1'])
+
+        # Go find the record we want to update
+        recordtoedit = TeamProfile.objects.get(pk=request.user.team.id) # still using our 1to1 field relation
+        ## ToDo - SAVE OLD VERSION TO ARCHIVE ###
+
+        # ToDo - CHECK WHETHER F1,2,3orW #######
+        # Now change relevant fields
+        #recordtoedit.teamName = request.POST['teamName']
+        recordtoedit.p1_1 = Competitor.objects.get(pk=request.POST['p1_1'])
+
+        #Save data to table
+        recordtoedit.save()
+
+    #Now load (or reload) data to reshow form with new data in it.
+    teamdata =  TeamProfile.objects.get(pk=request.user.team.id)
+    f1drivers = Competitor.objects.filter(formula = 1, role = 'D')
+    print ('count=',len(f1drivers))
+    return render(request, 'season/teamview.html',{ 'teamdata':teamdata, 'f1drivers':f1drivers})
+
 
 
 
 @login_required
-### EDIT MY TEAM #@@@@@@@@@#########
+### EDIT MY TEAM #####################
 def teampicker(request):
     return render(request, 'season/teampicker.html')
-
-
 
 ############################### ADMIN PAGES ###################################################
 
