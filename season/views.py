@@ -55,11 +55,6 @@ def tableformula(request, formula):
         pers_data = list(competitors[:1])
         showPersonal = " "
 
-    #pers_data = get_object_or_404(Competitor,pk=11)
-    #pers_data = get_list_or_404(Competitor,pk=per)
-
-    #"pers_data": pers_data,
-
     return render(request, 'season/tables.html', {'personality':pers_data, 'competitors': competitors,'managers':managers,'formulaname':formulaname, 'formula':formula, 'showPersonal':showPersonal})
 
 def test(request):
@@ -75,30 +70,21 @@ def test(request):
 def teamview(request):
 
     if(request.method == "POST"):
-        # Get the returned form into usable format via Forms
-        # OK print(request.POST['teamName'])
-        print('return p1_1',request.POST['p1_1'])
-
         # Go find the record we want to update
         recordtoedit = TeamProfile.objects.get(pk=request.user.team.id) # still using our 1to1 field relation
         ## ToDo - SAVE OLD VERSION TO ARCHIVE ###
 
-        # ToDo - CHECK WHETHER F1,2,3orW #######
         # Now change relevant fields
         #recordtoedit.teamName = request.POST['teamName']
         recordtoedit.p1_1 = Competitor.objects.get(pk=request.POST['p1_1'])
-
+        recordtoedit.p1_2 = Competitor.objects.get(pk=request.POST['p1_2'])
         #Save data to table
         recordtoedit.save()
 
     #Now load (or reload) data to reshow form with new data in it.
     teamdata =  TeamProfile.objects.get(pk=request.user.team.id)
     f1drivers = Competitor.objects.filter(formula = 1, role = 'D')
-    print ('count=',len(f1drivers))
     return render(request, 'season/teamview.html',{ 'teamdata':teamdata, 'f1drivers':f1drivers})
-
-
-
 
 @login_required
 ### EDIT MY TEAM #####################
