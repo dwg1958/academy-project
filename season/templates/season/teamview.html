@@ -69,6 +69,14 @@ Team :{{ user.team.teamName }}
       font-size: 1.2rem;
       padding-left: 8px;
    }
+   .my-custom-scrollbar {
+      position: relative;
+      height: 300px;
+      overflow: auto;
+   }
+      .table-wrapper-scroll-y {
+      display: block;
+   }
 </style>
 {% endblock %}
 
@@ -257,24 +265,230 @@ Team :{{ user.team.teamName }}
             <div class="tab-pane fade" id="F1">
                <div style = "padding: 0% 5% 10% 5%;">
                   <h2>F1 Team</h2>
+                  <dl class="row">
+                     <dt class=" DriverSection col-sm-2"></dt>
+                     <dt class=" DriverSection col-sm-4">
+                        <img src="{{ teamdata.p1_1.mugshot.url}}" style="height:150px;"/>
+                        <h4 class="mt-2">{{ teamdata.p1_1}}</h4>
+                        <p class="text-right">Lead Driver</p>
+                        <p><b>${{ teamdata.p1_1.value}}m </b>(Paid:${{ teamdata.p1_1_cost}}m) </p>
+                     </dt>
+                     <dt class=" DriverSection col-sm-4">
+                        <img src="{{ teamdata.p1_2.mugshot.url}}" style="height:150px;"/>
+                        <h4 class="mt-2">{{ teamdata.p1_2}}</h4>
+                        <p class="text-right">Second Driver</p>
+                        <p><b>${{ teamdata.p1_2.value}}m </b>(Paid:${{ teamdata.p1_2_cost}}m) </p>
+                     </dt>
+                  </dl>
+                  <br />
+                  <p style="text-align:right;padding-right:20%;"><input type="submit" name="F1_submit" value="UPDATE DRIVERS"  form="F1_form"></p>
+                  <br />
+                  <div class="table-wrapper-scroll-y my-custom-scrollbar radio-selector">
+                     <div class="container-fluid">
+                        <div class="row">
+                           <!--- Formula 1 --->
+                           <div class="col-sm-6">
+                              <table class="pickertable">
+                                 <tr><!--<th></th>--><th>Driver</th><th style="text-align:center;">Cost</th><th style="text-align:center;">Points</th>
+                                 {% for driver in f1drivers.all %}
+                                 <tr>
+                                    <!--<td>
+                                    <img src="{{driver.mugshot.url}}" height='50px;' class="d-inline-block" alt="" loading="lazy">
+                                    </td>-->
+                                 <td style="text-align:left;"><label for="{{driver.surname}}"> {{driver.firstname}} {{driver.surname}} </label>
+                                 </td><td style="padding-left:5px;">
+                                    ${{driver.value}}m
+                                 </td><td style="padding-left:10px;">
+                                    {{driver.pointsThisSeason}}
+                                 </td></tr>
+                                 {% endfor%}
+                              </table>
+                           </div>
+                           <!---Lead driver picker -->
+                           <div class="col-sm-2">
+                              <form action="{% url 'teamview' %}?tab=WS" method="POST" id="F1_form">
+                                 {% csrf_token %}
+                                 <table class="pickertable">
+                                    <tr><th style="text-align:center;">Driver #1</th></tr>
+                                    {% for driver in f1drivers.all %}
+                                       <tr><td>
+                                          <input type="radio" name="p1_1" value=" {{driver.id}} " {% if teamdata.p1_1.id == driver.id %} checked {% endif %}>
+                                       </td</tr>
+                                    {% endfor%}
+                                 </table>
+                           </div>
+                           <!---Second driver picker -->
+                           <div class="col-sm-2">
+                                 <table class="pickertable">
+                                    <tr><th style="text-align:center;">Driver #2 </th>
+                                    {% for driver in f1drivers.all %}
+                                       <tr><td>
+                                          <input type="radio" name="p1_2" value=" {{driver.id}} " {% if teamdata.p1_2.id == driver.id %} checked {% endif %}>
+                                       </td</tr>
+                                    {% endfor%}
+                                 </table>
+
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+
+                  </div>
+                  <p style="text-align:right;padding-right:20%;"><br /><br /><input type="submit" name="F1_submit" value="UPDATE DRIVERS"  form="F1_form"></p>
                </div>
             </div>
             <!------------------ F2 Edit DIV ------------------------>
             <div class="tab-pane fade" id="F2">
                <div style = "padding: 0% 5% 10% 5%;">
                   <h2>F2 Team</h2>
+                  <dl class="row">
+                     <dt class=" DriverSection col-sm-2"></dt>
+                     <dt class=" DriverSection col-sm-4">
+                        <img src="{{ teamdata.p1_1.mugshot.url}}" style="height:150px;"/>
+                        <h4 class="mt-2">{{ teamdata.p2_1}}</h4>
+                        <p class="text-right">Lead Driver</p>
+                        <p><b>${{ teamdata.p2_1.value}}m </b>(Paid:${{ teamdata.p2_1_cost}}m) </p>
+                     </dt>
+                     <dt class=" DriverSection col-sm-4">
+                        <img src="{{ teamdata.p1_2.mugshot.url}}" style="height:150px;"/>
+                        <h4 class="mt-2">{{ teamdata.p2_2}}</h4>
+                        <p class="text-right">Second Driver</p>
+                        <p><b>${{ teamdata.p2_2.value}}m </b>(Paid:${{ teamdata.p2_2_cost}}m) </p>
+                     </dt>
+                  </dl>
+                  <br />
+                  <p style="text-align:right;padding-right:20%;"><input type="submit" name="submit" value="UPDATE DRIVERS"  form="F1_form"></p>
+                  <br />
+                  <div class="radio-selector">
+                     <div class="container-fluid">
+                        <div class="row">
+                           <!--- Formula 1 --->
+                           <div class="col-sm-6">
+                              <table class="pickertable">
+                                 <tr><!--<th></th>--><th>Driver</th><th style="text-align:center;">Cost</th><th style="text-align:center;">Points</th>
+                                 {% for driver in f1drivers.all %}
+                                 <tr>
+                                    <!--<td>
+                                    <img src="{{driver.mugshot.url}}" height='50px;' class="d-inline-block" alt="" loading="lazy">
+                                    </td>-->
+                                 <td style="text-align:left;"><label for="{{driver.surname}}"> {{driver.firstname}} {{driver.surname}} </label>
+                                 </td><td style="padding-left:5px;">
+                                    ${{driver.value}}m
+                                 </td><td style="padding-left:10px;">
+                                    {{driver.pointsThisSeason}}
+                                 </td></tr>
+                                 {% endfor%}
+                              </table>
+                           </div>
+                           <!---Lead driver picker -->
+                           <div class="col-sm-2">
+                              <form action="{% url 'teamview' %}?tab=WS" method="POST" id="F1_form">
+                                 {% csrf_token %}
+                                 <table class="pickertable">
+                                    <tr><th style="text-align:center;">Driver #1</th></tr>
+                                    {% for driver in f1drivers.all %}
+                                       <tr><td>
+                                          <input type="radio" name="p1_1" value=" {{driver.id}} " {% if teamdata.p1_1.id == driver.id %} checked {% endif %}>
+                                       </td</tr>
+                                    {% endfor%}
+                                 </table>
+                           </div>
+                           <!---Second driver picker -->
+                           <div class="col-sm-2">
+                                 <table class="pickertable">
+                                    <tr><th style="text-align:center;">Driver #2 </th>
+                                    {% for driver in f1drivers.all %}
+                                       <tr><td>
+                                          <input type="radio" name="p1_2" value=" {{driver.id}} " {% if teamdata.p1_2.id == driver.id %} checked {% endif %}>
+                                       </td</tr>
+                                    {% endfor%}
+                                 </table>
+                                 <p><input type="submit" name="submit" value="UPDATE DRIVERS"  form="F1_form"></p>
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
                </div>
             </div>
             <!------------------ F3 Edit DIV ------------------------>
             <div class="tab-pane fade" id="F3">
                <div style = "padding: 0% 5% 10% 5%;">
                   <h2>F3 Team</h2>
+                  <dl class="row">
+                     <dt class=" DriverSection col-sm-2"></dt>
+                     <dt class=" DriverSection col-sm-4">
+                        <img src="{{ teamdata.p1_1.mugshot.url}}" style="height:150px;"/>
+                        <h4 class="mt-2">{{ teamdata.p1_1}}</h4>
+                        <p class="text-right">Lead Driver</p>
+                        <p><b>${{ teamdata.p1_1.value}}m </b>(Paid:${{ teamdata.p1_1_cost}}m) </p>
+                     </dt>
+                     <dt class=" DriverSection col-sm-4">
+                        <img src="{{ teamdata.p1_2.mugshot.url}}" style="height:150px;"/>
+                        <h4 class="mt-2">{{ teamdata.p1_2}}</h4>
+                        <p class="text-right">Second Driver</p>
+                        <p><b>${{ teamdata.p1_2.value}}m </b>(Paid:${{ teamdata.p1_2_cost}}m) </p>
+                     </dt>
+                  </dl>
+                  <br />
+                  <p style="text-align:right;padding-right:20%;"><input type="submit" name="submit" value="UPDATE DRIVERS"  form="F1_form"></p>
+                  <br />
+                  <div class="radio-selector">
+                     <div class="container-fluid">
+                        <div class="row">
+                           <!--- Formula 1 --->
+                           <div class="col-sm-6">
+                              <table class="pickertable">
+                                 <tr><!--<th></th>--><th>Driver</th><th style="text-align:center;">Cost</th><th style="text-align:center;">Points</th>
+                                 {% for driver in f1drivers.all %}
+                                 <tr>
+                                    <!--<td>
+                                    <img src="{{driver.mugshot.url}}" height='50px;' class="d-inline-block" alt="" loading="lazy">
+                                    </td>-->
+                                 <td style="text-align:left;"><label for="{{driver.surname}}"> {{driver.firstname}} {{driver.surname}} </label>
+                                 </td><td style="padding-left:5px;">
+                                    ${{driver.value}}m
+                                 </td><td style="padding-left:10px;">
+                                    {{driver.pointsThisSeason}}
+                                 </td></tr>
+                                 {% endfor%}
+                              </table>
+                           </div>
+                           <!---Lead driver picker -->
+                           <div class="col-sm-2">
+                              <form action="{% url 'teamview' %}?tab=WS" method="POST" id="F1_form">
+                                 {% csrf_token %}
+                                 <table class="pickertable">
+                                    <tr><th style="text-align:center;">Driver #1</th></tr>
+                                    {% for driver in f1drivers.all %}
+                                       <tr><td>
+                                          <input type="radio" name="p1_1" value=" {{driver.id}} " {% if teamdata.p1_1.id == driver.id %} checked {% endif %}>
+                                       </td</tr>
+                                    {% endfor%}
+                                 </table>
+                           </div>
+                           <!---Second driver picker -->
+                           <div class="col-sm-2">
+                                 <table class="pickertable">
+                                    <tr><th style="text-align:center;">Driver #2 </th>
+                                    {% for driver in f1drivers.all %}
+                                       <tr><td>
+                                          <input type="radio" name="p1_2" value=" {{driver.id}} " {% if teamdata.p1_2.id == driver.id %} checked {% endif %}>
+                                       </td</tr>
+                                    {% endfor%}
+                                 </table>
+                                 <p><input type="submit" name="submit" value="UPDATE DRIVERS"  form="F1_form"></p>
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
                </div>
             </div>
             <!------------------ WS Edit DIV ------------------------>
             <div class="tab-pane fade" id="WS">
                <div style = "padding: 0% 5% 10% 5%;">
-                  <h2>F1 Team</h2>
+                  <h2>W Series Team</h2>
                   <dl class="row">
                      <dt class=" DriverSection col-sm-2"></dt>
                      <dt class=" DriverSection col-sm-4">
@@ -345,7 +559,7 @@ Team :{{ user.team.teamName }}
                      </div>
                   <br />
                </div>
-            </div><!--End F1 Edit-->
+            </div>
          </div>
     </div>
    <br /><br />

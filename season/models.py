@@ -13,7 +13,7 @@ class Competitor(models.Model):
     ('D', 'Driver'),
     ('M', 'Manager'),
     )
-    mugshot                = models.ImageField(upload_to='mugshots/')
+    mugshot                = models.ImageField(upload_to='mugshots/', default="siteimages/blankUser.png")
     surname                = models.CharField(max_length=20)
     firstname              = models.CharField(max_length=20)
     role                   = models.CharField(max_length=1, choices=ROLE)

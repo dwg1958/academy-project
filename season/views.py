@@ -75,16 +75,30 @@ def teamview(request):
         ## ToDo - SAVE OLD VERSION TO ARCHIVE ###
 
         # Now change relevant fields
-        #recordtoedit.teamName = request.POST['teamName']
-        recordtoedit.p1_1 = Competitor.objects.get(pk=request.POST['p1_1'])
-        recordtoedit.p1_2 = Competitor.objects.get(pk=request.POST['p1_2'])
-        #Save data to table
-        recordtoedit.save()
+        if 'F1_submit' in request.POST:
+            #print('F1 submit found')
+            recordtoedit.p1_1 = Competitor.objects.get(pk=request.POST['p1_1'])
+            recordtoedit.p1_2 = Competitor.objects.get(pk=request.POST['p1_2'])
+            #Save data to table
+            recordtoedit.save()
+            returnURL = 'season/teamview.html?tab=F1'
+
+        elif 'F2_submit' in request.POST:
+            #..and so on
+            print('F1 submit NOT found') #temp line
+            
+    else:
+        returnURL = 'season/teamview.html'
 
     #Now load (or reload) data to reshow form with new data in it.
     teamdata =  TeamProfile.objects.get(pk=request.user.team.id)
     f1drivers = Competitor.objects.filter(formula = 1, role = 'D')
     return render(request, 'season/teamview.html',{ 'teamdata':teamdata, 'f1drivers':f1drivers})
+
+
+
+
+
 
 @login_required
 ### EDIT MY TEAM #####################
