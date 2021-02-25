@@ -76,7 +76,7 @@ def teamview(request):
 
         # Now change relevant fields
         if 'F1_submit' in request.POST:
-            #print('F1 submit found')
+            print('F1 submit found')
             recordtoedit.p1_1 = Competitor.objects.get(pk=request.POST['p1_1'])
             recordtoedit.p1_2 = Competitor.objects.get(pk=request.POST['p1_2'])
             #Save data to table
@@ -84,16 +84,45 @@ def teamview(request):
             returnURL = 'season/teamview.html?tab=F1'
 
         elif 'F2_submit' in request.POST:
-            #..and so on
-            print('F1 submit NOT found') #temp line
-            
+            print('F2 submit found')
+            print('p2_1 =',request.POST['p2_1'])
+            print('p2_2 =',request.POST['p2_2'])
+            recordtoedit.p2_1 = Competitor.objects.get(pk=request.POST['p2_1'])
+            recordtoedit.p2_2 = Competitor.objects.get(pk=request.POST['p2_2'])
+            #Save data to table
+            recordtoedit.save()
+            returnURL = 'season/teamview.html?tab=F2'
+
+        elif 'F3_submit' in request.POST:
+            print('F3 submit found')
+            print('p3_1 =',request.POST['p3_1'])
+            print('p3_2 =',request.POST['p3_2'])
+            recordtoedit.p3_1 = Competitor.objects.get(pk=request.POST['p3_1'])
+            recordtoedit.p3_2 = Competitor.objects.get(pk=request.POST['p3_2'])
+            #Save data to table
+            recordtoedit.save()
+            returnURL = 'season/teamview.html?tab=F3'
+
+        elif 'WS_submit' in request.POST:
+            print('WS submit found')
+            print('pw_1 =',request.POST['pw_1'])
+            print('pw_2 =',request.POST['pw_2'])
+            recordtoedit.pw_1 = Competitor.objects.get(pk=request.POST['pw_1'])
+            recordtoedit.pw_2 = Competitor.objects.get(pk=request.POST['pw_2'])
+            #Save data to table
+            recordtoedit.save()
+            returnURL = 'season/teamview.html?tab=WS'
+
     else:
         returnURL = 'season/teamview.html'
 
     #Now load (or reload) data to reshow form with new data in it.
     teamdata =  TeamProfile.objects.get(pk=request.user.team.id)
     f1drivers = Competitor.objects.filter(formula = 1, role = 'D')
-    return render(request, 'season/teamview.html',{ 'teamdata':teamdata, 'f1drivers':f1drivers})
+    f2drivers = Competitor.objects.filter(formula = 2, role = 'D')
+    f3drivers = Competitor.objects.filter(formula = 3, role = 'D')
+    wsdrivers = Competitor.objects.filter(formula = 'W', role = 'D')
+    return render(request, 'season/teamview.html',{ 'teamdata':teamdata, 'f1drivers':f1drivers, 'f2drivers':f2drivers, 'f3drivers':f3drivers, 'wsdrivers':wsdrivers})
 
 
 
