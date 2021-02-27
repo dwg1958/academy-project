@@ -44,7 +44,7 @@ Events
             </tr>
             {% for event in allevents%}
             <tr>
-               <td class="name"> {{event.name}} </td>
+               <td class="name"> <a href = " {% url 'showscoringevents' %}?event={{event.id}}">{{event.name}}</a> </td>
                <td> {{event.date}} </td>
                <td> {{event.circuit}} </td>
                <td> {{event.country}} </td>
@@ -54,7 +54,6 @@ Events
          </table>
       </div>
      <br />
-     <center><input type="button" onclick="alert('Hello World!')" value="Click Me!"></center>
      <br />
   </div>
 </div>

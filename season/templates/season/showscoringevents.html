@@ -31,10 +31,10 @@ Events
 {% block content %}
 
 <div style = "padding: 2% 0px 2% 15%;">
-   <h1 style = "padding: 1% 0% 0% 0%;"> 2020 Events </h1>
+   <h1 style = "padding: 1% 0% 0% 0%;"> {{ eventname }} Events </h1>
    <br />
-   <div>
-         <table class="bigtable">
+   <div style = "padding: 2% 0px 2% 5%;">
+         <table class="bigtable" >
             <tr>
                <th> Name </th>
                <th> Date / Time </th>
@@ -43,7 +43,13 @@ Events
             </tr>
             {% for event in allevents%}
             <tr>
-               <td> {{event.name}} </td>
+               <td>
+                  {% if event.results_in %}
+                     <a href = "{% url 'showresults' %}?scoringevent={{event.id}}" >{{event.name}}</a>  
+                  {% else%}
+                     {{ event.name }}
+                  {% endif %}
+               </td>
                <td> {{event.startDateTime}} </td>
                <td> {{event.formula}} </td>
                <td> {{event.get_eventType}} </td>
@@ -52,7 +58,7 @@ Events
          </table>
       </div>
      <br />
-     <center><input type="button" onclick="alert('Hello World!')" value="Click Me!"></center>
+     <center><input type="button" onclick="window.location.href = '{% url 'showevents' %} ';" value="Back to Calendar"></center>
      <br />
   </div>
 </div>

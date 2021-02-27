@@ -30,20 +30,19 @@ Results
 <!--------------------------------------------------------------->
 {% block content %}
 
-<div style = "padding: 2% 0px 2% 15%;">
-   <h1 style = "padding: 1% 0% 0% 0%;"> Results </h1>
+<div style = "padding: 2% 0px 2% 0%;">
+   <h1 style = "padding: 1% 0% 0% 15%;"> {{scoringeventname}} - Results {{ scoringevent_id }} </h1>
    <br />
+   <center>
    <div>
          <table class="bigtable">
             <tr>
                <th> Name </th>
-               <th> Date / Time </th>
                <th> Finish Position </th>
                <th> Formula Points </th>
             </tr>
             {% for result in resultset%}
             <tr>
-               <td> {{result.scoringEvent_ID}} </td>
                <td> {{result.competitor_ID}} </td>
                <td> {{result.finishPosition}} </td>
                <td> {{result.formulaPoints}} </td>
@@ -51,8 +50,9 @@ Results
             {% endfor %}
          </table>
       </div>
+      </center>
      <br />
-     <center><input type="button" onclick="alert('Hello World!')" value="Click Me!"></center>
+     <center><input type="button" onclick="history.go(-1);" value="Back"></center>
      <br />
   </div>
 </div>

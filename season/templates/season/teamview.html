@@ -84,6 +84,9 @@ Team :{{ user.team.teamName }}
    .budget-table td {
       padding-right:20px;
    }
+   #f1_p2_cost{
+      text-decoration:underline;
+   }
 </style>
 {% endblock %}
 
@@ -132,7 +135,7 @@ Team :{{ user.team.teamName }}
                       <table>
                          <tr>
                             <td>
-                              <img src="{{ user.team.p1_1.mugshot.url}}" />
+                              <img src="{% if user.team.p1_1.id %} {{ user.team.p1_1.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
                            </td>
                            <td>
                               <p class = "name" >{{ user.team.p1_1}}</p>
@@ -141,24 +144,14 @@ Team :{{ user.team.teamName }}
                         </tr>
                         <tr>
                            <td>
-                              <img src="{{ user.team.p1_2.mugshot.url}}" />
+                              <img src="{% if user.team.p1_2.id %} {{ user.team.p1_2.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
                            </td>
                            <td>
                               <p class = "name" >{{ user.team.p1_2}}</p>
                               <p class = "title" >Second Driver</p>
                            </td>
                         </tr>
-                        <tr>
-                           <td>
-                              <img src="{{ user.team.p1_m.mugshot.url}}" />
-                           </td>
-                           <td>
-                              <p class = "name" >{{ user.team.p1_m}}</p>
-                              <p class = "title" >Manager</p>
-                           </td>
-                        </tr>
                      </table>
-                     <a href="#" class="btn btn-primary btn-active" role="button" aria-pressed="true">Edit</a>
                      <br/>
                    </div>
                    <!--- Formula 2 --->
@@ -167,7 +160,7 @@ Team :{{ user.team.teamName }}
                       <table>
                          <tr>
                             <td>
-                              <img src="{{ user.team.p2_1.mugshot.url}}" />
+                              <img src="{% if user.team.p2_1.id %} {{ user.team.p2_1.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
                            </td>
                            <td>
                               <p class = "name" >{{ user.team.p2_1}}</p>
@@ -176,24 +169,14 @@ Team :{{ user.team.teamName }}
                         </tr>
                         <tr>
                            <td>
-                              <img src="{{ user.team.p2_2.mugshot.url}}" />
+                              <img src="{% if user.team.p2_2.id %} {{ user.team.p2_2.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
                            </td>
                            <td>
                               <p class = "name" >{{ user.team.p2_2}}</p>
                               <p class = "title" >Second Driver</p>
                            </td>
                         </tr>
-                        <tr>
-                           <td>
-                              <img src="{{ user.team.p2_m.mugshot.url}}" />
-                           </td>
-                           <td>
-                              <p class = "name" >{{ user.team.p2_m}}</p>
-                              <p class = "title" >Manager</p>
-                           </td>
-                        </tr>
                      </table>
-                     <a href="#" class="btn btn-primary btn-active" role="button" aria-pressed="true">Edit</a>
                    </div>
                    <!--- Formula 3 --->
                    <div class="col-sm-3 teamdiv" >
@@ -201,7 +184,7 @@ Team :{{ user.team.teamName }}
                       <table>
                          <tr>
                             <td>
-                              <img src="{{ user.team.p3_1.mugshot.url}}" />
+                              <img src="{% if user.team.p3_1.id %} {{ user.team.p3_1.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
                            </td>
                            <td>
                               <p class = "name" >{{ user.team.p3_1}}</p>
@@ -210,24 +193,14 @@ Team :{{ user.team.teamName }}
                         </tr>
                         <tr>
                            <td>
-                              <img src="{{ user.team.p3_2.mugshot.url}}" />
+                              <img src="{% if user.team.p3_2.id %} {{ user.team.p3_2.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
                            </td>
                            <td>
                               <p class = "name" >{{ user.team.p3_2}}</p>
                               <p class = "title" >Second Driver</p>
                            </td>
                         </tr>
-                        <tr>
-                           <td>
-                              <img src="{{ user.team.p3_m.mugshot.url}}" />
-                           </td>
-                           <td>
-                              <p class = "name" >{{ user.team.p3_m}}</p>
-                              <p class = "title" >Manager</p>
-                           </td>
-                        </tr>
                      </table>
-                     <a href="#" class="btn btn-primary btn-active" role="button" aria-pressed="true">Edit</a>
                    </div>
                    <!--- W Series--->
                    <div class="col-sm-3 teamdiv" >
@@ -235,7 +208,7 @@ Team :{{ user.team.teamName }}
                       <table>
                          <tr>
                             <td>
-                              <img src="{{ user.team.pw_1.mugshot.url}}" />
+                              <img src="{% if user.team.pw_1.id %} {{ user.team.pw_1.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
                            </td>
                            <td>
                               <p class = "name" >{{ user.team.pw_1}}</p>
@@ -244,24 +217,14 @@ Team :{{ user.team.teamName }}
                         </tr>
                         <tr>
                            <td>
-                              <img src="{{ user.team.pw_2.mugshot.url}}" />
+                              <img src="{% if user.team.pw_2.id %} {{ user.team.pw_2.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
                            </td>
                            <td>
                               <p class = "name" >{{ user.team.pw_2}}</p>
                               <p class = "title" >Second Driver</p>
                            </td>
                         </tr>
-                        <tr>
-                           <td>
-                              <img src="{{ user.team.pw_m.mugshot.url}}" />
-                           </td>
-                           <td>
-                              <p class = "name" >{{ user.team.pw_m}}</p>
-                              <p class = "title" >Manager</p>
-                           </td>
-                        </tr>
                      </table>
-                     <a href="#" class="btn btn-primary btn-active" role="button" aria-pressed="true">Edit</a>
                    </div>
                  </div>
                </div>
@@ -290,10 +253,10 @@ Team :{{ user.team.teamName }}
 
                            <table class="budget-table" style="margin-top:100px;">
                            <tr><th><h3>Budget</h3></th><th></th><tr>
-                           <tr><td>{{ teamdata.p1_1}}</td> <td id="f1_p2_cost">$</td></tr>
-                           <tr><td>{{ teamdata.p1_2}}</td> <td id="f1_p1_cost">$</td></tr>
-                           <tr><td>Total Cost</td>         <td id="f1_total_cost">$</td></tr>
-                           <tr><td>Budget remaining</td>   <td id="f1_total_cash_left">$</td></tr>
+                           <tr><td>{{ teamdata.p1_1}}    </td><td id="f1_p1_cost"        >$</td></tr>
+                           <tr><td>{{ teamdata.p1_2}}    </td><td id="f1_p2_cost"        >$</td></tr>
+                           <tr><td>Total Cost            </td><td id="f1_total_cost"     >$</td></tr>
+                           <tr><td>Budget remaining      </td><td id="f1_total_cash_left">$</td></tr>
                            </tr>
                         </table>
                         <p>
@@ -620,11 +583,24 @@ Team :{{ user.team.teamName }}
          //USAGE:  URL/season/teamview?tab=F2
 
          //////////////////////////////////////////////
+         // total Cost
+         var totalcost = {{teamdata.p1_1.value}}+{{teamdata.p1_2.value}}
          var cashbalance = 50;
-         let elem = document.getElementById('f1_total_cash_left');
-         elem.style.background = 'red';
-         alert(elem.text());
-         elem.text( "qwe" );
+         cashbalance -= {{teamdata.p1_1.value}};
+         cashbalance -= {{teamdata.p1_2.value}};
+         elem = document.getElementById('f1_total_cash_left');
+         //elem.style.background = 'red';
+         //elem.style.background = 'red';
+         //Fill in Page values
+         $("#f1_p1_cost").text("$"+{{teamdata.p1_1.value}}+"m");
+         $("#f1_p2_cost").text("$"+{{teamdata.p1_2.value}}+"m");
+         $("#f1_total_cost").text("$"+totalcost+"m");
+         $("#f1_total_cash_left").text("$"+cashbalance+"m");
+         if (cashbalance < 0) {
+            $('#f1_total_cash_left').css('color', 'red');
+            alert("Negative cash balance - choose again");
+         }
+
 
       });
    </script>

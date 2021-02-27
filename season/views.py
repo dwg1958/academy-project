@@ -15,16 +15,29 @@ def showevents(request):
     allevents = Event.objects.all()
     return render(request, 'season/showevents.html',{'allevents':allevents})
 
+
 ####################################
 def showscoringevents(request):
-    allevents = ScoringEvent.objects.all()
-    return render(request, 'season/showscoringevents.html', {'allevents': allevents})
+    if request.method == 'GET' and 'event' in request.GET:
+        event = request.GET['event']
+        allevents = ScoringEvent.objects.filter(event_ID = event)
+        eventname = Event.objects.get(id=event)
+        return render(request, 'season/showscoringevents.html', {'eventname': eventname,'allevents': allevents})
+    else:
+        allevents = Event.objects.all()
+        return render(request, 'season/showevents.html',{'allevents':allevents})
+
 
 ####################################
 def showresults(request):
-    resultset = Result.objects.order_by('scoringEvent_ID', 'finishPosition')
-
-    return render(request, 'season/showresults.html', {'resultset': resultset})
+    if request.method == 'GET' and 'scoringevent' in request.GET:
+        result_id = request.GET['scoringevent']
+        resultset = Result.objects.filter(scoringEvent_ID=result_id).order_by('scoringEvent_ID', 'finishPosition')
+        scoringeventname = ScoringEvent.objects.get(id=result_id)
+        return render(request, 'season/showresults.html', {'resultset': resultset, 'scoringeventname':scoringeventname})
+    else:
+        allevents = Event.objects.all()
+        return render(request, 'season/showevents.html',{'allevents':allevents})
 
 ####################################
 def tables(request):
