@@ -655,6 +655,8 @@ Team :{{ user.team.teamName }}
 
             //deduct new driver cost from cashbalance
             cashbalance -= parseInt(p2_new_value);
+            //Round to 1 decimal place (not sure why we have to do this..)
+            cashbalance = Math.round(cashbalance * 10) / 10
             //show new cash balance
             $("#f1_total_cash_left").text('$'+cashbalance+'m');
             if (cashbalance < 0) {$('#f1_total_cash_left').css('color', 'red');   $('input[name="F1_submit"]').attr('disabled','disabled');}
