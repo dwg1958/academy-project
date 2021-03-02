@@ -81,19 +81,38 @@ def test(request):
 @login_required
 ##### SHOW AND EDIT MY TEAM ###################
 def teamview(request):
+    returnmessage = ""
 
     if(request.method == "POST"):
         # Go find the record we want to update
         recordtoedit = TeamProfile.objects.get(pk=request.user.team.id) # still using our 1to1 field relation
-        ## ToDo - SAVE OLD VERSION TO ARCHIVE ###
+
+########## ToDo - SAVE OLD VERSION TO ARCHIVE ###
 
         # Now change relevant fields
         if 'F1_submit' in request.POST:
-            print('F1 submit found')
-            recordtoedit.p1_1 = Competitor.objects.get(pk=request.POST['p1_1'])
-            recordtoedit.p1_2 = Competitor.objects.get(pk=request.POST['p1_2'])
-            #Save data to table
-            recordtoedit.save()
+            # POST arg comes in as value="1|Lewis Hamilton|29.0"
+            arg1 = request.POST['p1_1_picker'] #Get arg
+            arg1 = arg1[:arg1.index("|")]      #Split out the first element - the driverID
+            arg2 = request.POST['p1_2_picker']
+            arg2 = arg2[:arg2.index("|")]
+
+            new_p1_1 = Competitor.objects.get(pk=arg1) #Find new driver 1 record
+            new_p1_2 = Competitor.objects.get(pk=arg2)
+            #check budget not exceeded
+            new_cash_pot = recordtoedit.f1_cashpot + recordtoedit.p1_1.value + recordtoedit.p1_2.value - new_p1_1.value - new_p1_2.value
+
+            if ( new_cash_pot < 0 ):
+                returnmessage = 'You have exceeded your budget - please choose again'
+            elif ( arg1 == arg2 ):
+                returnmessage = 'You have chosen the same driver twice - please choose again'
+            else:
+                recordtoedit.p1_1 = new_p1_1
+                recordtoedit.p1_2 = new_p1_2
+                recordtoedit.f1_cashpot = new_cash_pot
+                #Save data to table
+                recordtoedit.save()
+
             returnURL = 'season/teamview.html?tab=F1'
 
         elif 'F2_submit' in request.POST:
@@ -135,7 +154,7 @@ def teamview(request):
     f2drivers = Competitor.objects.filter(formula = 2, role = 'D')
     f3drivers = Competitor.objects.filter(formula = 3, role = 'D')
     wsdrivers = Competitor.objects.filter(formula = 'W', role = 'D')
-    return render(request, 'season/teamview.html',{ 'teamdata':teamdata, 'f1drivers':f1drivers, 'f2drivers':f2drivers, 'f3drivers':f3drivers, 'wsdrivers':wsdrivers})
+    return render(request, 'season/teamview.html',{ 'returnmessage':returnmessage, 'teamdata':teamdata, 'f1drivers':f1drivers, 'f2drivers':f2drivers, 'f3drivers':f3drivers, 'wsdrivers':wsdrivers})
 
 
 

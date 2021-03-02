@@ -102,7 +102,10 @@ Team :{{ user.team.teamName }}
         <h3>{{user.first_name}} {{user.last_name}}</h3>
      </dd>
    </dl>
+
    <br />
+   <h3 style = "background-color: red; color:white;"><center>{{ returnmessage }}</center></h3>
+   <br/>
 
    <div class="tabs-menu">
        <ul class="nav nav-pills">
@@ -252,11 +255,11 @@ Team :{{ user.team.teamName }}
                      <dt class=" DriverSection col-sm-4">
 
                            <table class="budget-table" style="margin-top:100px;">
-                           <tr><th><h3>Budget</h3></th><th></th><tr>
-                           <tr><td>{{ teamdata.p1_1}}    </td><td id="f1_p1_cost"        >$</td></tr>
-                           <tr><td>{{ teamdata.p1_2}}    </td><td id="f1_p2_cost"        >$</td></tr>
-                           <tr><td>Total Cost            </td><td id="f1_total_cost"     >$</td></tr>
-                           <tr><td>Budget remaining      </td><td id="f1_total_cash_left">$</td></tr>
+                           <tr><th><h3 id = "budget_title">Budget</h3></th><th></th><tr>
+                           <tr><td id="f1_p1_name" >{{ teamdata.p1_1}}    </td><td id="f1_p1_cost"        >$</td></tr>
+                           <tr><td id="f1_p2_name" >{{ teamdata.p1_2}}    </td><td id="f1_p2_cost"        >$</td></tr>
+                           <tr><td>Total Cost                             </td><td id="f1_total_cost"     >$</td></tr>
+                           <tr><td>Budget remaining                       </td><td id="f1_total_cash_left">$</td></tr>
                            </tr>
                         </table>
                         <p>
@@ -296,7 +299,7 @@ Team :{{ user.team.teamName }}
                                     <tr><th style="text-align:center;">Driver #1</th></tr>
                                     {% for driver in f1drivers.all %}
                                        <tr><td>
-                                          <input type="radio" name="p1_1" value=" {{driver.id}} " {% if teamdata.p1_1.id == driver.id %} checked {% endif %}>
+                                          <input type="radio" id="p1_1_picker" name="p1_1_picker" value="{{driver.id}}|{{driver.firstname}} {{driver.surname}}|{{driver.value}}" {% if teamdata.p1_1.id == driver.id %} checked {% endif %}>
                                        </td</tr>
                                     {% endfor%}
                                  </table>
@@ -307,7 +310,7 @@ Team :{{ user.team.teamName }}
                                     <tr><th style="text-align:center;">Driver #2 </th>
                                     {% for driver in f1drivers.all %}
                                        <tr><td>
-                                          <input type="radio" name="p1_2" value=" {{driver.id}} " {% if teamdata.p1_2.id == driver.id %} checked {% endif %}>
+                                          <input type="radio" id="p1_2_picker" name="p1_2_picker" value="{{driver.id}}|{{driver.firstname}} {{driver.surname}}|{{driver.value}}" {% if teamdata.p1_2.id == driver.id %} checked {% endif %}>
                                        </td</tr>
                                     {% endfor%}
                                  </table>
@@ -584,10 +587,10 @@ Team :{{ user.team.teamName }}
 
          //////////////////////////////////////////////
          // total Cost
-         var totalcost = {{teamdata.p1_1.value}}+{{teamdata.p1_2.value}}
-         var cashbalance = 50;
-         cashbalance -= {{teamdata.p1_1.value}};
-         cashbalance -= {{teamdata.p1_2.value}};
+         totalcost = {{teamdata.p1_1.value}}+{{teamdata.p1_2.value}}
+         cashbalance = {{teamdata.f1_cashpot}};
+         //cashbalance -= {{teamdata.p1_1.value}};
+         //cashbalance -= {{teamdata.p1_2.value}};
          elem = document.getElementById('f1_total_cash_left');
          //elem.style.background = 'red';
          //elem.style.background = 'red';
@@ -598,9 +601,65 @@ Team :{{ user.team.teamName }}
          $("#f1_total_cash_left").text("$"+cashbalance+"m");
          if (cashbalance < 0) {
             $('#f1_total_cash_left').css('color', 'red');
-            alert("Negative cash balance - choose again");
+            //alert("Negative cash balance - choose again");
          }
+///////////Driver 1 selector change///////////////////////////
+         var $radios1 = $('input[name="p1_1_picker"]');
 
+         $radios1.change(function() {
+            $("#budget_title").text("New Team Picks:");
+            //add departing driver cost to cashbalance
+            p1_dep_val = $("#f1_p1_cost").text();
+            //turn it back into a number
+            p1_dep_val = p1_dep_val.substring(1, p1_dep_val.length-1);
+            cashbalance += parseInt(p1_dep_val);
+
+            //Pick up new radio button values and show
+            var $checked = $radios1.filter(function() {
+               return $(this).prop('checked');
+            });
+            var $f1_p1 = $checked.val().split('|');
+            var p1_new_value = $f1_p1.pop();
+            $("#f1_p1_cost").text('$'+p1_new_value+'m');
+            var p1_new_name = $f1_p1.pop();
+            $("#f1_p1_name").text(p1_new_name);
+
+            //deduct new driver cost from cashbalance
+            cashbalance -= parseInt(p1_new_value);
+            //show new cash balance
+            $("#f1_total_cash_left").text('$'+cashbalance+'m');
+            if (cashbalance < 0) {$('#f1_total_cash_left').css('color', 'red');   $('input[name="F1_submit"]').attr('disabled','disabled');}
+            else                 {$('#f1_total_cash_left').css('color', 'black'); $('input[name="F1_submit"]').removeAttr('disabled');}
+         });
+
+///////////Driver 2 selector change///////////////////////////
+         var $radios2 = $('input[name="p1_2_picker"]');
+
+         $radios2.change(function() {
+            $("#budget_title").text("New Team Picks:");
+            //add departing driver cost to cashbalance
+            p2_dep_val = $("#f1_p2_cost").text();
+            //turn it back into a number
+            p2_dep_val = p2_dep_val.substring(1, p2_dep_val.length-1);
+            cashbalance += parseInt(p2_dep_val);
+
+            //Pick up new radio button values and show
+            var $checked = $radios2.filter(function() {
+               return $(this).prop('checked');
+            });
+            var $f1_p2 = $checked.val().split('|');
+            var p2_new_value = $f1_p2.pop();
+            $("#f1_p2_cost").text('$'+p2_new_value+'m');
+            var p2_new_name = $f1_p2.pop();
+            $("#f1_p2_name").text(p2_new_name);
+
+            //deduct new driver cost from cashbalance
+            cashbalance -= parseInt(p2_new_value);
+            //show new cash balance
+            $("#f1_total_cash_left").text('$'+cashbalance+'m');
+            if (cashbalance < 0) {$('#f1_total_cash_left').css('color', 'red');   $('input[name="F1_submit"]').attr('disabled','disabled');}
+            else                 {$('#f1_total_cash_left').css('color', 'black'); $('input[name="F1_submit"]').removeAttr('disabled');}
+         });
 
       });
    </script>

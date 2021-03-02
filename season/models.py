@@ -50,6 +50,10 @@ class TeamProfile(models.Model):
     teamLogo               = models.ImageField(upload_to='mugshots/', default="siteimages/car_outline.jpg")
     dateStarted            = models.DateField(auto_now=True)
     dateSelected           = models.DateTimeField(auto_now=True)
+    f1_cashpot             = models.DecimalField(max_digits=4, decimal_places=1, default = 50.0)
+    f2_cashpot             = models.DecimalField(max_digits=4, decimal_places=1, default = 30.0)
+    f3_cashpot             = models.DecimalField(max_digits=4, decimal_places=1, default = 20.0)
+    ws_cashpot             = models.DecimalField(max_digits=4, decimal_places=1, default = 20.0)
     p1_1                   = models.ForeignKey(Competitor , null=True, on_delete = models.SET_NULL, related_name='p1_1')
     p1_1_cost              = models.DecimalField(max_digits=4, decimal_places=1, default = 0)
     p1_2                   = models.ForeignKey(Competitor , null=True, on_delete = models.SET_NULL, related_name='p1_2')
@@ -151,7 +155,6 @@ class ScoringEvent(models.Model):
 
     #def scoringEventDate_Pretty(self):
         #return ScoringEvent.startDateTime.strftime('%A, %b %e, %Y at %-H:%M')
-
 
 class Result(models.Model):
     scoringEvent_ID      = models.ForeignKey(ScoringEvent, null=True, on_delete = models.CASCADE, related_name='result')
