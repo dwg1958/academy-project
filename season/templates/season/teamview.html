@@ -84,7 +84,7 @@ Team :{{ user.team.teamName }}
    .budget-table td {
       padding-right:20px;
    }
-   #f1_p2_cost{
+   #f1_p2_cost, #f2_p2_cost, #f3_p2_cost, #ws_p2_cost{
       text-decoration:underline;
    }
 </style>
@@ -231,10 +231,10 @@ Team :{{ user.team.teamName }}
                    </div>
                  </div>
                </div>
-               <!------------------ TEAM DIVS ------------------------>
+<!------------------ TEAM DIVS ------------------------>
             </div>
 
-            <!------------------ F1 Edit DIV ------------------------>
+<!------------------ F1 Edit DIV ------------------------>
             <div class="tab-pane fade" id="F1">
                <div style = "padding: 0% 5% 10% 5%;">
                   <h2>F1 Team</h2>
@@ -253,20 +253,17 @@ Team :{{ user.team.teamName }}
                         <p><b>${{ teamdata.p1_2.value}}m </b>(Paid:${{ teamdata.p1_2_cost}}m) </p>
                      </dt>
                      <dt class=" DriverSection col-sm-4">
-
-                           <table class="budget-table" style="margin-top:100px;">
-                           <tr><th><h3 id = "budget_title">Budget</h3></th><th></th><tr>
+                        <table class="budget-table" style="margin-top:100px;">
+                           <tr><th><h3 id = "f1_budget_title">Current F1 Cash:</h3></th><th></th>
                            <tr><td id="f1_p1_name" >{{ teamdata.p1_1}}    </td><td id="f1_p1_cost"        >$</td></tr>
                            <tr><td id="f1_p2_name" >{{ teamdata.p1_2}}    </td><td id="f1_p2_cost"        >$</td></tr>
                            <tr><td>Total Cost                             </td><td id="f1_total_cost"     >$</td></tr>
                            <tr><td>Budget remaining                       </td><td id="f1_total_cash_left">$</td></tr>
-                           </tr>
                         </table>
                         <p>
                      </dt>
                   </dl>
-
-
+                  <!-- Edit Table ----->
                   <br />
                   <p style="text-align:right;padding-right:20%;"><input type="submit" name="F1_submit" value="UPDATE DRIVERS"  form="F1_form"></p>
                   <br />
@@ -314,7 +311,6 @@ Team :{{ user.team.teamName }}
                                        </td</tr>
                                     {% endfor%}
                                  </table>
-
                               </form>
                            </div>
                         </div>
@@ -324,31 +320,43 @@ Team :{{ user.team.teamName }}
                   <p style="text-align:right;padding-right:20%;"><br /><br /><input type="submit" name="F1_submit" value="UPDATE DRIVERS"  form="F1_form"></p>
                </div>
             </div>
-            <!------------------ F2 Edit DIV ------------------------>
+
+<!------------------ F2 Edit DIV ------------------------>
             <div class="tab-pane fade" id="F2">
                <div style = "padding: 0% 5% 10% 5%;">
                   <h2>F2 Team</h2>
-                  <dl class="row">
-                     <dt class=" DriverSection col-sm-2"></dt>
-                     <dt class=" DriverSection col-sm-4">
-                        <img src="{{ teamdata.p2_1.mugshot.url}}" style="height:150px;"/>
+                  <dl class="row justify-content-center">
+                     <dt class=" DriverSection col-sm-1"></dt>
+                     <dt class=" DriverSection col-sm-3">
+                        <img src="{{ teamdata.p1_1.mugshot.url}}" style="height:150px;"/>
                         <h4 class="mt-2">{{ teamdata.p2_1}}</h4>
                         <p class="text-right">Lead Driver</p>
                         <p><b>${{ teamdata.p2_1.value}}m </b>(Paid:${{ teamdata.p2_1_cost}}m) </p>
                      </dt>
-                     <dt class=" DriverSection col-sm-4">
+                     <dt class=" DriverSection col-sm-3">
                         <img src="{{ teamdata.p2_2.mugshot.url}}" style="height:150px;"/>
                         <h4 class="mt-2">{{ teamdata.p2_2}}</h4>
                         <p class="text-right">Second Driver</p>
                         <p><b>${{ teamdata.p2_2.value}}m </b>(Paid:${{ teamdata.p2_2_cost}}m) </p>
                      </dt>
+                     <dt class=" DriverSection col-sm-4">
+                        <table class="budget-table" style="margin-top:100px;">
+                           <tr><th><h3 id = "f2_budget_title">Current F2 Cash</h3></th><th></th>
+                           <tr><td id="f2_p1_name" >{{ teamdata.p2_1}}    </td><td id="f2_p1_cost"        >$</td></tr>
+                           <tr><td id="f2_p2_name" >{{ teamdata.p2_2}}    </td><td id="f2_p2_cost"        >$</td></tr>
+                           <tr><td>Total Cost                             </td><td id="f2_total_cost"     >$</td></tr>
+                           <tr><td>Budget remaining                       </td><td id="f2_total_cash_left">$</td></tr>
+                        </table>
+                        <p>
+                     </dt>
                   </dl>
+                  <!-- Edit Table ----->
                   <br />
                   <p style="text-align:right;padding-right:20%;"><input type="submit" name="F2_submit" value="UPDATE DRIVERS"  form="F2_form"></p>
                   <br />
                   <div class="table-wrapper-scroll-y my-custom-scrollbar radio-selector">
                      <div class="container-fluid">
-                        <div class="row">
+                        <div class="row justify-content-center">
                            <!--- Formula 1 --->
                            <div class="col-sm-6">
                               <table class="pickertable">
@@ -369,14 +377,13 @@ Team :{{ user.team.teamName }}
                            </div>
                            <!---Lead driver picker -->
                            <div class="col-sm-2">
-                              <!--FORM-->
-                              <form action="{% url 'teamview' %}?tab=F2" method="POST"  id="F2_form">
+                              <form action="{% url 'teamview' %}?tab=F2" method="POST" id="F2_form">
                                  {% csrf_token %}
                                  <table class="pickertable">
                                     <tr><th style="text-align:center;">Driver #1</th></tr>
                                     {% for driver in f2drivers.all %}
                                        <tr><td>
-                                          <input type="radio" name="p2_1" value=" {{driver.id}} " {% if teamdata.p2_1.id == driver.id %} checked {% endif %}>
+                                          <input type="radio" id="p2_1_picker" name="p2_1_picker" value="{{driver.id}}|{{driver.firstname}} {{driver.surname}}|{{driver.value}}" {% if teamdata.p2_1.id == driver.id %} checked {% endif %}>
                                        </td</tr>
                                     {% endfor%}
                                  </table>
@@ -387,11 +394,10 @@ Team :{{ user.team.teamName }}
                                     <tr><th style="text-align:center;">Driver #2 </th>
                                     {% for driver in f2drivers.all %}
                                        <tr><td>
-                                          <input type="radio" name="p2_2" value=" {{driver.id}} " {% if teamdata.p2_2.id == driver.id %} checked {% endif %}>
+                                          <input type="radio" id="p2_2_picker" name="p2_2_picker" value="{{driver.id}}|{{driver.firstname}} {{driver.surname}}|{{driver.value}}" {% if teamdata.p2_2.id == driver.id %} checked {% endif %}>
                                        </td</tr>
                                     {% endfor%}
                                  </table>
-
                               </form>
                            </div>
                         </div>
@@ -401,31 +407,42 @@ Team :{{ user.team.teamName }}
                   <p style="text-align:right;padding-right:20%;"><br /><br /><input type="submit" name="F2_submit" value="UPDATE DRIVERS"  form="F2_form"></p>
                </div>
             </div>
-            <!------------------ F3 Edit DIV ------------------------>
+<!------------------ F3 Edit DIV ------------------------>
             <div class="tab-pane fade" id="F3">
                <div style = "padding: 0% 5% 10% 5%;">
                   <h2>F3 Team</h2>
-                  <dl class="row">
-                     <dt class=" DriverSection col-sm-2"></dt>
-                     <dt class=" DriverSection col-sm-4">
-                        <img src="{{ teamdata.p2_1.mugshot.url}}" style="height:150px;"/>
+                  <dl class="row justify-content-center">
+                     <dt class=" DriverSection col-sm-1"></dt>
+                     <dt class=" DriverSection col-sm-3">
+                        <img src="{{ teamdata.p3_1.mugshot.url}}" style="height:150px;"/>
                         <h4 class="mt-2">{{ teamdata.p3_1}}</h4>
                         <p class="text-right">Lead Driver</p>
                         <p><b>${{ teamdata.p3_1.value}}m </b>(Paid:${{ teamdata.p3_1_cost}}m) </p>
                      </dt>
-                     <dt class=" DriverSection col-sm-4">
-                        <img src="{{ teamdata.p2_2.mugshot.url}}" style="height:150px;"/>
+                     <dt class=" DriverSection col-sm-3">
+                        <img src="{{ teamdata.p3_2.mugshot.url}}" style="height:150px;"/>
                         <h4 class="mt-2">{{ teamdata.p3_2}}</h4>
                         <p class="text-right">Second Driver</p>
                         <p><b>${{ teamdata.p3_2.value}}m </b>(Paid:${{ teamdata.p3_2_cost}}m) </p>
                      </dt>
+                     <dt class=" DriverSection col-sm-4">
+                        <table class="budget-table" style="margin-top:100px;">
+                           <tr><th><h3 id = "f3_budget_title">Current F2 Cash</h3></th><th></th>
+                           <tr><td id="f3_p1_name" >{{ teamdata.p2_1}}    </td><td id="f3_p1_cost"        >$</td></tr>
+                           <tr><td id="f3_p2_name" >{{ teamdata.p2_2}}    </td><td id="f3_p2_cost"        >$</td></tr>
+                           <tr><td>Total Cost                             </td><td id="f3_total_cost"     >$</td></tr>
+                           <tr><td>Budget remaining                       </td><td id="f3_total_cash_left">$</td></tr>
+                        </table>
+                        <p>
+                     </dt>
                   </dl>
+                  <!-- Edit Table ----->
                   <br />
                   <p style="text-align:right;padding-right:20%;"><input type="submit" name="F3_submit" value="UPDATE DRIVERS"  form="F3_form"></p>
                   <br />
                   <div class="table-wrapper-scroll-y my-custom-scrollbar radio-selector">
                      <div class="container-fluid">
-                        <div class="row">
+                        <div class="row justify-content-center">
                            <!--- Formula 3 --->
                            <div class="col-sm-6">
                               <table class="pickertable">
@@ -446,14 +463,13 @@ Team :{{ user.team.teamName }}
                            </div>
                            <!---Lead driver picker -->
                            <div class="col-sm-2">
-                              <!--FORM-->
-                              <form action="{% url 'teamview' %}?tab=F3" method="POST"  id="F3_form">
+                              <form action="{% url 'teamview' %}?tab=F3" method="POST" id="F3_form">
                                  {% csrf_token %}
                                  <table class="pickertable">
                                     <tr><th style="text-align:center;">Driver #1</th></tr>
                                     {% for driver in f3drivers.all %}
                                        <tr><td>
-                                          <input type="radio" name="p3_1" value=" {{driver.id}} " {% if teamdata.p3_1.id == driver.id %} checked {% endif %}>
+                                          <input type="radio" id="p2_1_picker" name="p3_1_picker" value="{{driver.id}}|{{driver.firstname}} {{driver.surname}}|{{driver.value}}" {% if teamdata.p3_1.id == driver.id %} checked {% endif %}>
                                        </td</tr>
                                     {% endfor%}
                                  </table>
@@ -464,11 +480,10 @@ Team :{{ user.team.teamName }}
                                     <tr><th style="text-align:center;">Driver #2 </th>
                                     {% for driver in f3drivers.all %}
                                        <tr><td>
-                                          <input type="radio" name="p3_2" value=" {{driver.id}} " {% if teamdata.p3_2.id == driver.id %} checked {% endif %}>
+                                          <input type="radio" id="p3_2_picker" name="p3_2_picker" value="{{driver.id}}|{{driver.firstname}} {{driver.surname}}|{{driver.value}}" {% if teamdata.p3_2.id == driver.id %} checked {% endif %}>
                                        </td</tr>
                                     {% endfor%}
                                  </table>
-
                               </form>
                            </div>
                         </div>
@@ -478,32 +493,43 @@ Team :{{ user.team.teamName }}
                   <p style="text-align:right;padding-right:20%;"><br /><br /><input type="submit" name="F3_submit" value="UPDATE DRIVERS"  form="F3_form"></p>
                </div>
             </div>
-            <!------------------ WS Edit DIV ------------------------>
+<!------------------ WS Edit DIV ------------------------>
             <div class="tab-pane fade" id="WS">
                <div style = "padding: 0% 5% 10% 5%;">
-                  <h2>WSeries Team</h2>
-                  <dl class="row">
-                     <dt class=" DriverSection col-sm-2"></dt>
-                     <dt class=" DriverSection col-sm-4">
+                  <h2>W Series Team</h2>
+                  <dl class="row justify-content-center">
+                     <dt class=" DriverSection col-sm-1"></dt>
+                     <dt class=" DriverSection col-sm-3">
                         <img src="{{ teamdata.pw_1.mugshot.url}}" style="height:150px;"/>
                         <h4 class="mt-2">{{ teamdata.pw_1}}</h4>
                         <p class="text-right">Lead Driver</p>
                         <p><b>${{ teamdata.pw_1.value}}m </b>(Paid:${{ teamdata.pw_1_cost}}m) </p>
                      </dt>
-                     <dt class=" DriverSection col-sm-4">
+                     <dt class=" DriverSection col-sm-3">
                         <img src="{{ teamdata.pw_2.mugshot.url}}" style="height:150px;"/>
                         <h4 class="mt-2">{{ teamdata.pw_2}}</h4>
                         <p class="text-right">Second Driver</p>
                         <p><b>${{ teamdata.pw_2.value}}m </b>(Paid:${{ teamdata.pw_2_cost}}m) </p>
                      </dt>
+                     <dt class=" DriverSection col-sm-4">
+                        <table class="budget-table" style="margin-top:100px;">
+                           <tr><th><h3 id = "fw_budget_title">Current WS Cash</h3></th><th></th>
+                           <tr><td id="ws_p1_name" >{{ teamdata.pw_1}}    </td><td id="ws_p1_cost"        >$</td></tr>
+                           <tr><td id="ws_p2_name" >{{ teamdata.pw_2}}    </td><td id="ws_p2_cost"        >$</td></tr>
+                           <tr><td>Total Cost                             </td><td id="ws_total_cost"     >$</td></tr>
+                           <tr><td>Budget remaining                       </td><td id="ws_total_cash_left">$</td></tr>
+                        </table>
+                        <p>
+                     </dt>
                   </dl>
+                  <!-- Edit Table ----->
                   <br />
                   <p style="text-align:right;padding-right:20%;"><input type="submit" name="WS_submit" value="UPDATE DRIVERS"  form="WS_form"></p>
                   <br />
                   <div class="table-wrapper-scroll-y my-custom-scrollbar radio-selector">
                      <div class="container-fluid">
-                        <div class="row">
-                           <!--- Formula WS --->
+                        <div class="row justify-content-center">
+                           <!--- W Series --->
                            <div class="col-sm-6">
                               <table class="pickertable">
                                  <tr><!--<th></th>--><th>Driver</th><th style="text-align:center;">Cost</th><th style="text-align:center;">Points</th>
@@ -523,14 +549,13 @@ Team :{{ user.team.teamName }}
                            </div>
                            <!---Lead driver picker -->
                            <div class="col-sm-2">
-                              <!--FORM-->
-                              <form action="{% url 'teamview' %}?tab=WS" method="POST"  id="WS_form">
+                              <form action="{% url 'teamview' %}?tab=WS" method="POST" id="WS_form">
                                  {% csrf_token %}
                                  <table class="pickertable">
                                     <tr><th style="text-align:center;">Driver #1</th></tr>
                                     {% for driver in wsdrivers.all %}
                                        <tr><td>
-                                          <input type="radio" name="pw_1" value=" {{driver.id}} " {% if teamdata.pw_1.id == driver.id %} checked {% endif %}>
+                                          <input type="radio" id="pw_1_picker" name="pw_1_picker" value="{{driver.id}}|{{driver.firstname}} {{driver.surname}}|{{driver.value}}" {% if teamdata.pw_1.id == driver.id %} checked {% endif %}>
                                        </td</tr>
                                     {% endfor%}
                                  </table>
@@ -541,11 +566,10 @@ Team :{{ user.team.teamName }}
                                     <tr><th style="text-align:center;">Driver #2 </th>
                                     {% for driver in wsdrivers.all %}
                                        <tr><td>
-                                          <input type="radio" name="pw_2" value=" {{driver.id}} " {% if teamdata.pw_2.id == driver.id %} checked {% endif %}>
+                                          <input type="radio" id="pw_2_picker" name="pw_2_picker" value="{{driver.id}}|{{driver.firstname}} {{driver.surname}}|{{driver.value}}" {% if teamdata.pw_2.id == driver.id %} checked {% endif %}>
                                        </td</tr>
                                     {% endfor%}
                                  </table>
-
                               </form>
                            </div>
                         </div>
@@ -555,6 +579,7 @@ Team :{{ user.team.teamName }}
                   <p style="text-align:right;padding-right:20%;"><br /><br /><input type="submit" name="WS_submit" value="UPDATE DRIVERS"  form="WS_form"></p>
                </div>
             </div>
+<!------------------ End WS Edit DIV ------------------------>
          </div>
     </div>
    <br /><br />
@@ -586,54 +611,83 @@ Team :{{ user.team.teamName }}
          //USAGE:  URL/season/teamview?tab=F2
 
          //////////////////////////////////////////////
-         // Set up RHS table numbers with current values
+         // F1 - Set up RHS table numbers with current values
          totalcost = parseFloat({{teamdata.p1_1.value}})+parseFloat({{teamdata.p1_2.value}});
          cashbalance = parseFloat({{teamdata.f1_cashpot}});
-         //elem = document.getElementById('f1_total_cash_left');
          //Fill in Page values
          $("#f1_p1_cost").text("$"+{{teamdata.p1_1.value}}+"m");
          $("#f1_p2_cost").text("$"+{{teamdata.p1_2.value}}+"m");
          $("#f1_total_cost").text("$"+totalcost+"m");
          $("#f1_total_cash_left").text("$"+cashbalance+"m");
 
-///////////Driver 1 selector change///////////////////////////
-         var $radios1 = $('input[name="p1_1_picker"]');
+         //////////////////////////////////////////////
+         // F2 - Set up RHS table numbers with current values
+         totalcost = parseFloat({{teamdata.p2_1.value}})+parseFloat({{teamdata.p2_2.value}});
+         cashbalance = parseFloat({{teamdata.f2_cashpot}});
+         //Fill in Page values
+         $("#f2_p1_cost").text("$"+{{teamdata.p2_1.value}}+"m");
+         $("#f2_p2_cost").text("$"+{{teamdata.p2_2.value}}+"m");
+         $("#f2_total_cost").text("$"+totalcost+"m");
+         $("#f2_total_cash_left").text("$"+cashbalance+"m");
 
-         $radios1.change(function() {
+         //////////////////////////////////////////////
+         // F3 - Set up RHS table numbers with current values
+         totalcost = parseFloat({{teamdata.p3_1.value}})+parseFloat({{teamdata.p3_2.value}});
+         cashbalance = parseFloat({{teamdata.f3_cashpot}});
+         //Fill in Page values
+         $("#f3_p1_cost").text("$"+{{teamdata.p3_1.value}}+"m");
+         $("#f3_p2_cost").text("$"+{{teamdata.p3_2.value}}+"m");
+         $("#f3_total_cost").text("$"+totalcost+"m");
+         $("#f3_total_cash_left").text("$"+cashbalance+"m");
+
+         //////////////////////////////////////////////
+         // WS - Set up RHS table numbers with current values
+         totalcost = parseFloat({{teamdata.pw_1.value}})+parseFloat({{teamdata.pw_2.value}});
+         cashbalance = parseFloat({{teamdata.ws_cashpot}});
+         //Fill in Page values
+         $("#ws_p1_cost").text("$"+{{teamdata.pw_1.value}}+"m");
+         $("#ws_p2_cost").text("$"+{{teamdata.pw_2.value}}+"m");
+         $("#ws_total_cost").text("$"+totalcost+"m");
+         $("#ws_total_cash_left").text("$"+cashbalance+"m");
+
+
+///////////F1 Driver 1 selector change///////////////////////////
+         var $radios1_1 = $('input[name="p1_1_picker"]');
+
+         $radios1_1.change(function() {
             //Get Cash balance
             cashbalance = $("#f1_total_cash_left").text();
             cashbalance = parseFloat(cashbalance.substring(1, cashbalance.length-1));
 
             //Change Title First time
-            $("#budget_title").text("New Team Picks:");
+            $("#f1_budget_title").text("New Team Picks:");
 
             //add departing driver cost to cashbalance
-            p1_dep_val = $("#f1_p1_cost").text();
-            p1_dep_val = p1_dep_val.substring(1, p1_dep_val.length-1);           //Strip $ amd m
-            cashbalance += parseFloat(p1_dep_val);                               //turn it back into a number
+            p1_1_dep_val = $("#f1_p1_cost").text();
+            p1_1_dep_val = p1_1_dep_val.substring(1, p1_1_dep_val.length-1);           //Strip $ amd m
+            cashbalance += parseFloat(p1_1_dep_val);                               //turn it back into a number
 
             //Pick up new radio button values and show
-            var $checked = $radios1.filter(function() {
+            var $checked = $radios1_1.filter(function() {
                return $(this).prop('checked');
             });
             var $f1_p1 = $checked.val().split('|');
-            var p1_new_value = $f1_p1.pop();
-            var p1_new_name = $f1_p1.pop();
+            var p1_1_new_value = $f1_p1.pop();
+            var p1_1_new_name = $f1_p1.pop();
 
             // Update RHS fields
-            $("#f1_p1_cost").text('$'+p1_new_value+'m');
-            $("#f1_p1_name").text(p1_new_name);
+            $("#f1_p1_cost").text('$'+p1_1_new_value+'m');
+            $("#f1_p1_name").text(p1_1_new_name);
 
             //update teamTotalCost - first get OTHER driver cost
-            p2_dep_val = $("#f1_p2_cost").text()
-            p2_dep_val = p2_dep_val.substring(1, p2_dep_val.length-1);
-            teamTotalCost = parseFloat(p1_new_value) + parseFloat(p2_dep_val);
+            p1_2_dep_val = $("#f1_p2_cost").text()
+            p1_2_dep_val = p1_2_dep_val.substring(1, p1_2_dep_val.length-1);
+            teamTotalCost = parseFloat(p1_1_new_value) + parseFloat(p1_2_dep_val);
             teamTotalCost = teamTotalCost.toFixed(1);
             $("#f1_total_cost").text('$' + teamTotalCost + 'm');
 
             //deduct new driver cost from cashbalance
-            console.log(cashbalance, '- - -', parseFloat(p1_new_value), '= = =', cashbalance - p1_new_value );
-            cashbalance -= parseFloat(p1_new_value);
+            cashbalance -= parseFloat(p1_1_new_value);
 
             //round it.
             cashbalance = cashbalance.toFixed(1);
@@ -642,44 +696,43 @@ Team :{{ user.team.teamName }}
             else                 {$('#f1_total_cash_left').css('color', 'black'); $('input[name="F1_submit"]').removeAttr('disabled');}
          });
 
-///////////Driver 2 selector change///////////////////////////
-         var $radios2 = $('input[name="p1_2_picker"]');
+///////////F1 Driver 2 selector change///////////////////////////
+         var $radios1_2 = $('input[name="p1_2_picker"]');
 
-         $radios2.change(function() {
+         $radios1_2.change(function() {
             //Get Cash balance
             cashbalance = $("#f1_total_cash_left").text();
             cashbalance = parseFloat(cashbalance.substring(1, cashbalance.length-1));
 
             //Change Title First time
-            $("#budget_title").text("New Team Picks:");
+            $("#f1_budget_title").text("New Team Picks:");
 
             //add departing driver cost to cashbalance
-            p2_dep_val = $("#f1_p2_cost").text();
-            p2_dep_val = p2_dep_val.substring(1, p2_dep_val.length-1);            //Strip $ amd m
-            cashbalance += parseFloat(p2_dep_val);                               //turn it back into a number
+            p1_2_dep_val = $("#f1_p2_cost").text();
+            p1_2_dep_val = p1_2_dep_val.substring(1, p1_2_dep_val.length-1);            //Strip $ amd m
+            cashbalance += parseFloat(p1_2_dep_val);                               //turn it back into a number
 
             //Pick up new radio button values and show
-            var $checked = $radios2.filter(function() {
+            var $checked = $radios1_2.filter(function() {
                return $(this).prop('checked');
             });
             var $f1_p2 = $checked.val().split('|');
-            var p2_new_value = $f1_p2.pop();
-            var p2_new_name = $f1_p2.pop();
+            var p1_2_new_value = $f1_p2.pop();
+            var p1_2_new_name = $f1_p2.pop();
 
             // Update RHS fields
-            $("#f1_p2_cost").text('$'+p2_new_value+'m');
-            $("#f1_p2_name").text(p2_new_name);
+            $("#f1_p2_cost").text('$'+p1_2_new_value+'m');
+            $("#f1_p2_name").text(p1_2_new_name);
 
             //update teamTotalCost - first get OTHER driver cost
-            p1_dep_val = $("#f1_p1_cost").text()
-            p1_dep_val = p1_dep_val.substring(1, p1_dep_val.length-1);
-            teamTotalCost = parseFloat(p2_new_value) + parseFloat(p1_dep_val);
+            p1_1_dep_val = $("#f1_p1_cost").text()
+            p1_1_dep_val = p1_1_dep_val.substring(1, p1_1_dep_val.length-1);
+            teamTotalCost = parseFloat(p1_2_new_value) + parseFloat(p1_1_dep_val);
             teamTotalCost = teamTotalCost.toFixed(1);
             $("#f1_total_cost").text('$' + teamTotalCost + 'm');
 
             //deduct new driver cost from cashbalance
-            console.log( cashbalance, ' - ', parseFloat(p2_new_value),  cashbalance - parseFloat(p2_new_value));
-            cashbalance -= parseFloat(p2_new_value);
+            cashbalance -= parseFloat(p1_2_new_value);
             //round it.
             cashbalance = cashbalance.toFixed(1);
             //show new cash balance
@@ -688,6 +741,278 @@ Team :{{ user.team.teamName }}
             else                 {$('#f1_total_cash_left').css('color', 'black'); $('input[name="F1_submit"]').removeAttr('disabled');}
          });
 
+///////////F2 Driver 1 selector change///////////////////////////
+         var $radios2_1 = $('input[name="p2_1_picker"]');
+
+         $radios2_1.change(function() {
+            //Get Cash balance
+            cashbalance = $("#f2_total_cash_left").text();
+            cashbalance = parseFloat(cashbalance.substring(1, cashbalance.length-1));
+
+            //Change Title First time
+            $("#f2_budget_title").text("New Team Picks:");
+
+            //add departing driver cost to cashbalance
+            p2_1_dep_val = $("#f2_p1_cost").text();
+            p2_1_dep_val = p2_1_dep_val.substring(1, p2_1_dep_val.length-1);       //Strip $ amd m
+            cashbalance += parseFloat(p2_1_dep_val);                               //turn it back into a number
+
+            //Pick up new radio button values and show
+            var $checked = $radios2_1.filter(function() {
+               return $(this).prop('checked');
+            });
+            var $f2_p1 = $checked.val().split('|');
+            var p2_1_new_value = $f2_p1.pop();
+            var p2_1_new_name = $f2_p1.pop();
+
+            // Update RHS fields
+            $("#f2_p1_cost").text('$'+p2_1_new_value+'m');
+            $("#f2_p1_name").text(p2_1_new_name);
+
+            //update teamTotalCost - first get OTHER driver cost
+            p2_2_dep_val = $("#f2_p2_cost").text()
+            p2_2_dep_val = p2_2_dep_val.substring(1, p2_2_dep_val.length-1);
+            teamTotalCost = parseFloat(p2_1_new_value) + parseFloat(p2_2_dep_val);
+            teamTotalCost = teamTotalCost.toFixed(1);
+            $("#f2_total_cost").text('$' + teamTotalCost + 'm');
+
+            //deduct new driver cost from cashbalance
+            cashbalance -= parseFloat(p2_1_new_value);
+
+            //round it.
+            cashbalance = cashbalance.toFixed(1);
+            $("#f2_total_cash_left").text('$'+cashbalance+'m');
+            if (cashbalance < 0) {$('#f2_total_cash_left').css('color', 'red');   $('input[name="F2_submit"]').attr('disabled','disabled');}
+            else                 {$('#f2_total_cash_left').css('color', 'black'); $('input[name="F2_submit"]').removeAttr('disabled');}
+         });
+
+///////////F2 Driver 2 selector change///////////////////////////
+         var $radios2_2 = $('input[name="p2_2_picker"]');
+
+         $radios2_2.change(function() {
+            //Get Cash balance
+            cashbalance = $("#f2_total_cash_left").text();
+            cashbalance = parseFloat(cashbalance.substring(1, cashbalance.length-1));
+
+            //Change Title First time
+            $("#f2_budget_title").text("New Team Picks:");
+
+            //add departing driver cost to cashbalance
+            p2_2_dep_val = $("#f2_p2_cost").text();
+            p2_2_dep_val = p2_2_dep_val.substring(1, p2_2_dep_val.length-1);            //Strip $ amd m
+            cashbalance += parseFloat(p2_2_dep_val);                               //turn it back into a number
+
+            //Pick up new radio button values and show
+            var $checked = $radios2_2.filter(function() {
+               return $(this).prop('checked');
+            });
+            var $f2_p2 = $checked.val().split('|');
+            var p2_2_new_value = $f2_p2.pop();
+            var p2_2_new_name  = $f2_p2.pop();
+
+            // Update RHS fields
+            $("#f2_p2_cost").text('$'+p2_2_new_value+'m');
+            $("#f2_p2_name").text(p2_2_new_name);
+
+            //update teamTotalCost - first get OTHER driver cost
+            p2_1_dep_val = $("#f2_p1_cost").text()
+            p2_1_dep_val = p2_1_dep_val.substring(1, p2_1_dep_val.length-1);
+            teamTotalCost = parseFloat(p2_2_new_value) + parseFloat(p2_1_dep_val);
+            teamTotalCost = teamTotalCost.toFixed(1);
+            $("#f2_total_cost").text('$' + teamTotalCost + 'm');
+
+            //deduct new driver cost from cashbalance
+            cashbalance -= parseFloat(p2_2_new_value);
+            //round it.
+            cashbalance = cashbalance.toFixed(1);
+            //show new cash balance
+            $("#f2_total_cash_left").text('$'+cashbalance+'m');
+            if (cashbalance < 0) {$('#f2_total_cash_left').css('color', 'red');   $('input[name="F2_submit"]').attr('disabled','disabled');}
+            else                 {$('#f2_total_cash_left').css('color', 'black'); $('input[name="F2_submit"]').removeAttr('disabled');}
+         });
+
+/////////// END F2 Driver 2 selector change///////////////////////////
+/////////// F3 Driver 1 selector change///////////////////////////
+         var $radios3_1 = $('input[name="p3_1_picker"]');
+
+         $radios3_1.change(function() {
+            //Get Cash balance
+            cashbalance = $("#f3_total_cash_left").text();
+            cashbalance = parseFloat(cashbalance.substring(1, cashbalance.length-1));
+
+            //Change Title First time
+            $("#f3_budget_title").text("New Team Picks:");
+
+            //add departing driver cost to cashbalance
+            p3_1_dep_val = $("#f3_p1_cost").text();
+            p3_1_dep_val = p3_1_dep_val.substring(1, p3_1_dep_val.length-1);       //Strip $ amd m
+            cashbalance += parseFloat(p3_1_dep_val);                               //turn it back into a number
+
+            //Pick up new radio button values and show
+            var $checked = $radios3_1.filter(function() {
+               return $(this).prop('checked');
+            });
+            var $f3_p1 = $checked.val().split('|');
+            var p3_1_new_value = $f3_p1.pop();
+            var p3_1_new_name = $f3_p1.pop();
+
+            // Update RHS fields
+            $("#f3_p1_cost").text('$'+p3_1_new_value+'m');
+            $("#f3_p1_name").text(p3_1_new_name);
+
+            //update teamTotalCost - first get OTHER driver cost
+            p3_2_dep_val = $("#f3_p2_cost").text()
+            p3_2_dep_val = p3_2_dep_val.substring(1, p3_2_dep_val.length-1);
+            teamTotalCost = parseFloat(p3_1_new_value) + parseFloat(p3_2_dep_val);
+            teamTotalCost = teamTotalCost.toFixed(1);
+            $("#f3_total_cost").text('$' + teamTotalCost + 'm');
+
+            //deduct new driver cost from cashbalance
+            cashbalance -= parseFloat(p3_1_new_value);
+
+            //round it.
+            cashbalance = cashbalance.toFixed(1);
+            $("#f3_total_cash_left").text('$'+cashbalance+'m');
+            if (cashbalance < 0) {$('#f3_total_cash_left').css('color', 'red');   $('input[name="F3_submit"]').attr('disabled','disabled');}
+            else                 {$('#f3_total_cash_left').css('color', 'black'); $('input[name="F3_submit"]').removeAttr('disabled');}
+         });
+
+///////////F3 Driver 2 selector change///////////////////////////
+         var $radios3_2 = $('input[name="p3_2_picker"]');
+
+         $radios3_2.change(function() {
+            //Get Cash balance
+            cashbalance = $("#f3_total_cash_left").text();
+            cashbalance = parseFloat(cashbalance.substring(1, cashbalance.length-1));
+
+            //Change Title First time
+            $("#f3_budget_title").text("New Team Picks:");
+
+            //add departing driver cost to cashbalance
+            p3_2_dep_val = $("#f3_p2_cost").text();
+            p3_2_dep_val = p3_2_dep_val.substring(1, p3_2_dep_val.length-1);            //Strip $ amd m
+            cashbalance += parseFloat(p3_2_dep_val);                               //turn it back into a number
+
+            //Pick up new radio button values and show
+            var $checked = $radios3_2.filter(function() {
+               return $(this).prop('checked');
+            });
+            var $f3_p2 = $checked.val().split('|');
+            var p3_2_new_value = $f3_p2.pop();
+            var p3_2_new_name  = $f3_p2.pop();
+
+            // Update RHS fields
+            $("#f3_p2_cost").text('$'+p3_2_new_value+'m');
+            $("#f3_p2_name").text(p3_2_new_name);
+
+            //update teamTotalCost - first get OTHER driver cost
+            p3_1_dep_val = $("#f3_p1_cost").text()
+            p3_1_dep_val = p3_1_dep_val.substring(1, p3_1_dep_val.length-1);
+            teamTotalCost = parseFloat(p3_2_new_value) + parseFloat(p3_1_dep_val);
+            teamTotalCost = teamTotalCost.toFixed(1);
+            $("#f3_total_cost").text('$' + teamTotalCost + 'm');
+
+            //deduct new driver cost from cashbalance
+            cashbalance -= parseFloat(p3_2_new_value);
+            //round it.
+            cashbalance = cashbalance.toFixed(1);
+            //show new cash balance
+            $("#f3_total_cash_left").text('$'+cashbalance+'m');
+            if (cashbalance < 0) {$('#f3_total_cash_left').css('color', 'red');   $('input[name="F3_submit"]').attr('disabled','disabled');}
+            else                 {$('#f3_total_cash_left').css('color', 'black'); $('input[name="F3_submit"]').removeAttr('disabled');}
+         });
+
+/////////// END F3 Driver 2 selector change///////////////////////////
+/////////// WS Driver 1 selector change///////////////////////////////
+         var $radiosw_1 = $('input[name="pw_1_picker"]');
+
+         $radiosw_1.change(function() {
+            //Get Cash balance
+            cashbalance = $("#ws_total_cash_left").text();
+            cashbalance = parseFloat(cashbalance.substring(1, cashbalance.length-1));
+
+            //Change Title First time
+            $("#ws_budget_title").text("New Team Picks:");
+
+            //add departing driver cost to cashbalance
+            pw_1_dep_val = $("#ws_p1_cost").text();
+            pw_1_dep_val = pw_1_dep_val.substring(1, pw_1_dep_val.length-1);       //Strip $ amd m
+            cashbalance += parseFloat(pw_1_dep_val);                               //turn it back into a number
+
+            //Pick up new radio button values and show
+            var $checked = $radiosw_1.filter(function() {
+               return $(this).prop('checked');
+            });
+            var $ws_p1 = $checked.val().split('|');
+            var pw_1_new_value = $ws_p1.pop();
+            var pw_1_new_name = $ws_p1.pop();
+
+            // Update RHS fields
+            $("#ws_p1_cost").text('$'+pw_1_new_value+'m');
+            $("#ws_p1_name").text(pw_1_new_name);
+
+            //update teamTotalCost - first get OTHER driver cost
+            pw_2_dep_val = $("#ws_p2_cost").text()
+            pw_2_dep_val = pw_2_dep_val.substring(1, pw_2_dep_val.length-1);
+            teamTotalCost = parseFloat(pw_1_new_value) + parseFloat(pw_2_dep_val);
+            teamTotalCost = teamTotalCost.toFixed(1);
+            $("#ws_total_cost").text('$' + teamTotalCost + 'm');
+
+            //deduct new driver cost from cashbalance
+            cashbalance -= parseFloat(pw_1_new_value);
+
+            //round it.
+            cashbalance = cashbalance.toFixed(1);
+            $("#ws_total_cash_left").text('$'+cashbalance+'m');
+            if (cashbalance < 0) {$('#ws_total_cash_left').css('color', 'red');   $('input[name="ws_submit"]').attr('disabled','disabled');}
+            else                 {$('#ws_total_cash_left').css('color', 'black'); $('input[name="ws_submit"]').removeAttr('disabled');}
+         });
+
+///////////WS Driver 2 selector change///////////////////////////
+         var $radiosw_2 = $('input[name="pw_2_picker"]');
+
+         $radiosw_2.change(function() {
+            //Get Cash balance
+            cashbalance = $("#ws_total_cash_left").text();
+            cashbalance = parseFloat(cashbalance.substring(1, cashbalance.length-1));
+
+            //Change Title First time
+            $("#ws_budget_title").text("New Team Picks:");
+
+            //add departing driver cost to cashbalance
+            pw_2_dep_val = $("#ws_p2_cost").text();
+            pw_2_dep_val = pw_2_dep_val.substring(1, pw_2_dep_val.length-1);            //Strip $ amd m
+            cashbalance += parseFloat(pw_2_dep_val);                               //turn it back into a number
+
+            //Pick up new radio button values and show
+            var $checked = $radiosw_2.filter(function() {
+               return $(this).prop('checked');
+            });
+            var $ws_p2 = $checked.val().split('|');
+            var pw_2_new_value = $ws_p2.pop();
+            var pw_2_new_name  = $ws_p2.pop();
+
+            // Update RHS fields
+            $("#ws_p2_cost").text('$'+pw_2_new_value+'m');
+            $("#ws_p2_name").text(pw_2_new_name);
+
+            //update teamTotalCost - first get OTHER driver cost
+            pw_1_dep_val = $("#ws_p1_cost").text()
+            pw_1_dep_val = pw_1_dep_val.substring(1, pw_1_dep_val.length-1);
+            teamTotalCost = parseFloat(pw_2_new_value) + parseFloat(pw_1_dep_val);
+            teamTotalCost = teamTotalCost.toFixed(1);
+            $("#ws_total_cost").text('$' + teamTotalCost + 'm');
+
+            //deduct new driver cost from cashbalance
+            cashbalance -= parseFloat(pw_2_new_value);
+            //round it.
+            cashbalance = cashbalance.toFixed(1);
+            //show new cash balance
+            $("#ws_total_cash_left").text('$'+cashbalance+'m');
+            if (cashbalance < 0) {$('#ws_total_cash_left').css('color', 'red');   $('input[name="ws_submit"]').attr('disabled','disabled');}
+            else                 {$('#ws_total_cash_left').css('color', 'black'); $('input[name="ws_submit"]').removeAttr('disabled');}
+         });
+/////////// END WS Driver 2 selector change///////////////////////////
       });
    </script>
 {% endblock %}
