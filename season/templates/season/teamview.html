@@ -587,9 +587,9 @@ Team :{{ user.team.teamName }}
 
          //////////////////////////////////////////////
          // Set up RHS table numbers with current values
-         totalcost = {{teamdata.p1_1.value}}+{{teamdata.p1_2.value}}
-         cashbalance = {{teamdata.f1_cashpot}};
-         elem = document.getElementById('f1_total_cash_left');
+         totalcost = parseFloat({{teamdata.p1_1.value}})+parseFloat({{teamdata.p1_2.value}});
+         cashbalance = parseFloat({{teamdata.f1_cashpot}});
+         //elem = document.getElementById('f1_total_cash_left');
          //Fill in Page values
          $("#f1_p1_cost").text("$"+{{teamdata.p1_1.value}}+"m");
          $("#f1_p2_cost").text("$"+{{teamdata.p1_2.value}}+"m");
@@ -600,33 +600,43 @@ Team :{{ user.team.teamName }}
          var $radios1 = $('input[name="p1_1_picker"]');
 
          $radios1.change(function() {
+            //Get Cash balance
+            cashbalance = $("#f1_total_cash_left").text();
+            cashbalance = parseFloat(cashbalance.substring(1, cashbalance.length-1));
+
+            //Change Title First time
             $("#budget_title").text("New Team Picks:");
+
             //add departing driver cost to cashbalance
             p1_dep_val = $("#f1_p1_cost").text();
-            //turn it back into a number
-            p1_dep_val = p1_dep_val.substring(1, p1_dep_val.length-1);
-            cashbalance += parseInt(p1_dep_val);
+            p1_dep_val = p1_dep_val.substring(1, p1_dep_val.length-1);           //Strip $ amd m
+            cashbalance += parseFloat(p1_dep_val);                               //turn it back into a number
 
             //Pick up new radio button values and show
             var $checked = $radios1.filter(function() {
                return $(this).prop('checked');
             });
             var $f1_p1 = $checked.val().split('|');
-            var p1_new_value = parseInt($f1_p1.pop());
+            var p1_new_value = $f1_p1.pop();
             var p1_new_name = $f1_p1.pop();
 
             // Update RHS fields
             $("#f1_p1_cost").text('$'+p1_new_value+'m');
             $("#f1_p1_name").text(p1_new_name);
 
-            //update teamTotalCost - first get other driver cost
+            //update teamTotalCost - first get OTHER driver cost
             p2_dep_val = $("#f1_p2_cost").text()
             p2_dep_val = p2_dep_val.substring(1, p2_dep_val.length-1);
-            teamTotalCost = parseInt(p1_new_value) + parseInt(p2_dep_val);
+            teamTotalCost = parseFloat(p1_new_value) + parseFloat(p2_dep_val);
+            teamTotalCost = teamTotalCost.toFixed(1);
             $("#f1_total_cost").text('$' + teamTotalCost + 'm');
 
             //deduct new driver cost from cashbalance
-            cashbalance -= parseInt(p1_new_value);
+            console.log(cashbalance, '- - -', parseFloat(p1_new_value), '= = =', cashbalance - p1_new_value );
+            cashbalance -= parseFloat(p1_new_value);
+
+            //round it.
+            cashbalance = cashbalance.toFixed(1);
             $("#f1_total_cash_left").text('$'+cashbalance+'m');
             if (cashbalance < 0) {$('#f1_total_cash_left').css('color', 'red');   $('input[name="F1_submit"]').attr('disabled','disabled');}
             else                 {$('#f1_total_cash_left').css('color', 'black'); $('input[name="F1_submit"]').removeAttr('disabled');}
@@ -636,33 +646,42 @@ Team :{{ user.team.teamName }}
          var $radios2 = $('input[name="p1_2_picker"]');
 
          $radios2.change(function() {
+            //Get Cash balance
+            cashbalance = $("#f1_total_cash_left").text();
+            cashbalance = parseFloat(cashbalance.substring(1, cashbalance.length-1));
+
+            //Change Title First time
             $("#budget_title").text("New Team Picks:");
+
             //add departing driver cost to cashbalance
             p2_dep_val = $("#f1_p2_cost").text();
-            //turn it back into a number
-            p2_dep_val = p2_dep_val.substring(1, p2_dep_val.length-1);
-            cashbalance += parseInt(p2_dep_val);
+            p2_dep_val = p2_dep_val.substring(1, p2_dep_val.length-1);            //Strip $ amd m
+            cashbalance += parseFloat(p2_dep_val);                               //turn it back into a number
 
             //Pick up new radio button values and show
             var $checked = $radios2.filter(function() {
                return $(this).prop('checked');
             });
             var $f1_p2 = $checked.val().split('|');
-            var p2_new_value = parseInt($f1_p2.pop());
+            var p2_new_value = $f1_p2.pop();
             var p2_new_name = $f1_p2.pop();
 
             // Update RHS fields
             $("#f1_p2_cost").text('$'+p2_new_value+'m');
             $("#f1_p2_name").text(p2_new_name);
 
-            //update teamTotalCost - first get other driver cost
+            //update teamTotalCost - first get OTHER driver cost
             p1_dep_val = $("#f1_p1_cost").text()
             p1_dep_val = p1_dep_val.substring(1, p1_dep_val.length-1);
-            teamTotalCost = parseInt(p2_new_value) + parseInt(p1_dep_val);
+            teamTotalCost = parseFloat(p2_new_value) + parseFloat(p1_dep_val);
+            teamTotalCost = teamTotalCost.toFixed(1);
             $("#f1_total_cost").text('$' + teamTotalCost + 'm');
 
             //deduct new driver cost from cashbalance
-            cashbalance -= parseInt(p2_new_value);
+            console.log( cashbalance, ' - ', parseFloat(p2_new_value),  cashbalance - parseFloat(p2_new_value));
+            cashbalance -= parseFloat(p2_new_value);
+            //round it.
+            cashbalance = cashbalance.toFixed(1);
             //show new cash balance
             $("#f1_total_cash_left").text('$'+cashbalance+'m');
             if (cashbalance < 0) {$('#f1_total_cash_left').css('color', 'red');   $('input[name="F1_submit"]').attr('disabled','disabled');}

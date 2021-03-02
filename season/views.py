@@ -108,7 +108,9 @@ def teamview(request):
                 returnmessage = 'You have chosen the same driver twice - please choose again'
             else:
                 recordtoedit.p1_1 = new_p1_1
+                recordtoedit.p1_1_cost = new_p1_1.value
                 recordtoedit.p1_2 = new_p1_2
+                recordtoedit.p1_2_cost = new_p1_2.value
                 recordtoedit.f1_cashpot = new_cash_pot
                 #Save data to table
                 recordtoedit.save()
