@@ -586,23 +586,16 @@ Team :{{ user.team.teamName }}
          //USAGE:  URL/season/teamview?tab=F2
 
          //////////////////////////////////////////////
-         // total Cost
+         // Set up RHS table numbers with current values
          totalcost = {{teamdata.p1_1.value}}+{{teamdata.p1_2.value}}
          cashbalance = {{teamdata.f1_cashpot}};
-         //cashbalance -= {{teamdata.p1_1.value}};
-         //cashbalance -= {{teamdata.p1_2.value}};
          elem = document.getElementById('f1_total_cash_left');
-         //elem.style.background = 'red';
-         //elem.style.background = 'red';
          //Fill in Page values
          $("#f1_p1_cost").text("$"+{{teamdata.p1_1.value}}+"m");
          $("#f1_p2_cost").text("$"+{{teamdata.p1_2.value}}+"m");
          $("#f1_total_cost").text("$"+totalcost+"m");
          $("#f1_total_cash_left").text("$"+cashbalance+"m");
-         if (cashbalance < 0) {
-            $('#f1_total_cash_left').css('color', 'red');
-            //alert("Negative cash balance - choose again");
-         }
+
 ///////////Driver 1 selector change///////////////////////////
          var $radios1 = $('input[name="p1_1_picker"]');
 
@@ -619,14 +612,21 @@ Team :{{ user.team.teamName }}
                return $(this).prop('checked');
             });
             var $f1_p1 = $checked.val().split('|');
-            var p1_new_value = $f1_p1.pop();
-            $("#f1_p1_cost").text('$'+p1_new_value+'m');
+            var p1_new_value = parseInt($f1_p1.pop());
             var p1_new_name = $f1_p1.pop();
+
+            // Update RHS fields
+            $("#f1_p1_cost").text('$'+p1_new_value+'m');
             $("#f1_p1_name").text(p1_new_name);
+
+            //update teamTotalCost - first get other driver cost
+            p2_dep_val = $("#f1_p2_cost").text()
+            p2_dep_val = p2_dep_val.substring(1, p2_dep_val.length-1);
+            teamTotalCost = parseInt(p1_new_value) + parseInt(p2_dep_val);
+            $("#f1_total_cost").text('$' + teamTotalCost + 'm');
 
             //deduct new driver cost from cashbalance
             cashbalance -= parseInt(p1_new_value);
-            //show new cash balance
             $("#f1_total_cash_left").text('$'+cashbalance+'m');
             if (cashbalance < 0) {$('#f1_total_cash_left').css('color', 'red');   $('input[name="F1_submit"]').attr('disabled','disabled');}
             else                 {$('#f1_total_cash_left').css('color', 'black'); $('input[name="F1_submit"]').removeAttr('disabled');}
@@ -648,15 +648,21 @@ Team :{{ user.team.teamName }}
                return $(this).prop('checked');
             });
             var $f1_p2 = $checked.val().split('|');
-            var p2_new_value = $f1_p2.pop();
-            $("#f1_p2_cost").text('$'+p2_new_value+'m');
+            var p2_new_value = parseInt($f1_p2.pop());
             var p2_new_name = $f1_p2.pop();
+
+            // Update RHS fields
+            $("#f1_p2_cost").text('$'+p2_new_value+'m');
             $("#f1_p2_name").text(p2_new_name);
+
+            //update teamTotalCost - first get other driver cost
+            p1_dep_val = $("#f1_p1_cost").text()
+            p1_dep_val = p1_dep_val.substring(1, p1_dep_val.length-1);
+            teamTotalCost = parseInt(p2_new_value) + parseInt(p1_dep_val);
+            $("#f1_total_cost").text('$' + teamTotalCost + 'm');
 
             //deduct new driver cost from cashbalance
             cashbalance -= parseInt(p2_new_value);
-            //Round to 1 decimal place (not sure why we have to do this..)
-            cashbalance = Math.round(cashbalance * 10) / 10
             //show new cash balance
             $("#f1_total_cash_left").text('$'+cashbalance+'m');
             if (cashbalance < 0) {$('#f1_total_cash_left').css('color', 'red');   $('input[name="F1_submit"]').attr('disabled','disabled');}
