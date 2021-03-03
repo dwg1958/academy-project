@@ -8,9 +8,12 @@ Team Name
 <!---- STYLE --------->
 {% block css %}
 <style>
-   p{
-      font-size: 1.2rem;
+   td, th, input{
+      font-size : 1.4rem;
+      padding :0% 3% 2% 2%;
+      vertical-align: top;
    }
+   
 </style>
 {% endblock %}
 
@@ -33,8 +36,8 @@ Team Name
             {{ team_form.as_table }}
         </table>
         <br />
-        <p style = "padding: 3% 0px 0% 15%;">
-            <input type="submit" value="Save Changes">
+        <p style = "padding: 2% 0px 0% 10%;">
+            <input type="submit" class="btn btn-primary" value="Save Changes">
         </p>
         {% csrf_token %}
     </form>

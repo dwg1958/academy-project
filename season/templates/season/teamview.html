@@ -614,6 +614,8 @@ Team :{{ user.team.teamName }}
          // F1 - Set up RHS table numbers with current values
          totalcost = parseFloat({{teamdata.p1_1.value}})+parseFloat({{teamdata.p1_2.value}});
          cashbalance = parseFloat({{teamdata.f1_cashpot}});
+         totalcost = totalcost.toFixed(1);
+         cashbalance = cashbalance.toFixed(1);
          //Fill in Page values
          $("#f1_p1_cost").text("$"+{{teamdata.p1_1.value}}+"m");
          $("#f1_p2_cost").text("$"+{{teamdata.p1_2.value}}+"m");
@@ -624,6 +626,8 @@ Team :{{ user.team.teamName }}
          // F2 - Set up RHS table numbers with current values
          totalcost = parseFloat({{teamdata.p2_1.value}})+parseFloat({{teamdata.p2_2.value}});
          cashbalance = parseFloat({{teamdata.f2_cashpot}});
+         totalcost = totalcost.toFixed(1);
+         cashbalance = cashbalance.toFixed(1);
          //Fill in Page values
          $("#f2_p1_cost").text("$"+{{teamdata.p2_1.value}}+"m");
          $("#f2_p2_cost").text("$"+{{teamdata.p2_2.value}}+"m");
@@ -634,6 +638,8 @@ Team :{{ user.team.teamName }}
          // F3 - Set up RHS table numbers with current values
          totalcost = parseFloat({{teamdata.p3_1.value}})+parseFloat({{teamdata.p3_2.value}});
          cashbalance = parseFloat({{teamdata.f3_cashpot}});
+         totalcost = totalcost.toFixed(1);
+         cashbalance = cashbalance.toFixed(1);
          //Fill in Page values
          $("#f3_p1_cost").text("$"+{{teamdata.p3_1.value}}+"m");
          $("#f3_p2_cost").text("$"+{{teamdata.p3_2.value}}+"m");
@@ -644,6 +650,8 @@ Team :{{ user.team.teamName }}
          // WS - Set up RHS table numbers with current values
          totalcost = parseFloat({{teamdata.pw_1.value}})+parseFloat({{teamdata.pw_2.value}});
          cashbalance = parseFloat({{teamdata.ws_cashpot}});
+         totalcost = totalcost.toFixed(1);
+         cashbalance = cashbalance.toFixed(1);
          //Fill in Page values
          $("#ws_p1_cost").text("$"+{{teamdata.pw_1.value}}+"m");
          $("#ws_p2_cost").text("$"+{{teamdata.pw_2.value}}+"m");
