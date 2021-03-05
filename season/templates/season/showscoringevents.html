@@ -30,11 +30,11 @@ Events
 <!--------------------------------------------------------------->
 {% block content %}
 
-<div style = "padding: 2% 0px 2% 15%;">
-   <h1 style = "padding: 1% 0% 0% 0%;"> {{ eventname }} Events </h1>
+<div style = "padding: 2% 5% 2% 5%;">
+   <h1> {{ eventname }} Events </h1>
    <br />
-   <div style = "padding: 2% 0px 2% 5%;">
-         <table class="bigtable" >
+   <div >
+         <table class="table table-striped table-sm" >
             <tr>
                <th> Name </th>
                <th> Date / Time </th>
@@ -45,7 +45,7 @@ Events
             <tr>
                <td>
                   {% if event.results_in %}
-                     <a href = "{% url 'showresults' %}?scoringevent={{event.id}}" >{{event.name}}</a>  
+                     <a href = "{% url 'showresults' %}?scoringevent={{event.id}}" >{{event.name}}</a>
                   {% else%}
                      {{ event.name }}
                   {% endif %}

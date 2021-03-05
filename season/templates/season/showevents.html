@@ -5,6 +5,9 @@
 {% block title %}
 Events
 {% endblock %}
+{% block breadcrumb %}
+Events
+{% endblock %}
 
 {% block css%}
 <style>
@@ -24,17 +27,16 @@ Events
       font-size:1.2rem;
    }
 </style>
-<link href="{% static '/academy/css/datetimepicker.css' %}" rel="stylesheet">
 {% endblock %}
 
 <!--------------------------------------------------------------->
 {% block content %}
 
-<div style = "padding: 2% 0px 2% 15%;">
-   <h1 style = "padding: 1% 0% 0% 0%;"> 2020 Events </h1>
+<div style = "padding: 2% 5% 2% 5%;">
+   <h1> <script>document.write(new Date().getFullYear())</script> Events </h1>
    <br />
    <div>
-         <table class="bigtable">
+         <table class="table table-striped table-sm">
             <tr>
                <th> Name </th>
                <th> Date / time </th>

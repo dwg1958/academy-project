@@ -20,7 +20,7 @@ def showevents(request):
 def showscoringevents(request):
     if request.method == 'GET' and 'event' in request.GET:
         event = request.GET['event']
-        allevents = ScoringEvent.objects.filter(event_ID = event)
+        allevents = ScoringEvent.objects.filter(event_ID = event).order_by('startDateTime')
         eventname = Event.objects.get(id=event)
         return render(request, 'season/showscoringevents.html', {'eventname': eventname,'allevents': allevents})
     else:
@@ -34,7 +34,7 @@ def showresults(request):
         result_id = request.GET['scoringevent']
         resultset = Result.objects.filter(scoringEvent_ID=result_id).order_by('scoringEvent_ID', 'finishPosition')
         scoringeventname = ScoringEvent.objects.get(id=result_id)
-        return render(request, 'season/showresults.html', {'resultset': resultset, 'scoringeventname':scoringeventname})
+        return render(request, 'season/showresults.html', {'resultset': resultset, 'scoringeventname':scoringeventname,'startDateTime':scoringeventname.startDateTime})
     else:
         allevents = Event.objects.all()
         return render(request, 'season/showevents.html',{'allevents':allevents})

@@ -1,33 +1,30 @@
 {% extends "base.html" %}
 
 <!---- TITLE --------->
-{% block title%}
-Team :{{ user.team.teamName }}
+{% block title %}
+{{ user.team.teamName }}
+{% endblock %}
+{% block breadcrumb %}
+My Team
 {% endblock %}
 
 <!---- STYLE --------->
 {% block css %}
 <style>
-   p{
-      font-size: 1.2rem;
-   }
-   img{
 
+   img{
       vertical-align:middle;
    }
    .formula{
-      font-size:1.2rem;
       font-weight:bold;
       color: white;
    }
    .title{
-      font-size:0.7rem;
       margin:0px 5px 0px 15px;
       color: white;
 
    }
    .name{
-      font-size:1.1rem;
       margin:5px 5px 0px 15px;
       font-weight: 700;
       color: white;
@@ -49,7 +46,6 @@ Team :{{ user.team.teamName }}
       float: right;
    }
    .radio-selector label{
-      font-size:1.3rem;
       padding-left: 8px;
    }
    .pickertable {
@@ -66,7 +62,6 @@ Team :{{ user.team.teamName }}
       border-collapse: collapse;
       border: 1px solid black;
       height:45px;
-      font-size: 1.2rem;
       padding-left: 8px;
    }
    .my-custom-scrollbar {
@@ -79,7 +74,6 @@ Team :{{ user.team.teamName }}
    }
    .budget-table{
       margin-top:100px;
-      font-size:1.2rem;
    }
    .budget-table td {
       padding-right:20px;
@@ -92,21 +86,13 @@ Team :{{ user.team.teamName }}
 
 <!---- BODY CONTENT --------->
 {% block content %}
-<div style = "padding: 5% 5% 10% 5%;">
-   <dl class="row">
-     <dt class=" toppic col-sm-2">
-        <img src="{{ user.team.teamLogo.url }}" width="150" class="d-inline-block" alt="" loading="lazy">
-     </dt>
-     <dd class="col-sm-5">
-        <h1 style = "padding: 0% 0% 0% 0%;">{{user.team.teamName}}</h1>
-        <h3>{{user.first_name}} {{user.last_name}}</h3>
-     </dd>
-   </dl>
+<div style = "padding: 0% 5% 10% 5%;">
 
-   <br />
+   {% if not returnmessage %}
+   {% else %}
    <h3 style = "background-color: red; color:white;"><center>{{ returnmessage }}</center></h3>
    <br/>
-
+   {% endif %}
    <div class="tabs-menu">
        <ul class="nav nav-pills">
            <li class="nav-item">
@@ -242,14 +228,14 @@ Team :{{ user.team.teamName }}
                      <dt class=" DriverSection col-sm-1"></dt>
                      <dt class=" DriverSection col-sm-3">
                         <img src="{{ teamdata.p1_1.mugshot.url}}" style="height:150px;"/>
-                        <h4 class="mt-2">{{ teamdata.p1_1}}</h4>
-                        <p class="text-right">Lead Driver</p>
+                        <h3 class="mt-2">{{ teamdata.p1_1}}</h3>
+                        <p>Lead Driver</p>
                         <p><b>${{ teamdata.p1_1.value}}m </b>(Paid:${{ teamdata.p1_1_cost}}m) </p>
                      </dt>
                      <dt class=" DriverSection col-sm-3">
                         <img src="{{ teamdata.p1_2.mugshot.url}}" style="height:150px;"/>
-                        <h4 class="mt-2">{{ teamdata.p1_2}}</h4>
-                        <p class="text-right">Second Driver</p>
+                        <h3 class="mt-2">{{ teamdata.p1_2}}</h3>
+                        <p>Second Driver</p>
                         <p><b>${{ teamdata.p1_2.value}}m </b>(Paid:${{ teamdata.p1_2_cost}}m) </p>
                      </dt>
                      <dt class=" DriverSection col-sm-4">
@@ -330,13 +316,13 @@ Team :{{ user.team.teamName }}
                      <dt class=" DriverSection col-sm-3">
                         <img src="{{ teamdata.p1_1.mugshot.url}}" style="height:150px;"/>
                         <h4 class="mt-2">{{ teamdata.p2_1}}</h4>
-                        <p class="text-right">Lead Driver</p>
+                        <p>Lead Driver</p>
                         <p><b>${{ teamdata.p2_1.value}}m </b>(Paid:${{ teamdata.p2_1_cost}}m) </p>
                      </dt>
                      <dt class=" DriverSection col-sm-3">
                         <img src="{{ teamdata.p2_2.mugshot.url}}" style="height:150px;"/>
                         <h4 class="mt-2">{{ teamdata.p2_2}}</h4>
-                        <p class="text-right">Second Driver</p>
+                        <p>Second Driver</p>
                         <p><b>${{ teamdata.p2_2.value}}m </b>(Paid:${{ teamdata.p2_2_cost}}m) </p>
                      </dt>
                      <dt class=" DriverSection col-sm-4">
@@ -416,18 +402,18 @@ Team :{{ user.team.teamName }}
                      <dt class=" DriverSection col-sm-3">
                         <img src="{{ teamdata.p3_1.mugshot.url}}" style="height:150px;"/>
                         <h4 class="mt-2">{{ teamdata.p3_1}}</h4>
-                        <p class="text-right">Lead Driver</p>
+                        <p>Lead Driver</p>
                         <p><b>${{ teamdata.p3_1.value}}m </b>(Paid:${{ teamdata.p3_1_cost}}m) </p>
                      </dt>
                      <dt class=" DriverSection col-sm-3">
                         <img src="{{ teamdata.p3_2.mugshot.url}}" style="height:150px;"/>
                         <h4 class="mt-2">{{ teamdata.p3_2}}</h4>
-                        <p class="text-right">Second Driver</p>
+                        <p>Second Driver</p>
                         <p><b>${{ teamdata.p3_2.value}}m </b>(Paid:${{ teamdata.p3_2_cost}}m) </p>
                      </dt>
                      <dt class=" DriverSection col-sm-4">
                         <table class="budget-table" style="margin-top:100px;">
-                           <tr><th><h3 id = "f3_budget_title">Current F2 Cash</h3></th><th></th>
+                           <tr><th><h3 id = "f3_budget_title">Current F3 Cash</h3></th><th></th>
                            <tr><td id="f3_p1_name" >{{ teamdata.p2_1}}    </td><td id="f3_p1_cost"        >$</td></tr>
                            <tr><td id="f3_p2_name" >{{ teamdata.p2_2}}    </td><td id="f3_p2_cost"        >$</td></tr>
                            <tr><td>Total Cost                             </td><td id="f3_total_cost"     >$</td></tr>
@@ -502,13 +488,13 @@ Team :{{ user.team.teamName }}
                      <dt class=" DriverSection col-sm-3">
                         <img src="{{ teamdata.pw_1.mugshot.url}}" style="height:150px;"/>
                         <h4 class="mt-2">{{ teamdata.pw_1}}</h4>
-                        <p class="text-right">Lead Driver</p>
+                        <p>Lead Driver</p>
                         <p><b>${{ teamdata.pw_1.value}}m </b>(Paid:${{ teamdata.pw_1_cost}}m) </p>
                      </dt>
                      <dt class=" DriverSection col-sm-3">
                         <img src="{{ teamdata.pw_2.mugshot.url}}" style="height:150px;"/>
                         <h4 class="mt-2">{{ teamdata.pw_2}}</h4>
-                        <p class="text-right">Second Driver</p>
+                        <p>Second Driver</p>
                         <p><b>${{ teamdata.pw_2.value}}m </b>(Paid:${{ teamdata.pw_2_cost}}m) </p>
                      </dt>
                      <dt class=" DriverSection col-sm-4">
@@ -621,6 +607,7 @@ Team :{{ user.team.teamName }}
          $("#f1_p2_cost").text("$"+{{teamdata.p1_2.value}}+"m");
          $("#f1_total_cost").text("$"+totalcost+"m");
          $("#f1_total_cash_left").text("$"+cashbalance+"m");
+         $('input[name="F1_submit"]').attr('disabled','disabled');
 
          //////////////////////////////////////////////
          // F2 - Set up RHS table numbers with current values
@@ -633,6 +620,7 @@ Team :{{ user.team.teamName }}
          $("#f2_p2_cost").text("$"+{{teamdata.p2_2.value}}+"m");
          $("#f2_total_cost").text("$"+totalcost+"m");
          $("#f2_total_cash_left").text("$"+cashbalance+"m");
+         $('input[name="F2_submit"]').attr('disabled','disabled');
 
          //////////////////////////////////////////////
          // F3 - Set up RHS table numbers with current values
@@ -645,6 +633,7 @@ Team :{{ user.team.teamName }}
          $("#f3_p2_cost").text("$"+{{teamdata.p3_2.value}}+"m");
          $("#f3_total_cost").text("$"+totalcost+"m");
          $("#f3_total_cash_left").text("$"+cashbalance+"m");
+         $('input[name="F3_submit"]').attr('disabled','disabled');
 
          //////////////////////////////////////////////
          // WS - Set up RHS table numbers with current values
@@ -657,6 +646,7 @@ Team :{{ user.team.teamName }}
          $("#ws_p2_cost").text("$"+{{teamdata.pw_2.value}}+"m");
          $("#ws_total_cost").text("$"+totalcost+"m");
          $("#ws_total_cash_left").text("$"+cashbalance+"m");
+         $('input[name="WS_submit"]').attr('disabled','disabled');
 
 
 ///////////F1 Driver 1 selector change///////////////////////////
@@ -700,8 +690,13 @@ Team :{{ user.team.teamName }}
             //round it.
             cashbalance = cashbalance.toFixed(1);
             $("#f1_total_cash_left").text('$'+cashbalance+'m');
-            if (cashbalance < 0) {$('#f1_total_cash_left').css('color', 'red');   $('input[name="F1_submit"]').attr('disabled','disabled');}
-            else                 {$('#f1_total_cash_left').css('color', 'black'); $('input[name="F1_submit"]').removeAttr('disabled');}
+            // Show Budget red if negative
+            if(cashbalance < 0){$('#f1_total_cash_left').css('color', 'red');}else{$('#f1_total_cash_left').css('color', '#A3A4AB');}
+            //Test values for both drivers present before enabling UPDATE button
+            if (cashbalance < 0 || parseFloat(p1_1_new_value) < 1 || parseFloat(p1_2_dep_val) < 1 )
+               {$('input[name="F1_submit"]').attr('disabled','disabled');}
+            else
+               {$('input[name="F1_submit"]').removeAttr('disabled');}
          });
 
 ///////////F1 Driver 2 selector change///////////////////////////
@@ -745,8 +740,13 @@ Team :{{ user.team.teamName }}
             cashbalance = cashbalance.toFixed(1);
             //show new cash balance
             $("#f1_total_cash_left").text('$'+cashbalance+'m');
-            if (cashbalance < 0) {$('#f1_total_cash_left').css('color', 'red');   $('input[name="F1_submit"]').attr('disabled','disabled');}
-            else                 {$('#f1_total_cash_left').css('color', 'black'); $('input[name="F1_submit"]').removeAttr('disabled');}
+            // Show Budget red if negative
+            if(cashbalance < 0){$('#f1_total_cash_left').css('color', 'red');}else{$('#f1_total_cash_left').css('color', '#A3A4AB');}
+            //Test values for both drivers present before enabling UPDATE button
+            if (cashbalance < 0 || parseFloat(p1_2_new_value) < 1 || parseFloat(p1_1_dep_val) < 1)
+               {$('input[name="F1_submit"]').attr('disabled','disabled');}
+            else
+               {$('input[name="F1_submit"]').removeAttr('disabled');}
          });
 
 ///////////F2 Driver 1 selector change///////////////////////////
@@ -790,8 +790,13 @@ Team :{{ user.team.teamName }}
             //round it.
             cashbalance = cashbalance.toFixed(1);
             $("#f2_total_cash_left").text('$'+cashbalance+'m');
-            if (cashbalance < 0) {$('#f2_total_cash_left').css('color', 'red');   $('input[name="F2_submit"]').attr('disabled','disabled');}
-            else                 {$('#f2_total_cash_left').css('color', 'black'); $('input[name="F2_submit"]').removeAttr('disabled');}
+            // Show Budget red if negative
+            if(cashbalance < 0){$('#f2_total_cash_left').css('color', 'red');}else{$('#f2_total_cash_left').css('color', '#A3A4AB');}
+            //Test values for both drivers present before enabling UPDATE button
+            if (cashbalance < 0 || parseFloat(p2_1_new_value) < 1 || parseFloat(p2_2_dep_val) < 1)
+               {$('input[name="F2_submit"]').attr('disabled','disabled');}
+            else
+               {$('input[name="F2_submit"]').removeAttr('disabled');}
          });
 
 ///////////F2 Driver 2 selector change///////////////////////////
@@ -835,8 +840,13 @@ Team :{{ user.team.teamName }}
             cashbalance = cashbalance.toFixed(1);
             //show new cash balance
             $("#f2_total_cash_left").text('$'+cashbalance+'m');
-            if (cashbalance < 0) {$('#f2_total_cash_left').css('color', 'red');   $('input[name="F2_submit"]').attr('disabled','disabled');}
-            else                 {$('#f2_total_cash_left').css('color', 'black'); $('input[name="F2_submit"]').removeAttr('disabled');}
+            // Show Budget red if negative
+            if(cashbalance < 0){$('#f2_total_cash_left').css('color', 'red');}else{$('#f2_total_cash_left').css('color', '#A3A4AB');}
+            //Test values for both drivers present before enabling UPDATE button
+            if (cashbalance < 0 || parseFloat(p2_2_new_value) < 1 || parseFloat(p2_1_dep_val) < 1)
+               {$('input[name="F2_submit"]').attr('disabled','disabled');}
+            else
+               {$('input[name="F2_submit"]').removeAttr('disabled');}
          });
 
 /////////// END F2 Driver 2 selector change///////////////////////////
@@ -881,8 +891,13 @@ Team :{{ user.team.teamName }}
             //round it.
             cashbalance = cashbalance.toFixed(1);
             $("#f3_total_cash_left").text('$'+cashbalance+'m');
-            if (cashbalance < 0) {$('#f3_total_cash_left').css('color', 'red');   $('input[name="F3_submit"]').attr('disabled','disabled');}
-            else                 {$('#f3_total_cash_left').css('color', 'black'); $('input[name="F3_submit"]').removeAttr('disabled');}
+            // Show Budget red if negative
+            if(cashbalance < 0){$('#f3_total_cash_left').css('color', 'red');}else{$('#f3_total_cash_left').css('color', '#A3A4AB');}
+            //Test values for both drivers present before enabling UPDATE button
+            if (cashbalance < 0 || parseFloat(p3_1_new_value) < 1 || parseFloat(p3_2_dep_val) < 1)
+               {$('input[name="F3_submit"]').attr('disabled','disabled');}
+            else
+               {$('input[name="F3_submit"]').removeAttr('disabled');}
          });
 
 ///////////F3 Driver 2 selector change///////////////////////////
@@ -926,8 +941,13 @@ Team :{{ user.team.teamName }}
             cashbalance = cashbalance.toFixed(1);
             //show new cash balance
             $("#f3_total_cash_left").text('$'+cashbalance+'m');
-            if (cashbalance < 0) {$('#f3_total_cash_left').css('color', 'red');   $('input[name="F3_submit"]').attr('disabled','disabled');}
-            else                 {$('#f3_total_cash_left').css('color', 'black'); $('input[name="F3_submit"]').removeAttr('disabled');}
+            // Show Budget red if negative
+            if(cashbalance < 0){$('#f3_total_cash_left').css('color', 'red');}else{$('#f3_total_cash_left').css('color', '#A3A4AB');}
+            //Test values for both drivers present before enabling UPDATE button
+            if (cashbalance < 0 || parseFloat(p3_2_new_value) < 1 || parseFloat(p3_1_dep_val) < 1)
+               {$('input[name="F3_submit"]').attr('disabled','disabled');}
+            else
+               {$('input[name="F3_submit"]').removeAttr('disabled');}
          });
 
 /////////// END F3 Driver 2 selector change///////////////////////////
@@ -972,8 +992,13 @@ Team :{{ user.team.teamName }}
             //round it.
             cashbalance = cashbalance.toFixed(1);
             $("#ws_total_cash_left").text('$'+cashbalance+'m');
-            if (cashbalance < 0) {$('#ws_total_cash_left').css('color', 'red');   $('input[name="ws_submit"]').attr('disabled','disabled');}
-            else                 {$('#ws_total_cash_left').css('color', 'black'); $('input[name="ws_submit"]').removeAttr('disabled');}
+            // Show Budget red if negative
+            if(cashbalance < 0){$('#ws_total_cash_left').css('color', 'red');}else{$('#ws_total_cash_left').css('color', '#A3A4AB');}
+            //Test values for both drivers present and enough budget before enabling UPDATE button
+            if (cashbalance < 0 || parseFloat(pw_1_new_value) < 1 || parseFloat(pw_2_dep_val) < 1)
+               {$('input[name="WS_submit"]').attr('disabled','disabled');}
+            else
+               {$('input[name="WS_submit"]').removeAttr('disabled');}
          });
 
 ///////////WS Driver 2 selector change///////////////////////////
@@ -1017,8 +1042,13 @@ Team :{{ user.team.teamName }}
             cashbalance = cashbalance.toFixed(1);
             //show new cash balance
             $("#ws_total_cash_left").text('$'+cashbalance+'m');
-            if (cashbalance < 0) {$('#ws_total_cash_left').css('color', 'red');   $('input[name="ws_submit"]').attr('disabled','disabled');}
-            else                 {$('#ws_total_cash_left').css('color', 'black'); $('input[name="ws_submit"]').removeAttr('disabled');}
+            // Show Budget red if negative
+            if(cashbalance < 0){$('#ws_total_cash_left').css('color', 'red');}else{$('#ws_total_cash_left').css('color', '#A3A4AB');}
+            //Test values for both drivers present before enabling UPDATE button
+            if (cashbalance < 0 || parseFloat(pw_2_new_value) < 1 || parseFloat(pw_1_dep_val) < 1)
+               {$('input[name="WS_submit"]').attr('disabled','disabled');}
+            else
+               {$('input[name="WS_submit"]').removeAttr('disabled');}
          });
 /////////// END WS Driver 2 selector change///////////////////////////
       });
