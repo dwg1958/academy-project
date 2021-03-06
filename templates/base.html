@@ -21,7 +21,11 @@
         <link href="{% static '/academy/css/dashboard.css' %}" rel="stylesheet">
         <style>
            .navbar-header {
-             background-color: #333333;
+             /* background-color: #333333; */
+             background-image:url("{% static 'academy/webPageImages/GPGHeader.jpg' %}");
+             background-attachment: fixed;
+             background-size: cover;
+             background-repeat: no-repeat;
           }
           div.simplebar-wrapper{
 		        background-image: linear-gradient(#DA6020, #D52423);
@@ -61,30 +65,31 @@
             <header id="page-topbar">
                 <div class="navbar-header">
                     <div class="d-flex">
+
+
                         <!-- LOGO -->
                         <div class="navbar-brand-box">
                             <a href="{% url 'home' %}" class="logo logo-light">
                                 <span class="logo-sm">
-                                    <img src="{% static 'academy/webPageImages/Avatar.jpg' %}" alt="" height="50">
+                                   <!--Menu expander-->
+                                  <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
+                                      <i class="mdi mdi-menu"></i>
+                                   </button>
+                                  <img src="{% static 'academy/webPageImages/TheAcademyLogo.png' %}" alt="" height="50">
                                 </span>
                                 <span class="logo-lg">
-                                    <img src="{% static 'academy/webPageImages/blankUser.jpg' %}" alt="" height="50">
+                                    <img src="{% static 'academy/webPageImages/TheAcademyLogo.png' %}" alt="" height="50">
                                 </span>
                             </a>
                         </div>
-
-                        <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
-                            <i class="mdi mdi-menu"></i>
-                        </button>
-
                     </div>
 
                     <div class="d-flex">
-                        <div class="dropdown d-none d-lg-inline-block ml-1">
-                            <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
-                                <i class="mdi mdi-fullscreen"></i>
-                            </button>
-                        </div>
+                       <div class="dropdown d-none d-lg-inline-block ml-1">
+                           <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
+                              <i class="mdi mdi-fullscreen"></i>
+                           </button>
+                       </div>
 
                         {% if user.is_authenticated %}
                         <div class="dropdown d-inline-block">
