@@ -83,26 +83,6 @@ class TeamProfile(models.Model):
     def __str__(self):
         return self.user_ID.username + " - " + self.teamName
 
-class TeamMember(models.Model):
-    POSITION = (
-    ('1_1', 'F1 Lead Driver'),
-    ('1_2', 'F1 Second Driver'),
-    ('1_M', 'F1 Manager'),
-    ('2_1', 'F2 Lead Driver'),
-    ('2_2', 'F2 Second Driver'),
-    ('2_M', 'F2 Manager'),
-    ('3_1', 'F3 Lead Driver'),
-    ('3_2', 'F3 Second Driver'),
-    ('3_M', 'F3 Manager'),
-    ('W_1', 'W Lead Driver'),
-    ('W_2', 'W Second Driver'),
-    ('W_M', 'W Manager'),
-    )
-    team_ID                = models.ForeignKey(TeamProfile, null=True, on_delete = models.CASCADE, related_name='team')
-    competitor_ID          = models.ForeignKey(Competitor , null=True, on_delete = models.PROTECT, related_name='member')
-    position               = models.CharField(max_length=3, choices=POSITION)
-    dateSelected           = models.DateTimeField(auto_now=True)
-
 
 class Event(models.Model):
     name                 = models.CharField(max_length=50)
@@ -173,6 +153,43 @@ class Result(models.Model):
     def __str__(self):
         return  self.scoringEvent_ID.name + " - " + self.competitor_ID.surname + " - P" + str(self.finishPosition)
 
+class CompetitorScore(models.Model):
+    POINTSTYPE = (
+    ('P', 'Position'),
+    ('F', 'Fastest Lap'),
+    ('G', 'Places Gained / Lost'),
+    ('L', 'Laps Behind Leader'),
+    ('D', 'Disqualification'),
+    )
+    result_ID      = models.ForeignKey(Result, null=True, on_delete = models.CASCADE, related_name='result')
+    pointsType     = models.CharField(max_length=1, choices=POINTSTYPE)
+    t1_score       = models.DecimalField(max_digits=6, decimal_places=2)
+    t2_score       = models.DecimalField(max_digits=6, decimal_places=2)
+
+    def __str__(self):
+        return  self.result_ID.competitor_ID.surname + " - " + self.result_ID.scoringEvent_ID.name + " - T1:" + str(self.t1_score) + " - T2:" + str(self.t2_score)
+
+class TeamScore(models.Model):
+    TEAMPOSITION = (
+    ('1', '1. Lead Driver'),
+    ('2', '2. Second Driver'),
+    )
+    POINTSTYPE = (
+    ('P', 'Position'),
+    ('F', 'Fastest Lap'),
+    ('G', 'Places Gained / Lost'),
+    ('L', 'Laps Behind Leader'),
+    ('D', 'Disqualification'),
+    )
+    team_ID              = models.ForeignKey(TeamProfile, null=True, on_delete = models.CASCADE, related_name='team')
+    cscore_ID            = models.ForeignKey(Result, null=True, on_delete = models.CASCADE, related_name='cscore')
+    teamPosition         = models.CharField(max_length=1, choices=TEAMPOSITION)
+    pointsType           = models.CharField(max_length=1, choices=POINTSTYPE)
+    academyPoints        = models.DecimalField(max_digits=6, decimal_places=2)
+
+    def __str__(self):
+        return  self.team_ID.teamName + " - PT:" + self.pointsType
+
 class AcademyScoringMatrix(models.Model):
     FORMULA = (
     ('1', 'Formula 1'),
@@ -180,26 +197,51 @@ class AcademyScoringMatrix(models.Model):
     ('3', 'Formula 3'),
     ('W', 'W Series' ),
     )
-    RACETYPE = (
-    ('Q', 'Qualifying'),
-    ('R', 'Race'),
-    ('1', 'Race 1'),
-    ('2', 'Race 2' ),
-    ('F', 'Feature Race'),
-    ('S', 'Sprint Race' ),
+    TEAMPOSITION = (
+    ('1', '1. Lead Driver'),
+    ('2', '2. Second Driver'),
     )
-    POINTSTYPE = (
-    ('P', 'Position'),
-    ('F', 'Fastest Lap'),
-    ('G', 'Places Gained / Lost'),
-    )
-    pointsType           = models.CharField(max_length=1)
-    formula              = models.CharField(max_length=1, choices=FORMULA)
-    role                 = models.CharField(max_length=1)
-    multiplier           = models.DecimalField(max_digits=6, decimal_places=2)
 
-class ScoringMatches(models.Model):
-    player_ID            = models.ForeignKey(TeamProfile, null=True, on_delete = models.CASCADE, related_name='player')
-    result_ID            = models.ForeignKey(Result, null=True, on_delete = models.CASCADE, related_name='result')
-    points_Type          = models.CharField(max_length=1)
-    academyPoints        = models.IntegerField()
+    formula             = models.CharField(max_length=1, choices=FORMULA)
+    teamPosition        = models.CharField(max_length=1, choices=TEAMPOSITION, default = '1')
+    q_1                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    q_2                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    q_3                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    q_4                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    q_5                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    q_6                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    q_7                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    q_8                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    q_9                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    q_10                = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    m_1                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    m_2                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    m_3                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    m_4                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    m_5                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    m_6                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    m_7                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    m_8                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    m_9                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    m_10                = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    m_fastest_lap       = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    m_pos_gained        = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    m_laps_off_leader   = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    m_disqualified      = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    s_1                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    s_2                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    s_3                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    s_4                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    s_5                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    s_6                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    s_7                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    s_8                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    s_9                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    s_10                = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    s_fastest_lap       = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    s_pos_gained        = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    s_laps_off_leader   = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    s_disqualified      = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+
+    def __str__(self):
+        return  self.formula + " - " + self.teamPosition
