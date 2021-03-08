@@ -134,6 +134,7 @@ class ScoringEvent(models.Model):
     ('R', 'Race'),
     ('1', 'Race 1'),
     ('2', 'Race 2' ),
+    ('3', 'Race 3' ),
     ('F', 'Feature Race'),
     ('S', 'Sprint Race' ),
     )

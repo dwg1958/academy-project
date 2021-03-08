@@ -1,11 +1,30 @@
 {% extends 'base.html' %}
 
+{% block title %} Scoring {% endblock %}
+{% block breadcrumb %} Scoring {% endblock %}
+
 {% block content %}
 
-   <h1> Add Scoring Events </h1>
-   <br />
-   <br />
-   <br />
-   <br />
+   <div class="container-fluid" style = "padding: 0% 5% 2% 5%">
+      <h1> Add Scoring Events </h1>
+      <br /><br />
+      <h3>
+         1. Select event to score
+         <br /><br />
+         2. For each driver
+         <br /><br />
+            ~ 2.1 select relevant scoring matrix records  (e.g. F1_D1 and F2_D2)
+         <br />
+            ~ 2.2 go through each scoring opportunity and list with a score
+         <br />
+            ~ e.g. Race position 7 , Fastest lap, -3 places, 2 laps behind winner
+         <br /><br />
+         3. Go to players teams and find all players with this driver in T1
+         <br /><br />
+         4. Create a score record for each player for each score
+         <br />
+         <br />
+      </h3>
+   </div>
 
 {% endblock %}
