@@ -20,25 +20,25 @@
 
       <h1> Score a New Event </h1>
 
-         <div class="col">  </div>
-         <div class="col-8 center">
-            <form action="{% url 'scoreevents' %}"  method="GET">
-               <label for="scoringevent">Choose a scoring event:</label>
-               <select id="scoringevent" name="scoringevent">
-                  {% for event in scoringevents %}
-                  <option value="{{event.id}}">{{event.id}} - {{event.startDateTime}} - {{event.name}}</option>
-                  {% endfor %}
-               </select>
-               <br /><br /><br />
-               <center><input type="submit" name="submit" value="SELECT"></center>
-            </form>
-         </div>
-         <div class="col"> </div>
-      <div>
-         <hr />
-         {% if EventName %}
-         <h3> Scores Confirmed : {{ EventName }} </h3><br />
+      <div class="col">  </div>
+      <div class="col-8 center">
+         <form action="{% url 'scoreevents' %}"  method="GET">
+            <label for="scoringevent">Choose a scoring event:</label>
+            <select id="scoringevent" name="scoringevent">
+               {% for event in scoringevents %}
+               <option value="{{event.id}}">{{event.id}} - {{event.startDateTime}} - {{event.name}}</option>
+               {% endfor %}
+            </select>
+            <br /><br /><br />
+            <center><input type="submit" name="submit" value="SELECT"></center>
+         </form>
+      </div>
+      <div class="col"> </div>
 
+      <div>
+         {% if EventName %}
+         <hr />
+         <h3> Scores Confirmed : {{ EventName }} </h3><br />
 
          <table class="table table-responsive">
             <tr><th colspan = 4><th colspan = 5>Lead Driver Points--></th><th colspan = 5>2nd Driver Points--></th></tr>
@@ -46,16 +46,16 @@
                <th>Position</th><th>Fastest Lap</th><th>Disqualified</th><th>+/- Places</th><th>Laps Lost</th>
                <th>Position</th><th>Fastest Lap</th><th>Disqualified</th><th>+/- Places</th><th>Laps Lost</th></tr>
                {% for array in resultsArray %}
-               <tr>
-                  {% for content in array %}
-                  <td> {% if content == 0 %} <center>-</center> {% else %} {{content}} {% endif %} </td>
-                  {% endfor %}
-               <tr />
-                  {% endfor %}
-            </table>
+            <tr>
+               {% for content in array %}
+               <td> {% if content == 0 %} <center>-</center> {% else %} {{content}} {% endif %} </td>
+               {% endfor %}
+            <tr />
+               {% endfor %}
+         </table>
+               
+         {% endif %}
 
-
-            {% endif %}
       </div>
    </div>
 </div>

@@ -389,12 +389,12 @@ def scoreevents(request):
         #end For result in resultset
 
         print('new records count = ', len(competitorScores))
-        batch = 100
-        CompetitorScore.objects.bulk_create(competitorScores, batch)
+        if len(competitorScores) > 0:
+            batch = 100
+            CompetitorScore.objects.bulk_create(competitorScores, batch)
 
 
 
-#print(resultsArray[0][0])
         #3. Go to players teams and find all players with this driver in T1
 
         #4. Create a PlayerScore record for each player for each competitor_score
