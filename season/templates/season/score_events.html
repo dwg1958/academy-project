@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Scoring {% endblock %}
+{% block breadcrumb %} Scoring {% endblock %}
+
+{% block content %}
+
+
+<hr />
+<br />
+<div class="container">
+   <h1> Score an Event </h1>
+   <div class="row">
+      <div class="col">  </div>
+      <div class="col-4 center">
+         <form action="{% url 'scoreevents' %}"  method="GET">
+            <label for="scoringevent">Choose a scoring event:</label>
+             <select id="scoringevent" name="scoringevent">
+               {% for event in scoringevents %}
+                  <option value="{{event.id}}">{{event.id}} - {{event.startDateTime}} - {{event.name}}</option>
+               {% endfor %}
+             </select>
+             <br /><br /><br />
+            <center><input type="submit" name="submit" value="SELECT"></center>
+         </form>
+      </div>
+      <div class="col"> </div>
+   </div>
+   <hr />
+   {% if EventName %}
+   <h1> Results Confirmed ; {{ EventName }} </h1>
+   {% endif %}
+</div>
+
+
+{% endblock %}

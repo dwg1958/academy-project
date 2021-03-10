@@ -195,6 +195,20 @@
 
                                 </ul>
                             </li>
+                            {% if request.user.is_staff %}
+                            <li>
+                                <a href="javascript: void(0);" class="">
+                                    <i class="mdi mdi-format-list-bulleted-type text-white"></i>
+                                    <span>Admin</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="{% url 'home' %}">Add results</a></li>
+                                    <li><a href="{% url 'scoreevents' %}">Score Events</a></li>
+                                    <li><a href="{% url 'home' %}">Rebuild leagues</a></li>
+
+                                </ul>
+                            </li>
+                            {% endif %}
                             {% if user.is_authenticated %}
                             <li>
                                 <a href="javascript: void(0);" class="">
@@ -208,6 +222,8 @@
                                 </ul>
                             </li>
                             {% endif %}
+
+
                             <span class="logo-lg">
                                     <br /><br /><br /><br />
                                     <center>

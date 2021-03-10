@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
-from .models import Competitor, Event, ScoringEvent, Result, TeamProfile
+from .models import Competitor, Event, ScoringEvent, Result, TeamProfile, AcademyScoringMatrix
 from django.contrib.auth.decorators import login_required
 from .forms import EventForm, TeamProfileForm, TeamProfileForm
 from django.contrib.auth.models import User
@@ -253,10 +253,98 @@ def addevents(request):
     return render(request, 'season/add_events.html',{'new_event': new_event,'event_form': event_form, 'allevents':allevents})
 
 
+
+
+
+@login_required
 ####################################
-def addscoringevents(request):
-    return render(request, 'season/add_scoring_events.html')
+def scoreevents(request):
+    #1. Select event to score
+    if "scoringevent" in request.GET:
+        #Get Scoring Event details
+        scoringevent_ID = int(request.GET['scoringevent'])
+        scoringevent_detail = ScoringEvent.objects.get(pk=scoringevent_ID)
+        EventName = scoringevent_detail.name
+        print('-----------------------')
+        print(EventName)
+        print ('F:',scoringevent_detail.formula, ' - TYPE:', scoringevent_detail.eventType)
+
+        # Get Scoring Matrix #############
+        matrix = AcademyScoringMatrix.objects.all()
+        ASM_1 = matrix.get(formula=scoringevent_detail.formula, teamPosition='1')
+        ASM_2 = matrix.get(formula=scoringevent_detail.formula, teamPosition='2')
+
+        #Set Event type
+        if scoringevent_detail.eventType in 'RF3':
+            rt = 'm_'
+        elif scoringevent_detail.eventType in '12S':
+            rt = 's_'
+        else:
+            rt = 'q_'
+
+        #2. For each result
+        resultset = Result.objects.filter(scoringEvent_ID=int(scoringevent_ID))
+
+        #~ 2.1 select relevant scoring matrix records (e.g. F1_D1 *AND* F2_D2)
+        for result in resultset:
+            print(result.competitor_ID, ' - P', result.finishPosition)
+            #~ 2.2 go through each scoring opportunity and make a competitor_score record with EACH score for EACH TeamPosition
+
+
+
+
+
+            if result.finishPosition < 11:
+                var = rt+str(result.finishPosition)
+                print( 'T1 scores ',getattr(ASM_1,var), 'T2 scores ',getattr(ASM_2,var) )
+
+
+        #3. Go to players teams and find all players with this driver in T1
+
+        #4. Create a PlayerScore record for each player for each competitor_score
+
+        #Create New Page with Summary Data
+        scoringevents = ScoringEvent.objects.all().order_by('startDateTime')[:10]
+        return render(request, 'season/score_events.html',{'scoringevents': scoringevents,'EventName':EventName})
+
+
+    else:
+        #Create Blank Page
+        scoringevents = ScoringEvent.objects.all().order_by('startDateTime')[:10]
+        return render(request, 'season/score_events.html',{'scoringevents': scoringevents,})
+
+
+
+
+
+
+
+
 
 ####################################
 def addresults(request):
     return render(request, 'season/add_results.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################
