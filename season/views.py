@@ -394,7 +394,7 @@ def scoreevents(request):
 
 
 
-        print(resultsArray[0][0])
+#print(resultsArray[0][0])
         #3. Go to players teams and find all players with this driver in T1
 
         #4. Create a PlayerScore record for each player for each competitor_score
