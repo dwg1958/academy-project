@@ -142,10 +142,11 @@ class Result(models.Model):
     competitor_ID        = models.ForeignKey(Competitor, null=True, on_delete = models.PROTECT, related_name='competitor')
     finishPosition       = models.IntegerField()
     startPosition        = models.IntegerField(default = 0)
-    lapsComplete         = models.IntegerField(default = 0)
+    laps_off_leader      = models.IntegerField(default = 0)
     formulaPoints        = models.IntegerField(default = 0)
-    fastestLap           = models.BooleanField(default=False)
     placesGainedLost     = models.IntegerField(default = 0)
+    fastestLap           = models.BooleanField(default=False)
+    disqualified         = models.BooleanField(default=False)
 
     class Meta:
         ordering = ('scoringEvent_ID',)
@@ -214,6 +215,7 @@ class AcademyScoringMatrix(models.Model):
     q_8                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
     q_9                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
     q_10                = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    q_disqualified      = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
     m_1                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
     m_2                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
     m_3                 = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)

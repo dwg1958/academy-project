@@ -3,35 +3,62 @@
 
 {% block title %} Scoring {% endblock %}
 {% block breadcrumb %} Scoring {% endblock %}
+{% block css %}
+
+<style>
+   td{
+      text-align: center;
+   }
+</style>
+{% endblock %}
 
 {% block content %}
-
-
 <hr />
 <br />
-<div class="container">
-   <h1> Score an Event </h1>
-   <div class="row">
-      <div class="col">  </div>
-      <div class="col-4 center">
-         <form action="{% url 'scoreevents' %}"  method="GET">
-            <label for="scoringevent">Choose a scoring event:</label>
-             <select id="scoringevent" name="scoringevent">
-               {% for event in scoringevents %}
+<div class="row justify-content-center">
+    <div class="col-auto">
+      <table >
+      <h1> Score a New Event </h1>
+      <div class="row">
+         <div class="col">  </div>
+         <div class="col-4 center">
+            <form action="{% url 'scoreevents' %}"  method="GET">
+               <label for="scoringevent">Choose a scoring event:</label>
+               <select id="scoringevent" name="scoringevent">
+                  {% for event in scoringevents %}
                   <option value="{{event.id}}">{{event.id}} - {{event.startDateTime}} - {{event.name}}</option>
-               {% endfor %}
-             </select>
-             <br /><br /><br />
-            <center><input type="submit" name="submit" value="SELECT"></center>
-         </form>
+                  {% endfor %}
+               </select>
+               <br /><br /><br />
+               <center><input type="submit" name="submit" value="SELECT"></center>
+            </form>
+         </div>
+         <div class="col"> </div>
       </div>
-      <div class="col"> </div>
-   </div>
-   <hr />
-   {% if EventName %}
-   <h1> Results Confirmed ; {{ EventName }} </h1>
-   {% endif %}
-</div>
+      <div>
+      <hr />
+      {% if EventName %}
+      <h3> Scores Confirmed : {{ EventName }} </h3><br />
 
+
+      <table class="table table-responsive">
+         <tr><th colspan = 4><th colspan = 5>Lead Driver Points--></th><th colspan = 5>2nd Driver Points--></th></tr>
+         <tr><th>Position</th><th>Driver</th><th>+/- places</th><th>laps off leader</th>
+             <th>Position</th><th>Fastest Lap</th><th>Disqualified</th><th>+/- Places</th><th>Laps Lost</th>
+             <th>Position</th><th>Fastest Lap</th><th>Disqualified</th><th>+/- Places</th><th>Laps Lost</th></tr>
+         {% for array in resultsArray %}
+         <tr>
+            {% for content in array %}
+            <td> {% if content == 0 %} <center>-</center> {% else %} {{content}} {% endif %} </td>
+            {% endfor %}
+            <tr />
+            {% endfor %}
+         </table>
+
+
+         {% endif %}
+      </div>
+   </div>
+</div>
 
 {% endblock %}
