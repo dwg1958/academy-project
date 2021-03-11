@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
-from .models import Competitor, Event, ScoringEvent, Result, TeamProfile, AcademyScoringMatrix, CompetitorScore
+from .models import Competitor, Event, ScoringEvent, Result, TeamProfile, AcademyScoringMatrix, CompetitorScore, TeamScore
 from django.contrib.auth.decorators import login_required
 from .forms import EventForm, TeamProfileForm, TeamProfileForm
 from django.contrib.auth.models import User
@@ -272,6 +272,13 @@ def scoreevents(request):
         scoringevent_detail = ScoringEvent.objects.get(pk=scoringevent_ID)
         EventName = scoringevent_detail.name + ' (Type:' + scoringevent_detail.eventType + ')'
 
+########################################################
+#TO DO
+# Test if already scored and warn if it is
+########################################################
+
+
+
         # Get Scoring Matrix #############
         matrix = AcademyScoringMatrix.objects.all()
         ASM_1 = matrix.get(formula=scoringevent_detail.formula, teamPosition='1')
@@ -301,10 +308,11 @@ def scoreevents(request):
 
                 # Make new competitor score record
                 competitorScore = CompetitorScore()
-                competitorScore.result_ID  = result
-                competitorScore.pointsType = 'P'
-                competitorScore.t1_score   = t1_pos_points
-                competitorScore.t2_score   = t2_pos_points
+                competitorScore.result_ID       = result
+                competitorScore.scoringevent_ID = int(scoringevent_ID)
+                competitorScore.pointsType      = 'P'
+                competitorScore.t1_score        = t1_pos_points
+                competitorScore.t2_score        = t2_pos_points
                 competitorScores.append(competitorScore)
 
             else:
@@ -318,6 +326,7 @@ def scoreevents(request):
                 # Make new competitor score record
                 competitorScore = CompetitorScore()
                 competitorScore.result_ID  = result
+                competitorScore.scoringevent_ID = int(scoringevent_ID)
                 competitorScore.pointsType = 'D'
                 competitorScore.t1_score   = t1_disqualified
                 competitorScore.t2_score   = t2_disqualified
@@ -338,6 +347,7 @@ def scoreevents(request):
                     # Make new competitor score record
                     competitorScore = CompetitorScore()
                     competitorScore.result_ID  = result
+                    competitorScore.scoringevent_ID = int(scoringevent_ID)
                     competitorScore.pointsType = 'F'
                     competitorScore.t1_score   = t1_fLap
                     competitorScore.t2_score   = t2_fLap
@@ -355,6 +365,7 @@ def scoreevents(request):
                     # Make new competitor score record
                     competitorScore = CompetitorScore()
                     competitorScore.result_ID  = result
+                    competitorScore.scoringevent_ID = int(scoringevent_ID)
                     competitorScore.pointsType = 'G'
                     competitorScore.t1_score   = t1_PlacesGainedLost
                     competitorScore.t2_score   = t2_PlacesGainedLost
@@ -372,6 +383,7 @@ def scoreevents(request):
                     # Make new competitor score record
                     competitorScore = CompetitorScore()
                     competitorScore.result_ID  = result
+                    competitorScore.scoringevent_ID = int(scoringevent_ID)
                     competitorScore.pointsType = 'L'
                     competitorScore.t1_score   = t1_lapsLost
                     competitorScore.t2_score   = t2_lapsLost
@@ -380,26 +392,70 @@ def scoreevents(request):
                     t1_lapsLost = 0
                     t2_lapsLost = 0
 
-
             #Add line to results array
-            resultsArray.append([ result.finishPosition, result.competitor_ID, placesGainedLost, laps_off_leader, t1_pos_points, t1_fLap, t1_disqualified, t1_PlacesGainedLost, t1_lapsLost, t2_pos_points, t2_fLap, t2_disqualified, t2_PlacesGainedLost, t2_lapsLost ])
+            resultsArray.append([ result.competitor_ID.id, result.finishPosition, result.competitor_ID,   placesGainedLost, laps_off_leader, t1_pos_points, t1_fLap, t1_disqualified, t1_PlacesGainedLost, t1_lapsLost, t2_pos_points, t2_fLap, t2_disqualified, t2_PlacesGainedLost, t2_lapsLost ])
 
-
-
-        #end For result in resultset
-
-        print('new records count = ', len(competitorScores))
+        # Create Competitor Score records from array
         if len(competitorScores) > 0:
             batch = 100
             CompetitorScore.objects.bulk_create(competitorScores, batch)
 
+#############################################################################################################################
+        #3. Now create team score records
+        cscores = CompetitorScore.objects.filter(scoringevent_ID = int(scoringevent_ID))
+        print('Cscore records found :', len(cscores))
+        tscores = []
 
+        # For each competitor score for this event
+        for cscore in cscores:
+            driver_ID = str(cscore.result_ID).split('~')[0]
 
-        #3. Go to players teams and find all players with this driver in T1
+            print('====DRIVER ========== ', driver_ID, '================', cscore.result_ID.competitor_ID ,'================')
+            # Find all teams with this driver as T_1
+            t1_teams = TeamProfile.objects.filter(p1_1 = driver_ID) | TeamProfile.objects.filter(p2_1 = driver_ID) | TeamProfile.objects.filter(p3_1 = driver_ID) | TeamProfile.objects.filter(pw_1 = driver_ID) #<<<<<<< ---------------  MAKE WORK FOR ALL FORMULAS
+            if len(t1_teams) > 0:
+                print('1.Teams found : ', len(t1_teams))
+                for team in t1_teams:
+                    print('1->> ', team.teamName)
+                    # Make team score record for each T_1 position
+                    teamscore = TeamScore()
+                    teamscore.team_ID          = team
+                    teamscore.cscore_ID        = cscore
+                    teamscore.scoringevent_ID  = int(scoringevent_ID)
+                    teamscore.driver_ID        = cscore.result_ID.competitor_ID
+                    teamscore.eventType        = scoringevent_detail.eventType
+                    teamscore.teamPosition     = '1'
+                    teamscore.formula          = scoringevent_detail.formula
+                    teamscore.pointsType       = cscore.pointsType
+                    teamscore.academyPoints    = cscore.t1_score
+                    tscores.append(teamscore)
 
-        #4. Create a PlayerScore record for each player for each competitor_score
+            # Find all teams with this driver as T_2
+            t2_teams = TeamProfile.objects.filter(p1_2 = driver_ID) | TeamProfile.objects.filter(p2_2 = driver_ID) | TeamProfile.objects.filter(p3_2 = driver_ID) | TeamProfile.objects.filter(pw_2 = driver_ID)  #<<<<<<< ---------------  MAKE WORK FOR ALL FORMULAS
+            if len(t2_teams) > 0:
+                print('2.Teams found : ', len(t1_teams))
+                for team in t2_teams:
+                    print('2->> ', team.teamName)
+                    # Make team score record for each T_1 position
+                    teamscore = TeamScore()
+                    teamscore.team_ID          = team
+                    teamscore.cscore_ID        = cscore
+                    teamscore.scoringevent_ID  = int(scoringevent_ID)
+                    teamscore.driver_ID        = cscore.result_ID.competitor_ID
+                    teamscore.eventType        = scoringevent_detail.eventType
+                    teamscore.teamPosition     = '2'
+                    teamscore.formula          = scoringevent_detail.formula
+                    teamscore.pointsType       = cscore.pointsType
+                    teamscore.academyPoints    = cscore.t2_score
+                    tscores.append(teamscore)
 
-        #5. Mark scoring event page as marked
+        # Create Competitor Score records from array
+        if len(tscores) > 0:
+            batch = 100
+            TeamScore.objects.bulk_create(tscores, batch)
+
+        #5. Mark scoring event page as marked - !!!! ALSO STOP SCORING IF TRUE  !!!!
+
         #6  Save array to ScoringEvent table
 
 
@@ -411,7 +467,7 @@ def scoreevents(request):
 
         #Create New Page with Summary Data
         scoringevents = ScoringEvent.objects.all().order_by('startDateTime')[:10]
-        return render(request, 'season/score_events.html',{'scoringevents': scoringevents,'EventName':EventName, 'resultsArray':resultsArray})
+        return render(request, 'season/score_events.html',{'scoringevents': scoringevents,'EventName':EventName, 'resultsArray':resultsArray, 'time_taken':time_taken, 'crecords':len(competitorScores), 'trecords': len(tscores)})
 
 
     else:

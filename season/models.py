@@ -139,7 +139,7 @@ class ScoringEvent(models.Model):
 
 class Result(models.Model):
     scoringEvent_ID      = models.ForeignKey(ScoringEvent, null=True, on_delete = models.CASCADE, related_name='result')
-    competitor_ID        = models.ForeignKey(Competitor, null=True, on_delete = models.PROTECT, related_name='competitor')
+    competitor_ID        = models.ForeignKey(Competitor, null=True, on_delete = models.DO_NOTHING, related_name='competitor')
     finishPosition       = models.IntegerField()
     startPosition        = models.IntegerField(default = 0)
     laps_off_leader      = models.IntegerField(default = 0)
@@ -152,7 +152,7 @@ class Result(models.Model):
         ordering = ('scoringEvent_ID',)
 
     def __str__(self):
-        return  self.scoringEvent_ID.name + " - " + self.competitor_ID.surname + " - P" + str(self.finishPosition)
+        return  str(self.competitor_ID.id) + "~" +self.scoringEvent_ID.name + " - " + self.competitor_ID.firstname + " " + self.competitor_ID.surname + " - P" + str(self.finishPosition)
 
 class CompetitorScore(models.Model):
     POINTSTYPE = (
@@ -162,13 +162,14 @@ class CompetitorScore(models.Model):
     ('L', 'Laps Behind Leader'),
     ('D', 'Disqualification'),
     )
-    result_ID      = models.ForeignKey(Result, null=True, on_delete = models.CASCADE, related_name='result')
-    pointsType     = models.CharField(max_length=1, choices=POINTSTYPE)
-    t1_score       = models.DecimalField(max_digits=6, decimal_places=2)
-    t2_score       = models.DecimalField(max_digits=6, decimal_places=2)
+    result_ID       = models.ForeignKey(Result, null=True, on_delete = models.CASCADE, related_name='result')
+    scoringevent_ID = models.IntegerField(default = 0)
+    pointsType      = models.CharField(max_length=1, choices=POINTSTYPE)
+    t1_score        = models.DecimalField(max_digits=6, decimal_places=2)
+    t2_score        = models.DecimalField(max_digits=6, decimal_places=2)
 
     def __str__(self):
-        return  self.result_ID.competitor_ID.surname + " - " + self.result_ID.scoringEvent_ID.name + " - T1:" + str(self.t1_score) + " - T2:" + str(self.t2_score)
+        return  str(self.result_ID.competitor_ID.id)+ ' ~ ' + self.result_ID.competitor_ID.firstname + ' ' + self.result_ID.competitor_ID.surname + " - " + self.result_ID.scoringEvent_ID.name + " - T1:" + str(self.t1_score) + " - T2:" + str(self.t2_score)
 
 class TeamScore(models.Model):
     TEAMPOSITION = (
@@ -182,9 +183,22 @@ class TeamScore(models.Model):
     ('L', 'Laps Behind Leader'),
     ('D', 'Disqualification'),
     )
+    EVENTTYPE = (
+    ('Q', 'Qualifying'),
+    ('R', 'Race'),
+    ('1', 'Race 1'),
+    ('2', 'Race 2' ),
+    ('3', 'Race 3' ),
+    ('F', 'Feature Race'),
+    ('S', 'Sprint Race' ),
+    )
     team_ID              = models.ForeignKey(TeamProfile, null=True, on_delete = models.CASCADE, related_name='team')
-    cscore_ID            = models.ForeignKey(Result, null=True, on_delete = models.CASCADE, related_name='cscore')
+    cscore_ID            = models.ForeignKey(CompetitorScore, null=True, on_delete = models.CASCADE, related_name='cscore')
+    scoringevent_ID      = models.IntegerField(default = 0)
+    driver_ID            = models.ForeignKey(Competitor, null=True, on_delete = models.DO_NOTHING, related_name='driver')
+    eventType            = models.CharField(max_length=1, choices=EVENTTYPE, default='Q')
     teamPosition         = models.CharField(max_length=1, choices=TEAMPOSITION)
+    formula              = models.CharField(max_length=1, default = '1')
     pointsType           = models.CharField(max_length=1, choices=POINTSTYPE)
     academyPoints        = models.DecimalField(max_digits=6, decimal_places=2)
 

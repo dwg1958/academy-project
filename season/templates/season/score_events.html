@@ -16,7 +16,7 @@
 <hr />
 <br />
 <div class="row justify-content-center">
-   <div class="col-auto">
+   <div class="col-auto ml-20">
 
       <h1> Score a New Event </h1>
 
@@ -39,10 +39,11 @@
          {% if EventName %}
          <hr />
          <h3> Scores Confirmed : {{ EventName }} </h3><br />
+         <p class="text-center"> Time Taken : {{ time_taken }} seconds ~ ~ {{ crecords }} Competitor score records created ~ ~ {{ trecords }} Team score records created</p>
 
          <table class="table table-responsive">
-            <tr><th colspan = 4><th colspan = 5>Lead Driver Points--></th><th colspan = 5>2nd Driver Points--></th></tr>
-            <tr><th>Position</th><th>Driver</th><th>+/- places</th><th>laps off leader</th>
+            <tr><th colspan = 5><th colspan = 5>Lead Driver Points--></th><th colspan = 5>2nd Driver Points--></th></tr>
+            <tr><th>ID</th><th>Position</th><th>Driver</th><th>+/- places</th><th>laps off leader</th>
                <th>Position</th><th>Fastest Lap</th><th>Disqualified</th><th>+/- Places</th><th>Laps Lost</th>
                <th>Position</th><th>Fastest Lap</th><th>Disqualified</th><th>+/- Places</th><th>Laps Lost</th></tr>
                {% for array in resultsArray %}
@@ -53,7 +54,7 @@
             <tr />
                {% endfor %}
          </table>
-               
+
          {% endif %}
 
       </div>

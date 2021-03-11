@@ -59,7 +59,7 @@ class ScoringEventAdmin(admin.ModelAdmin):
     active.boolean = True
 
 class CompetitorScoreAdmin(admin.ModelAdmin):
-    list_display  = ( 'id','result_ID', 'pointsType', 't1_score', 't2_score')
+    list_display  = ( 'id','result_ID', 'scoringevent_ID', 'pointsType', 't1_score', 't2_score')
 
     def active(self, obj):
         return obj.is_active == 1
@@ -76,7 +76,7 @@ class AcademyScoringMatrixAdmin(admin.ModelAdmin):
     active.boolean = True
 
 class TeamScoreAdmin(admin.ModelAdmin):
-    list_display = ('id','team_ID', 'cscore_ID', 'pointsType', 'academyPoints')
+    list_display = ('id','team_ID', 'cscore_ID', 'pointsType', 'teamPosition','academyPoints')
 
     def active(self, obj):
         return obj.is_active == 1
