@@ -51,15 +51,21 @@ def tables(request):
 #### SHOW COMPETITOR TABLES #######
 def tableformula(request, formula):
 
-    # Go find drivers in this formula only
-    if formula == "4" or formula == "W":
-        formula = "W"
-        formulaname = "W Series"
+    if formula in '1234Ww':
+        # Go find drivers in this formula only
+        if formula == "4" or formula == "W":
+            formula = "W"
+            formulaname = "W Series"
+        else:
+            formulaname = "Formula " + formula
     else:
-        formulaname = "Formula " + formula
+            formula = "1"
+            formulaname = "Formula 1"
+
+
 
     competitors = Competitor.objects.filter(formula=formula, role="D")
-    managers    = Competitor.objects.filter(formula=formula, role="M")
+
 
     ## Find personality dataset
     try:
@@ -70,7 +76,7 @@ def tableformula(request, formula):
         pers_data = list(competitors[:1])
         showPersonal = " "
 
-    return render(request, 'season/tables.html', {'personality':pers_data, 'competitors': competitors,'managers':managers,'formulaname':formulaname, 'formula':formula, 'showPersonal':showPersonal})
+    return render(request, 'season/tables.html', {'personality':pers_data, 'competitors': competitors,'formulaname':formulaname, 'formula':formula, 'showPersonal':showPersonal})
 
 
 ####################################
@@ -104,7 +110,10 @@ def teamview(request):
             new_p1_1 = Competitor.objects.get(pk=arg1) #Find new driver 1 record
             new_p1_2 = Competitor.objects.get(pk=arg2)
             #check budget not exceeded
-            new_cash_pot = recordtoedit.f1_cashpot + recordtoedit.p1_1.value + recordtoedit.p1_2.value - new_p1_1.value - new_p1_2.value
+            if recordtoedit.f1_cashpot == 50:
+                new_cash_pot = 50
+            else:
+                new_cash_pot = recordtoedit.f1_cashpot + recordtoedit.p1_1.value + recordtoedit.p1_2.value - new_p1_1.value - new_p1_2.value
 
             if ( new_cash_pot < 0 ):
                 returnmessage = 'You have exceeded your budget - please choose again'
@@ -131,7 +140,10 @@ def teamview(request):
             new_p2_1 = Competitor.objects.get(pk=arg1) #Find new driver 2 record
             new_p2_2 = Competitor.objects.get(pk=arg2)
             #check budget not exceeded
-            new_cash_pot = recordtoedit.f2_cashpot + recordtoedit.p2_1.value + recordtoedit.p2_2.value - new_p2_1.value - new_p2_2.value
+            if recordtoedit.f2_cashpot == 30:
+                new_cash_pot = 30
+            else:
+                new_cash_pot = recordtoedit.f2_cashpot + recordtoedit.p2_1.value + recordtoedit.p2_2.value - new_p2_1.value - new_p2_2.value
 
             if ( new_cash_pot < 0 ):
                 returnmessage = 'You have exceeded your budget - please choose again'
@@ -157,7 +169,10 @@ def teamview(request):
             new_p3_1 = Competitor.objects.get(pk=arg1) #Find new driver 2 record
             new_p3_2 = Competitor.objects.get(pk=arg2)
             #check budget not exceeded
-            new_cash_pot = recordtoedit.f3_cashpot + recordtoedit.p3_1.value + recordtoedit.p3_2.value - new_p3_1.value - new_p3_2.value
+            if recordtoedit.f3_cashpot == 20:
+                new_cash_pot = 20
+            else:
+                new_cash_pot = recordtoedit.f3_cashpot + recordtoedit.p3_1.value + recordtoedit.p3_2.value - new_p3_1.value - new_p3_2.value
 
             if ( new_cash_pot < 0 ):
                 returnmessage = 'You have exceeded your budget - please choose again'
@@ -183,7 +198,10 @@ def teamview(request):
             new_pw_1 = Competitor.objects.get(pk=arg1) #Find new driver 2 record
             new_pw_2 = Competitor.objects.get(pk=arg2)
             #check budget not exceeded
-            new_cash_pot = recordtoedit.ws_cashpot + recordtoedit.pw_1.value + recordtoedit.pw_2.value - new_pw_1.value - new_pw_2.value
+            if recordtoedit.ws_cashpot == 20:
+                new_cash_pot = 20
+            else:
+                new_cash_pot = recordtoedit.ws_cashpot + recordtoedit.pw_1.value + recordtoedit.pw_2.value - new_pw_1.value - new_pw_2.value
 
             if ( new_cash_pot < 0 ):
                 returnmessage = 'You have exceeded your budget - please choose again'
@@ -454,10 +472,22 @@ def scoreevents(request):
             batch = 100
             TeamScore.objects.bulk_create(tscores, batch)
 
-        #5. Mark scoring event page as marked - !!!! ALSO STOP SCORING IF TRUE  !!!!
+                           ###############      ###            ##########          ###
+                                 ##           #######          ##       ##       #######
+                                 ##          ##     ##         ##        ##     ##     ##
+                                 ##          ##     ##    ##   ##        ##     ##     ##
+                                 ##          ##     ##         ##        ##     ##     ##
+                                 ##           #######          ##       ##       #######
+                                 ##             ###            ##########          ###
 
+################################################################################################################
+################################################################################################################
+    #5. Mark scoring event page as marked - !!!! ALSO STOP SCORING IF TRUE  !!!!
+################################################################################################################
+################################################################################################################
         #6  Save array to ScoringEvent table
-
+################################################################################################################
+################################################################################################################
 
 
 

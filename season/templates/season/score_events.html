@@ -9,6 +9,19 @@
    td{
       text-align: center;
    }
+   table td:nth-child(3)
+   {
+      text-align: left;
+   }
+   /* Hide first column (with driverID)*/
+   table th:nth-child(1)
+   {
+      display:none;
+   }
+   table td:nth-child(1)
+   {
+      display:none;
+   }
 </style>
 {% endblock %}
 
@@ -42,7 +55,7 @@
          <p class="text-center"> Time Taken : {{ time_taken }} seconds ~ ~ {{ crecords }} Competitor score records created ~ ~ {{ trecords }} Team score records created</p>
 
          <table class="table table-responsive">
-            <tr><th colspan = 5><th colspan = 5>Lead Driver Points--></th><th colspan = 5>2nd Driver Points--></th></tr>
+            <tr><th></th><th colspan = 4><th colspan = 5>Lead Driver Points--></th><th colspan = 5>2nd Driver Points--></th></tr>
             <tr><th>ID</th><th>Position</th><th>Driver</th><th>+/- places</th><th>laps off leader</th>
                <th>Position</th><th>Fastest Lap</th><th>Disqualified</th><th>+/- Places</th><th>Laps Lost</th>
                <th>Position</th><th>Fastest Lap</th><th>Disqualified</th><th>+/- Places</th><th>Laps Lost</th></tr>

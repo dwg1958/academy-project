@@ -12,6 +12,12 @@ Drivers
 <style>
    a{color:white}
    a:hover{color:gray}
+   .bg-dark b{
+      color:black;
+   }
+   .bg-dark {
+      background-color:black;
+   }
 </style>
 {% endblock %}
 
@@ -79,7 +85,7 @@ Drivers
                         <tbody>
 
                            <tr>
-                              <td colspan = 2 class="bg-dark" style="color:white"><b>Career</b></td>
+                              <td colspan = 2 class="bg-dark" ><b>Career</b></td>
                            </tr>
                            <tr>
                               <td>&nbsp;&nbsp;&nbsp;Wins</td>
@@ -94,7 +100,7 @@ Drivers
                               <td>{{ person.championships }}</td>
                            </tr>
                            <tr>
-                              <td colspan = 2 class="bg-dark" style="color:white"><b>This Season</b></td>
+                              <td colspan = 2 class="bg-dark"><b>This Season</b></td>
                            </tr>
                            <tr>
                               <td>&nbsp;&nbsp;&nbsp;Points</td>
@@ -113,7 +119,7 @@ Drivers
                               <td>{{ person.gainLossThisseason }}</td>
                            </tr>
                            <tr>
-                              <td colspan = 2 class="bg-dark" style="color:white"><b>Personal</b></td>
+                              <td colspan = 2 class="bg-dark"><b>Personal</b></td>
                            </tr>
                            <tr>
                               <td>&nbsp;&nbsp;&nbsp;Nationality</td>
@@ -148,7 +154,7 @@ Drivers
 
             <h2>Drivers</h2>
             <div class="table-responsive">
-               <table class="table table-striped table-sm">
+               <table class="table table-hover table-sm table-responsive-sm">
                   <thead>
                      <tr>
                         <th>Driver</th>
@@ -163,8 +169,8 @@ Drivers
                   </thead>
                   <tbody>
                      {% for driver in competitors.all %}
-                     <tr>
-                        <td><a href="/season/tables/{{formula}}?per={{driver.surname}}"><img class = "image-fluid " src="{{driver.mugshot.url}}"  height=50px /></a></td>
+                        <tr class='clickable-row' onclick="window.location='/season/tables/{{formula}}?per={{driver.surname}}'">
+                        <td><img class = "image-fluid " src="{{driver.mugshot.url}}"  height=50px /></td>
                         <td> <b> {{driver.surname}}, {{driver.firstname}} </b> </td>
                         <td>{{driver.team}}</td>
                         <td>${{driver.value}}m</td>

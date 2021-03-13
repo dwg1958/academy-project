@@ -50,6 +50,9 @@
           .page-content{
              padding: 94px 12px 10px 0px;
           }
+          h1, h2, h3, h4, h5, h6, p, td, th {
+             color: #dddddd;
+          }
 	    </style>
        <!---------------------- CSS BLOCK  ------------------->
           {% block css %}
@@ -146,7 +149,7 @@
                                     <span>My Team</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <<li><a href="{% url 'teamview' %}">My Team</a></li>
+                                    <li><a href="{% url 'teamview' %}">My Team</a></li>
                                     <li><a href="#">My Results</a></li>
                                     <li><a href="#">League Table</a></li>
                                     <li><a href="{% url 'teamnamepicker' %}">Team Name & Image</a></li>
