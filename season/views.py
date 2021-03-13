@@ -33,9 +33,34 @@ def showscoringevents(request):
 def showresults(request):
     if request.method == 'GET' and 'scoringevent' in request.GET:
         result_id = request.GET['scoringevent']
-        resultset = Result.objects.filter(scoringEvent_ID=result_id).order_by('scoringEvent_ID', 'finishPosition')
-        scoringeventname = ScoringEvent.objects.get(id=result_id)
-        return render(request, 'season/showresults.html', {'resultset': resultset, 'scoringeventname':scoringeventname,'startDateTime':scoringeventname.startDateTime})
+        #resultset = Result.objects.filter(scoringEvent_ID=result_id).order_by('scoringEvent_ID', 'finishPosition')
+        scoringevent = ScoringEvent.objects.get(id=result_id)
+
+        data     = scoringevent.resultsArray
+        newarray = []
+
+        data = data[2:]
+        data = data[:-2]
+
+        datarray = data.split("], [")
+        for line in datarray:
+            line = line.split(",")
+            newline = []
+            first = True
+            for item in line:
+                if first:
+                    first = False
+                else:
+                    item = item.replace("<Competitor: " , "")
+                    item = item.replace("Decimal('"     , "")
+                    item = item.replace(">"             , "")
+                    item = item.replace("')"            , "")
+                    newline.append(item)
+
+            newarray.append(newline)
+
+        return render(request, 'season/showresults.html', {'scoringevent':scoringevent, 'newarray':newarray})
+
     else:
         allevents = Event.objects.all()
         return render(request, 'season/showevents.html',{'allevents':allevents})
@@ -290,18 +315,16 @@ def scoreevents(request):
         scoringevent_detail = ScoringEvent.objects.get(pk=scoringevent_ID)
         EventName = scoringevent_detail.name + ' (Type:' + scoringevent_detail.eventType + ')'
 
-########################################################
-#TO DO
-# Test if already scored and warn if it is
-########################################################
-
-
+        # Test if already scored and warn if it is
+        if scoringevent_detail.results_in:
+            scoringevents = ScoringEvent.objects.all().filter(results_in = False).order_by('startDateTime')[:10]
+            return render(request, 'season/score_events.html',{'scoringevents': scoringevents,})
 
         # Get Scoring Matrix #############
         matrix = AcademyScoringMatrix.objects.all()
         ASM_1 = matrix.get(formula=scoringevent_detail.formula, teamPosition='1')
         ASM_2 = matrix.get(formula=scoringevent_detail.formula, teamPosition='2')
-        resultsArray = []
+        resultsArray   = []  # Make an array to send data to table in HTML template
 
         #Set Event type
         if   scoringevent_detail.eventType in 'RF3':    rt = 'm_'
@@ -311,8 +334,10 @@ def scoreevents(request):
         #2. For each result
         resultset = Result.objects.filter(scoringEvent_ID=int(scoringevent_ID)).order_by('finishPosition')
 
-        #Make array for new records to batch upload at the endDateTimecompetitorScores = []
+        #Make array for new records to batch upload at the end
         competitorScores = []
+
+
 
         # 2.1 select relevant scoring matrix records (e.g. F1_D1 *AND* F2_D2) then go
         # through each scoring opportunity and make a competitor_score record with EACH score for EACH TeamPosition
@@ -428,13 +453,10 @@ def scoreevents(request):
         for cscore in cscores:
             driver_ID = str(cscore.result_ID).split('~')[0]
 
-            print('====DRIVER ========== ', driver_ID, '================', cscore.result_ID.competitor_ID ,'================')
             # Find all teams with this driver as T_1
             t1_teams = TeamProfile.objects.filter(p1_1 = driver_ID) | TeamProfile.objects.filter(p2_1 = driver_ID) | TeamProfile.objects.filter(p3_1 = driver_ID) | TeamProfile.objects.filter(pw_1 = driver_ID) #<<<<<<< ---------------  MAKE WORK FOR ALL FORMULAS
             if len(t1_teams) > 0:
-                print('1.Teams found : ', len(t1_teams))
                 for team in t1_teams:
-                    print('1->> ', team.teamName)
                     # Make team score record for each T_1 position
                     teamscore = TeamScore()
                     teamscore.team_ID          = team
@@ -451,9 +473,7 @@ def scoreevents(request):
             # Find all teams with this driver as T_2
             t2_teams = TeamProfile.objects.filter(p1_2 = driver_ID) | TeamProfile.objects.filter(p2_2 = driver_ID) | TeamProfile.objects.filter(p3_2 = driver_ID) | TeamProfile.objects.filter(pw_2 = driver_ID)  #<<<<<<< ---------------  MAKE WORK FOR ALL FORMULAS
             if len(t2_teams) > 0:
-                print('2.Teams found : ', len(t1_teams))
                 for team in t2_teams:
-                    print('2->> ', team.teamName)
                     # Make team score record for each T_1 position
                     teamscore = TeamScore()
                     teamscore.team_ID          = team
@@ -472,45 +492,25 @@ def scoreevents(request):
             batch = 100
             TeamScore.objects.bulk_create(tscores, batch)
 
-                           ###############      ###            ##########          ###
-                                 ##           #######          ##       ##       #######
-                                 ##          ##     ##         ##        ##     ##     ##
-                                 ##          ##     ##    ##   ##        ##     ##     ##
-                                 ##          ##     ##         ##        ##     ##     ##
-                                 ##           #######          ##       ##       #######
-                                 ##             ###            ##########          ###
+        # Mark scoring event page as marked - !!!! ALSO STOP SCORING IF TRUE  !!!!
+        scoringevent_detail.results_in = True
+        # Save results array to ScoringEvent table to calendar pages
 
-################################################################################################################
-################################################################################################################
-    #5. Mark scoring event page as marked - !!!! ALSO STOP SCORING IF TRUE  !!!!
-################################################################################################################
-################################################################################################################
-        #6  Save array to ScoringEvent table
-################################################################################################################
-################################################################################################################
+        scoringevent_detail.resultsArray = resultsArray
+        scoringevent_detail.save()
 
-
-
+        # Close timer
         toc = time.perf_counter()
         time_taken = round(toc - tic,4)
-        print('Time taken - ',time_taken)
 
         #Create New Page with Summary Data
-        scoringevents = ScoringEvent.objects.all().order_by('startDateTime')[:10]
+        scoringevents = ScoringEvent.objects.all().filter(results_in = False).order_by('startDateTime')[:10]
         return render(request, 'season/score_events.html',{'scoringevents': scoringevents,'EventName':EventName, 'resultsArray':resultsArray, 'time_taken':time_taken, 'crecords':len(competitorScores), 'trecords': len(tscores)})
-
 
     else:
         #Create Blank Page
-        scoringevents = ScoringEvent.objects.all().order_by('startDateTime')[:10]
+        scoringevents = ScoringEvent.objects.all().filter(results_in = False).order_by('startDateTime')[:10]
         return render(request, 'season/score_events.html',{'scoringevents': scoringevents,})
-
-
-
-
-
-
-
 
 
 ##############################################################################################
@@ -519,7 +519,16 @@ def addresults(request):
 
 
 
+                       #############      ###            #######          ###
+                             ##         #######          ##    ##       #######
+                             ##        ##     ##         ##     ##     ##     ##
+                             ##        ##     ##    ##   ##     ##     ##     ##
+                             ##        ##     ##         ##     ##     ##     ##
+                             ##         #######          ##    ##       #######
+                             ##           ###            #######          ###
 
+##############################################################################################################
+##############################################################################################################
 
 
 

@@ -40,7 +40,7 @@ class Competitor(models.Model):
 
     class Meta:
         # Add verbose name
-        verbose_name = 'Driver or Manager'
+        verbose_name = 'Driver'
         ordering = ('-value',)
 
 # Create your models here.
@@ -124,6 +124,7 @@ class ScoringEvent(models.Model):
     eventType            = models.CharField(max_length=1, choices=RACETYPE)
     startDateTime        = models.DateTimeField(auto_now=False, auto_now_add=False)
     results_in           = models.BooleanField(default=False)
+    resultsArray         = models.TextField(default="-")
 
     class Meta:
         ordering = ('formula','startDateTime',)

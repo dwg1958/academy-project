@@ -50,7 +50,7 @@ class ResultAdmin(admin.ModelAdmin):
     active.boolean = True
 
 class ScoringEventAdmin(admin.ModelAdmin):
-    list_display = ('id','event_ID', 'name', 'formula',  'eventType', 'startDateTime')
+    list_display = ('id','event_ID', 'name', 'results_in', 'formula',  'eventType', 'startDateTime')
     list_filter   = ('formula',)
 
     def active(self, obj):
