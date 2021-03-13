@@ -47,7 +47,7 @@ class Competitor(models.Model):
 class TeamProfile(models.Model):
     user_ID                = models.OneToOneField(User, on_delete = models.CASCADE, related_name='team')
     teamName               = models.CharField(max_length=30, default='My Team')
-    teamLogo               = models.ImageField(upload_to='mugshots/', default="siteimages/car_outline.jpg")
+    teamLogo               = models.ImageField(upload_to='mugshots/', default="siteimages/defaultTeam.png")
     dateStarted            = models.DateField(auto_now=True)
     dateSelected           = models.DateTimeField(auto_now=True)
     f1_cashpot             = models.DecimalField(max_digits=4, decimal_places=1, default = 50.0)
