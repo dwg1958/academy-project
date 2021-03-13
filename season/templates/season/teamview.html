@@ -149,7 +149,7 @@ My Team
                       <table>
                          <tr>
                             <td>
-                              <img src="{% if user.team.p2_1.id %} {{ user.team.p2_1.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
+                              <img src="{{ user.team.p2_1.mugshot.url}}" />
                            </td>
                            <td>
                               <p class = "name" >{{ user.team.p2_1}}</p>
@@ -314,7 +314,7 @@ My Team
                   <dl class="row justify-content-center">
                      <dt class=" DriverSection col-sm-1"></dt>
                      <dt class=" DriverSection col-sm-3">
-                        <img src="{{ teamdata.p1_1.mugshot.url}}" style="height:150px;"/>
+                        <img src="{{ teamdata.p2_1.mugshot.url}}" style="height:150px;"/>
                         <h4 class="mt-2">{{ teamdata.p2_1}}</h4>
                         <p>Lead Driver</p>
                         <p><b>${{ teamdata.p2_1.value}}m </b>(Paid:${{ teamdata.p2_1_cost}}m) </p>

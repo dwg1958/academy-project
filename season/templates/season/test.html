@@ -14,35 +14,64 @@ TEST
 <!---- BODY CONTENT --------->
 {% block content %}
 <br /><br /><br /><br /><br />
-<div class="bs-example">
-    <ul class="nav nav-pills">
-        <li class="nav-item">
-            <a href="#home" class="nav-link active" data-toggle="tab">Home</a>
-        </li>
-        <li class="nav-item">
-            <a href="#profile" class="nav-link" data-toggle="tab">Profile</a>
-        </li>
-        <li class="nav-item">
-            <a href="#messages" class="nav-link" data-toggle="tab">Messages</a>
-        </li>
-    </ul>
-    <hr/>
-    <br/>
-    <div class="tab-content">
-        <div class="tab-pane fade show active" id="home">
-            <h4 class="mt-2">Home tab content</h4>
-            <p>Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui. Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth.</p>
-        </div>
-        <div class="tab-pane fade" id="profile">
-            <h4 class="mt-2">Profile tab content</h4>
-            <p>Vestibulum nec erat eu nulla rhoncus fringilla ut non neque. Vivamus nibh urna, ornare id gravida ut, mollis a magna. Aliquam porttitor condimentum nisi, eu viverra ipsum porta ut. Nam hendrerit bibendum turpis, sed molestie mi fermentum id. Aenean volutpat velit sem. Sed consequat ante in rutrum convallis. Nunc facilisis leo at faucibus adipiscing.</p>
-        </div>
-        <div class="tab-pane fade" id="messages">
-            <h4 class="mt-2">Messages tab content</h4>
-            <p>Donec vel placerat quam, ut euismod risus. Sed a mi suscipit, elementum sem a, hendrerit velit. Donec at erat magna. Sed dignissim orci nec eleifend egestas. Donec eget mi consequat massa vestibulum laoreet. Mauris et ultrices nulla, malesuada volutpat ante. Fusce ut orci lorem. Donec molestie libero in tempus imperdiet. Cum sociis natoque penatibus et magnis.</p>
-        </div>
-    </div>
-</div>
+<div class="row">
+   <div class="col-lg-2" ></div>
+   <div class="col-lg-8" >
+                                   <div class="card">
+                                       <div class="card-body">
+
+                                           <h5 class="card-title">Accordion example</h5>
+                                           <p class="card-title-desc">Extend the default collapse behavior to create an accordion.</p>
+
+                                           <div class="accordion" id="accordionExample2">
+                                               <div class="card mb-0 pt-2 shadow-none">
+                                                   <div class="card-header" id="headingOne2">
+                                                   <h5 class="my-0">
+                                                       <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne2" aria-expanded="true" aria-controls="collapseOne2">
+                                                       Collapsible Group Item #1
+                                                       </button>
+                                                   </h5>
+                                                   </div>
+
+                                                   <div id="collapseOne2" class="collapse show" aria-labelledby="headingOne2" data-parent="#accordionExample2">
+                                                   <div class="card-body font-size-13">
+                                                       Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                                   </div>
+                                                   </div>
+                                               </div>
+                                               <div class="card mb-0 pt-2 shadow-none">
+                                                   <div class="card-header" id="headingTwo2">
+                                                   <h5 class="my-0">
+                                                       <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo2" aria-expanded="false" aria-controls="collapseTwo2">
+                                                       Collapsible Group Item #2
+                                                       </button>
+                                                   </h5>
+                                                   </div>
+                                                   <div id="collapseTwo2" class="collapse" aria-labelledby="headingTwo2" data-parent="#accordionExample2">
+                                                   <div class="card-body font-size-13">
+                                                       Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                                   </div>
+                                                   </div>
+                                               </div>
+                                               <div class="card mb-0 pt-2 shadow-none">
+                                                   <div class="card-header" id="headingThree2">
+                                                   <h5 class="my-0">
+                                                       <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree2" aria-expanded="false" aria-controls="collapseThree2">
+                                                       Collapsible Group Item #3
+                                                       </button>
+                                                   </h5>
+                                                   </div>
+                                                   <div id="collapseThree2" class="collapse" aria-labelledby="headingThree2" data-parent="#accordionExample2">
+                                                   <div class="card-body font-size-13">
+                                                       Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                                   </div>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                               <div class="col-lg-2" ></div>
 <br /><br /><br /><br /><br />
 {% endblock %}
 <!---- BODY CONTENT BLOCK --------->
