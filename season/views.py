@@ -387,7 +387,7 @@ def scoreevents(request):
 
 
                 # Places gained/lost points
-                placesGainedLost = result.finishPosition - result.startPosition
+                placesGainedLost = result.placesGainedLost
                 if placesGainedLost != 0:
                     var = rt + 'pos_gained'
                     t1_PlacesGainedLost = placesGainedLost * getattr(ASM_1,var)
@@ -550,7 +550,7 @@ def addresults(request):
             newResult.placesGainedLost = int(request.POST['startPosition']) - int(request.POST['finishPosition'])
             #fastestLap checkbox does not return if not set, so look whether it exists..
             fastestLap = request.POST.get('fastestLap')
-            newResult.fastestLap     = True if disqualified else False
+            newResult.fastestLap     = True if fastestLap else False
 
         newResult.save()
 
