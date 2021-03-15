@@ -521,6 +521,12 @@ def addresults(request):
             except:
                 driversremaining.append(driver)
 
+        # If no drivers left to choose then go back to blank chooser screen
+        if len(driversremaining) == 0:
+            #First Screen - Choose an event
+            scoringevents = ScoringEvent.objects.all().filter(results_in = False).order_by('startDateTime')[:10]
+            return render(request, 'season/add_results.html',{'scoringevents': scoringevents})
+
         nextpos = len(resultsSoFar)+1
         return render(request, 'season/add_results.html',{'eventName': eventName, 'event':scoringevent_detail, 'resultsSoFar':resultsSoFar, 'driverOptions':driversremaining, 'nextpos':nextpos})
 
@@ -564,8 +570,13 @@ def addresults(request):
             except:
                 driversremaining.append(driver)
 
-        nextpos = len(resultsSoFar)+1
+        # If no drivers left to choose then go back to blank chooser screen
+        if len(driversremaining) == 0:
+            #First Screen - Choose an event
+            scoringevents = ScoringEvent.objects.all().filter(results_in = False).order_by('startDateTime')[:10]
+            return render(request, 'season/add_results.html',{'scoringevents': scoringevents})
 
+        nextpos = len(resultsSoFar)+1
         eventName = scoringevent_detail.name + ' (Type:' + scoringevent_detail.eventType + ')'
 
         #Show results already in:
