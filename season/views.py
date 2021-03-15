@@ -134,12 +134,8 @@ def teamview(request):
 
             new_p1_1 = Competitor.objects.get(pk=arg1) #Find new driver 1 record
             new_p1_2 = Competitor.objects.get(pk=arg2)
-            #check budget not exceeded
-            if recordtoedit.f1_cashpot == 50:
-                new_cash_pot = 50
-            else:
-                new_cash_pot = recordtoedit.f1_cashpot + recordtoedit.p1_1.value + recordtoedit.p1_2.value - new_p1_1.value - new_p1_2.value
-
+            #check budget not exceeded and not a new team
+            new_cash_pot = recordtoedit.f1_cashpot + recordtoedit.p1_1.value + recordtoedit.p1_2.value - new_p1_1.value - new_p1_2.value
             if ( new_cash_pot < 0 ):
                 returnmessage = 'You have exceeded your budget - please choose again'
             elif ( arg1 == arg2 ):
@@ -165,10 +161,7 @@ def teamview(request):
             new_p2_1 = Competitor.objects.get(pk=arg1) #Find new driver 2 record
             new_p2_2 = Competitor.objects.get(pk=arg2)
             #check budget not exceeded
-            if recordtoedit.f2_cashpot == 30:
-                new_cash_pot = 30
-            else:
-                new_cash_pot = recordtoedit.f2_cashpot + recordtoedit.p2_1.value + recordtoedit.p2_2.value - new_p2_1.value - new_p2_2.value
+            new_cash_pot = recordtoedit.f2_cashpot + recordtoedit.p2_1.value + recordtoedit.p2_2.value - new_p2_1.value - new_p2_2.value
 
             if ( new_cash_pot < 0 ):
                 returnmessage = 'You have exceeded your budget - please choose again'
@@ -194,10 +187,7 @@ def teamview(request):
             new_p3_1 = Competitor.objects.get(pk=arg1) #Find new driver 2 record
             new_p3_2 = Competitor.objects.get(pk=arg2)
             #check budget not exceeded
-            if recordtoedit.f3_cashpot == 20:
-                new_cash_pot = 20
-            else:
-                new_cash_pot = recordtoedit.f3_cashpot + recordtoedit.p3_1.value + recordtoedit.p3_2.value - new_p3_1.value - new_p3_2.value
+            new_cash_pot = recordtoedit.f3_cashpot + recordtoedit.p3_1.value + recordtoedit.p3_2.value - new_p3_1.value - new_p3_2.value
 
             if ( new_cash_pot < 0 ):
                 returnmessage = 'You have exceeded your budget - please choose again'
@@ -223,10 +213,7 @@ def teamview(request):
             new_pw_1 = Competitor.objects.get(pk=arg1) #Find new driver 2 record
             new_pw_2 = Competitor.objects.get(pk=arg2)
             #check budget not exceeded
-            if recordtoedit.ws_cashpot == 20:
-                new_cash_pot = 20
-            else:
-                new_cash_pot = recordtoedit.ws_cashpot + recordtoedit.pw_1.value + recordtoedit.pw_2.value - new_pw_1.value - new_pw_2.value
+            new_cash_pot = recordtoedit.ws_cashpot + recordtoedit.pw_1.value + recordtoedit.pw_2.value - new_pw_1.value - new_pw_2.value
 
             if ( new_cash_pot < 0 ):
                 returnmessage = 'You have exceeded your budget - please choose again'
