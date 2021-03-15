@@ -296,6 +296,7 @@ def scoreevents(request):
 
         #Start Timer
         tic = time.perf_counter()
+        results_calculated = False
 
         #Get Scoring Event details
         scoringevent_ID = int(request.GET['scoringevent'])
@@ -427,6 +428,7 @@ def scoreevents(request):
 
         # Create Competitor Score records from array
         if len(competitorScores) > 0:
+            results_calculated = True
             batch = 100
             CompetitorScore.objects.bulk_create(competitorScores, batch)
 
@@ -480,11 +482,11 @@ def scoreevents(request):
             TeamScore.objects.bulk_create(tscores, batch)
 
         # Mark scoring event page as marked - !!!! ALSO STOP SCORING IF TRUE  !!!!
-        scoringevent_detail.results_in = True
-        # Save results array to ScoringEvent table to calendar pages
-
-        scoringevent_detail.resultsArray = resultsArray
-        scoringevent_detail.save()
+        if results_calculated:
+            scoringevent_detail.results_in = True
+            # Save results array to ScoringEvent table to calendar pages
+            scoringevent_detail.resultsArray = resultsArray
+            scoringevent_detail.save()
 
         # Close timer
         toc = time.perf_counter()
@@ -512,7 +514,7 @@ def addresults(request):
 
         #Show results already in:
         resultsSoFar  = Result.objects.all().filter(scoringEvent_ID = scoringevent).order_by('finishPosition')
-        driverOptions = Competitor.objects.filter(formula = '1').filter(role = 'D')
+        driverOptions = Competitor.objects.filter(formula = scoringevent_detail.formula).filter(role = 'D')
         #remove those already selected #######################
         driversremaining = []
         for driver in driverOptions:
@@ -561,7 +563,7 @@ def addresults(request):
         newResult.save()
 
         resultsSoFar    = Result.objects.all().filter(scoringEvent_ID = scoringevent_detail.id).order_by('finishPosition')
-        driverOptions = Competitor.objects.filter(formula = '1').filter(role = 'D')
+        driverOptions = Competitor.objects.filter(formula = scoringevent_detail.formula).filter(role = 'D')
         #remove those already selected #######################
         driversremaining = []
         for driver in driverOptions:
