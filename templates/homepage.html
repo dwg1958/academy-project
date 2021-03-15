@@ -2,6 +2,8 @@
 {% extends 'base.html' %}
 {% load blog_tags %}
 {% load static %}
+{% block title      %} Home {% endblock %}
+{% block breadcrumb %} Home {% endblock %}
 
 {% block css %}
 <style>
@@ -23,7 +25,7 @@
 <div class="container">
    <section class="jumbotron text-center text-white">
       <div class="container">
-         <img src="{% static 'academy/webPageImages/FFDAcademy_Logo.png' %}" alt="" height="150">
+         <img src="{% static 'academy/webPageImages/FFDAcademy_Logo.png' %}" alt="" width="40%">
       </div>
    </section>
    <div class="row">

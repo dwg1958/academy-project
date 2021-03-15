@@ -42,7 +42,7 @@ class EventAdmin(admin.ModelAdmin):
 
 class ResultAdmin(admin.ModelAdmin):
     list_display  = ('id','scoringEvent_ID', 'competitor_ID', 'finishPosition', 'startPosition', 'fastestLap')
-    search_fields = ('scoringEvent_ID', 'finishPosition',)
+    search_fields = ('scoringEvent_ID',)
 
     def active(self, obj):
         return obj.is_active == 1

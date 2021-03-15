@@ -1,6 +1,6 @@
 
 from django import forms
-from .models import Event, TeamProfile, Competitor
+from .models import Event, TeamProfile, Competitor, Result
 
 class EventForm(forms.ModelForm):
     class Meta:

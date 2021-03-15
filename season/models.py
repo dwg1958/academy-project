@@ -30,10 +30,11 @@ class Competitor(models.Model):
     polesThisSeason        = models.IntegerField(default = 0)
     gainLossThisseason     = models.IntegerField(default = 0)
     fastestLapsThisSeason  = models.IntegerField(default = 0)
-    webLink                = models.CharField(max_length=30, blank=True)
-    instaHandle            = models.CharField(max_length=30, blank=True)
-    twitterHandle          = models.CharField(max_length=30, blank=True)
-    short_bio              = models.TextField(default = " ", blank=True)
+    previousHistory        = models.CharField(max_length=200, blank=True)
+    webLink                = models.CharField(max_length=30,  blank=True)
+    instaHandle            = models.CharField(max_length=30,  blank=True)
+    twitterHandle          = models.CharField(max_length=30,  blank=True)
+    short_bio              = models.TextField(default = " ",  blank=True)
 
     def __str__(self):
         return self.firstname + " " + self.surname

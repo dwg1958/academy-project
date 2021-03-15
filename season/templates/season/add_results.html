@@ -1,11 +1,183 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block title%} Add Results{% endblock %}
+{% block breadcrumb %} Add Results{% endblock %}
 
+{% block css%}
+<style>
+   th{
+      font-weight: bold;
+   }
+   .bigtable td, .bigtable th{
+      border: 1px solid black;
+      border-collapse: collapse;
+      min-width: 100px;
+      padding: 5px;
+      text-align: center;
+   }
+   .bigtable td:nth-child(1), .bigtable th:nth-child(1){
+      width:300px;
+      text-align: left;
+   }
+   td{
+      vertical-align: top;
+   }
+</style>
+
+{% endblock %}
+
+<!--------------------------------------------------------------->
 {% block content %}
 
-   <h1> Add Results </h1>
-   <br />
-   <br />
-   <br />
-   <br />
+{% if eventName %}
+<div class = "" style = "padding: 0% 5% 2% 5%;">
 
+   <h1> {{event.name }} ({{ event.eventType }} - #{{ event.id }}) </h1>
+   <br />
+   <br />
+   <div class="container col-md-6 offset-3">
+      <h3>Add Results</h3>
+      <br />
+      <form action="{% url 'addresults' %}"  method="post">
+         {% csrf_token %}
+         <table class="inputtable entry_form" id="entry_form" style="width:100%">
+            <tr>
+               <td>
+                  <!--- Left side ----->
+                  <table id = "lhs">
+                     <tr>
+                        <th>Driver</th>
+                         <td class="align-top">
+                           <select name="driver" id="driver">
+                              {% for driver in driverOptions %}
+                                 <option value="{{driver.id}} ">{{ driver.firstname }} {{ driver.surname }}</option>
+                              {% endfor %}
+                           </select>
+                         </td>
+                     </tr>
+                  </table>
+                  <!--------------------->
+               </td>
+               <td>
+                  <table id = "rhs">
+                     <tr><th>Disqualified ?    </th><td><input type="checkbox"  id="disqualified"   name="disqualified"  ></td></tr>
+                     <tr><th>Finish Position   </th><td><input type="number"    id="finishPosition" name="finishPosition" value="{{nextpos}}"></td></tr>
+                     {% if event.eventType != 'Q' %}
+                     <tr><th>Start Position    </th><td><input type="number"    id="startPosition"  name="startPosition" value="{{nextpos}}"></td></tr>
+                     <tr><th>Fastest Lap ?     </th><td><input type="checkbox"  id="fastestLap"     name="fastestLap"    ></td></tr>
+                     <tr><th>Laps Off Leader   </th><td><input type="number"    id="lapsOffLeader"  name="lapsOffLeader" value="0" ></td></tr>
+                     {% endif %}
+                  </table>
+               </td>
+            </tr>
+            <tr>
+               <td colspan = "2"><br />
+                  <input type="hidden" id="event_id" name="event_id" value="{{ event.id }}">
+                  <center><input type="submit" name="submit" value="ADD"></center>
+               </td>
+            </tr>
+         </table>
+      </form>
+   </div>
+
+   <div class = "container col-md-10 offset-1 ">
+      <div class="container">
+         <h1 style="padding-top:20px; padding-bottom:20px;"> Results So Far </h1>
+         <table class="bigtable">
+            <tr>
+               <th class="name"> Competitor </th>
+               <th> Finish </th>
+               {% if event.eventType != 'Q' %}
+               <th> Start </th>
+               <th> Laps Off Leader </th>
+               <th> Fastest Lap? </th>
+               {% endif %}
+               <th> Disqualified? </th>
+            </tr>
+            {% for result in resultsSoFar%}
+            <tr>
+               <td class="name"> {{result.competitor_ID}} </td>
+               <td> {{result.finishPosition}} </td>
+               {% if event.eventType != 'Q' %}
+               <td> {{result.startPosition}} </td>
+               <td> {{result.laps_off_leader}} </td>
+               <td> {% if result.fastestLap %}{{result.fastestLap}}{% else %} - {% endif %} </td>
+               {% endif %}
+               <td> {% if result.disqualified %}{{result.disqualified}}{% else %} - {% endif %} </td>
+            </tr>
+            {% endfor %}
+         </table>
+      </div>
+   </div>
+</div>
+
+
+
+
+
+
+<!--
+         <div class="row">
+            <div class="col">  </div>
+            <div class="col-4 center">
+               <form action="{% url 'addevents' %}" enctype="multipart/form-data" method="post">
+                  {% csrf_token %}
+                  <table class="inputtable">
+                     <tr>
+                        <td>
+                           {{ event_form.as_table }}
+                        </td></tr><tr><td colspan = "2"><br />
+                           <center><input type="submit" name="submit" value="ADD"></center>
+                        </td>
+                     </tr>
+                  </table>
+               </form>
+            </div>
+            <div class="col"> </div>
+         </div>
+         <hr />
+      </div>
+
+      <br />
+-->
+{% else %}
+<div class="row justify-content-center">
+   <div class="col-auto ml-20">
+      <h1>Select Event to add results:</h1>
+      <div class="col">  </div>
+         <div class="col-8 center">
+            <form action="{% url 'addresults' %}"  method="GET">
+               <label for="scoringevent">Choose a scoring event:</label>
+               <select id="scoringevent" name="scoringevent">
+                  {% for event in scoringevents %}
+                  <option value="{{event.id}}">{{event.id}} - {{event.startDateTime}} - {{event.name}}</option>
+                  {% endfor %}
+               </select>
+               <br /><br /><br />
+               <center><input type="submit" name="submit" value="SELECT"></center>
+            </form>
+         </div>
+      <div class="col"> </div>
+   </div>
+</div>
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+{% block javascript%}
 {% endblock %}

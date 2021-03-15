@@ -515,8 +515,84 @@ def scoreevents(request):
 
 ##############################################################################################
 def addresults(request):
-    return render(request, 'season/add_results.html')
 
+    # If event specified, ask for result details
+    if "scoringevent" in request.GET:
+        #Get Scoring Event details
+        scoringevent = int(request.GET['scoringevent'])
+        scoringevent_detail = ScoringEvent.objects.get(pk=scoringevent)
+        eventName = scoringevent_detail.name + ' (Type:' + scoringevent_detail.eventType + ')'
+
+        #Show results already in:
+        resultsSoFar  = Result.objects.all().filter(scoringEvent_ID = scoringevent).order_by('finishPosition')
+        driverOptions = Competitor.objects.filter(formula = '1').filter(role = 'D')
+        #remove those already selected #######################
+        driversremaining = []
+        for driver in driverOptions:
+            try:
+                present = resultsSoFar.get(competitor_ID = driver.id)
+            except:
+                driversremaining.append(driver)
+
+        nextpos = len(resultsSoFar)+1
+        return render(request, 'season/add_results.html',{'eventName': eventName, 'event':scoringevent_detail, 'resultsSoFar':resultsSoFar, 'driverOptions':driversremaining, 'nextpos':nextpos})
+
+
+    #If new record details sent, save them:
+    elif request.method == 'POST':
+        #Get Scoring Event details
+        scoringevent_detail = ScoringEvent.objects.get( pk=int(request.POST['event_id']) )
+        driver_detail       = Competitor.objects.get( pk=int(request.POST['driver']))
+
+        #Save new result record
+        newResult = Result()
+        newResult.scoringEvent_ID  = scoringevent_detail
+        newResult.competitor_ID    = driver_detail
+        newResult.finishPosition   = int(request.POST['finishPosition'])
+        #disqualified checkbox does not return if not set, so look whether it exists..
+        disqualified = request.POST.get('disqualified')
+        newResult.disqualified     = True if disqualified else False
+
+
+        if scoringevent_detail.eventType == 'Q':
+            print('Qualifying')
+        else:
+            newResult.startPosition    = int(request.POST['startPosition'])
+            newResult.laps_off_leader  = int(request.POST['lapsOffLeader'])
+            newResult.formulaPoints    = 0
+            newResult.placesGainedLost = int(request.POST['startPosition']) - int(request.POST['finishPosition'])
+            #fastestLap checkbox does not return if not set, so look whether it exists..
+            fastestLap = request.POST.get('fastestLap')
+            newResult.fastestLap     = True if disqualified else False
+
+        newResult.save()
+
+        resultsSoFar    = Result.objects.all().filter(scoringEvent_ID = scoringevent_detail.id).order_by('finishPosition')
+        driverOptions = Competitor.objects.filter(formula = '1').filter(role = 'D')
+        #remove those already selected #######################
+        driversremaining = []
+        for driver in driverOptions:
+            try:
+                present = resultsSoFar.get(competitor_ID = driver.id)
+            except:
+                driversremaining.append(driver)
+
+        nextpos = len(resultsSoFar)+1
+
+        eventName = scoringevent_detail.name + ' (Type:' + scoringevent_detail.eventType + ')'
+
+        #Show results already in:
+        resultsSoFar = Result.objects.all().filter(scoringEvent_ID = scoringevent_detail.id).order_by('finishPosition')
+        return render(request, 'season/add_results.html',{'eventName': eventName, 'event':scoringevent_detail, 'resultsSoFar':resultsSoFar, 'driverOptions':driversremaining, 'nextpos':nextpos})
+
+    else:
+        #First Screen - Choose an event
+        scoringevents = ScoringEvent.objects.all().filter(results_in = False).order_by('startDateTime')[:10]
+        return render(request, 'season/add_results.html',{'scoringevents': scoringevents})
+
+
+##############################################################################################################
+##############################################################################################################
 
 
                        #############      ###            #######          ###
