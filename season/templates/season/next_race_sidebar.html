@@ -1,0 +1,26 @@
+<!--### TAG TO SHOW NEXT EVENTS SIDEBAR ###########################-->
+{% load static %}
+{% load blog_tags %}
+
+<div class="card" id="next_race_table">
+   <div class="card-body">
+        <h5 class="card-title mb-3">Coming Up Next...</h5>
+
+        <div class="activity">
+
+           {% for race in next_races %}
+            <img src = "{% static 'academy/webPageImages/defaultTeam.png' %} " alt="" class="img-activity" >
+            <div class="time-item">
+                <div class="item-info">
+                    <div class="text-muted float-right font-size-10"> {{ race.startDateTime | daysuntil  }}  days to go</div>
+                    <h5 class="mt-0 mb-1">{{ race.name }}</h5>
+                    <p class="text-muted font-size-13">{{race.startDateTime}}
+                        <!--<a href="#" class="text-info">[more info]</a>-->
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+
+      </div>
+   </div>
+</div>

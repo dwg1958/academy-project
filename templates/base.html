@@ -53,6 +53,11 @@
           h1, h2, h3, h4, h5, h6, p, td, th {
              color: #dddddd;
           }
+          #tags{
+             color:white;
+             font-size: 0.6rem;
+             font-align: center;
+          }
 	    </style>
        <!---------------------- CSS BLOCK  ------------------->
           {% block css %}
@@ -237,7 +242,14 @@
                                           <img src="{% static '/academy/webPageImages/GPGFlag.png'%}" alt="" height="200" >
                                        </a>
                                        <br />
-                                       <p> <center> {% teamCountTag %} Teams active</center></p>
+                                       <p id="tags">
+
+                                             {% teamCountTag %} Teams active<br />
+                                             Page loaded at {% now "H:i" %}<br />
+                                             on {% now "jS F Y " %}
+
+                                       </p>
+
                                     </center>
                             </span>
 

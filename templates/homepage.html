@@ -23,67 +23,71 @@
 
 {% block content %}
 <div class="container">
+   {% if message %}
+   <center><h5 style="color:green">{{ message }}</h5></center>
+   {% endif %}
+
    <section class="jumbotron text-center text-white">
       <div class="container">
          <img src="{% static 'academy/webPageImages/FFDAcademy_Logo.png' %}" alt="" width="40%">
       </div>
    </section>
+
    <div class="row">
-      <div class="col">
-         <!--spacer -->
-      </div>
-      <div class="col-8 center">
+      <div class="col-7">
          <h1 class = "text-center pt-5" style="">Just Imagine..</h1>
-         <div class = "text-left pt-3" style="">
+         <div class = "text-left pt-3 pl-5" style="">
             <p>You are a retired 7-times world champion, sadly deprived of a drive by a skinflint team and ever-decreasing budgets...</p>
             <p>Sitting on your number-2 yacht in Monaco one day with your close band of multi-millionaire friends gathered over
                an illustrious career, the idea of <b>{%if user.is_authenticated%}{{user.first_name|capfirst}}’s{%else%}your{%endif%}
-                  Driver Academy </b>is born. </p>
+                  Driver Academy </b>is born.
+            </p>
             <p>They offer you a budget of $110 million to bring on the best new talent through the junior formulas.
-               You set out to recruit the best drivers and team managers you can find and build your academy...</p>
-               <br /><br /><br />
+               You set out to recruit the best drivers and team managers you can find and build your academy...
+            </p>
+            <br /><br /><br />
 
-               <!--- Future Events Calendar Tag-->
-               <div style = "padding: 0% 0px 3% 5%;">
-                  <h1 style = "padding: 0% 0% 0% 0%;">Next Scoring Events:</h1>
-                  <p>{% show_next_race 3 %}</p>
-               </div>
-
-
+            <!--- Future Events Calendar Tag
+            <div style = "padding: 0% 0px 3% 5%;">
+               <h1 style = "padding: 0% 0% 0% 0%;">Next Scoring Events:</h1>
+               <p>{% show_next_race 3 %}</p>
             </div>
+            -->
          </div>
-         <div class="col">
-            <!--spacer -->
-         </div>
-         </div>
-         <br/><br/><br/><br/>
-         {% if user.is_authenticated %}
-
-         {% else %}
-         <!-- LOG IN AND REGISTRATION BUTTONS -->
-         <div class="container">
-            <div class="row">
-               <div class="col"><!--spacer --></div>
-               <div class="col-4 ">
-                  <div class="d-grid gap-2 d-md-block col-4 mx-auto">
-                     <a class="btn btn-danger text-center" href="{% url 'login'%}" role="button">LOG IN</a>
-                     <br /><br /><br /><br />
-                  </div>
-               </div>
-            <div class="col-4 ">
-         <div class="d-grid gap-2 d-md-block col-4 mx-auto">
-         <a class="btn btn-danger text-center" href="{% url 'register'%}" role="button">JOIN</a>
-         {% endif %}
-         <br /><br /><br /><br />
+      </div>
+      <div class="col-1"><!--spacer--></div>
+      <div class="col-4 pt-5">
+         <div class="tab-pane" id="activity" role="tabpanel">
+            {% show_next_race_sidebar 5 %}
       </div>
    </div>
-   <div class="col"><!--spacer --></div>
+
+   <br/><br/><br/><br/>
+   {% if user.is_authenticated %}
+
+   {% else %}
+   <!-- LOG IN AND REGISTRATION BUTTONS -->
+   <div class="container">
+      <div class="row">
+         <div class="col"><!--spacer --></div>
+         <div class="col-4 ">
+            <div class="d-grid gap-2 d-md-block col-4 mx-auto">
+               <a class="btn btn-danger text-center" href="{% url 'login'%}" role="button">LOG IN</a>
+               <br /><br /><br /><br />
+            </div>
+         </div>
+         <div class="col-4 ">
+            <div class="d-grid gap-2 d-md-block col-4 mx-auto">
+               <a class="btn btn-danger text-center" href="{% url 'register'%}" role="button">JOIN</a>
+               {% endif %}
+               <br /><br /><br /><br />
+            </div>
+         </div>
+         <div class="col"><!--spacer --></div>
+      </div>
    </div>
-</div>
-<br />
-{% if message %}
-   <center><h5 style="color:green">{{ message }}</h5></center>
-{% endif %}
+   <br />
+
 </div>
 
 {% endblock %}
