@@ -103,12 +103,37 @@ def tableformula(request, formula):
 
     return render(request, 'season/tables.html', {'personality':pers_data, 'competitors': competitors,'formulaname':formulaname, 'formula':formula, 'showPersonal':showPersonal})
 
+####################################
+def scoring(request):
+    return render(request, 'season/scoring.html')
+
+
+
+
+
+
+
+
+
+
+
+
 
 ####################################
 def test(request):
     #resultset = Result.objects.order_by('scoringEvent_ID', 'finishPosition')
 
     return render(request, 'season/test.html')#, {'resultset': resultset})
+
+
+
+
+
+
+
+
+
+
 
 
 ############################### USER PAGES ###################################################

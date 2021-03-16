@@ -10,6 +10,9 @@ Events
 {% endblock %}
 
 {% block css%}
+<!-- FOR MAPS. -->
+<link href=" {% static '/season/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css' %}" rel="stylesheet" type="text/css" />
+<!-- FOR MAPS. -->
 <style>
    td{
       padding-top:10px;
@@ -31,9 +34,23 @@ Events
 
 <!--------------------------------------------------------------->
 {% block content %}
+<div style = "padding: 0% 5% 2% 5%;">
+   <!-- FOR MAPS. -->
+   <div class="row">
+       <div class="col-lg-12">
+           <div class="card">
+               <div class="card-body">
+                  <h3 class="card-title"> <script>document.write(new Date().getFullYear())</script> Events </h3>
+                  <p class="card-title-desc"><i>(Scroll up or down to zoom)</i></p>
 
-<div style = "padding: 2% 5% 2% 5%;">
-   <h1> <script>document.write(new Date().getFullYear())</script> Events </h1>
+                  <div id="world-map-markers" style="height: 400px"></div>
+
+               </div>
+           </div>
+       </div> <!-- end col -->
+   </div> <!-- end row -->
+
+<!-- FOR MAPS. -->
    <br />
    <div>
       <table class="table table-striped table-sm">
@@ -59,4 +76,132 @@ Events
      <br />
 </div>
 
+{% endblock %}
+
+
+{% block javascript %}
+<!-- FOR MAPS. -->
+      <script src="{% static 'season/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js' %} "></script>
+		<script src="{% static 'season/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js' %}"></script>
+		<!-- Init js-->
+		<script>
+			! function($) {
+				"use strict";
+
+				var VectorMap = function() {
+				};
+
+				VectorMap.prototype.init = function() {
+					//various examples
+					$('#world-map-markers').vectorMap({
+						map : 'world_mill_en',
+						normalizeFunction : 'polynomial',
+						hoverOpacity : 0.7,
+						hoverColor : false,
+						regionStyle : {
+							initial : {
+								fill : '#dd4400'
+							}
+						},
+						 markerStyle: {
+			                initial: {
+			                    r: 9,
+			                    'fill': '#Ad0303',
+			                    'fill-opacity': 0.9,
+			                    'stroke': '#fff',
+			                    'stroke-width' : 7,
+			                    'stroke-opacity': 0.4
+			                },
+
+			                hover: {
+			                    'stroke': '#fff',
+			                    'fill-opacity': 1,
+			                    'stroke-width': 1.5
+			                }
+			            },
+						backgroundColor : 'transparent',
+						markers : [{
+							latLng : [26.031754270445642, 50.51160593421078],
+							name : 'Bahrain GP - 28th March'
+						}, {
+							latLng : [44.343898316940376, 11.714949211869772],
+							name : 'Emilia Romagna GP - 18th April'
+						}, {
+							latLng : [37.231478298555885, -8.62829541529476],
+							name : 'Portuguese GP - 2nd May'
+						}, {
+							latLng : [41.56985626788835, 2.2605413067878244],
+							name : 'Spanish GP - 9th May'
+						}, {
+							latLng : [43.733574465797844, 7.422180776078],
+							name : 'Monoco GP - 23rd May'
+						}, {
+							latLng : [40.37305589134475, 49.85327228824976],
+							name : 'Azerbaijan GP - 6th June'
+						}, {
+							latLng : [45.50098021512226, -73.52274261536257],
+							name : 'Canadian GP - 13th June'
+						}, {
+							latLng : [43.251873165880006, 5.79269931184217],
+							name : 'French GP - 27th June'
+						}, {
+							latLng : [47.2203121420351, 14.765229313805108],
+							name : 'Austrian GP - 4th July'
+						}, {
+							latLng : [52.073439064116066, -1.01448101118129],
+							name : 'British GP - 18th July'
+						}, {
+							latLng : [47.58184134506679, 19.250814446355797],
+							name : 'Hungarian GP - 1st August'
+						}, {
+							latLng : [50.43788480029421, 5.972200400469177],
+							name : 'Belgian GP - 29th August'
+						}, {
+							latLng : [52.387852134812164, 4.544255713960339],
+							name : 'Dutch GP - 5th September'
+						}, {
+							latLng : [45.62188151915753, 9.28520769418397],
+							name : 'Italian GP - 12th September'
+						}, {
+							latLng : [43.41010978314902, 39.96908004253464],
+							name : 'Russian GP - 26th September'
+						}, {
+							latLng : [1.291710777914493, 103.86408135911441],
+							name : 'Singapore GP - 3rd October'
+						}, {
+							latLng : [34.845804802425135, 136.53899511348615],
+							name : 'Japanese GP - 10th October'
+						}, {
+							latLng : [30.134812751948296, -97.63535757550096],
+							name : 'United States GP - 24th October'
+						}, {
+							latLng : [19.406126934314923, -99.09232848308916],
+							name : 'Mexican GP - 31st October'
+						}, {
+							latLng : [-23.70067271738758, -46.697712825312344],
+							name : 'Brazilian GP - 7th November'
+						}, {
+							latLng : [-37.849867630413826, 144.96944935165263],
+							name : 'Australian GP - 21st November'
+						}, {
+							latLng : [21.48635697296948, 39.190781552213735],
+							name : 'Saudi Arabia GP - 5th November'
+						}, {
+							latLng : [24.470253768827263, 54.60550669794031],
+							name : 'Abu Dhabi GP - 12th November'
+						}]
+			    	});
+				},
+				//init
+				$.VectorMap = new VectorMap, $.VectorMap.Constructor =
+				VectorMap
+			}(window.jQuery),
+
+			//initializing
+			function($) {
+				"use strict";
+				$.VectorMap.init();
+			}(window.jQuery);
+		</script>
+<!-- FOR MAPS. -->
 {% endblock %}

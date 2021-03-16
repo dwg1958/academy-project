@@ -1,0 +1,377 @@
+{% extends "base.html" %}
+
+<!---- TITLE --------->
+{% block title      %}Scoring{% endblock %}
+{% block breadcrumb %}Scoring{% endblock %}
+
+<!---- STYLE --------->
+{% block css %}
+<style>
+   th, td{
+      text-align:center;
+   }
+   li{
+      color: #dddddd;
+   }
+</style>
+{% endblock %}
+
+<!---- BODY CONTENT --------->
+{% block content %}
+
+<div class="col-md-10  offset-1">
+   <h1>Scoring Your Academy</h1>
+   <br /><br />
+   <ul class="nav nav-pills">
+      <li class="nav-item">
+         <a href="#introduction" class="nav-link active" data-toggle="tab">Introduction</a>
+      </li>
+      <li class="nav-item">
+         <a href="#racepoints" class="nav-link" data-toggle="tab">Race Points Scoring</a>
+      </li>
+      <li class="nav-item">
+         <a href="#qualifying" class="nav-link" data-toggle="tab">Qualifying Points Scoring</a>
+      </li>
+      <li class="nav-item">
+         <a href="#leaddriver" class="nav-link" data-toggle="tab">Lead Driver Bonus</a>
+      </li>
+   </ul>
+   <hr/>
+   <br/>
+   <div class="tab-content col-md-12">
+      <div class="tab-pane fade show active" id="introduction">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-5 col-sm-7" >
+                  <h4 class="mt-2 bp-10">Introduction </h4>
+                  <p><span data-preserver-spaces="true">Although the official point-scoring of Formula 1, Formula 2, Formula 3, and W Series
+                     carries over to Fantasy Formula Academy, there are many more ways to score points. This makes the decision about which
+                     drivers you'll choose for your academy a little more difficult than picking those most likely to win!</span>
+                  </p>
+                  <p><span data-preserver-spaces="true">To have the highest-scoring Fantasy Formula Driver Academy at the end of the season
+                     you need to think strategically about strong qualifiers, consistent finishers, fastest laps, and the series your
+                     drivers' are racing in.</span>
+                  </p>
+               </div>
+               <div class="col-md-7 col-sm-5">
+                  <a id='Dl3HVNu2QJBbIHLRgVO3nQ' class='gie-single' href='http://www.gettyimages.com/detail/516462556' target='_blank' style='color:#a7a7a7;text-decoration:none;font-weight:normal !important;border:none;display:inline-block;'>Embed from Getty Images</a><script>window.gie=window.gie||function(c){(gie.q=gie.q||[]).push(c)};gie(function(){gie.widgets.load({id:'Dl3HVNu2QJBbIHLRgVO3nQ',sig:'AbelJb_VVewUwQ_MsTLRBepmCDHU_uT67de0CX7pz3Y=',w:'594px',h:'396px',items:'516462556',caption: true ,tld:'com',is360: false })});</script><script src='//embed-cdn.gettyimages.com/widgets.js' charset='utf-8' async></script>
+               </div>
+            </div>
+         </div>
+      </div>
+
+
+      <div class="tab-pane fade" id="racepoints">
+         <div class="card-body">
+             <h5 class="card-title">Race Points</h5>
+             <div class="table-responsive">
+                 <table class="table table-centered table-nowrap table-hover mb-0" >
+                     <thead>
+                         <tr class="align-self-center">
+                             <th>Position</th>
+                             <th>F1</th>
+                             <th class = "spacer"></th>
+                             <th>F2 Sprint Race 1</th>
+                             <th>F2 Sprint Race 2</th>
+                             <th>F2 Feature</th>
+                             <th class = "spacer"></th>
+                             <th>F3 Race 1</th>
+                             <th>F3 Race 2</th>
+                             <th>F3 Race 3</th>
+                             <th class = "spacer"></th>
+                             <th>W Series</th>
+                         </tr>
+                     </thead>
+                     <tbody>
+                         <tr>
+                             <td>1st</td>
+                             <td>25</td>
+                             <td class = "spacer"></td>
+                             <td>15</td>
+                             <td>15</td>
+                             <td>25</td>
+                             <td class = "spacer"></td>
+                             <td>15</td>
+                             <td>15</td>
+                             <td>25</td>
+                             <td class = "spacer"></td>
+                             <td>25</td>
+                         </tr>
+                         <tr>
+                             <td>2nd</td>
+                             <td>18</td>
+                             <td class = "spacer"></td>
+                             <td>12</td>
+                             <td>12</td>
+                             <td>18</td>
+                             <td class = "spacer"></td>
+                             <td>12</td>
+                             <td>12</td>
+                             <td>28</td>
+                             <td class = "spacer"></td>
+                             <td>18</td>
+                         </tr>
+                         <tr>
+                             <td>3rd</td>
+                             <td>15</td>
+                             <td class = "spacer"></td>
+                             <td>10</td>
+                             <td>10</td>
+                             <td>15</td>
+                             <td class = "spacer"></td>
+                             <td>10</td>
+                             <td>10</td>
+                             <td>15</td>
+                             <td class = "spacer"></td>
+                             <td>15</td>
+                         </tr>
+                         <tr>
+                             <td>4th</td>
+                             <td>12</td>
+                             <td class = "spacer"></td>
+                             <td>8</td>
+                             <td>8</td>
+                             <td>12</td>
+                             <td class = "spacer"></td>
+                             <td>8</td>
+                             <td>8</td>
+                             <td>12</td>
+                             <td class = "spacer"></td>
+                             <td>12</td>
+                         </tr>
+                         <tr>
+                             <td>5th</td>
+                             <td>10</td>
+                             <td class = "spacer"></td>
+                             <td>6</td>
+                             <td>6</td>
+                             <td>10</td>
+                             <td class = "spacer"></td>
+                             <td>6</td>
+                             <td>6</td>
+                             <td>10</td>
+                             <td class = "spacer"></td>
+                             <td>10</td>
+                         </tr>
+                         <tr>
+                             <td>6th</td>
+                             <td>8</td>
+                             <td class = "spacer"></td>
+                             <td>4</td>
+                             <td>4</td>
+                             <td>8</td>
+                             <td class = "spacer"></td>
+                             <td>5</td>
+                             <td>5</td>
+                             <td>8</td>
+                             <td class = "spacer"></td>
+                             <td>8</td>
+                         </tr>
+                         <tr>
+                             <td>7th</td>
+                             <td>6</td>
+                             <td class = "spacer"></td>
+                             <td>2</td>
+                             <td>2</td>
+                             <td>6</td>
+                             <td class = "spacer"></td>
+                             <td>4</td>
+                             <td>4</td>
+                             <td>6</td>
+                             <td class = "spacer"></td>
+                             <td>6</td>
+                         </tr>
+                         <tr>
+                             <td>8th</td>
+                             <td>4</td>
+                             <td class = "spacer"></td>
+                             <td>1</td>
+                             <td>1</td>
+                             <td>4</td>
+                             <td class = "spacer"></td>
+                             <td>3</td>
+                             <td>3</td>
+                             <td>4</td>
+                             <td class = "spacer"></td>
+                             <td>4</td>
+                         </tr>
+                         <tr>
+                             <td>9th</td>
+                             <td>2</td>
+                             <td class = "spacer"></td>
+                             <td>-</td>
+                             <td>-</td>
+                             <td>2</td>
+                             <td class = "spacer"></td>
+                             <td>2</td>
+                             <td>2</td>
+                             <td>2</td>
+                             <td class = "spacer"></td>
+                             <td>2</td>
+                         </tr>
+                         <tr>
+                             <td>10th</td>
+                             <td>1</td>
+                             <td class = "spacer"></td>
+                             <td>-</td>
+                             <td>-</td>
+                             <td>1</td>
+                             <td class = "spacer"></td>
+                             <td>1</td>
+                             <td>1</td>
+                             <td>1</td>
+                             <td class = "spacer"></td>
+                             <td>1</td>
+                         </tr>
+                     </tbody>
+                 </table>
+             </div><!--end table-responsive-->
+             <div class="pt-3 border-top text-right">
+                 <a href="#" class="text-primary">View all <i class="mdi mdi-arrow-right"></i></a>
+             </div>
+         </div>
+         <div class="card-body">
+             <h5 class="card-title">Bonus Points</h5>
+             <div class="table table-centered table-nowrap table-hover mb-0">
+               <table class="has-fixed-layout ">
+                  <tbody>
+                     <tr>
+                        <td class="text-left">Position Gained</td>
+                        <td class="text-left">1pt/position</td>
+                     </tr>
+                     <tr>
+                        <td class="text-left">Position Lost</td>
+                        <td class="text-left">-1pt/position</td>
+                     </tr>
+                     <tr>
+                        <td class="text-left">Fastest Lap</td>
+                        <td class="text-left">5pts</td>
+                     </tr>
+                     <tr>
+                        <td class="text-left">DNFs/lapped drivers</td>
+                        <td class="text-left">-1pt/lap behind winner</td>
+                     </tr>
+                     <tr>
+                        <td class="text-left">Disqualification</td>
+                        <td class="text-left">-30pts</td>
+                     </tr>
+                  </tbody>
+               </table>
+               <br /><h5>NB: W Series drivers score 1.5x race points!</h5>
+            </div>
+         </div>
+      </div>
+
+
+
+      <div class="tab-pane fade" id="qualifying">
+         <div class="card-body container">
+            <div class="row">
+               <div class="col-md-4 col-sm-12 mx-auto" >
+
+                  <h5 class="card-title">Qualifying Points</h5>
+                  <div class="table table-centered table-nowrap table-hover mb-0">
+                     <table class="has-fixed-layout ">
+                        <thead>
+                           <tr>
+                              <th class="">Position</th>
+                              <th>Points</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td class="">1st</td>
+                              <td>10</td>
+                           </tr>
+                           <tr>
+                              <td class="">2nd</td>
+                              <td>9</td>
+                           </tr>
+                           <tr>
+                              <td class="">3rd</td>
+                              <td>8</td>
+                           </tr>
+                           <tr>
+                              <td class="">4th</td>
+                              <td>7</td>
+                           </tr>
+                           <tr>
+                              <td class="">5th</td>
+                              <td>6</td>
+                           </tr>
+                           <tr>
+                              <td class="">6th</td>
+                              <td>5</td>
+                           </tr>
+                           <tr>
+                              <td class="">7th</td>
+                              <td>4</td>
+                           </tr>
+                           <tr>
+                              <td class="">8th</td>
+                              <td>3</td>
+                           </tr>
+                           <tr>
+                              <td class="">9th</td>
+                              <td>2</td>
+                           </tr>
+                           <tr>
+                              <td class="">10th</td>
+                              <td>1</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                     <br /><h5>Formula 2, Formula 3, and W Series drivers score 3x points for qualifying</h5>
+                  </div>
+               </div>
+               <div class="col-md-6 col-xs-0" >
+                  <a id='Ck4yO8pNQg5fqS33LUUGeA' class='gie-single' href='http://www.gettyimages.com/detail/489939134' target='_blank' style='color:#a7a7a7;text-decoration:none;font-weight:normal !important;border:none;display:inline-block;'>Embed from Getty Images</a><script>window.gie=window.gie||function(c){(gie.q=gie.q||[]).push(c)};gie(function(){gie.widgets.load({id:'Ck4yO8pNQg5fqS33LUUGeA',sig:'ajc5zcI97ZK2Mh6mvszke-6KtE7irQMsg2-Db5OQumE=',w:'594px',h:'377px',items:'489939134',caption: true ,tld:'com',is360: false })});</script><script src='//embed-cdn.gettyimages.com/widgets.js' charset='utf-8' async></script>
+                  <a id='-qRZTNPVQGZxc4kYUys3KQ' class='gie-single' href='http://www.gettyimages.com/detail/1148634726' target='_blank' style='color:#a7a7a7;text-decoration:none;font-weight:normal !important;border:none;display:inline-block;'>Embed from Getty Images</a><script>window.gie=window.gie||function(c){(gie.q=gie.q||[]).push(c)};gie(function(){gie.widgets.load({id:'-qRZTNPVQGZxc4kYUys3KQ',sig:'x_ZxcyvC5fWU9PQY21r8G3z_ZBrIQnE22H_JUEwRFg8=',w:'594px',h:'396px',items:'1148634726',caption: true ,tld:'com',is360: false })});</script><script src='//embed-cdn.gettyimages.com/widgets.js' charset='utf-8' async></script>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="tab-pane fade" id="leaddriver">
+         <div class="card-body container">
+            <div class="row">
+               <div class="col-md-4 col-sm-12 mx-auto" >
+                  <h3 class="card-title pb-20">Lead Driver Bonus</h3>
+                  <p>In each race series you can pick two drivers; a lead driver and a
+                     second driver. It's very important that you choose your lead driver
+                     wisely... they will score you extra points!</p>
+                  <ul>
+                     <li>For Formula 1, your lead driver will score a further
+                        <strong>10%</strong> at each event (i.e. qualifying or a race).</li>
+                     <li>For Formula 2, your lead driver scores a further <strong>25%</strong>
+                        at each event (i.e. qualifying or a race).</li>
+                     <li>For Formula 3 and W Series, your lead driver will score a further
+                        <strong>50%</strong> at each event (i.e.
+                        qualifying or a race).</li>
+                  </ul>
+                  <p><strong>Rounding</strong> - Should your lead driver's points tally
+                     finish result in a fractional value, these are all stored for sorting
+                     your league position.</p>
+               </div>
+               <div class="col-md-6 col-xs-0" >
+                  <a id='gCbG8lGCQtJkf_Tm4bC_Xg' class='gie-single' href='http://www.gettyimages.com/detail/1291064802' target='_blank' style='color:#a7a7a7;text-decoration:none;font-weight:normal !important;border:none;display:inline-block;'>Embed from Getty Images</a><script>window.gie=window.gie||function(c){(gie.q=gie.q||[]).push(c)};gie(function(){gie.widgets.load({id:'gCbG8lGCQtJkf_Tm4bC_Xg',sig:'XFS1zBKxO3jxCT_1XiIKHEAExAwwWhoULrnPBg3S3CY=',w:'594px',h:'396px',items:'1291064802',caption: true ,tld:'com',is360: false })});</script><script src='//embed-cdn.gettyimages.com/widgets.js' charset='utf-8' async></script>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<br /><br /><br /><br /><br />
+{% endblock %}
+<!---- BODY CONTENT BLOCK --------->
+
+<!---------------------- FOOTER BLOCK  ------------------->
+{% block footer %}
+{% endblock %}
+<!---------------------- FOOTER BLOCK  ------------------->
+
+<!---------------------- JAVASCRIPT BLOCK  ------------------->
+{% block javascript %}
+{% endblock %}
+<!---------------------- JAVASCRIPT BLOCK  ------------------->
