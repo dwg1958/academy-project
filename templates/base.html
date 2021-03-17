@@ -4,331 +4,327 @@
 <!doctype html>
 <html lang="en">
 
-    <head>
+<head>
 
-        <meta charset="utf-8" />
-        <title>GPG Academy | {% block title %}{% endblock%}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="GrandPrix Grandstand Fantasy F1 F2 F3 WSeries Academy" name="description" />
-        <meta content="W5H for GPG" name="author" />
-        <!-- App favicon -->
-        <link rel="shortcut icon" href="{% static '/academy/webPageImages/favicon.ico'%}">
+   <meta charset="utf-8" />
+   <title>GPG Academy | {% block title %}{% endblock%}</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta content="GrandPrix Grandstand Fantasy F1 F2 F3 WSeries Academy" name="description" />
+   <meta content="W5H for GPG" name="author" />
+   <!-- App favicon -->
+   <link rel="shortcut icon" href="{% static '/academy/webPageImages/favicon.ico'%}">
 
-        <link href="{% static '/academy/css/bootstrap-dark.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
-        <link href="{% static '/academy/css/icons.css' %}" rel="stylesheet" type="text/css" />
-        <link href="{% static '/academy/css/app-dark.css' %}" id="app-style" rel="stylesheet" type="text/css" />
-        <link href="{% static '/academy/css/academy.css' %}" rel="stylesheet">
-        <link href="{% static '/academy/css/dashboard.css' %}" rel="stylesheet">
-        <style>
-           .navbar-header {
-             /* background-color: #333333; */
-             background-image:url("{% static 'academy/webPageImages/GPGHeader.jpg' %}");
-             background-attachment: fixed;
-             background-size: cover;
-             background-repeat: no-repeat;
-          }
-          div.simplebar-wrapper{
-		        background-image: linear-gradient(#DA6020, #D52423);
-	        }
-	        #sidebar-menu ul li a{
-		        color:white;
-		        font-size: 1.2rem;
-	        }
-	        #sidebar-menu ul li a:hover{
-		        color:#222222;
-	        }
-	        #sidebar-menu ul li ul.sub-menu li a {
-		        color:white;
-	        }
-	        #sidebar-menu ul li ul.sub-menu li a:hover {
-		        color:#222222;
-	        }
-	       .menu-title{
-		       color:white;
-		       font-size: 1.5rem;
-	       }
-          .page-content{
-             padding: 94px 12px 10px 0px;
-          }
-          h1, h2, h3, h4, h5, h6, p, td, th {
-             color: #dddddd;
-          }
-          #tags{
-             color:white;
-             font-size: 0.6rem;
-             font-align: center;
-          }
-	    </style>
-       <!---------------------- CSS BLOCK  ------------------->
-          {% block css %}
-          {% endblock %}
-       <!---------------------- CSS BLOCK  ------------------->
-    </head>
+   <link href="{% static '/academy/css/bootstrap-dark.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+   <link href="{% static '/academy/css/icons.css' %}" rel="stylesheet" type="text/css" />
+   <link href="{% static '/academy/css/app-dark.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+   <link href="{% static '/academy/css/academy.css' %}" rel="stylesheet">
+   <link href="{% static '/academy/css/dashboard.css' %}" rel="stylesheet">
+   <style>
+      .navbar-header {
+         /* background-color: #333333; */
+         background-image:url("{% static 'academy/webPageImages/GPGHeader.jpg' %}");
+         background-attachment: fixed;
+         background-size: cover;
+         background-repeat: no-repeat;
+      }
+      div.simplebar-wrapper{
+         background-image: linear-gradient(#DA6020, #D52423);
+      }
+      #sidebar-menu ul li a{
+         color:white;
+         font-size: 1.0rem;
+      }
+      #sidebar-menu ul li a:hover{
+         color:#222222;
+      }
+      #sidebar-menu ul li ul.sub-menu li a {
+         color:white;
+      }
+      #sidebar-menu ul li ul.sub-menu li a:hover {
+         color:#222222;
+      }
+      .menu-title{
+         color:white;
+         font-size: 1.2rem;
+      }
+      .page-content{
+         padding: 94px 12px 10px 0px;
+      }
+      h1, h2, h3, h4, h5, h6, p, td, th {
+         color: #dddddd;
+      }
+      #tags{
+         color:white;
+         font-size: 0.6rem;
+         font-align: center;
+      }
+   </style>
+   <!---------------------- CSS BLOCK  ------------------->
+   {% block css %}
+   {% endblock %}
+   <!---------------------- CSS BLOCK  ------------------->
+</head>
 
-    <body data-topbar="dark">
+<body data-topbar="dark">
 
-        <!-- Begin page -->
-        <div id="layout-wrapper">
+   <!-- Begin page -->
+   <div id="layout-wrapper">
 
-            <header id="page-topbar">
-                <div class="navbar-header">
-                    <div class="d-flex">
+      <header id="page-topbar">
+         <div class="navbar-header">
+            <div class="d-flex">
 
+               <!--Menu expander-->
+               <button type="button" class="btn btn-sm px-3 font-size-24 header-item" id="vertical-menu-btn" onclick="hideLogo()">
+                  <i class="mdi mdi-menu"></i>
+               </button>
+               <!-- LOGO -->
+               <div class="navbar-brand-box">
+                  <a href="{% url 'home' %}" class="logo logo-light">
+                     <span class="logo-sm">
+                        <img src="{% static 'academy/webPageImages/TheAcademyLogo.png' %}" alt="" height="50">
+                     </span>
+                     <span class="logo-lg">
+                        <img src="{% static 'academy/webPageImages/TheAcademyLogo.png' %}" alt="" height="50">
+                     </span>
 
-                        <!-- LOGO -->
-                        <div class="navbar-brand-box">
-                            <a href="{% url 'home' %}" class="logo logo-light">
-                                <span class="logo-sm">
-                                   <!--Menu expander-->
-                                  <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
-                                      <i class="mdi mdi-menu"></i>
-                                   </button>
-                                  <img src="{% static 'academy/webPageImages/TheAcademyLogo.png' %}" alt="" height="50">
-                                </span>
-                                <span class="logo-lg">
-                                    <img src="{% static 'academy/webPageImages/TheAcademyLogo.png' %}" alt="" height="50">
-                                </span>
-                            </a>
-                        </div>
-                    </div>
+                  </a>
+               </div>
 
-                    <div class="d-flex">
-                       <div class="dropdown d-none d-lg-inline-block ml-1">
-                           <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
-                              <i class="mdi mdi-fullscreen"></i>
-                           </button>
-                       </div>
+            </div>
 
-                        {% if user.is_authenticated %}
-                        <div class="dropdown d-inline-block">
-                            <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img class="rounded-circle header-profile-user" src="{{ user.profile.photo.url }}"
-                                    alt="Header Avatar">
-                                <span class="d-none d-xl-inline-block ml-1">{{user.first_name}} {{user.last_name}}</span>
-                                <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <!-- item-->
-                                <a class="dropdown-item d-block" href="{% url 'dashboard'%}">My Settings</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item"         href="javascript:{document.getElementById('logout').submit()}" onclick="">Logout</a>
-                                <form id="logout" method="POST" action="{% url 'logout' %}">
-                                 {% csrf_token %}
-                                 <input type="hidden" />
-                               </form>
-                            </div>
-                        </div>
-                        {% else %}
+            <div class="d-flex">
+               <div class="dropdown d-none d-lg-inline-block ml-1">
+                  <button type="button" class="btn header-item noti-icon" data-toggle="fullscreen">
+                     <i class="mdi mdi-fullscreen"></i>
+                  </button>
+               </div>
 
-                        <div class="dropdown d-inline-block">
-                           <a href="{% url 'login'%}" onclick="">
-                            <button type="button" class="btn header-item" id="page-header-user-loggedout">
-                                  <img class="rounded-circle header-profile-user" src="{% static 'academy/webPageImages/blankUser.jpg' %}">
-                                  <span class="d-none d-xl-inline-block ml-1">Log in</span>
-                            </button>
-                           </a>
-                        </div>
+               {% if user.is_authenticated %}
+               <div class="dropdown d-inline-block">
+                  <button type="button" class="btn header-item" id="page-header-user-dropdown"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <img class="rounded-circle header-profile-user" src="{{ user.profile.photo.url }}"
+                  alt="Header Avatar">
+                  <span class="d-none d-xl-inline-block ml-1">{{user.first_name}} {{user.last_name}}</span>
+                  <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+               </button>
+               <div class="dropdown-menu dropdown-menu-right">
+                  <!-- item-->
+                  <a class="dropdown-item d-block" href="{% url 'dashboard'%}">My Settings</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item"         href="javascript:{document.getElementById('logout').submit()}" onclick="">Logout</a>
+                  <form id="logout" method="POST" action="{% url 'logout' %}">
+                     {% csrf_token %}
+                     <input type="hidden" />
+                  </form>
+               </div>
+            </div>
+            {% else %}
 
-                        {% endif %}
+            <div class="dropdown d-inline-block">
+               <a href="{% url 'login'%}" onclick="">
+                  <button type="button" class="btn header-item" id="page-header-user-loggedout">
+                     <img class="rounded-circle header-profile-user" src="{% static 'academy/webPageImages/blankUser.jpg' %}">
+                     <span class="d-none d-xl-inline-block ml-1">Log in</span>
+                  </button>
+               </a>
+            </div>
+
+            {% endif %}
+         </div>
+
+      </div>
+   </header>
+
+   <!-- ========== Left Sidebar Start ========== -->
+   <div class="vertical-menu">
+
+      <div data-simplebar class="h-100">
+
+         <!--- Sidemenu -->
+         <div id="sidebar-menu">
+            <!-- Left Menu Start -->
+            <ul class="metismenu list-unstyled" id="side-menu">
+               {% if user.is_authenticated %}
+               <li class="menu-title text-center" style="padding-bottom:-10px; margin-bottom:-10px;"><img src="{{user.team.teamLogo.url}}" height= '100px'/></li>
+               <li class="menu-title text-center">{{user.team.teamName}}</li>
+
+               <li>
+                  <a href="javascript: void(0);" class="">
+                     <i class="mdi mdi-briefcase-check text-white"></i>
+                     <span>My Team</span>
+                  </a>
+                  <ul class="sub-menu" aria-expanded="false">
+                     <li><a href="{% url 'teamview' %}">My Team</a></li>
+                     <li><a href="#">My Results</a></li>
+                     <li><a href="#">League Table</a></li>
+                     <li><a href="{% url 'teamnamepicker' %}">Team Name & Image</a></li>
+                  </ul>
+               </li>
+               {% else %}
+               <li class="menu-title">Welcome <br /><br /></li>
+               <li>
+                  <a href="{% url 'register'%}" class="">
+                     <i class="mdi mdi-briefcase-check text-white"></i>
+                     <span>Register</span>
+                  </a>
+               </li>
+               {% endif %}
+               <li>
+                  <a href="javascript: void(0);">
+                     <i class="mdi mdi-buffer text-white"></i>
+                     <span>Drivers</span>
+                  </a>
+                  <ul class="sub-menu" aria-expanded="false">
+                     <li><a href="{% url 'tables' %}/1">Formula 1</a></li>
+                     <li><a href="{% url 'tables' %}/2">Formula 2</a></li>
+                     <li><a href="{% url 'tables' %}/3">Formula 3</a></li>
+                     <li><a href="{% url 'tables' %}/W">W Series</a></li>
+
+                  </ul>
+               </li>
+               <li>
+                  <a href="{% url 'showevents' %}" class="">
+                     <i class="mdi mdi-chart-arc text-white"></i>
+                     <span>Race Calendar</span>
+                  </a>
+               </li>
+               <li>
+                  <a href="javascript: void(0);" class="">
+                     <i class="mdi mdi-format-list-bulleted-type text-white"></i>
+                     <span>Guide & Rules</span>
+                  </a>
+                  <ul class="sub-menu" aria-expanded="false">
+                     <li><a href="{% url 'test' %}">Guided Tour</a></li>
+                     <li><a href="{% url 'test' %}">Getting Started</a></li>
+                     <li><a href="{% url 'scoring' %}">Scoring</a></li>
+                  </ul>
+               </li>
+
+               {% if request.user.is_staff %}
+               <li>
+                  <a href="javascript: void(0);" class="">
+                     <i class="mdi mdi-spin mdi-settings text-white"></i>
+                     <span>Admin</span>
+                  </a>
+                  <ul class="sub-menu" aria-expanded="false">
+                     <li><a href="{% url 'addresults' %}">Add results</a></li>
+                     <li><a href="{% url 'scoreevents' %}">Score Events</a></li>
+                     <li><a href="{% url 'test' %}">Rebuild leagues</a></li>
+                  </ul>
+               </li>
+               {% endif %}
+
+               {% if user.is_authenticated %}
+               <li>
+                  <a href="javascript: void(0);" class="">
+                     <i class="mdi mdi-settings text-white"></i>
+                     <span>Settings</span>
+                  </a>
+                  <ul class="sub-menu" aria-expanded="false">
+                     <li><a href="{% url 'dashboard' %}">My Account</a></li>
+                     <li><a href="javascript:{document.getElementById('logout').submit()}" onclick="">Logout</a></li>
+                  </ul>
+               </li>
+               {% endif %}
+
+               <!---- GPG Logo and tags - hide if sidebar minimised -->
+               <span class="logo-lg" id = "hideMe">
+                  <br />
+                  <center>
+                     <p class = "text-white" style="margin-bottom:-40px; font-size:0.8rem;">Get more racing insight at:</p>
+                     <a href = "https://gpgrandstand.com" target="_blank">
+                        <img src="{% static '/academy/webPageImages/GPGFlag.png'%}" alt="" height="170" >
+                     </a>
+                     <p id="tags">
+                        {% teamCountTag %} Teams active<br />
+                        Page loaded at {% now "H:i" %}<br />
+                        on {% now "jS F Y " %}
+                     </p>
+                  </center>
+               </span>
+
+            </ul>
+         </div>
+         <!-- Sidebar -->
+      </div>
+   </div>
+   <!-- Left Sidebar End -->
+
+   <!-- ==================================================================================================================================================== -->
+   <!-- Start right Content here -->
+   <!-- ==================================================================================================================================================== -->
+   <div class="main-content">
+
+      <div class="page-content">
+         <div class="container-fluid">
+            <!-- start page title -->
+            <div class="row">
+               <div class="col-12">
+                  <div class="page-title-box d-flex align-items-center justify-content-between">
+                     <h4 class="mb-0 font-size-18">&nbsp;</h4>
+
+                     <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                           <li class="breadcrumb-item"><a href="javascript: void(0);">GPGrandstand</a></li>
+                           <li class="breadcrumb-item"><a href="javascript: void(0);">Academy</a></li>
+                           <li class="breadcrumb-item active"><a href="javascript: void(0);">{% block breadcrumb %}{% endblock %}</a></li>
+                        </ol>
                      </div>
-
-                </div>
-            </header>
-
-            <!-- ========== Left Sidebar Start ========== -->
-            <div class="vertical-menu">
-
-                <div data-simplebar class="h-100">
-
-                    <!--- Sidemenu -->
-                    <div id="sidebar-menu">
-                        <!-- Left Menu Start -->
-                        <ul class="metismenu list-unstyled" id="side-menu">
-                            {% if user.is_authenticated %}
-                            <li class="menu-title text-center" style="padding-bottom:-10px; margin-bottom:-10px;"><img src="{{user.team.teamLogo.url}}" height= '100px'/></li>
-                            <li class="menu-title text-center">{{user.team.teamName}}</li>
-
-                            <br /><br />
-                            <li>
-                                <a href="javascript: void(0);" class="">
-                                    <i class="mdi mdi-briefcase-check text-white"></i>
-                                    <span>My Team</span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="{% url 'teamview' %}">My Team</a></li>
-                                    <li><a href="#">My Results</a></li>
-                                    <li><a href="#">League Table</a></li>
-                                    <li><a href="{% url 'teamnamepicker' %}">Team Name & Image</a></li>
-
-                                </ul>
-                            </li>
-                            {% else %}
-                            <li class="menu-title">Welcome <br /><br /></li>
-                            <li>
-                                <a href="{% url 'register'%}" class="">
-                                    <i class="mdi mdi-briefcase-check text-white"></i>
-                                    <span>Register</span>
-                                </a>
-                             </li>
-                            {% endif %}
-                            <li>
-                                <a href="javascript: void(0);">
-                                    <i class="mdi mdi-buffer text-white"></i>
-                                    <span>Drivers</span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="false">
-                                   <li><a href="{% url 'tables' %}/1">Formula 1</a></li>
-                                   <li><a href="{% url 'tables' %}/2">Formula 2</a></li>
-                                   <li><a href="{% url 'tables' %}/3">Formula 3</a></li>
-                                   <li><a href="{% url 'tables' %}/W">W Series</a></li>
-
-                                </ul>
-                            </li>
-
-                            <li>
-                                <a href="{% url 'showevents' %}" class="">
-                                    <i class="mdi mdi-chart-arc text-white"></i>
-                                    <span>Race Calendar</span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="javascript: void(0);" class="">
-                                    <i class="mdi mdi-format-list-bulleted-type text-white"></i>
-                                    <span>Guide & Rules</span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="{% url 'home' %}">Guided Tour</a></li>
-                                    <li><a href="{% url 'home' %}">Getting Started</a></li>
-                                    <li><a href="{% url 'scoring' %}">Scoring</a></li>
-
-                                </ul>
-                            </li>
-                            {% if request.user.is_staff %}
-                            <li>
-                                <a href="javascript: void(0);" class="">
-                                    <i class="mdi mdi-spin mdi-settings text-white"></i>
-                                    <span>Admin</span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="{% url 'addresults' %}">Add results</a></li>
-                                    <li><a href="{% url 'scoreevents' %}">Score Events</a></li>
-                                    <li><a href="{% url 'home' %}">Rebuild leagues</a></li>
-
-                                </ul>
-                            </li>
-                            {% endif %}
-                            {% if user.is_authenticated %}
-                            <li>
-                                <a href="javascript: void(0);" class="">
-                                    <i class="mdi mdi-settings text-white"></i>
-                                    <span>Settings</span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="{% url 'dashboard' %}">My Account</a></li>
-                                    <li><a href="javascript:{document.getElementById('logout').submit()}" onclick="">Logout</a></li>
-
-                                </ul>
-                            </li>
-                            {% endif %}
-
-
-                            <span class="logo-lg">
-                                    <br /><br /><br /><br />
-                                    <center>
-                                    	<p class = "text-white" style="margin-bottom:-40px; font-size:1rem;">Get more racing insight at:</p>
-                                       <a href = "https://gpgrandstand.com" target="_blank">
-                                          <img src="{% static '/academy/webPageImages/GPGFlag.png'%}" alt="" height="200" >
-                                       </a>
-                                       <br />
-                                       <p id="tags">
-
-                                             {% teamCountTag %} Teams active<br />
-                                             Page loaded at {% now "H:i" %}<br />
-                                             on {% now "jS F Y " %}
-
-                                       </p>
-
-                                    </center>
-                            </span>
-
-                        </ul>
-                    </div>
-                    <!-- Sidebar -->
-                </div>
+                  </div>
+               </div>
             </div>
-            <!-- Left Sidebar End -->
+            <!-- end page title -->
 
-<!-- ==================================================================================================================================================== -->
-<!-- Start right Content here -->
-<!-- ==================================================================================================================================================== -->
-            <div class="main-content">
-
-                <div class="page-content">
-                    <div class="container-fluid">
-                        <!-- start page title -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box d-flex align-items-center justify-content-between">
-                                    <h4 class="mb-0 font-size-18">&nbsp;</h4>
-
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">GPGrandstand</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Academy</a></li>
-                                            <li class="breadcrumb-item active"><a href="javascript: void(0);">{% block breadcrumb %}{% endblock %}</a></li>
-                                        </ol>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end page title -->
-
-                    </div> <!-- container-fluid -->
-                </div>
-                <!-- End Page-content -->
-                <!---------------------- CONTENT BLOCK  ------------------->
-                {% block content %}
-                {% endblock %}
-                <!---------------------- CONTENT BLOCK  ------------------->
-                <br /><br /><br /><br />
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-sm-9">
-                                2020 - <script>document.write(new Date().getFullYear())</script> © GPGrandstand Ltd.
-                                <!---------------------- FOOTER BLOCK  ------------------->
-                                         {% block footer %}
-                                         {% endblock %}
-                                <!---------------------- FOOTER BLOCK  ------------------->
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="text-sm-right d-none d-sm-block">
-                                    <i class="mdi mdi-account-supervisor text-danger"></i> W5H.com 2021
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+         </div> <!-- container-fluid -->
+      </div>
+      <!-- End Page-content -->
+      <!---------------------- CONTENT BLOCK  ------------------->
+      {% block content %}
+      {% endblock %}
+      <!---------------------- CONTENT BLOCK  ------------------->
+      <br /><br /><br /><br />
+      <footer class="footer">
+         <div class="container-fluid">
+            <div class="row">
+               <div class="col-sm-9">
+                  2020 - <script>document.write(new Date().getFullYear())</script> © GPGrandstand Ltd.
+                  <!---------------------- FOOTER BLOCK  ------------------->
+                  {% block footer %}
+                  {% endblock %}
+                  <!---------------------- FOOTER BLOCK  ------------------->
+               </div>
+               <div class="col-sm-3">
+                  <div class="text-sm-right d-none d-sm-block">
+                     <i class="mdi mdi-account-supervisor text-danger"></i> W5H.com 2021
+                  </div>
+               </div>
             </div>
-<!-- ==================================================================================================================================================== -->
-<!------------------------------- end main content---------------------------------------------------------------------------------->
-<!-- ==================================================================================================================================================== -->
+         </div>
+      </footer>
+   </div>
+   <!-- ==================================================================================================================================================== -->
+   <!------------------------------- end main content---------------------------------------------------------------------------------->
+   <!-- ==================================================================================================================================================== -->
 
-        </div>
-        <!-- END layout-wrapper -->
+</div>
+<!-- END layout-wrapper -->
 
-        <!-- JAVASCRIPT -->
-        <script src="{% static '/academy/libs/jquery/jquery.min.js'                 %}" ></script>
-        <script src="{% static '/academy/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-        <script src="{% static '/academy/libs/metismenu/metisMenu.min.js'           %}"></script>
-        <script src="{% static '/academy/libs/simplebar/simplebar.min.js'           %}"></script>
-        <!--<script src="{% static '/academy/libs/node-waves/waves.min.js'              %}"></script>-->
-
-        <script src="{% static '/academy/js/app.js'                                 %}"></script>
-
-    </body>
+<!-- JAVASCRIPT -->
+<script src="{% static '/academy/libs/jquery/jquery.min.js'                 %}" ></script>
+<script src="{% static '/academy/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static '/academy/libs/metismenu/metisMenu.min.js'           %}"></script>
+<script src="{% static '/academy/libs/simplebar/simplebar.min.js'           %}"></script>
+<script src="{% static '/academy/js/app.js'                                 %}"></script>
+<script>
+   $(document).ready(function(){
+      $("#vertical-menu-btn").click(function(){
+         $("#hideMe").toggle();
+      });
+   });
+</script>
+</body>
 </html>
 
 

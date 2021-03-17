@@ -18,6 +18,8 @@ My Team
    .formula{
       font-weight:bold;
       color: white;
+      margin-top: 10px;
+      margin-bottom: 10px;
    }
    .title{
       margin:0px 5px 0px 15px;
@@ -32,10 +34,12 @@ My Team
    .teamdiv
    {
       border-style: solid;
-      border-width:5px;
+      border-width:10px;
       border-color: #0f111d;
-      padding: 10px;
+      padding: 8px;
       background-image: linear-gradient(#DA6020, #D52423);
+      border-radius: 25px;
+
    }
    .container-fluid img{
       height: 80px;
@@ -81,12 +85,26 @@ My Team
    #f1_p2_cost, #f2_p2_cost, #f3_p2_cost, #ws_p2_cost{
       text-decoration:underline;
    }
+   .results-l{
+      font-weight: 400;
+      color: white;
+      text-align:left;
+      padding-left:10%;
+      width: 85%;
+   }
+   .results-r{
+      font-weight: 600;
+      color: white;
+      text-align:right;
+      padding-left:0%;
+
+   }
 </style>
 {% endblock %}
 
 <!---- BODY CONTENT --------->
 {% block content %}
-<div style = "padding: 0% 5% 10% 5%;">
+<div style = "padding: 0% 2% 10% 2%;">
 
    {% if not returnmessage %}
    {% else %}
@@ -119,7 +137,7 @@ My Team
                <div class="container-fluid">
                  <div class="row">
                    <!--- Formula 1 --->
-                   <div class="col-sm-3 teamdiv" >
+                   <div class=" col-xl-3 col-md-6 teamdiv" >
                       <h4 class = "formula">Formula 1</h4>
                       <table>
                          <tr>
@@ -141,10 +159,55 @@ My Team
                            </td>
                         </tr>
                      </table>
+                     <!----- results Table ----------->
+                     <table>
+                        <tr>
+                           <td class = "results-l pt-4">
+                              Total Points
+                           </td>
+                           <td class = "results-r pt-4">
+                              {{ teamdata.p1_1.value}}
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class = "results-l">
+                              Place
+                           </td>
+                           <td class = "results-r">
+                              {{ teamdata.p1_2.value}}
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class = "results-l">
+                              Places won/lost
+                           </td>
+                           <td class = "results-r">
+                              {{ teamdata.p2_1.value}}
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class = "results-l ">
+                              Laps Lost
+                           </td>
+                           <td class = "results-r ">
+                              {{ teamdata.p2_2.value}}
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class = "results-l">
+                              Others
+                           </td>
+                           <td class = "results-r ">
+                              {{ teamdata.p3_2.value}}
+                           </td>
+                        </tr>
+                        <tr>
+                     </table>
+                     <!----- end results Table ----------->
                      <br/>
                    </div>
                    <!--- Formula 2 --->
-                   <div class="col-sm-3 teamdiv" >
+                   <div class="col-xl-3 col-md-6 col-md-6 teamdiv" >
                       <h4 class = "formula">Formula 2</h4>
                       <table>
                          <tr>
@@ -168,7 +231,7 @@ My Team
                      </table>
                    </div>
                    <!--- Formula 3 --->
-                   <div class="col-sm-3 teamdiv" >
+                   <div class="col-xl-3 col-md-6 teamdiv" >
                       <h4 class = "formula">Formula 3</h4>
                       <table>
                          <tr>
@@ -192,7 +255,7 @@ My Team
                      </table>
                    </div>
                    <!--- W Series--->
-                   <div class="col-sm-3 teamdiv">
+                   <div class="col-xl-3 col-md-6 teamdiv">
                       <h4 class = "formula">W Series</h4>
                       <table>
                          <tr>
@@ -225,20 +288,24 @@ My Team
                <div style = "padding: 0% 5% 10% 5%;">
                   <h2>F1 Team</h2>
                   <dl class="row justify-content-center">
-                     <dt class=" DriverSection col-sm-1"></dt>
-                     <dt class=" DriverSection col-sm-3">
+
+                     <dt class=" DriverSection col-lg-1 col-md-0"></dt>
+
+                     <dt class=" DriverSection col-lg-3 col-sm-6">
                         <img src="{{ teamdata.p1_1.mugshot.url}}" style="height:150px;"/>
                         <h3 class="mt-2">{{ teamdata.p1_1}}</h3>
                         <p>Lead Driver</p>
                         <p><b>${{ teamdata.p1_1.value}}m </b>(Paid:${{ teamdata.p1_1_cost}}m) </p>
                      </dt>
-                     <dt class=" DriverSection col-sm-3">
+
+                     <dt class=" DriverSection col-lg-3 col-sm-6">
                         <img src="{{ teamdata.p1_2.mugshot.url}}" style="height:150px;"/>
                         <h3 class="mt-2">{{ teamdata.p1_2}}</h3>
                         <p>Second Driver</p>
                         <p><b>${{ teamdata.p1_2.value}}m </b>(Paid:${{ teamdata.p1_2_cost}}m) </p>
                      </dt>
-                     <dt class=" DriverSection col-sm-4">
+
+                     <dt class=" DriverSection col-lg-4 col-md-8">
                         <table class="budget-table" style="margin-top:100px;">
                            <tr><th><h3 id = "f1_budget_title">Current F1 Cash:</h3></th><th></th>
                            <tr><td id="f1_p1_name" >{{ teamdata.p1_1}}    </td><td id="f1_p1_cost"        >$</td></tr>
@@ -248,6 +315,7 @@ My Team
                         </table>
                         <p>
                      </dt>
+
                   </dl>
                   <!-- Edit Table ----->
                   <br />

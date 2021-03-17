@@ -27,11 +27,15 @@
    <center><h5 style="color:green">{{ message }}</h5></center>
    {% endif %}
 
-   <section class="jumbotron text-center text-white">
-      <div class="container">
-         <img src="{% static 'academy/webPageImages/FFDAcademy_Logo.png' %}" alt="" width="40%">
+   <div class = "row">
+      <div class = "col-md-12 pl-5 pr-5">
+         <section class="jumbotron text-center text-white">
+            <div class="container">
+               <img src="{% static 'academy/webPageImages/FFDAcademy_Logo.png' %}" alt="" width="40%">
+            </div>
+         </section>
       </div>
-   </section>
+   </div>
 
    <div class="row">
       <div class="col-7">
@@ -55,8 +59,8 @@
             -->
          </div>
       </div>
-      <div class="col-1"><!--spacer--></div>
-      <div class="col-4 pt-5">
+
+      <div class="col-4 pt-5 ml-3">
          <div class="tab-pane" id="activity" role="tabpanel">
             {% show_next_race_sidebar 5 %}
       </div>
