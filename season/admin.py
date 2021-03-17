@@ -42,7 +42,7 @@ class EventAdmin(admin.ModelAdmin):
 
 class ResultAdmin(admin.ModelAdmin):
     list_display  = ('id','scoringEvent_ID', 'competitor_ID', 'finishPosition', 'startPosition', 'fastestLap')
-    search_fields = ('scoringEvent_ID',)
+    search_fields = ('scoringEvent_ID__name', 'competitor_ID__surname', 'competitor_ID__firstname')
 
     def active(self, obj):
         return obj.is_active == 1
@@ -60,6 +60,7 @@ class ScoringEventAdmin(admin.ModelAdmin):
 
 class CompetitorScoreAdmin(admin.ModelAdmin):
     list_display  = ( 'id','result_ID', 'scoringevent_ID', 'pointsType', 't1_score', 't2_score')
+    search_fields = ('competitor_ID__surname', 'competitor_ID__firstname')
 
     def active(self, obj):
         return obj.is_active == 1
@@ -76,7 +77,8 @@ class AcademyScoringMatrixAdmin(admin.ModelAdmin):
     active.boolean = True
 
 class TeamScoreAdmin(admin.ModelAdmin):
-    list_display = ('id','team_ID', 'cscore_ID', 'pointsType', 'teamPosition','academyPoints')
+    list_display = ('id','team_ID', 'cscore_ID', 'driver_ID','pointsType', 'teamPosition','academyPoints')
+    search_fields = ('team_ID__teamName','driver_ID__surname', 'driver_ID__firstname')
 
     def active(self, obj):
         return obj.is_active == 1

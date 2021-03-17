@@ -35,6 +35,12 @@ class Competitor(models.Model):
     instaHandle            = models.CharField(max_length=30,  blank=True)
     twitterHandle          = models.CharField(max_length=30,  blank=True)
     short_bio              = models.TextField(default = " ",  blank=True)
+    points_total           = models.DecimalField(max_digits=5, decimal_places=1, default = 0)
+    points_pos             = models.DecimalField(max_digits=5, decimal_places=1, default = 0)
+    points_fl              = models.DecimalField(max_digits=5, decimal_places=1, default = 0)
+    points_pgl             = models.DecimalField(max_digits=5, decimal_places=1, default = 0)
+    points_lbl             = models.DecimalField(max_digits=5, decimal_places=1, default = 0)
+    points_dsq             = models.DecimalField(max_digits=5, decimal_places=1, default = 0)
 
     def __str__(self):
         return self.firstname + " " + self.surname
@@ -78,7 +84,13 @@ class TeamProfile(models.Model):
     pw_2                   = models.ForeignKey(Competitor , null=True, on_delete = models.SET_NULL, related_name='pw_2', default=1)
     pw_2_cost              = models.DecimalField(max_digits=4, decimal_places=1, default = 0)
     pw_m                   = models.ForeignKey(Competitor , null=True, on_delete = models.SET_NULL, related_name='pw_m', default=1)
-    pw_m_cost              = models.DecimalField(max_digits=4, decimal_places=1, default = 0)
+    pw_m_cost              = models.DecimalField(max_digits=5, decimal_places=1, default = 0)
+    points_total           = models.DecimalField(max_digits=5, decimal_places=1, default = 0)
+    points_f1              = models.DecimalField(max_digits=5, decimal_places=1, default = 0)
+    points_f2              = models.DecimalField(max_digits=5, decimal_places=1, default = 0)
+    points_f3              = models.DecimalField(max_digits=5, decimal_places=1, default = 0)
+    points_f4              = models.DecimalField(max_digits=5, decimal_places=1, default = 0)
+
 
 
     def __str__(self):
@@ -165,6 +177,7 @@ class CompetitorScore(models.Model):
     ('D', 'Disqualification'),
     )
     result_ID       = models.ForeignKey(Result, null=True, on_delete = models.CASCADE, related_name='result')
+    competitor_ID   = models.ForeignKey(Competitor, null=True, on_delete = models.DO_NOTHING, related_name='cscore_driver')
     scoringevent_ID = models.IntegerField(default = 0)
     pointsType      = models.CharField(max_length=1, choices=POINTSTYPE)
     t1_score        = models.DecimalField(max_digits=6, decimal_places=2)
@@ -196,6 +209,8 @@ class TeamScore(models.Model):
     )
     team_ID              = models.ForeignKey(TeamProfile, null=True, on_delete = models.CASCADE, related_name='team')
     cscore_ID            = models.ForeignKey(CompetitorScore, null=True, on_delete = models.CASCADE, related_name='cscore')
+    ######################UNUSED##############################
+    competitor_ID        = models.ForeignKey(Competitor, null=True, on_delete = models.DO_NOTHING, related_name='tscore_driver')
     scoringevent_ID      = models.IntegerField(default = 0)
     driver_ID            = models.ForeignKey(Competitor, null=True, on_delete = models.DO_NOTHING, related_name='driver')
     eventType            = models.CharField(max_length=1, choices=EVENTTYPE, default='Q')

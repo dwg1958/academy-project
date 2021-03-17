@@ -121,6 +121,26 @@ def scoring(request):
 
 ####################################
 def test(request):
+
+    from django.db.models import Avg, Sum, Count, Max
+
+    print('Drivers count =  ' , Competitor.objects.count())
+
+    print('C_Scores count =  ', CompetitorScore.objects.count())
+
+    #To find the number of results(FKey ref = 'competitor') per driver:
+    scoresPerDriver = Competitor.objects.annotate(score_count = Count('competitor')).order_by('id')
+
+    #for driver in scoresPerDriver:
+    #    print('ScoringEvents for :',driver.id, driver.firstname, driver.surname, ' - ', driver.score_count)
+
+    # To find the points total per driver (grandschild record: Competitor->result->competitorScore)
+    pointsPerDriver = Competitor.objects.annotate(score_points = Count('competitor__result__t1_score')).order_by('id')
+
+    for driver in pointsPerDriver:
+        print(driver.id, driver.firstname, driver.surname, ' - ', 'Points:',driver.score_points)
+
+
     #resultset = Result.objects.order_by('scoringEvent_ID', 'finishPosition')
 
     return render(request, 'season/test.html')#, {'resultset': resultset})
@@ -366,6 +386,7 @@ def scoreevents(request):
                 competitorScore = CompetitorScore()
                 competitorScore.result_ID       = result
                 competitorScore.scoringevent_ID = int(scoringevent_ID)
+                competitorScore.competitor_ID   = result.competitor_ID
                 competitorScore.pointsType      = 'P'
                 competitorScore.t1_score        = t1_pos_points
                 competitorScore.t2_score        = t2_pos_points
@@ -383,6 +404,7 @@ def scoreevents(request):
                 competitorScore = CompetitorScore()
                 competitorScore.result_ID  = result
                 competitorScore.scoringevent_ID = int(scoringevent_ID)
+                competitorScore.competitor_ID   = result.competitor_ID
                 competitorScore.pointsType = 'D'
                 competitorScore.t1_score   = t1_disqualified
                 competitorScore.t2_score   = t2_disqualified
@@ -404,6 +426,7 @@ def scoreevents(request):
                     competitorScore = CompetitorScore()
                     competitorScore.result_ID  = result
                     competitorScore.scoringevent_ID = int(scoringevent_ID)
+                    competitorScore.competitor_ID   = result.competitor_ID
                     competitorScore.pointsType = 'F'
                     competitorScore.t1_score   = t1_fLap
                     competitorScore.t2_score   = t2_fLap
@@ -422,6 +445,7 @@ def scoreevents(request):
                     competitorScore = CompetitorScore()
                     competitorScore.result_ID  = result
                     competitorScore.scoringevent_ID = int(scoringevent_ID)
+                    competitorScore.competitor_ID   = result.competitor_ID
                     competitorScore.pointsType = 'G'
                     competitorScore.t1_score   = t1_PlacesGainedLost
                     competitorScore.t2_score   = t2_PlacesGainedLost
@@ -440,6 +464,7 @@ def scoreevents(request):
                     competitorScore = CompetitorScore()
                     competitorScore.result_ID  = result
                     competitorScore.scoringevent_ID = int(scoringevent_ID)
+                    competitorScore.competitor_ID   = result.competitor_ID
                     competitorScore.pointsType = 'L'
                     competitorScore.t1_score   = t1_lapsLost
                     competitorScore.t2_score   = t2_lapsLost
