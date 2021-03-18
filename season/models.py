@@ -209,8 +209,6 @@ class TeamScore(models.Model):
     )
     team_ID              = models.ForeignKey(TeamProfile, null=True, on_delete = models.CASCADE, related_name='team')
     cscore_ID            = models.ForeignKey(CompetitorScore, null=True, on_delete = models.CASCADE, related_name='cscore')
-    ######################UNUSED##############################
-    competitor_ID        = models.ForeignKey(Competitor, null=True, on_delete = models.DO_NOTHING, related_name='tscore_driver')
     scoringevent_ID      = models.IntegerField(default = 0)
     driver_ID            = models.ForeignKey(Competitor, null=True, on_delete = models.DO_NOTHING, related_name='driver')
     eventType            = models.CharField(max_length=1, choices=EVENTTYPE, default='Q')

@@ -114,7 +114,8 @@ My Team
    <div class="tabs-menu">
        <ul class="nav nav-pills">
            <li class="nav-item">
-               <a href="#academy" class="nav-link active" data-toggle="tab">Academy</a>
+         <!--   <a href="#academy" class="nav-link active" data-toggle="tab">Academy</a>-->
+           <a href="{% url 'teamview'%}" class="nav-link active" >Academy</a>
            </li>
            <li class="nav-item">
                <a href="#F1" class="nav-link" data-toggle="tab">Formula 1</a>
@@ -660,9 +661,10 @@ My Team
        }
 
        $(document).ready(function(){
+         // go to correct team tab
          $('.nav-pills a[href="#' + $.urlParam('tab') + '"]').tab('show');
-         //gives us... $('.nav-pills a[href="#F1"]').tab('show');
-         //USAGE:  URL/season/teamview?tab=F2
+         // gives us... $('.nav-pills a[href="#F1"]').tab('show');
+         // USAGE:  URL/season/teamview?tab=F2
 
          //////////////////////////////////////////////
          // F1 - Set up RHS table numbers with current values

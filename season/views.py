@@ -129,13 +129,13 @@ def test(request):
     print('C_Scores count =  ', CompetitorScore.objects.count())
 
     #To find the number of results(FKey ref = 'competitor') per driver:
-    scoresPerDriver = Competitor.objects.annotate(score_count = Count('competitor')).order_by('id')
+    scoresPerDriver = Competitor.objects.annotate(score_count = Count('competitor')).filter(formula ='1').order_by('firstname')
 
-    #for driver in scoresPerDriver:
-    #    print('ScoringEvents for :',driver.id, driver.firstname, driver.surname, ' - ', driver.score_count)
+    for driver in scoresPerDriver:
+       print(driver.firstname, driver.surname, ' - ScoringEvents :', driver.score_count)
 
-    # To find the points total per driver (grandschild record: Competitor->result->competitorScore)
-    pointsPerDriver = Competitor.objects.annotate(score_points = Count('competitor__result__t1_score')).order_by('id')
+    #To find the points total per driver
+    pointsPerDriver = Competitor.objects.annotate(score_points = Sum('cscore_driver__t1_score')).filter(formula ='1').order_by('firstname')
 
     for driver in pointsPerDriver:
         print(driver.id, driver.firstname, driver.surname, ' - ', 'Points:',driver.score_points)
@@ -530,6 +530,12 @@ def scoreevents(request):
         if len(tscores) > 0:
             batch = 100
             TeamScore.objects.bulk_create(tscores, batch)
+
+        ################# TO DO ################################################
+        # 1. Update team_profile records with total scores for FORMULAS        #
+        # 2. Update competitor records with total scores for each scoring type #
+        ########################################################################
+
 
         # Mark scoring event page as marked - !!!! ALSO STOP SCORING IF TRUE  !!!!
         if results_calculated:
