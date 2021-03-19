@@ -90,6 +90,7 @@ class TeamProfile(models.Model):
     points_f2              = models.DecimalField(max_digits=5, decimal_places=1, default = 0)
     points_f3              = models.DecimalField(max_digits=5, decimal_places=1, default = 0)
     points_ws              = models.DecimalField(max_digits=5, decimal_places=1, default = 0)
+    league_position        = models.IntegerField(default=0)
 
     def __str__(self):
         return self.user_ID.username + " - " + self.teamName
