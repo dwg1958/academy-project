@@ -70,8 +70,6 @@ def showresults(request):
 def leagueposition(request):
 
     league_list = TeamProfile.objects.all().order_by('-points_total')
-
-
     return render(request, 'season/leagueposition.html', {'league_list':league_list})
 
 
@@ -218,8 +216,6 @@ def rebuildleagues(request):
     for driver in resultset:
         scores_dict[driver.id]['points_ws'] = driver.ws_points
 
-    print(scores_dict)
-
     # Now work through teams and insert points
     for team in allteams:
         team_record = team
@@ -229,6 +225,15 @@ def rebuildleagues(request):
         team_record.points_ws    = scores_dict[team.id]['points_ws']
         team_record.points_total = scores_dict[team.id]['points_f1'] + scores_dict[team.id]['points_f2'] + scores_dict[team.id]['points_f3']+ scores_dict[team.id]['points_ws']
         team_record.save()
+
+    # Finally put league position into tem records so we can find 5 above and below
+    league_list = TeamProfile.objects.all().order_by('-points_total')
+    place = 1
+    for team in league_list:
+        team_details = team
+        team_details.league_position = place
+        team_details.save()
+        place = place+1
 
     #Just to check - compare total points in competitorScores with total points in cometitor table
     tcheck = TeamProfile.objects.aggregate(team_points = Sum('points_total'))

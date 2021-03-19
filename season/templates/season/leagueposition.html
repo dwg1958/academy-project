@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load static %}
 
 <!---- TITLE --------->
 {% block title.     %}League {% endblock %}
@@ -8,44 +8,52 @@
 <!---- STYLE --------->
 {% block css %}
 <style>
+   .myteam{
+      background-color: #DA6020;
+   }
 </style>
 {% endblock %}
 
 <!---- BODY CONTENT --------->
 {% block content %}
-<br /><br /><br /><br /><br />
+
 <div class="row">
    <div class="container">
       <div class="row">
          <div class="col-md-10 col-sm-10 offset-1">
-            <h1>League table</h1>
+            <img src="{% static 'academy/webPageImages/FFDAcademy_Logo.png' %}" alt="" width="40%">
+            <br /><br />
+            <h2>League table</h2>
+            <p></p>
             <div>
                <table class="table table-sm">
                   <tr>
+                     <th class="pr-3">Pos.</th>
                      <th> </th>
                      <th> Team </th>
-                     <th> F1 Points </th>
-                     <th> F2 Points </th>
-                     <th> F3 Points </th>
-                     <th> WS Points </th>
-                     <th> Total Points </th>
+                     <th class="text-right"> F1 Points </th>
+                     <th class="text-right"> F2 Points </th>
+                     <th class="text-right"> F3 Points </th>
+                     <th class="text-right"> WS Points </th>
+                     <th class="text-right"> Total Points </th>
                   </tr>
 
                   {% for team in league_list %}
                   {% if user.team.teamName  ==  team.teamName %}
-                     <tr class = " bg-info">
+                     <tr class = "myteam">
                   {% else %}
                      <tr>
                   {% endif %}
 
                      <!--<td class="name"> <a href = " {% url 'showscoringevents' %}?event={{event.id}}">{{event.name}}</a> </td> -->
+                     <td class="text-center align-middle pr-3"> {{team.league_position}} </td>
                      <td> <img src=" {{team.teamLogo.url}}" height="50px" > </td>
-                     <td class="align-middle"> {{team.teamName}} </td>
-                     <td class="align-middle"> {{team.points_f1}} </td>
-                     <td class="align-middle"> {{team.points_f2}} </td>
-                     <td class="align-middle"> {{team.points_f3}} </td>
-                     <td class="align-middle"> {{team.points_ws}} </td>
-                     <td class="align-middle"> {{team.points_total}} </td>
+                     <td class="align-middle text-left"> {{team.teamName}} </td>
+                     <td class="align-middle text-right"> {{team.points_f1}} </td>
+                     <td class="align-middle text-right"> {{team.points_f2}} </td>
+                     <td class="align-middle text-right"> {{team.points_f3}} </td>
+                     <td class="align-middle text-right"> {{team.points_ws}} </td>
+                     <td class="align-middle text-right"> {{team.points_total}} </td>
                   </tr>
                   {% endfor %}
                </table>
