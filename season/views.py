@@ -4,6 +4,7 @@ from .models import Competitor, Event, ScoringEvent, Result, TeamProfile, Academ
 from django.contrib.auth.decorators import login_required
 from .forms import EventForm, TeamProfileForm, TeamProfileForm
 from django.contrib.auth.models import User
+from django.db.models import Sum, Count
 import time
 
 # Create your views here.
@@ -115,35 +116,75 @@ def scoring(request):
 
 
 
-
-
-
-
 ####################################
-def test(request):
-
-    from django.db.models import Avg, Sum, Count, Max
-
-    print('Drivers count =  ' , Competitor.objects.count())
-
-    print('C_Scores count =  ', CompetitorScore.objects.count())
-
-    #To find the number of results(FKey ref = 'competitor') per driver:
-    scoresPerDriver = Competitor.objects.annotate(score_count = Count('competitor')).filter(formula ='1').order_by('firstname')
-
-    for driver in scoresPerDriver:
-       print(driver.firstname, driver.surname, ' - ScoringEvents :', driver.score_count)
-
-    #To find the points total per driver
-    pointsPerDriver = Competitor.objects.annotate(score_points = Sum('cscore_driver__t1_score')).filter(formula ='1').order_by('firstname')
-
-    for driver in pointsPerDriver:
-        print(driver.id, driver.firstname, driver.surname, ' - ', 'Points:',driver.score_points)
+def rebuildleagues(request):
 
 
-    #resultset = Result.objects.order_by('scoringEvent_ID', 'finishPosition')
+    #Start Timer
+    tic = time.perf_counter()
 
-    return render(request, 'season/test.html')#, {'resultset': resultset})
+    scores_dict  = {}
+
+    #create the dictionary
+    alldrivers = Competitor.objects.filter(role ='D')
+    for driver in alldrivers:
+        scores_dict.update({driver.id: {"name" : driver.firstname +' '+  driver.surname, "pos_points" : 0, "fl_points" : 0, "pgl_points" : 0, "lbl_points" : 0, "dsq_points" : 0 }})
+
+    #Get position Points
+    #resultset = Competitor.objects.filter(cscore_driver__pointsType ='P').filter(formula ='1').annotate(pos_points = Sum('cscore_driver__t2_score')).order_by('firstname')#.distinct()
+    resultset = Competitor.objects.filter(cscore_driver__pointsType ='P').filter(role ='D').annotate(pos_points = Sum('cscore_driver__t2_score')).order_by('firstname')#.distinct()
+    for driver in resultset:
+        scores_dict[driver.id]['pos_points'] = driver.pos_points
+
+    #Get fastestLap Points
+    resultset = Competitor.objects.filter(cscore_driver__pointsType ='F').filter(role ='D').annotate(fl_points = Sum('cscore_driver__t2_score')).order_by('firstname').distinct()
+    for driver in resultset:
+        scores_dict[driver.id]['fl_points'] = driver.fl_points
+
+    #Get placesGainedLostG Points
+    resultset = Competitor.objects.filter(cscore_driver__pointsType ='G').filter(role ='D').annotate(pgl_points = Sum('cscore_driver__t2_score')).order_by('firstname').distinct()
+    for driver in resultset:
+        scores_dict[driver.id]['pgl_points'] = driver.pgl_points
+
+    #Get LapsBehindLeader Points
+    resultset = Competitor.objects.filter(cscore_driver__pointsType ='L').filter(role ='D').annotate(lbl_points = Sum('cscore_driver__t2_score')).order_by('firstname').distinct()
+    for driver in resultset:
+        scores_dict[driver.id]['lbl_points'] = driver.lbl_points
+
+    #Get Disqualification Points
+    resultsetD = Competitor.objects.filter(cscore_driver__pointsType ='D').filter(role ='D').annotate(dsq_points = Sum('cscore_driver__t2_score')).order_by('firstname').distinct()
+    for driver in resultsetD:
+        scores_dict[driver.id]['dsq_points'] = driver.dsq_points
+
+    #Print out dictionaries:
+    #for x in scores_dict:
+    #    print(scores_dict[x])
+    #    print(scores_dict[x].values())
+
+    # Now work through drivers and insert points
+    for driver in alldrivers:
+        driver_record = driver
+        driver_record.points_pos   = scores_dict[driver.id]['pos_points']
+        driver_record.points_fl    = scores_dict[driver.id]['fl_points']
+        driver_record.points_pgl   = scores_dict[driver.id]['pgl_points']
+        driver_record.points_lbl   = scores_dict[driver.id]['lbl_points']
+        driver_record.points_dsq   = scores_dict[driver.id]['dsq_points']
+        driver_record.points_total = scores_dict[driver.id]['pos_points'] + scores_dict[driver.id]['fl_points'] + scores_dict[driver.id]['pgl_points']+ scores_dict[driver.id]['lbl_points'] + scores_dict[driver.id]['dsq_points']
+        driver_record.save()
+
+    #Just to check - compare total points in competitorScores with total points in cometitor table
+    ccheck = Competitor.objects.filter(role ='D').aggregate(driver_points = Sum('points_total'))
+    scheck = CompetitorScore.objects.aggregate(score_points = Sum('t2_score'))
+
+    # Close timer
+    toc = time.perf_counter()
+    time_taken = round(toc - tic,4)
+
+    message   = 'Points in drivers table = ' + str(ccheck['driver_points']) + ' versus points in scores table = ' + str(scheck['score_points'])
+    message_2 = 'Team Tables to be done next ...'
+    message_3 = 'Time taken : ' + str(time_taken) + ' seconds'
+
+    return render(request, 'season/rebuildleagues.html', {'message': message, 'message_2': message_2, 'message_3': message_3})
 
 
 
@@ -158,7 +199,7 @@ def test(request):
 
 ############################### USER PAGES ###################################################
 
-@login_required
+
 ##### SHOW AND EDIT MY TEAM ###################
 def teamview(request):
     returnmessage = ""
@@ -645,6 +686,12 @@ def addresults(request):
         #First Screen - Choose an event
         scoringevents = ScoringEvent.objects.all().filter(results_in = False).order_by('startDateTime')[:10]
         return render(request, 'season/add_results.html',{'scoringevents': scoringevents})
+
+
+@login_required
+####################################
+def test(request):
+    return render(request, 'season/test.html')
 
 
 ##############################################################################################################

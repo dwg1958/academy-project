@@ -196,8 +196,8 @@
                      <span>Guide & Rules</span>
                   </a>
                   <ul class="sub-menu" aria-expanded="false">
-                     <li><a href="{% url 'test' %}">Guided Tour</a></li>
-                     <li><a href="{% url 'test' %}">Getting Started</a></li>
+                     <li><a href="{% url 'scoring' %}">Guided Tour</a></li>
+                     <li><a href="{% url 'scoring' %}">Getting Started</a></li>
                      <li><a href="{% url 'scoring' %}">Scoring</a></li>
                   </ul>
                </li>
@@ -211,7 +211,9 @@
                   <ul class="sub-menu" aria-expanded="false">
                      <li><a href="{% url 'addresults' %}">Add results</a></li>
                      <li><a href="{% url 'scoreevents' %}">Score Events</a></li>
-                     <li><a href="{% url 'test' %}">Rebuild leagues</a></li>
+                     <li><a href="{% url 'rebuildleagues' %}">Rebuild leagues</a></li>
+                     <li><a href="{% url 'test' %}">Tester</a></li>
+
                   </ul>
                </li>
                {% endif %}

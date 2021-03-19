@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-
+{% load static %}
 
 <!---- TITLE --------->
-{% block title.     %}TEST {% endblock %}
-{% block breadcrumb %}TEST {% endblock %}
+{% block title%}Build Leagues{% endblock %}
+{% block breadcrumb%}Build Leagues{% endblock %}
 
 <!---- STYLE --------->
 {% block css %}
@@ -15,15 +15,23 @@
 {% block content %}
 <br /><br /><br /><br /><br />
 <div class="row">
-   <div class="container">
-     <div class="row">
-       <div class="col-md-10 col-sm-10 offset-1">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-sm-10 offset-1">
 
-          <h1>TEST!!</h1>
+             <h3>Driver Tables rebuilt..</h3><br />
 
-       </div>
-     </div>
-   </div>
+             <p>{{message}}</p><br />
+
+             <h3>Team Tables rebuilt..</h3><br />
+
+             <p>{{message_2}}</p>
+
+             <p>{{message_3}}</p>
+
+          </div>
+        </div>
+      </div>
  </div>
 <br /><br /><br /><br /><br />
 {% endblock %}

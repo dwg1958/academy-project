@@ -89,34 +89,42 @@ Drivers
                            </tr>
                            <tr>
                               <td>&nbsp;&nbsp;&nbsp;Wins</td>
-                              <td>{{ person.winsPreviousSeasons }}</td>
+                              <td class = "text-right pr-5">{{ person.winsPreviousSeasons }}</td>
                            </tr>
                            <tr>
                               <td>&nbsp;&nbsp;&nbsp;Poles</td>
-                              <td>{{ person.pointsPreviousSeasons }}</td>
+                              <td class = "text-right pr-5">{{ person.pointsPreviousSeasons }}</td>
                            </tr>
                            <tr>
                               <td>&nbsp;&nbsp;&nbsp;Championships</td>
-                              <td>{{ person.championships }}</td>
+                              <td class = "text-right pr-5">{{ person.championships }}</td>
                            </tr>
                            <tr>
                               <td colspan = 2 class="bg-dark"><b>This Season</b></td>
                            </tr>
                            <tr>
-                              <td>&nbsp;&nbsp;&nbsp;Points</td>
-                              <td>{{ person.pointsThisSeason }}</td>
+                              <td>&nbsp;&nbsp;&nbsp;Position Points</td>
+                              <td class = "text-right pr-5">{{ person.points_pos }}</td>
                            </tr>
                            <tr>
-                              <td>&nbsp;&nbsp;&nbsp;Wins</td>
-                              <td>{{ person.winsThisSeason }}</td>
+                              <td>&nbsp;&nbsp;&nbsp;Fastets Lap Points</td>
+                              <td class = "text-right pr-5">{{ person.points_fl }}</td>
                            </tr>
                            <tr>
-                              <td>&nbsp;&nbsp;&nbsp;Poles</td>
-                              <td>{{ person.polesThisSeason }}</td>
+                              <td>&nbsp;&nbsp;&nbsp;Positions Gained / Lost Points</td>
+                              <td class = "text-right pr-5">{{ person.points_pgl }}</td>
                            </tr>
                            <tr>
-                              <td>&nbsp;&nbsp;&nbsp;Positions Gained / Lost</td>
-                              <td>{{ person.gainLossThisseason }}</td>
+                              <td>&nbsp;&nbsp;&nbsp;Laps Behind Leader Points</td>
+                              <td class = "text-right pr-5">{{ person.points_lbl }}</td>
+                           </tr>
+                           <tr>
+                              <td>&nbsp;&nbsp;&nbsp;Disqualification Points</td>
+                              <td class = "text-right pr-5"><u>{{ person.points_dsq }}</u></td>
+                           </tr>
+                           <tr>
+                              <td class="font-weight-bold text-uppercase">&nbsp;&nbsp;&nbsp;Total Points</td>
+                              <td class="font-weight-bold text-uppercase text-right pr-5">{{ person.points_total }}</td>
                            </tr>
                            <tr>
                               <td colspan = 2 class="bg-dark"><b>Personal</b></td>
@@ -156,14 +164,17 @@ Drivers
             <div class="table-responsive">
                <table class="table table-hover table-sm table-responsive-sm">
                   <thead>
-                     <tr>
+                     <tr class = "font-weight-bold text-uppercase">
                         <th>Driver</th>
                         <th> </th>
                         <th>Team</th>
-                        <th>Value</th>
-                        <th>Season Points</th>
-                        <th>Season Wins</th>
-                        <th>Season Poles</th>
+                        <th class = "text-right">Value</th>
+                        <th class = "text-right">Total Points</th>
+                        <th class = "text-right">Position<br />Points</th>
+                        <th class = "text-right">Fastest Lap<br />Points</th>
+                        <th class = "text-right">Places +/- <br />Points</th>
+                        <th class = "text-right">LapsBehind <br />Points</th>
+                        <th class = "text-right">Disqualify <br />Points</th>
 
                      </tr>
                   </thead>
@@ -172,11 +183,14 @@ Drivers
                         <tr class='clickable-row' onclick="window.location='/season/tables/{{formula}}?per={{driver.surname}}'">
                         <td><img class = "image-fluid " src="{{driver.mugshot.url}}"  height=50px /></td>
                         <td> <b> {{driver.surname}}, {{driver.firstname}} </b> </td>
-                        <td>{{driver.team}}</td>
-                        <td>${{driver.value}}m</td>
-                        <td>{{driver.pointsThisSeason}}</td>
-                        <td>{{driver.winsThisSeason}}</td>
-                        <td>{{driver.polesThisSeason}}</td>
+                        <td> {{driver.team}}</td>
+                        <td class = "text-right"> ${{driver.value}}m</td>
+                        <td class = "text-right"> {{driver.points_total}}</td>
+                        <td class = "text-right"> {{driver.points_pos}}</td>
+                        <td class = "text-right"> {{driver.points_fl}}</td>
+                        <td class = "text-right"> {{driver.points_pgl}}</td>
+                        <td class = "text-right"> {{driver.points_lbl}}</td>
+                        <td class = "text-right"> {{driver.points_dsq}}</td>
                      </tr>
                      {% endfor%}
                   </tbody>

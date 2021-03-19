@@ -78,7 +78,7 @@ class AcademyScoringMatrixAdmin(admin.ModelAdmin):
 
 class TeamScoreAdmin(admin.ModelAdmin):
     list_display = ('id','team_ID', 'cscore_ID', 'driver_ID','pointsType', 'teamPosition','academyPoints')
-    search_fields = ('team_ID__teamName','driver_ID__surname', 'driver_ID__firstname')
+    search_fields = ('team_ID__teamName',)
 
     def active(self, obj):
         return obj.is_active == 1
