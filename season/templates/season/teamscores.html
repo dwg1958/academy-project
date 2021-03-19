@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+
+<!---- TITLE --------->
+{% block title.     %}My Scores {% endblock %}
+{% block breadcrumb %}My Scores{% endblock %}
+
+<!---- STYLE --------->
+{% block css %}
+<style>
+</style>
+{% endblock %}
+
+<!---- BODY CONTENT --------->
+{% block content %}
+<div class="row">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-10 col-sm-10 offset-1">
+            <img src = "{{teamdata.teamLogo.url}} " height= "200" >
+            <h1>{{teamdata.teamName}}</h1>
+            <br /><br />
+            <div>
+               <table class="table table-sm">
+                  <tr>
+                     <th> Event </th>
+                     <th> Driver </th>
+                     <th> Driver Position </th>
+                     <th> Event Type</th>
+                     <th class="text-right"> Points </th>
+                  </tr>
+
+                  {% for team in score_data %}
+                  <tr>
+                     <td > {{ team.1 }} </td>
+                     <td > {{ team.0 }} </td>
+                     <td class="text-center"> {{ team.2 }} </td>
+                     <td > {{ team.3 }} </td>
+                     <td class="text-right"> {{ team.4 }} </td>
+                  </tr>
+                  {% endfor %}
+                  <tr>
+                     <td colspan = '3'></td>
+                     <td><h4>TOTAL</h4></td>
+                     <td class="text-right"><h4>{{total_score}}</h4></td>
+                  </tr>
+               </table>
+
+            </div>
+
+
+         </div>
+      </div>
+   </div>
+</div>
+<br /><br /><br /><br /><br />
+{% endblock %}
+<!---- BODY CONTENT BLOCK --------->
+
+<!---------------------- FOOTER BLOCK  ------------------->
+{% block footer %}
+{% endblock %}
+<!---------------------- FOOTER BLOCK  ------------------->
+
+<!---------------------- JAVASCRIPT BLOCK  ------------------->
+{% block javascript %}
+{% endblock %}
+<!---------------------- JAVASCRIPT BLOCK  ------------------->

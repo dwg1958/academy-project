@@ -22,6 +22,7 @@ urlpatterns = [
     path( 'showscoringevents', views.showscoringevents     , name = "showscoringevents"),
     path( 'showresults',       views.showresults           , name = "showresults"),
     path( 'leagueposition',    views.leagueposition        , name = "leagueposition"),
+    path( 'teamscores',        views.teamscores            , name = "teamscores"),
     path( 'rebuildleagues',    views.rebuildleagues        , name = "rebuildleagues"),
     path( 'scoring',           views.scoring               , name = "scoring"),
     path( 'test',              views.test                  , name = "test"),

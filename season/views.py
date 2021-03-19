@@ -257,7 +257,7 @@ def rebuildleagues(request):
 
 ############################### USER PAGES ###################################################
 
-
+@login_required
 ##### SHOW AND EDIT MY TEAM ###################
 def teamview(request):
     returnmessage = ""
@@ -384,6 +384,32 @@ def teamview(request):
     f3drivers = Competitor.objects.filter(formula = 3, role = 'D')
     wsdrivers = Competitor.objects.filter(formula = 'W', role = 'D')
     return render(request, 'season/teamview.html',{ 'returnmessage':returnmessage, 'teamdata':teamdata, 'f1drivers':f1drivers, 'f2drivers':f2drivers, 'f3drivers':f3drivers, 'wsdrivers':wsdrivers})
+
+@login_required
+####################################
+def teamscores(request):
+    score_data = []
+    total_score = 0
+    teamdata    = TeamProfile.objects.get(pk = request.user.team.id)
+    team_scores = TeamScore.objects.filter(team_ID = request.user.team.id)
+    for score in team_scores:
+        data = str(score.cscore_ID).split('~')
+        data = data[1].split('-')
+        if score.pointsType == 'P':
+            type='Finish Place'
+        elif score.pointsType == 'F':
+            type='Fastest Lap'
+        elif score.pointsType == 'G':
+            type='Places +/-'
+        elif score.pointsType == 'L':
+            type='LapsBehind'
+        elif score.pointsType == 'D':
+            type='Disqualified'
+        else: type='--'
+        score_data.append( [  data[0], data[1], score.teamPosition, type, score.academyPoints   ] )
+        total_score+= score.academyPoints
+
+    return render(request, 'season/teamscores.html', {'teamdata': teamdata, 'score_data': score_data, 'total_score': total_score})
 
 
 @login_required
