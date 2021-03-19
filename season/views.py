@@ -66,6 +66,14 @@ def showresults(request):
         allevents = Event.objects.all()
         return render(request, 'season/showevents.html',{'allevents':allevents})
 
+####################################
+def leagueposition(request):
+
+    league_list = TeamProfile.objects.all().order_by('points_total')
+    
+
+    return render(request, 'season/leagueposition.html', {'league_list':league_list})
+
 
 ####################################
 def tables(request):
@@ -175,13 +183,63 @@ def rebuildleagues(request):
     #Just to check - compare total points in competitorScores with total points in cometitor table
     ccheck = Competitor.objects.filter(role ='D').aggregate(driver_points = Sum('points_total'))
     scheck = CompetitorScore.objects.aggregate(score_points = Sum('t2_score'))
+    message   = 'Points in drivers table = ' + str(ccheck['driver_points']) + ' versus points in scores table = ' + str(scheck['score_points'])
+
+    # Aggregate team scores for formulae ############################
+
+    scores_dict  = {}
+
+    #create the dictionary
+    allteams = TeamProfile.objects.all()
+    for team in allteams:
+        scores_dict.update( {team.id: \
+            {   "name" : team.teamName, \
+                "points_f1"    : 0, \
+                "points_f2"    : 0, \
+                "points_f3"    : 0, \
+                "points_ws"    : 0,  \
+                "points_total" : 0 \
+             }})
+
+    #Get scores
+    resultset = TeamProfile.objects.filter(team__formula = '1').annotate(f1_points = Sum('team__academyPoints')).distinct()
+    for driver in resultset:
+        scores_dict[driver.id]['points_f1'] = driver.f1_points
+
+    resultset = TeamProfile.objects.filter(team__formula = '2').annotate(f2_points = Sum('team__academyPoints')).distinct()
+    for driver in resultset:
+        scores_dict[driver.id]['points_f2'] = driver.f2_points
+
+    resultset = TeamProfile.objects.filter(team__formula = '3').annotate(f3_points = Sum('team__academyPoints')).distinct()
+    for driver in resultset:
+        scores_dict[driver.id]['points_f3'] = driver.f3_points
+
+    resultset = TeamProfile.objects.filter(team__formula = 'W').annotate(ws_points = Sum('team__academyPoints')).distinct()
+    for driver in resultset:
+        scores_dict[driver.id]['points_ws'] = driver.ws_points
+
+    print(scores_dict)
+
+    # Now work through teams and insert points
+    for team in allteams:
+        team_record = team
+        team_record.points_f1    = scores_dict[team.id]['points_f1']
+        team_record.points_f2    = scores_dict[team.id]['points_f2']
+        team_record.points_f3    = scores_dict[team.id]['points_f3']
+        team_record.points_ws    = scores_dict[team.id]['points_ws']
+        team_record.points_total = scores_dict[team.id]['points_f1'] + scores_dict[team.id]['points_f2'] + scores_dict[team.id]['points_f3']+ scores_dict[team.id]['points_ws']
+        team_record.save()
+
+    #Just to check - compare total points in competitorScores with total points in cometitor table
+    tcheck = TeamProfile.objects.aggregate(team_points = Sum('points_total'))
+    scheck = TeamScore.objects.aggregate(score_points = Sum('academyPoints'))
+
+    message_2   = 'Points in team table = ' + str(tcheck['team_points']) + ' versus points in scores table = ' + str(scheck['score_points'])
 
     # Close timer
     toc = time.perf_counter()
     time_taken = round(toc - tic,4)
 
-    message   = 'Points in drivers table = ' + str(ccheck['driver_points']) + ' versus points in scores table = ' + str(scheck['score_points'])
-    message_2 = 'Team Tables to be done next ...'
     message_3 = 'Time taken : ' + str(time_taken) + ' seconds'
 
     return render(request, 'season/rebuildleagues.html', {'message': message, 'message_2': message_2, 'message_3': message_3})

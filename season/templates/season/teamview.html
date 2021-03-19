@@ -90,13 +90,14 @@ My Team
       color: white;
       text-align:left;
       padding-left:10%;
-      width: 85%;
+      width: 90%;
    }
    .results-r{
       font-weight: 600;
       color: white;
       text-align:right;
-      padding-left:0%;
+      padding-right:4%;
+      width: 25%;
 
    }
 </style>
@@ -164,45 +165,12 @@ My Team
                      <table>
                         <tr>
                            <td class = "results-l pt-4">
-                              Total Points
+                              F1 Points
                            </td>
                            <td class = "results-r pt-4">
-                              {{ teamdata.p1_1.value}}
+                              {{ teamdata.points_f1}}
                            </td>
                         </tr>
-                        <tr>
-                           <td class = "results-l">
-                              Place
-                           </td>
-                           <td class = "results-r">
-                              {{ teamdata.p1_2.value}}
-                           </td>
-                        </tr>
-                        <tr>
-                           <td class = "results-l">
-                              Places won/lost
-                           </td>
-                           <td class = "results-r">
-                              {{ teamdata.p2_1.value}}
-                           </td>
-                        </tr>
-                        <tr>
-                           <td class = "results-l ">
-                              Laps Lost
-                           </td>
-                           <td class = "results-r ">
-                              {{ teamdata.p2_2.value}}
-                           </td>
-                        </tr>
-                        <tr>
-                           <td class = "results-l">
-                              Others
-                           </td>
-                           <td class = "results-r ">
-                              {{ teamdata.p3_2.value}}
-                           </td>
-                        </tr>
-                        <tr>
                      </table>
                      <!----- end results Table ----------->
                      <br/>
@@ -230,6 +198,19 @@ My Team
                            </td>
                         </tr>
                      </table>
+                     <!----- results Table ----------->
+                     <table>
+                        <tr>
+                           <td class = "results-l pt-4">
+                              F2 Points
+                           </td>
+                           <td class = "results-r pt-4">
+                              {{ teamdata.points_f2}}
+                           </td>
+                        </tr>
+                     </table>
+                     <!----- end results Table ----------->
+                     <br/>
                    </div>
                    <!--- Formula 3 --->
                    <div class="col-xl-3 col-md-6 teamdiv" >
@@ -254,6 +235,19 @@ My Team
                            </td>
                         </tr>
                      </table>
+                     <!----- results Table ----------->
+                     <table>
+                        <tr>
+                           <td class = "results-l pt-4">
+                              F3 Points
+                           </td>
+                           <td class = "results-r pt-4">
+                              {{ teamdata.points_f3}}
+                           </td>
+                        </tr>
+                     </table>
+                     <!----- end results Table ----------->
+                     <br/>
                    </div>
                    <!--- W Series--->
                    <div class="col-xl-3 col-md-6 teamdiv">
@@ -278,6 +272,19 @@ My Team
                            </td>
                         </tr>
                      </table>
+                     <!----- results Table ----------->
+                     <table>
+                        <tr>
+                           <td class = "results-l pt-4">
+                              W Series Points
+                           </td>
+                           <td class = "results-r pt-4 text-right">
+                              {{ teamdata.points_ws}}
+                           </td>
+                        </tr>
+                     </table>
+                     <!----- end results Table ----------->
+                     <br/>
                    </div>
                  </div>
                </div>

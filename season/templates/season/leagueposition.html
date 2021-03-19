@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+
+<!---- TITLE --------->
+{% block title.     %}League {% endblock %}
+{% block breadcrumb %}My League{% endblock %}
+
+<!---- STYLE --------->
+{% block css %}
+<style>
+</style>
+{% endblock %}
+
+<!---- BODY CONTENT --------->
+{% block content %}
+<br /><br /><br /><br /><br />
+<div class="row">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-10 col-sm-10 offset-1">
+            <h1>League table</h1>
+            <div>
+               <table class="table table-sm">
+                  <tr>
+                     <th> </th>
+                     <th> Team </th>
+                     <th> F1 Points </th>
+                     <th> F1 Points </th>
+                     <th> F1 Points </th>
+                     <th> WS Points </th>
+                     <th> Total </th>
+                  </tr>
+
+                  {% for team in league_list %}
+                  {% if user.team.teamName  ==  team.teamName %}
+                     <tr class = " bg-info">
+                  {% else %}
+                     <tr>
+                  {% endif %}
+
+                     <!--<td class="name"> <a href = " {% url 'showscoringevents' %}?event={{event.id}}">{{event.name}}</a> </td> -->
+                     <td> <img src=" {{team.teamLogo.url}}" height="50px" > </td>
+                     <td class="align-middle"> {{team.teamName}} </td>
+                     <td class="align-middle"> {{team.points_f1}} </td>
+                     <td class="align-middle"> {{team.points_f2}} </td>
+                     <td class="align-middle"> {{team.points_f3}} </td>
+                     <td class="align-middle"> {{team.points_ws}} </td>
+                     <td class="align-middle"> {{team.points_total}} </td>
+                  </tr>
+                  {% endfor %}
+               </table>
+            </div>
+
+
+         </div>
+      </div>
+   </div>
+</div>
+<br /><br /><br /><br /><br />
+{% endblock %}
+<!---- BODY CONTENT BLOCK --------->
+
+<!---------------------- FOOTER BLOCK  ------------------->
+{% block footer %}
+{% endblock %}
+<!---------------------- FOOTER BLOCK  ------------------->
+
+<!---------------------- JAVASCRIPT BLOCK  ------------------->
+{% block javascript %}
+{% endblock %}
+<!---------------------- JAVASCRIPT BLOCK  ------------------->
