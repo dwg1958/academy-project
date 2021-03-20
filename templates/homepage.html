@@ -34,18 +34,17 @@
    <div class="row">
       <div class="card col-6 offset-1 pl-5 pr-5 mt-5">
          <div class="card-body">
-
-            <h2 class = "text-center pt-2">Prove you know what it takes to make an F1 driver</h2>
-
-            <div class = "text-left pt-3 pl-5">
-               <p>Spend $120m to build your dream drier academy</p>
-               <p>Recruit drivers across 4 formulas in the only fantasy league for F1,F2, F3 and W Series
+            <center>
+               <h2 class = "text-center pt-2">Prove you know what it takes to make an F1 driver</h2>
+               <p class = "pt-2">Spend $120m to build your dream driver academy</p>
+               <p>Recruit drivers across 4 formulas in the only <br />fantasy league for F1,F2, F3 and W Series
                </p>
-               <p>Compete in a global league to find out who has the ultimate academy
+               <p>Compete in a global league to find out who has <br />the ultimate academy
                </p>
-               <b>Ready to choose {%if user.is_authenticated%}{{user.first_name|capfirst}}’s{%else%}your{%endif%}
-                  Driver Academy ?</b>
-               <br /><br /><br />
+               <p>Ready to choose {%if user.is_authenticated%}{{user.first_name|capfirst}}’s{%else%}your{%endif%}
+                  Driver Academy ?</p>
+                  <br /><br />
+               </center>
                {% if user.is_authenticated %}
 
                {% else %}
@@ -57,22 +56,19 @@
 
                   </div>
                   <div class="col-5 ">
-                     <a class="btn btn-primary btn-lg text-center" href="{% url 'register'%}" role="button">JOIN</a>
+                     <a class="btn btn-primary btn-lg text-center" href="{% url 'register'%}" role="button">SIGN UP</a>
                      <br /><br />
                   </div>
                </div>
                {% endif %}
             </div>
-
+         </div>
+         <div class="col-4 pt-5 ml-3">
+            <div class="tab-pane" id="activity" role="tabpanel">
+               {% show_next_race_sidebar 5 %}
+            </div>
          </div>
       </div>
-      <div class="col-4 pt-5 ml-3">
-         <div class="tab-pane" id="activity" role="tabpanel">
-            {% show_next_race_sidebar 5 %}
-      </div>
-
-
-
    </div>
 
    <br/><br/><br/><br/>
