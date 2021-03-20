@@ -10,6 +10,9 @@
    .jumbotron{
       background-color: #DA6020;
    }
+   p{
+      font-size: 1.1rem;
+   }
 </style>
 {% endblock %}
 
@@ -36,14 +39,14 @@
          <div class="card-body">
             <center>
                <h2 class = "text-center pt-2">Prove you know what it takes to make an F1 driver</h2>
-               <p class = "pt-2">Spend $120m to build your dream driver academy</p>
+               <p class = "pt-4">Spend $120m to build your dream driver academy</p>
                <p>Recruit drivers across 4 formulas in the only <br />fantasy league for F1,F2, F3 and W Series
                </p>
                <p>Compete in a global league to find out who has <br />the ultimate academy
                </p>
                <p>Ready to choose {%if user.is_authenticated%}{{user.first_name|capfirst}}’s{%else%}your{%endif%}
                   Driver Academy ?</p>
-                  <br /><br />
+                  <br />
                </center>
                {% if user.is_authenticated %}
 
@@ -52,12 +55,12 @@
                <div class="row">
                   <div class="col-5 offset-2 ">
                      <a class="btn btn-primary btn-lg text-center" href="{% url 'login'%}" role="button">LOG IN</a>
-                     <br /><br />
+                     <br />
 
                   </div>
                   <div class="col-5 ">
                      <a class="btn btn-primary btn-lg text-center" href="{% url 'register'%}" role="button">SIGN UP</a>
-                     <br /><br />
+                     <br />
                   </div>
                </div>
                {% endif %}
