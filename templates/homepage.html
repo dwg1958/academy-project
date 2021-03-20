@@ -32,59 +32,51 @@
    </div>
 
    <div class="row">
-      <div class="col-7">
-         <h2 class = "text-center pt-5" style="">Just Imagine..</h2>
-         <div class = "text-left pt-3 pl-5" style="">
-            <p class = "text-center"> <img src = "{% static 'season/siteimages/imagine.png'%}" height = "100px;"</p>
-            <p>You are a retired 7-times world champion, sadly deprived of a drive by a skinflint team and ever-decreasing budgets...</p>
-            <p>Sitting on your number-2 yacht in Monaco one day with your close band of multi-millionaire friends gathered over
-               an illustrious career, the idea of <b>{%if user.is_authenticated%}{{user.first_name|capfirst}}’s{%else%}your{%endif%}
-                  Driver Academy </b>is born.
-            </p>
-            <p>They offer you a budget of $110 million to bring on the best new talent through the junior formulas.
-               You set out to recruit the best drivers and team managers you can find and build your academy...
-            </p>
-            <br /><br /><br />
+      <div class="card col-6 offset-1 pl-5 pr-5 mt-5">
+         <div class="card-body">
 
-            <!--- Future Events Calendar Tag
-            <div style = "padding: 0% 0px 3% 5%;">
-               <h1 style = "padding: 0% 0% 0% 0%;">Next Scoring Events:</h1>
-               <p>{% show_next_race 3 %}</p>
+            <h2 class = "text-center pt-2">Prove you know what it takes to make an F1 driver</h2>
+
+            <div class = "text-left pt-3 pl-5">
+               <p>Spend $120m to build your dream drier academy</p>
+               <p>Recruit drivers across 4 formulas in the only fantasy league for F1,F2, F3 and W Series
+               </p>
+               <p>Compete in a global league to find out who has the ultimate academy
+               </p>
+               <b>Ready to choose {%if user.is_authenticated%}{{user.first_name|capfirst}}’s{%else%}your{%endif%}
+                  Driver Academy ?</b>
+               <br /><br /><br />
+               {% if user.is_authenticated %}
+
+               {% else %}
+               <!-- LOG IN AND REGISTRATION BUTTONS -->
+               <div class="row">
+                  <div class="col-5 offset-2 ">
+                     <a class="btn btn-primary btn-lg text-center" href="{% url 'login'%}" role="button">LOG IN</a>
+                     <br /><br />
+
+                  </div>
+                  <div class="col-5 ">
+                     <a class="btn btn-primary btn-lg text-center" href="{% url 'register'%}" role="button">JOIN</a>
+                     <br /><br />
+                  </div>
+               </div>
+               {% endif %}
             </div>
-            -->
+
          </div>
       </div>
-
       <div class="col-4 pt-5 ml-3">
          <div class="tab-pane" id="activity" role="tabpanel">
             {% show_next_race_sidebar 5 %}
       </div>
+
+
+
    </div>
 
    <br/><br/><br/><br/>
-   {% if user.is_authenticated %}
 
-   {% else %}
-   <!-- LOG IN AND REGISTRATION BUTTONS -->
-   <div class="container">
-      <div class="row">
-         <div class="col"><!--spacer --></div>
-         <div class="col-4 ">
-            <div class="d-grid gap-2 d-md-block col-4 mx-auto">
-               <a class="btn btn-danger text-center" href="{% url 'login'%}" role="button">LOG IN</a>
-               <br /><br /><br /><br />
-            </div>
-         </div>
-         <div class="col-4 ">
-            <div class="d-grid gap-2 d-md-block col-4 mx-auto">
-               <a class="btn btn-danger text-center" href="{% url 'register'%}" role="button">JOIN</a>
-               {% endif %}
-               <br /><br /><br /><br />
-            </div>
-         </div>
-         <div class="col"><!--spacer --></div>
-      </div>
-   </div>
    <br />
 
 </div>
