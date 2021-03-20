@@ -9,9 +9,19 @@ from .models import AcademyScoringMatrix
 from .models import CompetitorScore
 from .models import TeamProfile
 from .models import TeamScore
+from .models import Parameter
 
 #Show record details in admin table
 #https://www.geeksforgeeks.org/customize-django-admin-interface/
+
+class ParameterAdmin(admin.ModelAdmin):
+    list_display = ('name', 'value', 'explanation')
+
+    def active(self, obj):
+        return obj.is_active == 1
+
+    active.boolean = True
+
 class TeamProfileAdmin(admin.ModelAdmin):
     list_display  = ( 'id','user_ID', 'teamName', 'p1_1','p1_2','dateStarted')#, 'is_active')
     search_fields = ('teamName',)
@@ -108,3 +118,4 @@ admin.site.register(ScoringEvent, ScoringEventAdmin)
 admin.site.register(Result, ResultAdmin)
 admin.site.register(AcademyScoringMatrix, AcademyScoringMatrixAdmin)
 admin.site.register(TeamScore, TeamScoreAdmin)
+admin.site.register(Parameter, ParameterAdmin)

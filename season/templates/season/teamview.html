@@ -148,7 +148,7 @@ My Team
                       <table>
                          <tr>
                             <td>
-                              <img src="{% if user.team.p1_1.id %} {{ user.team.p1_1.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
+                              <img class = "image-fluid rounded-circle" src="{% if user.team.p1_1.id %} {{ user.team.p1_1.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
                            </td>
                            <td>
                               <p class = "name" >{{ user.team.p1_1}}</p>
@@ -157,7 +157,7 @@ My Team
                         </tr>
                         <tr>
                            <td>
-                              <img src="{% if user.team.p1_2.id %} {{ user.team.p1_2.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
+                              <img class = "image-fluid rounded-circle" src="{% if user.team.p1_2.id %} {{ user.team.p1_2.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
                            </td>
                            <td>
                               <p class = "name" >{{ user.team.p1_2}}</p>
@@ -185,7 +185,7 @@ My Team
                       <table>
                          <tr>
                             <td>
-                              <img src="{{ user.team.p2_1.mugshot.url}}" />
+                              <img class = "image-fluid rounded-circle" src="{{ user.team.p2_1.mugshot.url}}" />
                            </td>
                            <td>
                               <p class = "name" >{{ user.team.p2_1}}</p>
@@ -194,7 +194,7 @@ My Team
                         </tr>
                         <tr>
                            <td>
-                              <img src="{% if user.team.p2_2.id %} {{ user.team.p2_2.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
+                              <img class = "image-fluid rounded-circle" src="{% if user.team.p2_2.id %} {{ user.team.p2_2.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
                            </td>
                            <td>
                               <p class = "name" >{{ user.team.p2_2}}</p>
@@ -222,7 +222,7 @@ My Team
                       <table>
                          <tr>
                             <td>
-                              <img src="{% if user.team.p3_1.id %} {{ user.team.p3_1.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
+                              <img class = "image-fluid rounded-circle" src="{% if user.team.p3_1.id %} {{ user.team.p3_1.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
                            </td>
                            <td>
                               <p class = "name" >{{ user.team.p3_1}}</p>
@@ -231,7 +231,7 @@ My Team
                         </tr>
                         <tr>
                            <td>
-                              <img src="{% if user.team.p3_2.id %} {{ user.team.p3_2.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
+                              <img class = "image-fluid rounded-circle" src="{% if user.team.p3_2.id %} {{ user.team.p3_2.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
                            </td>
                            <td>
                               <p class = "name" >{{ user.team.p3_2}}</p>
@@ -242,10 +242,10 @@ My Team
                      <!----- results Table ----------->
                      <table>
                         <tr>
-                           <td class = "results-l pt-4">
+                           <td class = "image-fluid rounded-circle" class = "results-l pt-4">
                               F3 Points
                            </td>
-                           <td class = "results-r pt-4">
+                           <td class = "image-fluid rounded-circle" class = "results-r pt-4">
                               {{ teamdata.points_f3}}
                            </td>
                         </tr>
@@ -259,7 +259,7 @@ My Team
                       <table>
                          <tr>
                             <td>
-                              <img src="{% if user.team.pw_1.id %} {{ user.team.pw_1.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
+                              <img class = "image-fluid rounded-circle" src="{% if user.team.pw_1.id %} {{ user.team.pw_1.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
                            </td>
                            <td>
                               <p class = "name" >{{ user.team.pw_1}}</p>
@@ -268,7 +268,7 @@ My Team
                         </tr>
                         <tr>
                            <td>
-                              <img src="{% if user.team.pw_2.id %} {{ user.team.pw_2.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
+                              <img class = "image-fluid rounded-circle" src="{% if user.team.pw_2.id %} {{ user.team.pw_2.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
                            </td>
                            <td>
                               <p class = "name" >{{ user.team.pw_2}}</p>
@@ -304,14 +304,14 @@ My Team
                      <dt class=" DriverSection col-lg-1 col-md-0"></dt>
 
                      <dt class=" DriverSection col-lg-3 col-sm-6">
-                        <img src="{{ teamdata.p1_1.mugshot.url}}" style="height:150px;"/>
+                        <img class = "image-fluid rounded-circle" src="{{ teamdata.p1_1.mugshot.url}}" style="height:150px;"/>
                         <h3 class="mt-2">{{ teamdata.p1_1}}</h3>
                         <p>Lead Driver</p>
                         <p><b>${{ teamdata.p1_1.value}}m </b>(Paid:${{ teamdata.p1_1_cost}}m) </p>
                      </dt>
 
                      <dt class=" DriverSection col-lg-3 col-sm-6">
-                        <img src="{{ teamdata.p1_2.mugshot.url}}" style="height:150px;"/>
+                        <img class = "image-fluid rounded-circle" src="{{ teamdata.p1_2.mugshot.url}}" style="height:150px;"/>
                         <h3 class="mt-2">{{ teamdata.p1_2}}</h3>
                         <p>Second Driver</p>
                         <p><b>${{ teamdata.p1_2.value}}m </b>(Paid:${{ teamdata.p1_2_cost}}m) </p>
@@ -394,13 +394,13 @@ My Team
                   <dl class="row justify-content-center">
                      <dt class=" DriverSection col-sm-1"></dt>
                      <dt class=" DriverSection col-sm-3">
-                        <img src="{{ teamdata.p2_1.mugshot.url}}" style="height:150px;"/>
+                        <img class = "image-fluid rounded-circle" src="{{ teamdata.p2_1.mugshot.url}}" style="height:150px;"/>
                         <h4 class="mt-2">{{ teamdata.p2_1}}</h4>
                         <p>Lead Driver</p>
                         <p><b>${{ teamdata.p2_1.value}}m </b>(Paid:${{ teamdata.p2_1_cost}}m) </p>
                      </dt>
                      <dt class=" DriverSection col-sm-3">
-                        <img src="{{ teamdata.p2_2.mugshot.url}}" style="height:150px;"/>
+                        <img class = "image-fluid rounded-circle" src="{{ teamdata.p2_2.mugshot.url}}" style="height:150px;"/>
                         <h4 class="mt-2">{{ teamdata.p2_2}}</h4>
                         <p>Second Driver</p>
                         <p><b>${{ teamdata.p2_2.value}}m </b>(Paid:${{ teamdata.p2_2_cost}}m) </p>
@@ -480,13 +480,13 @@ My Team
                   <dl class="row justify-content-center">
                      <dt class=" DriverSection col-sm-1"></dt>
                      <dt class=" DriverSection col-sm-3">
-                        <img src="{{ teamdata.p3_1.mugshot.url}}" style="height:150px;"/>
+                        <img class = "image-fluid rounded-circle" src="{{ teamdata.p3_1.mugshot.url}}" style="height:150px;"/>
                         <h4 class="mt-2">{{ teamdata.p3_1}}</h4>
                         <p>Lead Driver</p>
                         <p><b>${{ teamdata.p3_1.value}}m </b>(Paid:${{ teamdata.p3_1_cost}}m) </p>
                      </dt>
                      <dt class=" DriverSection col-sm-3">
-                        <img src="{{ teamdata.p3_2.mugshot.url}}" style="height:150px;"/>
+                        <img class = "image-fluid rounded-circle" src="{{ teamdata.p3_2.mugshot.url}}" style="height:150px;"/>
                         <h4 class="mt-2">{{ teamdata.p3_2}}</h4>
                         <p>Second Driver</p>
                         <p><b>${{ teamdata.p3_2.value}}m </b>(Paid:${{ teamdata.p3_2_cost}}m) </p>
@@ -566,13 +566,13 @@ My Team
                   <dl class="row justify-content-center">
                      <dt class=" DriverSection col-sm-1"></dt>
                      <dt class=" DriverSection col-sm-3">
-                        <img src="{{ teamdata.pw_1.mugshot.url}}" style="height:150px;"/>
+                        <img class = "image-fluid rounded-circle" src="{{ teamdata.pw_1.mugshot.url}}" style="height:150px;"/>
                         <h4 class="mt-2">{{ teamdata.pw_1}}</h4>
                         <p>Lead Driver</p>
                         <p><b>${{ teamdata.pw_1.value}}m </b>(Paid:${{ teamdata.pw_1_cost}}m) </p>
                      </dt>
                      <dt class=" DriverSection col-sm-3">
-                        <img src="{{ teamdata.pw_2.mugshot.url}}" style="height:150px;"/>
+                        <img class = "image-fluid rounded-circle" src="{{ teamdata.pw_2.mugshot.url}}" style="height:150px;"/>
                         <h4 class="mt-2">{{ teamdata.pw_2}}</h4>
                         <p>Second Driver</p>
                         <p><b>${{ teamdata.pw_2.value}}m </b>(Paid:${{ teamdata.pw_2_cost}}m) </p>
@@ -650,6 +650,27 @@ My Team
     </div>
    <br /><br />
 </div>
+
+<!-- sample modal content -->
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+   <div class="modal-content">
+        <div class="modal-header">
+           <h5 class="modal-title align-self-center mt-0" id="myModalLabel">Choose your Team Name</h5>
+        </div>
+        <div class="modal-body">
+
+           <p>The first thing you have to do is make the big decision - What will we call the team? </p>
+           <p> Think about it carefully as you will not be able to change it after the season begins
+             (or you score your first points). Click on the button below to select a team name and image</p>
+        </div>
+        <div class="modal-footer">
+           <a href = "{% url 'teamnamepicker'%}"><button type="button" class="btn btn-primary ">Choose My Team name</button></a>
+        </div>
+   </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 {% endblock %}
 
 <!---------------------- FOOTER BLOCK  ------------------->
@@ -672,6 +693,11 @@ My Team
        }
 
        $(document).ready(function(){
+          //show modal if no team name selected
+          if('{{teamdata.teamName}}' == 'My Team') {
+          	 $('#myModal').modal('show');
+          }
+
          // go to correct team tab
          $('.nav-pills a[href="#' + $.urlParam('tab') + '"]').tab('show');
          // gives us... $('.nav-pills a[href="#F1"]').tab('show');

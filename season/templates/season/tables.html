@@ -181,7 +181,7 @@ Drivers
                   <tbody>
                      {% for driver in competitors.all %}
                         <tr class='clickable-row' onclick="window.location='/season/tables/{{formula}}?per={{driver.surname}}'">
-                        <td><img class = "image-fluid " src="{{driver.mugshot.url}}"  height=50px /></td>
+                        <td><img class = "image-fluid rounded-circle" src="{{driver.mugshot.url}}"  height=50px /></td>
                         <td> <b> {{driver.surname}}, {{driver.firstname}} </b> </td>
                         <td> {{driver.team}}</td>
                         <td class = "text-right"> ${{driver.value}}m</td>

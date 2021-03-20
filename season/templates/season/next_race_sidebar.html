@@ -9,7 +9,17 @@
         <div class="activity">
 
            {% for race in next_races %}
-            <img src = "{% static 'academy/webPageImages/defaultTeam.png' %} " alt="" class="img-activity" >
+            <img src = "
+               {% if race.formula == '1' %}
+                   {% static 'season/siteimages/F1.png' %}
+               {% elif race.formula == '2' %}
+                   {% static 'season/siteimages/F2.png' %}
+               {% elif race.formula == '3' %}
+                   {% static 'season/siteimages/F3.png' %}
+               {% else%}
+                   {% static 'season/siteimages/W.png' %}
+               {% endif%}
+               " height="40px;" alt="" class="img-activity" >
             <div class="time-item">
                 <div class="item-info">
                     <div class="text-muted float-right font-size-10"> {{ race.startDateTime | daysuntil  }}  days to go</div>

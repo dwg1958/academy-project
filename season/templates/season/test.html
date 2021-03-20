@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load static %}
 
 <!---- TITLE --------->
 {% block title.     %}TEST {% endblock %}
@@ -7,6 +7,11 @@
 
 <!---- STYLE --------->
 {% block css %}
+<!-- DataTables -->
+
+<link href="{% static 'season/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'season/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<!-- DataTables -->
 <style>
 </style>
 {% endblock %}
@@ -14,17 +19,33 @@
 <!---- BODY CONTENT --------->
 {% block content %}
 <br /><br /><br /><br /><br />
-<div class="row">
-   <div class="container">
-     <div class="row">
-       <div class="col-md-10 col-sm-10 offset-1">
 
-          <h1>TEST!!</h1>
 
-       </div>
-     </div>
-   </div>
- </div>
+
+<!-- sample modal content -->
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+   <div class="modal-content">
+        <div class="modal-header">
+           <h5 class="modal-title align-self-center mt-0" id="myModalLabel">Modal Heading</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        </div>
+        <div class="modal-body">
+           <h5>Overflowing text to show scroll behavior</h5>
+           <p>Cras mattis consectetur purus sit amet fermentum.
+                Cras justo odio, dapibus ac facilisis in,
+                egestas eget quam. Morbi leo risus, porta ac
+                consectetur ac, vestibulum at eros.</p>
+        </div>
+        <div class="modal-footer">
+           <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Close</button>
+           <button type="button" class="btn btn-primary ">Save changes</button>
+        </div>
+   </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 <br /><br /><br /><br /><br />
 {% endblock %}
 <!---- BODY CONTENT BLOCK --------->
@@ -36,5 +57,15 @@
 
 <!---------------------- JAVASCRIPT BLOCK  ------------------->
 {% block javascript %}
+<!-- FOR datatable js -->
+ <script src="{% static 'season/assets/libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+ <script src="{% static 'season/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+ <script>
+	$(document).ready(function() {
+	    $('#myModal').modal('show');
+	} );
+</script>
+
+
 {% endblock %}
 <!---------------------- JAVASCRIPT BLOCK  ------------------->

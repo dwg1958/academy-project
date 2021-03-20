@@ -7,12 +7,6 @@
 
 {% block css %}
 <style>
-   p{
-      font-size: 1.2rem;
-   }
-   td{
-      font-size: 1.3rem;
-   }
    .jumbotron{
       background-color: #DA6020;
    }
@@ -39,8 +33,9 @@
 
    <div class="row">
       <div class="col-7">
-         <h1 class = "text-center pt-5" style="">Just Imagine..</h1>
+         <h2 class = "text-center pt-5" style="">Just Imagine..</h2>
          <div class = "text-left pt-3 pl-5" style="">
+            <p class = "text-center"> <img src = "{% static 'season/siteimages/imagine.png'%}" height = "100px;"</p>
             <p>You are a retired 7-times world champion, sadly deprived of a drive by a skinflint team and ever-decreasing budgets...</p>
             <p>Sitting on your number-2 yacht in Monaco one day with your close band of multi-millionaire friends gathered over
                an illustrious career, the idea of <b>{%if user.is_authenticated%}{{user.first_name|capfirst}}’s{%else%}your{%endif%}

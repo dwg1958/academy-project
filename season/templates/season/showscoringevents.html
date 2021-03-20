@@ -34,7 +34,7 @@ Events
    <h1> {{ eventname }} Events </h1>
    <br />
    <div >
-         <table class="table table-striped table-sm" >
+         <table class="table table-sm" >
             <tr>
                <th> Name </th>
                <th> Date / Time </th>
@@ -51,7 +51,18 @@ Events
                   {% endif %}
                </td>
                <td> {{event.startDateTime}} </td>
-               <td> {{event.formula}} </td>
+               <td><img src="
+                  {% if event.formula == '1' %}
+                     {% static 'season/siteimages/F1.png' %}
+                  {% elif event.formula == '2' %}
+                     {% static 'season/siteimages/F2.png' %}
+                  {% elif event.formula == '3' %}
+                     {% static 'season/siteimages/F3.png' %}
+                  {% else%}
+                     {% static 'season/siteimages/W.png' %}
+                  {% endif%}
+                  " height = "30px" >
+                </td>
                <td> {{event.get_eventType}} </td>
             </tr>
             {% endfor %}

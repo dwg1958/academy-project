@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load static %}
 
 <!---- TITLE --------->
 {% block title.     %}My Scores {% endblock %}
@@ -7,49 +7,49 @@
 
 <!---- STYLE --------->
 {% block css %}
-<style>
+<link href="{% static '/season/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
 </style>
 {% endblock %}
 
 <!---- BODY CONTENT --------->
 {% block content %}
-<div class="row">
-   <div class="container">
-      <div class="row">
-         <div class="col-md-10 col-sm-10 offset-1">
-            <img src = "{{teamdata.teamLogo.url}} " height= "200" >
-            <h1>{{teamdata.teamName}}</h1>
-            <br /><br />
-            <div>
-               <table class="table table-sm">
-                  <tr>
-                     <th> Event </th>
-                     <th> Driver </th>
-                     <th> Driver Position </th>
-                     <th> Event Type</th>
-                     <th class="text-right"> Points </th>
-                  </tr>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12  col-sm-12">
 
-                  {% for team in score_data %}
-                  <tr>
-                     <td > {{ team.1 }} </td>
-                     <td > {{ team.0 }} </td>
-                     <td class="text-center"> {{ team.2 }} </td>
-                     <td > {{ team.3 }} </td>
-                     <td class="text-right"> {{ team.4 }} </td>
-                  </tr>
-                  {% endfor %}
-                  <tr>
-                     <td colspan = '3'></td>
-                     <td><h4>TOTAL</h4></td>
-                     <td class="text-right"><h4>{{total_score}}</h4></td>
-                  </tr>
-               </table>
+       <img src = "{{teamdata.teamLogo.url}} " height= "200" >
+       <h1>{{teamdata.teamName}} Scores</h1>
+       <br /><br />
+         <div class="table-responsive">
+             <table id="datatable" class="table table-bordered">
+                 <thead>
+                 <tr>
+                    <th> Event </th>
+                    <th> Driver </th>
+                    <th> Driver Position </th>
+                    <th> Event Type</th>
+                    <th class="text-right"> Points </th>
+                 </tr>
+                 </thead>
 
-            </div>
+                 <tbody>
+                    {% for team in score_data %}
+                     <tr>
+                        <td > {{ team.1 }} </td>
+                        <td > {{ team.0 }} </td>
+                        <td class="text-center">  {{team.2}} </td>
+                        <td > {{ team.3 }} </td>
+                        <td class="text-right"> {{ team.4 }} </td>
+                     </tr>
+                     {% endfor %}
 
-
-         </div>
+                 </tbody>
+                 <tr>
+               <td colspan = '3'></td>
+               <td><h4>TOTAL</h4></td>
+               <td class="text-right"><h4>{{total_score}}</h4></td>
+            </tr>
+             </table>
       </div>
    </div>
 </div>
@@ -64,5 +64,13 @@
 
 <!---------------------- JAVASCRIPT BLOCK  ------------------->
 {% block javascript %}
+<!-- Required datatable js -->
+<script src="{% static '/season/assets/libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static '/season/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script>
+   $(document).ready(function() {
+       $('#datatable').DataTable();
+   } );
+</script>
 {% endblock %}
 <!---------------------- JAVASCRIPT BLOCK  ------------------->

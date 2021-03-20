@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
-from .models import Competitor, Event, ScoringEvent, Result, TeamProfile, AcademyScoringMatrix, CompetitorScore, TeamScore
+from .models import Competitor, Event, ScoringEvent, Result, TeamProfile, AcademyScoringMatrix, CompetitorScore, TeamScore, Parameter
 from django.contrib.auth.decorators import login_required
 from .forms import EventForm, TeamProfileForm, TeamProfileForm
 from django.contrib.auth.models import User
@@ -110,6 +110,7 @@ def tableformula(request, formula):
 
     return render(request, 'season/tables.html', {'personality':pers_data, 'competitors': competitors,'formulaname':formulaname, 'formula':formula, 'showPersonal':showPersonal})
 
+
 ####################################
 def scoring(request):
     return render(request, 'season/scoring.html')
@@ -117,153 +118,10 @@ def scoring(request):
 
 
 
-
-
-
-
-
-####################################
-def rebuildleagues(request):
-
-
-    #Start Timer
-    tic = time.perf_counter()
-
-    scores_dict  = {}
-
-    #create the dictionary
-    alldrivers = Competitor.objects.filter(role ='D')
-    for driver in alldrivers:
-        scores_dict.update({driver.id: {"name" : driver.firstname +' '+  driver.surname, "pos_points" : 0, "fl_points" : 0, "pgl_points" : 0, "lbl_points" : 0, "dsq_points" : 0 }})
-
-    #Get position Points
-    #resultset = Competitor.objects.filter(cscore_driver__pointsType ='P').filter(formula ='1').annotate(pos_points = Sum('cscore_driver__t2_score')).order_by('firstname')#.distinct()
-    resultset = Competitor.objects.filter(cscore_driver__pointsType ='P').filter(role ='D').annotate(pos_points = Sum('cscore_driver__t2_score')).order_by('firstname')#.distinct()
-    for driver in resultset:
-        scores_dict[driver.id]['pos_points'] = driver.pos_points
-
-    #Get fastestLap Points
-    resultset = Competitor.objects.filter(cscore_driver__pointsType ='F').filter(role ='D').annotate(fl_points = Sum('cscore_driver__t2_score')).order_by('firstname').distinct()
-    for driver in resultset:
-        scores_dict[driver.id]['fl_points'] = driver.fl_points
-
-    #Get placesGainedLostG Points
-    resultset = Competitor.objects.filter(cscore_driver__pointsType ='G').filter(role ='D').annotate(pgl_points = Sum('cscore_driver__t2_score')).order_by('firstname').distinct()
-    for driver in resultset:
-        scores_dict[driver.id]['pgl_points'] = driver.pgl_points
-
-    #Get LapsBehindLeader Points
-    resultset = Competitor.objects.filter(cscore_driver__pointsType ='L').filter(role ='D').annotate(lbl_points = Sum('cscore_driver__t2_score')).order_by('firstname').distinct()
-    for driver in resultset:
-        scores_dict[driver.id]['lbl_points'] = driver.lbl_points
-
-    #Get Disqualification Points
-    resultsetD = Competitor.objects.filter(cscore_driver__pointsType ='D').filter(role ='D').annotate(dsq_points = Sum('cscore_driver__t2_score')).order_by('firstname').distinct()
-    for driver in resultsetD:
-        scores_dict[driver.id]['dsq_points'] = driver.dsq_points
-
-    #Print out dictionaries:
-    #for x in scores_dict:
-    #    print(scores_dict[x])
-    #    print(scores_dict[x].values())
-
-    # Now work through drivers and insert points
-    for driver in alldrivers:
-        driver_record = driver
-        driver_record.points_pos   = scores_dict[driver.id]['pos_points']
-        driver_record.points_fl    = scores_dict[driver.id]['fl_points']
-        driver_record.points_pgl   = scores_dict[driver.id]['pgl_points']
-        driver_record.points_lbl   = scores_dict[driver.id]['lbl_points']
-        driver_record.points_dsq   = scores_dict[driver.id]['dsq_points']
-        driver_record.points_total = scores_dict[driver.id]['pos_points'] + scores_dict[driver.id]['fl_points'] + scores_dict[driver.id]['pgl_points']+ scores_dict[driver.id]['lbl_points'] + scores_dict[driver.id]['dsq_points']
-        driver_record.save()
-
-    #Just to check - compare total points in competitorScores with total points in cometitor table
-    ccheck = Competitor.objects.filter(role ='D').aggregate(driver_points = Sum('points_total'))
-    scheck = CompetitorScore.objects.aggregate(score_points = Sum('t2_score'))
-    message   = 'Points in drivers table = ' + str(ccheck['driver_points']) + ' versus points in scores table = ' + str(scheck['score_points'])
-
-    # Aggregate team scores for formulae ############################
-
-    scores_dict  = {}
-
-    #create the dictionary
-    allteams = TeamProfile.objects.all()
-    for team in allteams:
-        scores_dict.update( {team.id: \
-            {   "name" : team.teamName, \
-                "points_f1"    : 0, \
-                "points_f2"    : 0, \
-                "points_f3"    : 0, \
-                "points_ws"    : 0,  \
-                "points_total" : 0 \
-             }})
-
-    #Get scores
-    resultset = TeamProfile.objects.filter(team__formula = '1').annotate(f1_points = Sum('team__academyPoints')).distinct()
-    for driver in resultset:
-        scores_dict[driver.id]['points_f1'] = driver.f1_points
-
-    resultset = TeamProfile.objects.filter(team__formula = '2').annotate(f2_points = Sum('team__academyPoints')).distinct()
-    for driver in resultset:
-        scores_dict[driver.id]['points_f2'] = driver.f2_points
-
-    resultset = TeamProfile.objects.filter(team__formula = '3').annotate(f3_points = Sum('team__academyPoints')).distinct()
-    for driver in resultset:
-        scores_dict[driver.id]['points_f3'] = driver.f3_points
-
-    resultset = TeamProfile.objects.filter(team__formula = 'W').annotate(ws_points = Sum('team__academyPoints')).distinct()
-    for driver in resultset:
-        scores_dict[driver.id]['points_ws'] = driver.ws_points
-
-    # Now work through teams and insert points
-    for team in allteams:
-        team_record = team
-        team_record.points_f1    = scores_dict[team.id]['points_f1']
-        team_record.points_f2    = scores_dict[team.id]['points_f2']
-        team_record.points_f3    = scores_dict[team.id]['points_f3']
-        team_record.points_ws    = scores_dict[team.id]['points_ws']
-        team_record.points_total = scores_dict[team.id]['points_f1'] + scores_dict[team.id]['points_f2'] + scores_dict[team.id]['points_f3']+ scores_dict[team.id]['points_ws']
-        team_record.save()
-
-    # Finally put league position into tem records so we can find 5 above and below
-    league_list = TeamProfile.objects.all().order_by('-points_total')
-    place = 1
-    for team in league_list:
-        team_details = team
-        team_details.league_position = place
-        team_details.save()
-        place = place+1
-
-    #Just to check - compare total points in competitorScores with total points in cometitor table
-    tcheck = TeamProfile.objects.aggregate(team_points = Sum('points_total'))
-    scheck = TeamScore.objects.aggregate(score_points = Sum('academyPoints'))
-
-    message_2   = 'Points in team table = ' + str(tcheck['team_points']) + ' versus points in scores table = ' + str(scheck['score_points'])
-
-    # Close timer
-    toc = time.perf_counter()
-    time_taken = round(toc - tic,4)
-
-    message_3 = 'Time taken : ' + str(time_taken) + ' seconds'
-
-    return render(request, 'season/rebuildleagues.html', {'message': message, 'message_2': message_2, 'message_3': message_3})
-
-
-
-
-
-
-
-
-
-
-
-
 ############################### USER PAGES ###################################################
 
 @login_required
-##### SHOW AND EDIT MY TEAM ###################
+##### SHOW AND EDIT MY TEAM ##################################################################
 def teamview(request):
     returnmessage = ""
 
@@ -272,6 +130,10 @@ def teamview(request):
         recordtoedit = TeamProfile.objects.get(pk=request.user.team.id) # still using our 1to1 field relation
 
 ########## ToDo - SAVE OLD VERSION TO ARCHIVE ###
+
+        # Check whether we are in a Scoring Event weekend ##
+        updateallowed = get_object_or_404(Parameter, name = 'update_team_allowed').value
+
 
         # Now change relevant fields
         if 'F1_submit' in request.POST:
@@ -283,12 +145,14 @@ def teamview(request):
 
             new_p1_1 = Competitor.objects.get(pk=arg1) #Find new driver 1 record
             new_p1_2 = Competitor.objects.get(pk=arg2)
-            #check budget not exceeded and not a new team
+            #check budget not exceeded and not a new team and changes allowed
             new_cash_pot = recordtoedit.f1_cashpot + recordtoedit.p1_1.value + recordtoedit.p1_2.value - new_p1_1.value - new_p1_2.value
             if ( new_cash_pot < 0 ):
                 returnmessage = 'You have exceeded your budget - please choose again'
             elif ( arg1 == arg2 ):
                 returnmessage = 'You have chosen the same driver twice - please choose again'
+            elif ( updateallowed == "NO" ):
+                returnmessage = 'Sorry - No update allowed during a Scoring-Event weekend'
             else:
                 recordtoedit.p1_1 = new_p1_1
                 recordtoedit.p1_1_cost = new_p1_1.value
@@ -316,6 +180,8 @@ def teamview(request):
                 returnmessage = 'You have exceeded your budget - please choose again'
             elif ( arg1 == arg2 ):
                 returnmessage = 'You have chosen the same driver twice - please choose again'
+            elif ( updateallowed == "NO" ):
+                returnmessage = 'Sorry - No update allowed during a Scoring-Event weekend'
             else:
                 recordtoedit.p2_1 = new_p2_1
                 recordtoedit.p2_1_cost = new_p2_1.value
@@ -342,6 +208,8 @@ def teamview(request):
                 returnmessage = 'You have exceeded your budget - please choose again'
             elif ( arg1 == arg2 ):
                 returnmessage = 'You have chosen the same driver twice - please choose again'
+            elif ( updateallowed == "NO" ):
+                returnmessage = 'Sorry - No update allowed during a Scoring-Event weekend'
             else:
                 recordtoedit.p3_1 = new_p3_1
                 recordtoedit.p3_1_cost = new_p3_1.value
@@ -368,6 +236,8 @@ def teamview(request):
                 returnmessage = 'You have exceeded your budget - please choose again'
             elif ( arg1 == arg2 ):
                 returnmessage = 'You have chosen the same driver twice - please choose again'
+            elif ( updateallowed == "NO" ):
+                returnmessage = 'Sorry - No update allowed during a Scoring-Event weekend'
             else:
                 recordtoedit.pw_1 = new_pw_1
                 recordtoedit.pw_1_cost = new_pw_1.value
@@ -391,7 +261,7 @@ def teamview(request):
     return render(request, 'season/teamview.html',{ 'returnmessage':returnmessage, 'teamdata':teamdata, 'f1drivers':f1drivers, 'f2drivers':f2drivers, 'f3drivers':f3drivers, 'wsdrivers':wsdrivers})
 
 @login_required
-####################################
+##############################################################################################
 def teamscores(request):
     score_data = []
     total_score = 0
@@ -418,7 +288,7 @@ def teamscores(request):
 
 
 @login_required
-### EDIT MY TEAM #####################
+### EDIT MY TEAM NAME ########################################################################
 def teamnamepicker(request):
     if request.method == 'POST':
         team_form = TeamProfileForm(
@@ -427,12 +297,14 @@ def teamnamepicker(request):
                                     files=request.FILES)
         if team_form.is_valid():
             team_form.save()
-            return redirect('teamnamepicker')
+            return redirect('teamview')
     else:
         team_form = TeamProfileForm(instance=request.user.team)
     return render(request,'season/teamnamepicker.html', {'team_form': team_form})
 
+
 ############################### ADMIN PAGES ###################################################
+
 @login_required
 ####################################
 def addcompetitors(request):
@@ -687,7 +559,7 @@ def scoreevents(request):
         scoringevents = ScoringEvent.objects.all().filter(results_in = False).order_by('startDateTime')[:10]
         return render(request, 'season/score_events.html',{'scoringevents': scoringevents,})
 
-
+@login_required
 ##############################################################################################
 def addresults(request):
 
@@ -778,9 +650,133 @@ def addresults(request):
 
 
 @login_required
-####################################
-def test(request):
-    return render(request, 'season/test.html')
+##############################################################################################
+def rebuildleagues(request):
+
+
+    #Start Timer
+    tic = time.perf_counter()
+
+    scores_dict  = {}
+
+    #create the dictionary
+    alldrivers = Competitor.objects.filter(role ='D')
+    for driver in alldrivers:
+        scores_dict.update({driver.id: {"name" : driver.firstname +' '+  driver.surname, "pos_points" : 0, "fl_points" : 0, "pgl_points" : 0, "lbl_points" : 0, "dsq_points" : 0 }})
+
+    #Get position Points
+    #resultset = Competitor.objects.filter(cscore_driver__pointsType ='P').filter(formula ='1').annotate(pos_points = Sum('cscore_driver__t2_score')).order_by('firstname')#.distinct()
+    resultset = Competitor.objects.filter(cscore_driver__pointsType ='P').filter(role ='D').annotate(pos_points = Sum('cscore_driver__t2_score')).order_by('firstname')#.distinct()
+    for driver in resultset:
+        scores_dict[driver.id]['pos_points'] = driver.pos_points
+
+    #Get fastestLap Points
+    resultset = Competitor.objects.filter(cscore_driver__pointsType ='F').filter(role ='D').annotate(fl_points = Sum('cscore_driver__t2_score')).order_by('firstname').distinct()
+    for driver in resultset:
+        scores_dict[driver.id]['fl_points'] = driver.fl_points
+
+    #Get placesGainedLostG Points
+    resultset = Competitor.objects.filter(cscore_driver__pointsType ='G').filter(role ='D').annotate(pgl_points = Sum('cscore_driver__t2_score')).order_by('firstname').distinct()
+    for driver in resultset:
+        scores_dict[driver.id]['pgl_points'] = driver.pgl_points
+
+    #Get LapsBehindLeader Points
+    resultset = Competitor.objects.filter(cscore_driver__pointsType ='L').filter(role ='D').annotate(lbl_points = Sum('cscore_driver__t2_score')).order_by('firstname').distinct()
+    for driver in resultset:
+        scores_dict[driver.id]['lbl_points'] = driver.lbl_points
+
+    #Get Disqualification Points
+    resultsetD = Competitor.objects.filter(cscore_driver__pointsType ='D').filter(role ='D').annotate(dsq_points = Sum('cscore_driver__t2_score')).order_by('firstname').distinct()
+    for driver in resultsetD:
+        scores_dict[driver.id]['dsq_points'] = driver.dsq_points
+
+    #Print out dictionaries:
+    #for x in scores_dict:
+    #    print(scores_dict[x])
+    #    print(scores_dict[x].values())
+
+    # Now work through drivers and insert points
+    for driver in alldrivers:
+        driver_record = driver
+        driver_record.points_pos   = scores_dict[driver.id]['pos_points']
+        driver_record.points_fl    = scores_dict[driver.id]['fl_points']
+        driver_record.points_pgl   = scores_dict[driver.id]['pgl_points']
+        driver_record.points_lbl   = scores_dict[driver.id]['lbl_points']
+        driver_record.points_dsq   = scores_dict[driver.id]['dsq_points']
+        driver_record.points_total = scores_dict[driver.id]['pos_points'] + scores_dict[driver.id]['fl_points'] + scores_dict[driver.id]['pgl_points']+ scores_dict[driver.id]['lbl_points'] + scores_dict[driver.id]['dsq_points']
+        driver_record.save()
+
+    #Just to check - compare total points in competitorScores with total points in cometitor table
+    ccheck = Competitor.objects.filter(role ='D').aggregate(driver_points = Sum('points_total'))
+    scheck = CompetitorScore.objects.aggregate(score_points = Sum('t2_score'))
+    message   = 'Points in drivers table = ' + str(ccheck['driver_points']) + ' versus points in scores table = ' + str(scheck['score_points'])
+
+    # Aggregate team scores for formulae ############################
+
+    scores_dict  = {}
+
+    #create the dictionary
+    allteams = TeamProfile.objects.all()
+    for team in allteams:
+        scores_dict.update( {team.id: \
+            {   "name" : team.teamName, \
+                "points_f1"    : 0, \
+                "points_f2"    : 0, \
+                "points_f3"    : 0, \
+                "points_ws"    : 0,  \
+                "points_total" : 0 \
+             }})
+
+    #Get scores
+    resultset = TeamProfile.objects.filter(team__formula = '1').annotate(f1_points = Sum('team__academyPoints')).distinct()
+    for driver in resultset:
+        scores_dict[driver.id]['points_f1'] = driver.f1_points
+
+    resultset = TeamProfile.objects.filter(team__formula = '2').annotate(f2_points = Sum('team__academyPoints')).distinct()
+    for driver in resultset:
+        scores_dict[driver.id]['points_f2'] = driver.f2_points
+
+    resultset = TeamProfile.objects.filter(team__formula = '3').annotate(f3_points = Sum('team__academyPoints')).distinct()
+    for driver in resultset:
+        scores_dict[driver.id]['points_f3'] = driver.f3_points
+
+    resultset = TeamProfile.objects.filter(team__formula = 'W').annotate(ws_points = Sum('team__academyPoints')).distinct()
+    for driver in resultset:
+        scores_dict[driver.id]['points_ws'] = driver.ws_points
+
+    # Now work through teams and insert points
+    for team in allteams:
+        team_record = team
+        team_record.points_f1    = scores_dict[team.id]['points_f1']
+        team_record.points_f2    = scores_dict[team.id]['points_f2']
+        team_record.points_f3    = scores_dict[team.id]['points_f3']
+        team_record.points_ws    = scores_dict[team.id]['points_ws']
+        team_record.points_total = scores_dict[team.id]['points_f1'] + scores_dict[team.id]['points_f2'] + scores_dict[team.id]['points_f3']+ scores_dict[team.id]['points_ws']
+        team_record.save()
+
+    # Finally put league position into tem records so we can find 5 above and below
+    league_list = TeamProfile.objects.all().order_by('-points_total')
+    place = 1
+    for team in league_list:
+        team_details = team
+        team_details.league_position = place
+        team_details.save()
+        place = place+1
+
+    #Just to check - compare total points in competitorScores with total points in cometitor table
+    tcheck = TeamProfile.objects.aggregate(team_points = Sum('points_total'))
+    scheck = TeamScore.objects.aggregate(score_points = Sum('academyPoints'))
+
+    message_2   = 'Points in team table = ' + str(tcheck['team_points']) + ' versus points in scores table = ' + str(scheck['score_points'])
+
+    # Close timer
+    toc = time.perf_counter()
+    time_taken = round(toc - tic,4)
+
+    message_3 = 'Time taken : ' + str(time_taken) + ' seconds'
+
+    return render(request, 'season/rebuildleagues.html', {'message': message, 'message_2': message_2, 'message_3': message_3})
+
 
 
 ##############################################################################################################
@@ -797,6 +793,11 @@ def test(request):
 
 ##############################################################################################################
 ##############################################################################################################
+
+@login_required
+##############################################################################################
+def test(request):
+    return render(request, 'season/test.html')
 
 
 
