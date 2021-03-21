@@ -82,10 +82,10 @@
                <div class="navbar-brand-box">
                   <a href="{% url 'home' %}" class="logo logo-light">
                      <span class="logo-sm">
-                        <img src="{% static 'academy/webPageImages/TheAcademyLogo.png' %}" alt="" height="50">
+                        <img src="{% static 'season/siteimages/FFDABetaLogoWide.png' %}" alt="" height="30">
                      </span>
                      <span class="logo-lg">
-                        <img src="{% static 'academy/webPageImages/TheAcademyLogo.png' %}" alt="" height="50">
+                        <img src="{% static 'season/siteimages/FFDABetaLogoWide.png' %}" alt="" height="50">
                      </span>
 
                   </a>
@@ -238,11 +238,13 @@
                      <a href = "https://gpgrandstand.com" target="_blank">
                         <img src="{% static '/academy/webPageImages/GPGFlag.png'%}" alt="" height="170" >
                      </a>
+                     {% if request.user.is_staff %}
                      <p id="tags">
                         {% teamCountTag %} Teams active<br />
                         Page loaded at {% now "H:i" %}<br />
                         on {% now "jS F Y " %}
                      </p>
+                     {% endif %}
                   </center>
                </span>
 

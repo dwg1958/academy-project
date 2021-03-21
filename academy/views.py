@@ -1,13 +1,14 @@
 
 #from django.http import HttpResponse
-from season.models import Parameter
+from season.models import Parameter, TeamProfile
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import auth
 
 def homepage(request):
 	front_page_news =  get_object_or_404(Parameter, name = 'front_page_news').long_text
-	return render(request, 'homepage.html', {'section': 'home', 'front_page_news':front_page_news})
+	teamname        =  get_object_or_404(TeamProfile, pk=request.user.team.id).teamName
+	return render(request, 'homepage.html', {'section': 'home', 'front_page_news':front_page_news, 'teamname':teamname})
 
 def aboutpage(request):
 	#textreceived = request.GET['fname']

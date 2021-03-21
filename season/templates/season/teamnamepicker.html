@@ -1,9 +1,8 @@
 {% extends "base.html" %}
 
 <!---- TITLE --------->
-{% block title%}
-Team Name
-{% endblock %}
+{% block title      %}Team Name{% endblock %}
+{% block breadcrumb %}Team Name{% endblock %}
 
 <!---- STYLE --------->
 {% block css %}
@@ -18,28 +17,37 @@ Team Name
 
 <!---- BODY CONTENT --------->
 {% block content %}
-<div style = "padding: 10% 0px 15% 15%;">
-   <dl class="row">
-     <dt >
-        <img src="{{ user.team.teamLogo.url }}" height="150" class="d-inline-block align-center" alt="" loading="lazy" >
-     </dt>
-     <dd style = "padding: 3% 0% 0% 3%;">
-        <h1>{{user.team.teamName}}</h1>
-        <h3>{{user.first_name}} {{user.last_name}}</h3>
-     </dd>
-   </dl>
-   <br />
-   <br />
-    <form method="post" enctype="multipart/form-data">
-        <table>
-            {{ team_form.as_table }}
-        </table>
-        <br />
-        <p style = "padding: 2% 0px 0% 10%;">
-            <input type="submit" class="btn btn-primary" value="Save Changes">
-        </p>
-        {% csrf_token %}
-    </form>
 
+<div class="container card">
+   <h2 class="p-3"> Set up your First Team:</h2>
+   <div class = "row justify-content-md-center col-12 m-2">
+      <div class = "col-lg-5 pt-3" >
+         <dl>
+           <dt >
+              <img src="{{ user.team.teamLogo.url }}" height="150" class="d-inline-block align-center" alt="" loading="lazy" >
+           </dt>
+           <dd style = "padding: 3% 0% 0% 3%;">
+              <h2>{{user.team.teamName}}</h2>
+              <h4>{{user.first_name}} {{user.last_name}}</h4>
+           </dd>
+         </dl>
+      </div>
+
+      <div class = "col-lg-5 pt-1">
+         <br /><br /><br />
+            <form method="post" enctype="multipart/form-data">
+              <table>
+                 {{ team_form.as_table }}
+              </table>
+              <br />
+              <center>
+                 <input type="submit" class="btn btn-primary" value="Save Changes">
+              </center>
+              {% csrf_token %}
+           </form>
+      </div>
+   </div>
+   <br /><p class ="text-center">Remember: Once the season starts this is how you will be seen in the league tables so make it look sharp!</p>
 </div>
+
 {% endblock %}

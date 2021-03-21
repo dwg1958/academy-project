@@ -17,7 +17,6 @@
 {% endblock %}
 
 
-
 {% block content %}
 <div class="container-fluid">
    {% if message %}
@@ -83,17 +82,43 @@
          </div>
       </div
    </div>
-   <br/><br/><br/><br/>
-
-   <br />
-
+   <br/><br/><br/><br/><br />
 </div>
+
+<!-- modal content -->
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+           <div class="modal-header">
+              <h5 class="modal-title align-self-center mt-0" id="myModalLabel">Choose your Team Name</h5>
+           </div>
+           <div class="modal-body">
+
+              <p>The first thing you have to do is make the big decision - What will we call the Academy? </p>
+              <p> Think about it carefully as you will not be able to change it after the season begins
+                (or you score your first points). Click on the button below to select a team name and image</p>
+           </div>
+           <div class="modal-footer">
+              <a href = "{% url 'teamnamepicker'%}"><button type="button" class="btn btn-primary ">Choose My Team name</button></a>
+           </div>
+      </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 {% endblock %}
 
 <!---------------------- FOOTER BLOCK  ------------------->
 {% block footer %}
-<div class="container">
+{% endblock %}
 
-</div>
+<!---------------------- JAVASCRIPT BLOCK  ------------------->
+{% block javascript %}
+<script>
+$(document).ready(function(){
+   //show modal if no team name selected
+   if('{{teamname}}' == 'My Team') {
+     $('#myModal').modal('show');
+   }
+});
+</script>
 {% endblock %}
