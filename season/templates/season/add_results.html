@@ -30,59 +30,45 @@
 {% block content %}
 
 {% if eventName %}
-<div class = "" style = "padding: 0% 5% 2% 5%;">
 
+<div class = "container card">
+   <br />
    <h1> {{event.name }} ({{ event.eventType }} - #{{ event.id }}) </h1>
-   <br />
-   <br />
-   <div class="container col-md-6 offset-3">
-      <h3>Add Results</h3>
-      <br />
-      <form action="{% url 'addresults' %}"  method="post">
-         {% csrf_token %}
-         <table class="inputtable entry_form" id="entry_form" style="width:100%">
-            <tr>
-               <td>
-                  <!--- Left side ----->
-                  <table id = "lhs">
-                     <tr>
-                        <th>Driver</th>
-                         <td class="align-top">
-                           <select name="driver" id="driver">
-                              {% for driver in driverOptions %}
-                                 <option value="{{driver.id}} ">{{ driver.firstname }} {{ driver.surname }}</option>
-                              {% endfor %}
-                           </select>
-                         </td>
-                     </tr>
-                  </table>
-                  <!--------------------->
-               </td>
-               <td>
-                  <table id = "rhs">
-                     <tr><th>Disqualified ?    </th><td><input type="checkbox"  id="disqualified"   name="disqualified"  ></td></tr>
-                     <tr><th>Finish Position   </th><td><input type="number"    id="finishPosition" name="finishPosition" value="{{nextpos}}"></td></tr>
-                     {% if event.eventType != 'Q' %}
-                     <tr><th>Start Position    </th><td><input type="number"    id="startPosition"  name="startPosition" value="{{nextpos}}"></td></tr>
-                     <tr><th>Fastest Lap ?     </th><td><input type="checkbox"  id="fastestLap"     name="fastestLap"    ></td></tr>
-                     <tr><th>Laps Off Leader   </th><td><input type="number"    id="lapsOffLeader"  name="lapsOffLeader" value="0" ></td></tr>
-                     {% endif %}
-                  </table>
-               </td>
-            </tr>
-            <tr>
-               <td colspan = "2"><br />
-                  <input type="hidden" id="event_id" name="event_id" value="{{ event.id }}">
-                  <center><input type="submit" name="submit" value="ADD"></center>
-               </td>
-            </tr>
-         </table>
-      </form>
-   </div>
+   <br /><br />
+   <div class = "row justify-content-center" >
+      <div class = "col-lg-5">
+         <h3>Add Results</h3>
+         <br />
+         <form action="{% url 'addresults' %}"  method="post">
+            {% csrf_token %}
 
-   <div class = "container col-md-10 offset-1 ">
-      <div class="container">
-         <h1 style="padding-top:20px; padding-bottom:20px;"> Results So Far </h1>
+                     <!--- Left side ----->
+                     <h4>Driver</h4>
+
+                      {% for driver in driverOptions %}
+                      <input type="radio" id="driver" name="driver" value="{{driver.id}}" class = "ml-5">
+                      <label for="{{driver.id}}">{{ driver.firstname }} {{ driver.surname }}</label><br>
+                      {% endfor %}
+                     <!--------------------->
+                     <br /><br />
+                     <table id = "rhs">
+                        <tr><th>Disqualified ?    </th><td><input type="checkbox"  id="disqualified"   name="disqualified"  ></td></tr>
+                        <tr><th>Finish Position   </th><td><input type="number"    id="finishPosition" name="finishPosition" value="{{nextpos}}"></td></tr>
+                        {% if event.eventType != 'Q' %}
+                        <tr><th>Start Position    </th><td><input type="number"    id="startPosition"  name="startPosition" value="{{nextpos}}"></td></tr>
+                        <tr><th>Fastest Lap ?     </th><td><input type="checkbox"  id="fastestLap"     name="fastestLap"    ></td></tr>
+                        <tr><th>Laps Off Leader   </th><td><input type="number"    id="lapsOffLeader"  name="lapsOffLeader" value="0" ></td></tr>
+                        {% endif %}
+                     </table>
+                     <br /><br />
+                     <input type="hidden" id="event_id" name="event_id" value="{{ event.id }}">
+                     <center><input type="submit" name="submit" value="ADD"></center>
+
+         </form>
+      </div>
+
+      <div class = "col-lg-7">
+         <h3 style="padding-bottom:20px;"> Results So Far </h3>
          <table class="bigtable">
             <tr>
                <th class="name"> Competitor </th>
@@ -108,8 +94,11 @@
             {% endfor %}
          </table>
       </div>
-   </div>
 </div>
+
+
+
+
 
 {% else %}
 <div class="row justify-content-center">
@@ -136,4 +125,11 @@
 {% endblock %}
 
 {% block javascript%}
+
+<script>
+   $(document).ready(function(){
+
+   });
+</script>
+
 {% endblock %}

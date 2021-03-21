@@ -112,7 +112,7 @@ My Team
    <h3 style = "background-color: red; color:white;"><center>{{ returnmessage }}</center></h3>
    <br/>
    {% endif %}
-   <img src = "{{teamdata.teamLogo.url}} " height= "200" class = "mb-2">
+   <!--<img src = "{{teamdata.teamLogo.url}} " height= "150" class = "mb-2">-->
 
    <h2>{{teamdata.teamName}} Team Line-up</h2>
    <br /><br />
@@ -342,15 +342,16 @@ My Team
                                  <tr><!--<th></th>--><th>Driver</th><th style="text-align:center;">Cost</th><th style="text-align:center;">Points</th>
                                  {% for driver in f1drivers.all %}
                                  <tr>
-                                    <!--<td>
-                                    <img src="{{driver.mugshot.url}}" height='50px;' class="d-inline-block" alt="" loading="lazy">
-                                    </td>-->
-                                 <td style="text-align:left;">{{driver.firstname}} {{driver.surname}}
-                                 </td><td style="padding-left:5px;">
-                                    ${{driver.value}}m
-                                 </td><td style="padding-left:10px;">
-                                    {{driver.points_total}}
-                                 </td></tr>
+                                    <!--
+                                    <td><img src="{{driver.mugshot.url}}" height="20px" class = "image-fluid rounded-circle" alt="" loading="lazy"></td>
+                                    -->
+                                    <td style="text-align:left;">{{driver.firstname}} {{driver.surname}}
+                                    </td><td style="padding-left:5px;">
+                                       ${{driver.value}}m
+                                    </td><td style="padding-left:10px;">
+                                       {{driver.points_total}}
+                                    </td>
+                                 </tr>
                                  {% endfor%}
                               </table>
                            </div>

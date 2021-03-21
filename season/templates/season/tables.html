@@ -83,9 +83,9 @@ Drivers
                   <div class="table-responsive col-sm-8">
                      <table class="table table-sm">
                         <tbody>
-
+<!--
                            <tr>
-                              <td colspan = 2 class="bg-dark" ><b>Career</b></td>
+                              <td colspan = 2 class="bg-dark" ><b>Previous Years Stats</b></td>
                            </tr>
                            <tr>
                               <td>&nbsp;&nbsp;&nbsp;Wins</td>
@@ -99,6 +99,8 @@ Drivers
                               <td>&nbsp;&nbsp;&nbsp;Championships</td>
                               <td class = "text-right pr-5">{{ person.championships }}</td>
                            </tr>
+-->
+
                            <tr>
                               <td colspan = 2 class="bg-dark"><b>This Season</b></td>
                            </tr>
@@ -107,7 +109,7 @@ Drivers
                               <td class = "text-right pr-5">{{ person.points_pos }}</td>
                            </tr>
                            <tr>
-                              <td>&nbsp;&nbsp;&nbsp;Fastets Lap Points</td>
+                              <td>&nbsp;&nbsp;&nbsp;Fastest Lap Points</td>
                               <td class = "text-right pr-5">{{ person.points_fl }}</td>
                            </tr>
                            <tr>
@@ -146,7 +148,7 @@ Drivers
                               <td>{{ person.twitterHandle }}</td>
                            </tr>
                            <tr>
-                              <td colspan="2"><br />{{ person.short_bio|markdown }}</td>
+                              <td><p> </p></td><td><p> </p></td><!--<td colspan="2"><br />{{ person.short_bio|markdown }}</td>-->
                            </tr>
 
                         </tbody>
