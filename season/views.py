@@ -138,8 +138,8 @@ def teamview(request):
 ########## ToDo - SAVE OLD VERSION TO ARCHIVE ###
 
         # Check whether we are in a Scoring Event weekend ##
-        updateallowed = get_object_or_404(Parameter, name = 'update_team_allowed').value
-
+        updateallowed =  get_object_or_404(Parameter, name = 'update_team_allowed').text
+        
 
         # Now change relevant fields
         if 'F1_submit' in request.POST:

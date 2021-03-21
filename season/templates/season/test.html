@@ -26,31 +26,19 @@
                 <div class="col-xl-3">
                     <div class="card">
                         <div class="card-body">
-                            <span class="float-right text-muted font-size-13">Last 3 month</span>
-                            <h5 class="card-title mb-3">Workload</h5>
+                            <span class="float-right text-muted font-size-13">23/80 Scoring Events</span>
+                            <h5 class="card-title mb-3">Point by Formula</h5>
                             <div id="donut-example" class="morris-charts workloed-chart" style="height: 273px;" dir="ltr"></div>
                             <ul class="list-unstyled text-center text-muted mb-0">
-                                <li class="list-inline-item font-size-13"><i class="mdi mdi-album font-size-16 text-purple mr-2"></i>External</li>
-                                <li class="list-inline-item font-size-13"><i class="mdi mdi-album font-size-16 text-pink mr-2"></i>Internal</li>
-                                <li class="list-inline-item font-size-13"><i class="mdi mdi-album font-size-16 text-light mr-2"></i>Other</li>
+                                <li class="list-inline-item font-size-13"><i class="mdi mdi-album font-size-16 text-warning mr-2"></i>F1</li>
+                                <li class="list-inline-item font-size-13"><i class="mdi mdi-album font-size-16 text-pink mr-2"></i>F2</li>
+                                <li class="list-inline-item font-size-13"><i class="mdi mdi-album font-size-16 text-success mr-2"></i>F3</li>
+                                <li class="list-inline-item font-size-13"><i class="mdi mdi-album font-size-16 text-primary mr-2"></i>WS</li>
                             </ul>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-xl-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title mb-3">Budget Detail</h5>
-                            <div id="morris-bar-chart" class="morris-charts project-budget-detail-chart" style="height: 265px;" dir="ltr"></div>
-                            <ul class="list-unstyled text-center text-muted mb-0 mt-2">
-                                <li class="list-inline-item font-size-13"><i class="mdi mdi-album font-size-16 text-primary mr-2"></i>Total Budget</li>
-                                <li class="list-inline-item font-size-13"><i class="mdi mdi-album font-size-16 text-success mr-2"></i>Amount Used</li>
-                                <li class="list-inline-item font-size-13"><i class="mdi mdi-album font-size-16 text-secondary mr-2"></i>Target Amount</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-xl-3">
                     <div class="card profile">
                         <div class="card-body">
@@ -59,7 +47,7 @@
 
                                 <h4 class="mt-3">David Griffiths</h4>
                                 <p class="text-muted font-12">Project Manager</p>
-                                <p class="font-size-13 text-muted">Struggling to maintain a level head with the ever-closing in deadline of
+                                <p class="font-size-13">Struggling to maintain a level head with the ever-closing in deadline of
                                 thousands of people starting to enjoy themselves. It's a good job he's got an old and wise head on such a youthful
                                  figure..</p>
                                 <a href="#" class="btn btn-pink btn-rounded px-5">Help this chap</a>
@@ -73,7 +61,7 @@
                 <div class="col-xl-8">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title mb-3">Project Budget</h5>
+                            <h5 class="card-title mb-3">Driver Results</h5>
                             <div class="row justify-content-end">
                                 <div class="col-xl-12 align-self-center">
                                     <ul class="list-unstyled list-inline float-right">
@@ -244,187 +232,46 @@
                 </div>
             </div>
 <!--end row 2 -->
-            <div class="row justify-content-md-center">
-                <div class="col-xl-9">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title mb-4">All Projects</h5>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="table-responsive">
-                                        <table class="table table-hover table-centered table-nowrap mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Project Name</th>
-                                                    <th>Client Name</th>
-                                                    <th>Start Date</th>
-                                                    <th>Deadline</th>
-                                                    <th>Status</th>
-                                                    <th>Progress</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Product Devlopment</td>
-                                                    <td>
-                                                        <img src="{% static 'season/siteimages/imagine.png'%}" alt="" class="avatar-xs rounded-circle mr-2">
-                                                        Kevin J. Heal
-                                                    </td>
-                                                    <td>20/3/2018</td>
-                                                    <td>5/5/2018</td>
-                                                    <td><span class="badge badge-boxed  badge-primary">Active</span></td>
-                                                    <td>
-                                                        <small class="float-right ml-2 pt-1 font-size-12">92%</small>
-                                                        <div class="progress mt-2" style="height:5px;">
-                                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 92%;" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>New Office Building</td>
-                                                    <td>
-                                                        <img src="{% static 'season/siteimages/imagine.png'%}" alt="" class="avatar-xs rounded-circle mr-2">
-                                                        Frank M. Lyons
-                                                    </td>
-                                                    <td>11/6/2018</td>
-                                                    <td>15/7/2018</td>
-                                                    <td><span class="badge badge-boxed  badge-warning">Panding</span></td>
-                                                    <td>
-                                                        <small class="float-right ml-2 pt-1 font-size-12">0%</small>
-                                                        <div class="progress mt-2" style="height:5px;">
-                                                            <div class="progress-bar  bg-warning" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Website &amp; Blog</td>
-                                                    <td>
-                                                        <img src="{% static 'season/siteimages/imagine.png'%}" alt="" class="avatar-xs rounded-circle mr-2">
-                                                        Hyman M. Cross
-                                                    </td>
-                                                    <td>21/6/2018</td>
-                                                    <td>3/7/2018</td>
-                                                    <td><span class="badge badge-boxed  badge-warning">Panding</span></td>
-                                                    <td>
-                                                        <small class="float-right ml-2 pt-1 font-size-12">0%</small>
-                                                        <div class="progress mt-2" style="height:5px;">
-                                                            <div class="progress-bar  bg-warning" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Market Research</td>
-                                                    <td>
-                                                        <img src="{% static 'season/siteimages/imagine.png'%}" alt="" class="avatar-xs rounded-circle mr-2">
-                                                        Angelo E. Butler
-                                                    </td>
-                                                    <td>30/4/2018</td>
-                                                    <td>1/6/2018</td>
-                                                    <td><span class="badge badge-boxed  badge-primary">Active</span></td>
-                                                    <td>
-                                                        <small class="float-right ml-2 pt-1 font-size-12">78%</small>
-                                                        <div class="progress mt-2" style="height:5px;">
-                                                            <div class="progress-bar  bg-primary" role="progressbar" style="width: 78%;" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Export Marketing</td>
-                                                    <td>
-                                                        <img src="{% static 'season/siteimages/imagine.png'%}" alt="" class="avatar-xs rounded-circle mr-2">
-                                                        Robert C. Golding
-                                                    </td>
-                                                    <td>20/3/2018</td>
-                                                    <td>5/5/2018</td>
-                                                    <td><span class="badge badge-boxed  badge-primary">Active</span></td>
-                                                    <td>
-                                                        <small class="float-right ml-2 pt-1 font-size-12">45%</small>
-                                                        <div class="progress mt-2" style="height:5px;">
-                                                            <div class="progress-bar  bg-primary" role="progressbar" style="width: 45%;" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Product Devlopment</td>
-                                                    <td>
-                                                        <img src="{% static 'season/siteimages/imagine.png'%}" alt="" class="avatar-xs rounded-circle mr-2">
-                                                        Kevin J. Heal
-                                                    </td>
-                                                    <td>14/2/2018</td>
-                                                    <td>10/8/2018</td>
-                                                    <td><span class="badge badge-boxed  badge-primary">Active</span></td>
-                                                    <td>
-                                                        <small class="float-right ml-2 pt-1 font-size-12">35%</small>
-                                                        <div class="progress mt-2" style="height:5px;">
-                                                            <div class="progress-bar  bg-primary" role="progressbar" style="width: 35%;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Website &amp; Blog</td>
-                                                    <td>
-                                                        <img src="{% static 'season/siteimages/imagine.png'%}" alt="" class="avatar-xs rounded-circle mr-2">
-                                                        Phillip T. Morse
-                                                    </td>
-                                                    <td>8/4/2018</td>
-                                                    <td>2/6/2018</td>
-                                                    <td><span class="badge badge-boxed  badge-danger">Complete</span></td>
-                                                    <td>
-                                                        <small class="float-right ml-2 pt-1 font-size-12">100%</small>
-                                                        <div class="progress mt-2" style="height:5px;">
-                                                            <div class="progress-bar  bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div><!--end table-responsive-->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-            </div><!--end row-->
 <!--end row 3 -->
             <div class="row justify-content-md-center">
                 <div class="col-lg-6">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title mb-3">Projects Workload</h5>
+                            <h5 class="card-title mb-3">Season Progress</h5>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mb-0">
-                                        <img src="{% static 'season/siteimages/imagine.png'%}" alt="" class="avatar-xs rounded-circle mr-1">
-                                        <span><strong>Website & Blog</strong></span>
+                                        <img src="{% static 'season/siteimages/F1.png'%}" alt="" class="avatar-xs rounded-circle mr-1">
+                                        <span><strong>Next: Russian GP - July 8th</strong></span>
                                     </div>
-                                    <small class="float-right text-muted ml-3 font-size-14">502h</small>
+                                    <small class="float-right text-muted ml-3 font-size-14">6/18 races</small>
                                     <div class="progress mt-2 mb-4 bg-transparent" style="height:6px;">
-                                        <div class="progress-bar bg-pink" role="progressbar" style="width: 78%; border-radius:5px;" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 33%; border-radius:5px;" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <div class="mb-0">
-                                        <img src="{% static 'season/siteimages/imagine.png'%}" alt="" class="avatar-xs rounded-circle mr-1">
-                                        <span><strong>New Office Building</strong></span>
+                                        <img src="{% static 'season/siteimages/F2.png'%}" alt="" class="avatar-xs rounded-circle mr-1">
+                                        <span><strong>Next: Russian GP - July 8th</strong></span>
                                     </div>
-                                    <small class="float-right text-muted ml-3 font-size-14">320h</small>
+                                    <small class="float-right text-muted ml-3 font-size-14">6/14 races</small>
                                     <div class="progress mt-2 mb-4 bg-transparent" style="height:6px;">
-                                        <div class="progress-bar bg-purple" role="progressbar" style="width: 60%; border-radius:5px;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 60%; border-radius:5px;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <div class="mb-0">
-                                        <img src="{% static 'season/siteimages/imagine.png'%}" alt="" class="avatar-xs rounded-circle mr-1">
-                                        <span><strong>Product Devlopment</strong></span>
+                                        <img src="{% static 'season/siteimages/F3.png'%}" alt="" class="avatar-xs rounded-circle mr-1">
+                                        <span><strong>Next: Austrian GP - July 20th</strong></span>
                                     </div>
-                                    <small class="float-right text-muted ml-3 font-size-14">251h</small>
+                                    <small class="float-right text-muted ml-3 font-size-14">6/14 races</small>
                                     <div class="progress mt-2 mb-4 bg-transparent" style="height:6px;">
-                                        <div class="progress-bar bg-pink" role="progressbar" style="width: 45%; border-radius:5px;" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 45%; border-radius:5px;" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <div class="mb-0">
-                                        <img src="{% static 'season/siteimages/imagine.png'%}" alt="" class="avatar-xs rounded-circle mr-1">
-                                        <span><strong>Market Research</strong></span>
+                                        <img src="{% static 'season/siteimages/W.png'%}" alt="" class="avatar-xs rounded-circle mr-1">
+                                        <span><strong>Next: Russian GP - July 8th</strong></span>
                                     </div>
-                                    <small class="float-right text-muted ml-3 font-size-14">121h</small>
+                                    <small class="float-right text-muted ml-3 font-size-14">2/8 races</small>
                                     <div class="progress mt-2 bg-transparent" style="height:6px;">
-                                        <div class="progress-bar bg-pink" role="progressbar" style="width: 30%; border-radius:5px;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 30%; border-radius:5px;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
 
@@ -458,7 +305,7 @@
    //  Morris Area chart
    $( function () {
        "use strict";
-
+/*
        Morris.Area( {
            element: 'extra-area-chart', data: [
                {y: '2018-02', a: 0, b: 0, c:0},
@@ -480,35 +327,49 @@
            gridLineColor: 'rgba(108, 120, 151, 0.2)',
            hideHover: 'auto'
        }
-       );
-
-   // Morris bar chart
-
-       Morris.Bar( {
-           element: 'morris-bar-chart', data: [
-               { y: 'Project-1', a: 10000, b: 8000, c:7800},
-               { y: 'Project-2', a: 8500, b: 7000, c:6500},
-               { y: 'Project-3', a: 9000, b: 7500, c:7000},
-               { y: 'Project-4', a: 9500, b: 8500, c:7500},
-               { y: 'Project-5', a: 7500, b: 5500, c:5000}
-           ],
-           barGap:8,
-           barSizeRatio:0.30,
-           barShape: 'soft',
-           barRadius: [5, 5, 5, 5],
-           xkey: 'y',
-           ykeys: [ 'a', 'b', 'c'],
-           labels: ['Total', 'Used', 'Target'],
-           barColors: ['#44a2d2', '#98d4ce', '#c1d1de'],
-           hideHover: 'auto',
-           preUnits: "$",
-           gridLineColor: 'rgba(108, 120, 151, 0.2)',
-           resize: true
-       }
-       );
-
+    );
+ */
+          Morris.Area( {
+             element: 'extra-area-chart', data: [
+                  {y: 'BAH', a: 10  , b: 0},
+                  {y: 'EMI', a: 0   , b: 0},
+                  {y: 'POR', a: 25  , b: 0},
+                  {y: 'SPA', a: 20  , b: 0},
+                  {y: 'MON', a: 18  , b: 10},
+                  {y: 'AZE', a: 25  , b: 0},
+                  {y: 'CAN', a: 6   , b: 0},
+                  {y: 'FRE', a: 20  , b: 0},
+                  {y: 'AUS', a: 20  , b: 0},
+                  {y: 'BRI', a: 20  , b: 0},
+                  {y: 'HUN', a: 20  , b: 0},
+                  {y: 'BEL', a: 20  , b: 0},
+                  {y: 'DUT', a: 20  , b: 0},
+                  {y: 'ITA', a: 20  , b: 0},
+                  {y: 'RUS', a: 20  , b: 0},
+                  {y: 'SIN', a: 20  , b: 0},
+                  {y: 'JAP', a: 20  , b: 0},
+                  {y: 'USA', a: 20  , b: 0},
+                  {y: 'MEX', a: 20  , b: 0},
+                  {y: 'BRA', a: 20  , b: 0},
+                  {y: 'AUS', a: 20  , b: 0},
+                  {y: 'SAU', a: 20  , b: 0},
+                  {y: 'ABU', a: 20  , b: 0}
+             ],
+             lineColors: [ '#009688', '#fdb93e', '#148cca'],
+             xkey: 'y',
+             ykeys: [ 'a', 'b', 'c'],
+             ymax: 25,
+             parseTime: false,                          //Stops the date formatting
+             labels: [ 'Hamilton', 'Vettel', 'Norris'],
+             pointSize: 0, lineWidth: 0,
+             resize: true,
+             fillOpacity: 0.8,
+             behaveLikeLine: true,
+             gridLineColor: 'rgba(108, 120, 151, 0.2)',
+             hideHover: 'auto'
+         }
+         );
     // Knob Chart
-
        $(".knob").knob({
            'format' : function (value) {
               return value + '%';
@@ -536,24 +397,23 @@
        });
 
    // Metro
-
        $(".live-tile, .flip-list").not(".exclude").liveTile();
 
    // Morris Dounut
-
        Morris.Donut({
            element: 'donut-example',
            data: [
-             {label: "P1", value: 50},
-             {label: "P3", value: 114},
-             {label: "P2", value: 230}
+             {label: "F3", value: 230},
+             {label: "F2", value: 114},
+             {label: "F1", value: 108},
+             {label: "WS", value: 201}
            ],
            resize: true,
-           colors:[ '#e3eaef', '#ff679b', '#777edd'],
-           labelColor: '#888',
+           colors:[ '#0ACF97', '#FF679B', '#F9BC09', '#44A2D2'],
+           labelColor: '#DA6020',
            backgroundColor: 'transparent',
            fillOpacity: 0.1,
-           formatter: function (x) { return x + "h"}
+           formatter: function (x) { return x + " points"}
        });
 
    });

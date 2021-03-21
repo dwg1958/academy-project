@@ -4,11 +4,13 @@ from django.contrib.auth.models import User
 
 class Parameter(models.Model):
     name                = models.CharField(max_length=20)
-    value               = models.CharField(max_length=20)
-    explanation         = models.CharField(max_length=40, blank=True)
+    explanation         = models.CharField(max_length=40,  blank=True)
+    value               = models.IntegerField(default = 0)
+    text                = models.CharField(max_length=40,  blank=True)
+    long_text           = models.TextField(default = " ",  blank=True)
 
     def __str__(self):
-        return self.value
+        return self.name
 
 class Competitor(models.Model):
     FORMULA = (
