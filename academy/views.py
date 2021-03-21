@@ -7,7 +7,10 @@ from django.contrib import auth
 
 def homepage(request):
 	front_page_news =  get_object_or_404(Parameter, name = 'front_page_news').long_text
-	teamname        =  get_object_or_404(TeamProfile, pk=request.user.team.id).teamName
+	try:
+		teamname    =  get_object_or_404(TeamProfile, pk=request.user.team.id).teamName
+	except:
+		teamname = " "
 	return render(request, 'homepage.html', {'section': 'home', 'front_page_news':front_page_news, 'teamname':teamname})
 
 def aboutpage(request):
