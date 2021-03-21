@@ -25,6 +25,7 @@ urlpatterns = [
     path( 'teamscores',        views.teamscores            , name = "teamscores"),
     path( 'rebuildleagues',    views.rebuildleagues        , name = "rebuildleagues"),
     path( 'scoring',           views.scoring               , name = "scoring"),
+    path( 'monitor',           views.monitor               , name = "monitor"),
     path( 'test',              views.test                  , name = "test"),
 
 #    path( '<int:blog_id>/', views.oneblog, name = "oneblog"),

@@ -19,13 +19,13 @@
 
 
 {% block content %}
-<div class="container">
+<div class="container-fluid">
    {% if message %}
    <center><h5 style="color:green">{{ message }}</h5></center>
    {% endif %}
 
    <div class = "row">
-      <div class = "col-md-12 pl-5 pr-5">
+      <div class = "col-md-12 p-5">
          <section class="jumbotron text-center text-white">
             <div class="container">
                <img src="{% static 'academy/webPageImages/FFDAcademy_Logo.png' %}" alt="" width="40%">
@@ -34,8 +34,8 @@
       </div>
    </div>
 
-   <div class="row">
-      <div class="card col-6 offset-1 pl-5 pr-5 mt-5">
+   <div class="row justify-content-md-center">
+      <div class="card col-lg-6 col-sm-10 m-2 mb-4">
          <div class="card-body">
             <center>
                <h2 class = "text-center pt-2">Prove you know what it takes to make an F1 driver</h2>
@@ -52,28 +52,32 @@
 
                {% else %}
                <!-- LOG IN AND REGISTRATION BUTTONS -->
-               <div class="row">
-                  <div class="col-5 offset-2 ">
-                     <a class="btn btn-primary btn-lg text-center" href="{% url 'login'%}" role="button">LOG IN</a>
-                     <br />
-
+               <div class="row justify-content-md-center">
+                  <div class="col-5">
+                     <center><a class="btn btn-primary btn-lg" href="{% url 'login'%}" role="button">LOG IN</a>
+                     </center><br />
                   </div>
-                  <div class="col-5 ">
-                     <a class="btn btn-primary btn-lg text-center" href="{% url 'register'%}" role="button">SIGN UP</a>
+                  <div class="col-5">
+                     <center><a class="btn btn-primary btn-lg" href="{% url 'register'%}" role="button">SIGN UP</a>
                      <br />
+                     </center>
                   </div>
                </div>
                {% endif %}
             </div>
          </div>
-         <div class="col-4 pt-5 ml-3">
-            <div class="tab-pane" id="activity" role="tabpanel">
+         <div class="col-lg-4 col-sm-10 m-2">
                {% show_next_race_sidebar 5 %}
-            </div>
          </div>
-      </div>
    </div>
 
+   <div class="row justify-content-md-center">
+      <div class="card col-10 m-2">
+         <div class="card-body">
+            <p>&nbsp;</p>
+         </div>
+      </div
+   </div>
    <br/><br/><br/><br/>
 
    <br />

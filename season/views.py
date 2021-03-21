@@ -121,6 +121,12 @@ def scoring(request):
 ############################### USER PAGES ###################################################
 
 @login_required
+##############################################################################################
+def monitor(request):
+    return render(request, 'season/monitor.html')
+
+
+@login_required
 ##### SHOW AND EDIT MY TEAM ##################################################################
 def teamview(request):
     returnmessage = ""
