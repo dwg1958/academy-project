@@ -45,7 +45,7 @@
 
                   <!--<td class="name"> <a href = " {% url 'showscoringevents' %}?event={{event.id}}">{{event.name}}</a> </td> -->
                   <td class="text-center align-middle pr-3">
-                     {% if team.league_position == 0 %}
+                     {% if team.points_total == 0 %}
                         -
                      {% else %}
                         {{team.league_position}}
