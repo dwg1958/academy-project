@@ -22,6 +22,7 @@
    td{
       vertical-align: top;
    }
+   input[type='radio'] { transform: scale(1.2); }
 </style>
 
 {% endblock %}
@@ -44,10 +45,10 @@
 
                      <!--- Left side ----->
                      <h4>Driver</h4>
-
+                     <br />
                       {% for driver in driverOptions %}
                       <input type="radio" id="driver" name="driver" value="{{driver.id}}" class = "ml-5">
-                      <label for="{{driver.id}}">{{ driver.firstname }} {{ driver.surname }}</label><br>
+                      <label for="{{driver.id}}" class = "ml-2">{{ driver.firstname }} {{ driver.surname }}</label><br>
                       {% endfor %}
                      <!--------------------->
                      <br /><br />
