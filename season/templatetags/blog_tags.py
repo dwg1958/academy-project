@@ -5,13 +5,10 @@ from ..models import TeamProfile, ScoringEvent
 from datetime import datetime
 
 
-
-
 register = template.Library()
 
 ## SIMPLE TAG ##################################
 @register.simple_tag(name='teamCountTag')
-
 def total_teams():
     return TeamProfile.objects.count()
 

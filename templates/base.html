@@ -158,7 +158,6 @@
                   <ul class="sub-menu" aria-expanded="false">
                      <li><a href="{% url 'teamview'       %}">My Team</a></li>
                      <li><a href="{% url 'teamscores'     %}">My Results</a></li>
-                     <li><a href="{% url 'leagueposition' %}">League Table</a></li>
                      <li><a href="{% url 'teamnamepicker' %}">Team Name & Image</a></li>
                   </ul>
                </li>
@@ -171,6 +170,12 @@
                   </a>
                </li>
                {% endif %}
+               <li>
+                  <a href="{% url 'leagueposition' %}" class="">
+                     <i class="mdi mdi-chart-arc text-white"></i>
+                     <span>League Table</span>
+                  </a>
+               </li>
                <li>
                   <a href="javascript: void(0);">
                      <i class="mdi mdi-buffer text-white"></i>

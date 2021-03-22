@@ -17,49 +17,50 @@
 <!---- BODY CONTENT --------->
 {% block content %}
 
-<div class="row">
-   <div class="container">
-      <div class="row">
-         <div class="col-md-10 col-sm-10 offset-1">
-            <img src="{% static 'academy/webPageImages/FFDAcademy_Logo.png' %}" alt="" width="40%">
-            <br /><br />
-            <h2>League table</h2>
-            <p></p>
-            <div>
-               <table class="table table-sm">
+<div class="container">
+   <div class="row">
+      <img src="{% static 'academy/webPageImages/FFDAcademy_Logo.png' %}" alt="" width="40%" class = "mb-5">
+      <div class="card col-md-10 col-sm-10 offset-1 pt-3">
+         <h2>League table</h2>
+         <p></p>
+         <div>
+            <table class="table table-sm table-hover table-responsive-md">
+               <tr>
+                  <th class="pr-3">Pos.</th>
+                  <th> </th>
+                  <th> Team </th>
+                  <th class="text-right"> F1 Points </th>
+                  <th class="text-right"> F2 Points </th>
+                  <th class="text-right"> F3 Points </th>
+                  <th class="text-right"> WS Points </th>
+                  <th class="text-right"> Total Points </th>
+               </tr>
+
+               {% for team in league_list %}
+               {% if user.team.teamName  ==  team.teamName %}
+                  <tr class = "myteam">
+               {% else %}
                   <tr>
-                     <th class="pr-3">Pos.</th>
-                     <th> </th>
-                     <th> Team </th>
-                     <th class="text-right"> F1 Points </th>
-                     <th class="text-right"> F2 Points </th>
-                     <th class="text-right"> F3 Points </th>
-                     <th class="text-right"> WS Points </th>
-                     <th class="text-right"> Total Points </th>
-                  </tr>
+               {% endif %}
 
-                  {% for team in league_list %}
-                  {% if user.team.teamName  ==  team.teamName %}
-                     <tr class = "myteam">
-                  {% else %}
-                     <tr>
-                  {% endif %}
-
-                     <!--<td class="name"> <a href = " {% url 'showscoringevents' %}?event={{event.id}}">{{event.name}}</a> </td> -->
-                     <td class="text-center align-middle pr-3"> {{team.league_position}} </td>
-                     <td> <center><img class="rounded-circle" src=" {{team.teamLogo.url}}" height="50px" ></center> </td>
-                     <td class="align-middle text-left"> {{team.teamName}} </td>
-                     <td class="align-middle text-right"> {{team.points_f1}} </td>
-                     <td class="align-middle text-right"> {{team.points_f2}} </td>
-                     <td class="align-middle text-right"> {{team.points_f3}} </td>
-                     <td class="align-middle text-right"> {{team.points_ws}} </td>
-                     <td class="align-middle text-right"> {{team.points_total}} </td>
-                  </tr>
-                  {% endfor %}
-               </table>
-            </div>
-
-
+                  <!--<td class="name"> <a href = " {% url 'showscoringevents' %}?event={{event.id}}">{{event.name}}</a> </td> -->
+                  <td class="text-center align-middle pr-3">
+                     {% if team.league_position == 0 %}
+                        -
+                     {% else %}
+                        {{team.league_position}}
+                     {% endif %}
+                   </td>
+                  <td> <center><img class="rounded-circle" src=" {{team.teamLogo.url}}" height="50px" ></center> </td>
+                  <td class="align-middle text-left"> {{team.teamName}} </td>
+                  <td class="align-middle text-right"> {{team.points_f1}} </td>
+                  <td class="align-middle text-right"> {{team.points_f2}} </td>
+                  <td class="align-middle text-right"> {{team.points_f3}} </td>
+                  <td class="align-middle text-right"> {{team.points_ws}} </td>
+                  <td class="align-middle text-right"> {{team.points_total}} </td>
+               </tr>
+               {% endfor %}
+            </table>
          </div>
       </div>
    </div>

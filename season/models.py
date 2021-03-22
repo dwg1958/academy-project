@@ -103,7 +103,7 @@ class TeamProfile(models.Model):
     league_position        = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.user_ID.username + " - " + self.teamName
+        return self.teamName
 
 
 class Event(models.Model):
