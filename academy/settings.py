@@ -136,7 +136,8 @@ EMAIL_HOST_PASSWORD = 'mM3rce>Yzdbu'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-
+CONTENT_TYPES = ['image', 'video']
+MAX_UPLOAD_SIZE = "1100000"  # 1Mb
 
 
 # Static files (CSS, JavaScript, Images)
