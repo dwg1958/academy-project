@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 <!---- TITLE --------->
-{% block title%}
-Dashboard
-{% endblock %}
+{% block title      %}Edit account{% endblock %}
+{% block breadcrumb %}Edit account{% endblock %}
+
 
 <!---- STYLE --------->
 {% block css %}
@@ -16,24 +16,29 @@ Dashboard
 
 <!---- BODY CONTENT --------->
 {% block content %}
-<div style = "padding: 10% 0px 15% 15%;">
-   <dl class="row">
-     <dt class="col-sm-3">
-        <img src="{{ user.profile.photo.url }}" height="150" class="d-inline-block align-center" alt="" loading="lazy">
-     </dt>
-     <dd class="col-sm-9">
-        <h1 style = "padding: 5% 0% 0% 0%;">{{user.first_name}} {{user.last_name}}</h1>
-        <h3>{{user.team.teamName}}</h3>
-     </dd>
-   </dl>
-   <br />
-   <p><b>email:</b> {{ user.email }}
-   <p><b>Birthdate:</b> {{ user.profile.date_of_birth}}
-   <br /><br />
-   <p>
-      <a href="{% url "edit" %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Edit my Profile</a>
-      <a href="{% url 'password_change' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Change Password</a>
-   </p>
-   <p> </p>
-</div>
+
+<div class = "container">
+    <div class="row justify-content-md-center">
+        <div class = "card col-lg-6 p-3 mt-5">
+
+            <h2 class = "pb-3">{{user.first_name}} {{user.last_name}}</h2>
+
+            <center>
+               <img src="{{ user.profile.photo.url }}" width="250" class="d-inline-block align-center" alt="" loading="lazy">
+               <br /><br />
+               <p><b>Team :</b> {{user.team.teamName}}</b></p>
+               <p><b>eMail:</b> {{ user.email }}
+               <br /><br />
+               <p>
+                  <a href="{% url "edit" %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Edit my Profile</a>
+                  &nbsp;&nbsp;&nbsp;
+                  <a href="{% url 'password_change' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Change Password</a>
+               </p>
+            </center>
+
+         </div>
+     </div>
+ </div>
+
+
 {% endblock %}

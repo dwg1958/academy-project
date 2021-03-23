@@ -1,16 +1,13 @@
 {% extends "base.html" %}
 
 <!--- TITLE -------->
-{% block title %}
-Edit Account
-{% endblock %}
+{% block title      %}Edit account{% endblock %}
+{% block breadcrumb %}Edit account{% endblock %}
 
 <!--- CSS ---------->
 {% block css %}
 <style>
-   p{
-      font-size:1.4rem;
-   }
+
    td{
       height:50px;
    }
@@ -19,23 +16,32 @@ Edit Account
 
 <!--- BODY CONTENT -------->
 {% block content %}
-<div style = "padding: 10% 0px 15% 15%;">
-   <h1 style = "padding: 5% 0% 5% 0%;"> Edit your account </h1>
-   <br />
-   <div class="login-form">
 
-       <form method="post" enctype="multipart/form-data">
-           <table>
-               {{ user_form.as_table }}
-               {{ profile_form.as_table }}
-           </table>
-           <br />
-           <p style = "padding: 3% 0px 0% 15%;">
-               <input type="submit" value="Save Changes">
-           </p>
-           {% csrf_token %}
-       </form>
+<div class = "container pt-5">
+    <div class="row justify-content-md-center">
+        <div class = "card login-formcol-lg-6 p-3">
 
+           <h2 class = "pb-3">{{user.first_name}} {{user.last_name}}</h2>
+
+           <center>
+             <img src="{{ user.profile.photo.url }}" width="250" class="d-inline-block align-center" alt="" loading="lazy">
+             <br /><br />
+            <form method="post" enctype="multipart/form-data" class = "pl-3">
+                <table>
+                     {{ user_form.as_table }}
+                     {{ profile_form.as_table }}
+                </table>
+                <br />
+                <p style = "">
+                   <center>
+                      <button type="submit" class="btn btn-primary  mb-2">Submit</button>
+                   </center>
+                </p>
+                 {% csrf_token %}
+             </form>
+
+         </div>
    </div>
 </div>
+
 {% endblock %}

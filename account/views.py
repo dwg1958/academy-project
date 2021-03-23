@@ -15,8 +15,8 @@ from django.contrib.auth.decorators import user_passes_test
 ## ACCOUNT DASHBOARD ################################
 @login_required
 def dashboard(request):
-    return render(request, 'account/dashboard.html', {'section': 'dashboard'})
-
+    #return render(request, 'account/dashboard.html', {'section': 'dashboard'})
+    return redirect('teamview')
 
 ## LOGOUT ##############################################
 @login_required

@@ -2,40 +2,50 @@
 {% extends "base.html" %}
 
 <!--- TITLE -------->
-{% block title %}
-Create an account
-{% endblock %}
+{% block title      %}Create an account{% endblock %}
+{% block breadcrumb %}Create an account{% endblock %}
+
 
 <!--- CSS ---------->
 {% block css %}
 <style>
-   p{
-      font-size:1.2rem;
+   .helptext{
+      visibility: hidden;
    }
    td, th{
       padding:0px 10px 15px 15px;
-      vertical-align: middle;
+      vertical-align:top;
    }
+   th{width:30%;}
 </style>
 {% endblock %}
 
 <!--- BODY CONTENT -------->
 {% block content %}
 
-<div style = "padding: 2% 0px 5% 15%;">
-   <h1 style = "padding: 2% 0% 2% 0%;">Start Your Academy</h1>
-   <br />
-   <p>First please tell us about you:</p>
-   <br />
-   <form method="post">
-      {% csrf_token %}
-      <table>
-         {{ user_form.as_table }}
-      </table>
-      <br />
-      <p style = "padding: 3% 0px 0% 15%;"><input type="submit" value="Create my account"></p>
-   </form>
-</div>
+<div class = "container">
+    <div class="row justify-content-md-center">
+        <div class = "card col-lg-6 p-3 mt-5">
+
+            <h2 class = "pb-3">Start Your Academy</h2>
+            <br />
+            <p>First please tell us about you:</p>
+            <br />
+            <form method="post">
+               {% csrf_token %}
+               <table>
+                  {{ user_form.as_table }}
+               </table>
+               <br />
+               <div class="col-md-12 text-center">
+                  <button type="submit" class="btn btn-primary mb-2">Create my account</button>
+               </center>
+            </form>
+         </div>
+     </div>
+ </div>
+
+
 {% endblock %}
 
 

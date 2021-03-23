@@ -111,7 +111,7 @@
                </button>
                <div class="dropdown-menu dropdown-menu-right">
                   <!-- item-->
-                  <a class="dropdown-item d-block" href="{% url 'dashboard'%}">My Settings</a>
+                  <a class="dropdown-item d-block" href="{% url 'edit'%}">My Settings</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item"         href="javascript:{document.getElementById('logout').submit()}" onclick="">Logout</a>
                   <form id="logout" method="POST" action="{% url 'logout' %}">
@@ -156,7 +156,7 @@
                      <span>My Team</span>
                   </a>
                   <ul class="sub-menu" aria-expanded="false">
-                     <li><a href="{% url 'teamview'       %}">My Team</a></li>
+                     <li><a href="{% url 'teamview'       %}">Manage My Team</a></li>
                      <li><a href="{% url 'teamscores'     %}">My Results</a></li>
                      <li><a href="{% url 'teamnamepicker' %}">Team Name & Image</a></li>
                   </ul>
@@ -178,7 +178,7 @@
                </li>
                <li>
                   <a href="javascript: void(0);">
-                     <i class="mdi mdi-buffer text-white"></i>
+                     <i class="mdi mdi-account-multiple text-white"></i>
                      <span>Drivers</span>
                   </a>
                   <ul class="sub-menu" aria-expanded="false">
@@ -217,6 +217,7 @@
                      <li><a href="{% url 'addresults' %}">Add results</a></li>
                      <li><a href="{% url 'scoreevents' %}">Score Events</a></li>
                      <li><a href="{% url 'rebuildleagues' %}">Rebuild leagues</a></li>
+                     <li><a href="{% url 'email' %}">Emailer</a></li>
                      <li><a href="{% url 'test' %}">Tester</a></li>
                   </ul>
                </li>
