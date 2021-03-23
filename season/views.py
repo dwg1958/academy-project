@@ -277,7 +277,7 @@ def teamscores(request):
     team_scores = TeamScore.objects.filter(team_ID = request.user.team.id)
     for score in team_scores:
         data = str(score.cscore_ID).split('~')
-        data = data[1].split('-')
+        data = data[1].split(' -')
         if score.pointsType == 'P':
             type='Finish Place'
         elif score.pointsType == 'F':

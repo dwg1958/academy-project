@@ -53,11 +53,11 @@
                    </td>
                   <td> <center><img class="rounded-circle" src=" {{team.teamLogo.url}}" height="50px" ></center> </td>
                   <td class="align-middle text-left"> {{team.teamName}} </td>
-                  <td class="align-middle text-right"> {{team.points_f1}} </td>
-                  <td class="align-middle text-right"> {{team.points_f2}} </td>
-                  <td class="align-middle text-right"> {{team.points_f3}} </td>
-                  <td class="align-middle text-right"> {{team.points_ws}} </td>
-                  <td class="align-middle text-right"> {{team.points_total}} </td>
+                  <td class="align-middle text-right"> {{team.points_f1 |floatformat:0 }} </td>
+                  <td class="align-middle text-right"> {{team.points_f2 |floatformat:0 }} </td>
+                  <td class="align-middle text-right"> {{team.points_f3 |floatformat:0 }} </td>
+                  <td class="align-middle text-right"> {{team.points_ws |floatformat:0 }} </td>
+                  <td class="align-middle text-right"> {{team.points_total |floatformat:0 }} </td>
                </tr>
                {% endfor %}
             </table>

@@ -172,10 +172,11 @@ My Team
                               F1 Points
                            </td>
                            <td class = "results-r pt-4">
-                              {{ teamdata.points_f1}}
+                              {{ teamdata.points_f1 |floatformat:0 }}
                            </td>
                         </tr>
                      </table>
+                     <a href="/season/teamview?tab=F1" class="btn btn-primary mr-1 mt-3" role="button" >Edit</a>
                      <!----- end results Table ----------->
                      <br/>
                    </div>
@@ -209,10 +210,11 @@ My Team
                               F2 Points
                            </td>
                            <td class = "results-r pt-4">
-                              {{ teamdata.points_f2}}
+                              {{ teamdata.points_f2 |floatformat:0 }}
                            </td>
                         </tr>
                      </table>
+                     <a href="/season/teamview?tab=F2" class="btn btn-primary mr-1 mt-3" role="button" >Edit</a>
                      <!----- end results Table ----------->
                      <br/>
                    </div>
@@ -246,10 +248,11 @@ My Team
                               F3 Points
                            </td>
                            <td  class = "results-r pt-4">
-                              {{ teamdata.points_f3}}
+                              {{ teamdata.points_f3 |floatformat:0 }}
                            </td>
                         </tr>
                      </table>
+                     <a href="/season/teamview?tab=F3" class="btn btn-primary mr-1 mt-3" role="button" >Edit</a>
                      <!----- end results Table ----------->
                      <br/>
                    </div>
@@ -282,11 +285,12 @@ My Team
                            <td class = "results-l pt-4">
                               W Series Points
                            </td>
-                           <td class = "results-r pt-4 text-right">
-                              {{ teamdata.points_ws}}
+                           <td class = "results-r pt-4">
+                              {{ teamdata.points_ws |floatformat:0 }}
                            </td>
                         </tr>
                      </table>
+                     <a href="/season/teamview?tab=WS" class="btn btn-primary mr-1 mt-3" role="button" >Edit</a>
                      <!----- end results Table ----------->
                      <br/>
                    </div>

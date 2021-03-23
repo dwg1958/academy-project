@@ -28,16 +28,16 @@ Drivers
     <ul class="nav nav-pills">
 
         <li class="nav-item">
-            <a href="/season/tables/1" class="nav-link active" >Formula 1</a>
+            <a href="/season/tables/1" class="nav-link active mr-2" >Formula 1</a>
         </li>
         <li class="nav-item">
-            <a href="/season/tables/2" class="nav-link" >Formula 2</a>
+            <a href="/season/tables/2" class="nav-link active mr-2" >Formula 2</a>
         </li>
         <li class="nav-item">
-            <a href="/season/tables/3" class="nav-link" >Formula 3</a>
+            <a href="/season/tables/3" class="nav-link active mr-2" >Formula 3</a>
         </li>
         <li class="nav-item">
-            <a href="/season/tables/W" class="nav-link" >W Series</a>
+            <a href="/season/tables/W" class="nav-link active mr-2" >W Series</a>
         </li>
     </ul>
     <hr/>
@@ -106,27 +106,27 @@ Drivers
                            </tr>
                            <tr>
                               <td>&nbsp;&nbsp;&nbsp;Position Points</td>
-                              <td class = "text-right pr-5">{{ person.points_pos }}</td>
+                              <td class = "text-right pr-5">{{ person.points_pos |floatformat }}</td>
                            </tr>
                            <tr>
                               <td>&nbsp;&nbsp;&nbsp;Fastest Lap Points</td>
-                              <td class = "text-right pr-5">{{ person.points_fl }}</td>
+                              <td class = "text-right pr-5">{{ person.points_fl |floatformat  }}</td>
                            </tr>
                            <tr>
                               <td>&nbsp;&nbsp;&nbsp;Positions Gained / Lost Points</td>
-                              <td class = "text-right pr-5">{{ person.points_pgl }}</td>
+                              <td class = "text-right pr-5">{{ person.points_pgl  |floatformat }}</td>
                            </tr>
                            <tr>
                               <td>&nbsp;&nbsp;&nbsp;Laps Behind Leader Points</td>
-                              <td class = "text-right pr-5">{{ person.points_lbl }}</td>
+                              <td class = "text-right pr-5">{{ person.points_lbl  |floatformat }}</td>
                            </tr>
                            <tr>
                               <td>&nbsp;&nbsp;&nbsp;Disqualification Points</td>
-                              <td class = "text-right pr-5"><u>{{ person.points_dsq }}</u></td>
+                              <td class = "text-right pr-5"><u>{{ person.points_dsq  |floatformat }}</u></td>
                            </tr>
                            <tr>
                               <td class="font-weight-bold text-uppercase">&nbsp;&nbsp;&nbsp;Total Points</td>
-                              <td class="font-weight-bold text-uppercase text-right pr-5">{{ person.points_total }}</td>
+                              <td class="font-weight-bold text-uppercase text-right pr-5">{{ person.points_total  |floatformat }}</td>
                            </tr>
                            <tr>
                               <td colspan = 2 class="bg-dark"><b>Personal</b></td>
@@ -187,12 +187,12 @@ Drivers
                         <td> <b> {{driver.surname}}, {{driver.firstname}} </b> </td>
                         <td> {{driver.team}}</td>
                         <td class = "text-right"> ${{driver.value}}m</td>
-                        <td class = "text-right"> {{driver.points_total}}</td>
-                        <td class = "text-right"> {{driver.points_pos}}</td>
-                        <td class = "text-right"> {{driver.points_fl}}</td>
-                        <td class = "text-right"> {{driver.points_pgl}}</td>
-                        <td class = "text-right"> {{driver.points_lbl}}</td>
-                        <td class = "text-right"> {{driver.points_dsq}}</td>
+                        <td class = "text-right"> {{driver.points_total |floatformat:0 }}</td>
+                        <td class = "text-right"> {{driver.points_pos   |floatformat:0 }}</td>
+                        <td class = "text-right"> {{driver.points_fl    |floatformat:0 }}</td>
+                        <td class = "text-right"> {{driver.points_pgl   |floatformat:0 }}</td>
+                        <td class = "text-right"> {{driver.points_lbl   |floatformat:0 }}</td>
+                        <td class = "text-right"> {{driver.points_dsq   |floatformat:0 }}</td>
                      </tr>
                      {% endfor%}
                   </tbody>
