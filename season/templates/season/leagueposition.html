@@ -11,6 +11,9 @@
    .myteam{
       background-color: #DA6020;
    }
+   td:nth-child(2) img{
+      max-width: 100px;
+   }
 </style>
 {% endblock %}
 
@@ -51,7 +54,7 @@
                         {{team.league_position}}
                      {% endif %}
                    </td>
-                  <td> <center><img class="rounded-circle" src=" {{team.teamLogo.url}}" height="50px" ></center> </td>
+                  <td> <center><img class="rounded-circle" src=" {{team.teamLogo.url}}" height="50px"></center> </td>
                   <td class="align-middle text-left"> {{team.teamName}} </td>
                   <td class="align-middle text-right"> {{team.points_f1 |floatformat:0 }} </td>
                   <td class="align-middle text-right"> {{team.points_f2 |floatformat:0 }} </td>
