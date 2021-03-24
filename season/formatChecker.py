@@ -1,3 +1,4 @@
+# FROM: https://stackoverflow.com/questions/2472422/django-file-upload-size-limit
 from django.db.models import FileField
 from django.forms import forms
 from django.template.defaultfilters import filesizeformat
@@ -7,7 +8,7 @@ class ContentTypeRestrictedFileField(FileField):
 
     def clean(self, *args, **kwargs):
         data = super(ContentTypeRestrictedFileField, self).clean(*args, **kwargs)
-        max_upload_size = 2621440
+        max_upload_size = 524288
 
         file = data.file
         try:
@@ -17,7 +18,7 @@ class ContentTypeRestrictedFileField(FileField):
             if content_type in ['image/png', 'image/jpeg']:
 
                 if file.size > max_upload_size:
-                    raise forms.ValidationError(_('Please keep filesize under %s. Current filesize %s') % (filesizeformat(max_upload_size), filesizeformat(file.size)))
+                    raise forms.ValidationError(_('Please keep filesize under %s. Your file is %s') % (filesizeformat(max_upload_size), filesizeformat(file.size)))
             else:
                 raise forms.ValidationError(_('Filetype not supported.'))
         except AttributeError:
