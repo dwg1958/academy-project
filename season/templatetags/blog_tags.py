@@ -26,7 +26,7 @@ def show_next_race(count=5):
 # Sidebar event calendar ################
 @register.inclusion_tag('season/next_race_sidebar.html')
 def show_next_race_sidebar(count=10):
-    next_races = ScoringEvent.objects.all().order_by('startDateTime')[:count]
+    next_races = ScoringEvent.objects.filter(results_in="False").order_by('startDateTime')[:count]
     return {'next_races': next_races}
 
 
