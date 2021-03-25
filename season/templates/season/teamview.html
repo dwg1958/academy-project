@@ -42,9 +42,9 @@ My Team
 
    }
    .container-fluid img{
-      height: 80px;
-      width: 80px;
-      margin:5px 5px 0px 15px;
+      height: 33px;
+      width: 33px;
+      margin:0px 5px 0px 15px;
    }
    .btn{
       float: right;
@@ -343,12 +343,10 @@ My Team
                            <!--- Formula 1 --->
                            <div class="col-sm-6">
                               <table class="pickertable">
-                                 <tr><!--<th></th>--><th>Driver</th><th style="text-align:center;">Cost</th><th style="text-align:center;">Points</th>
+                                 <tr><th colspan = "2" class = "pl-5">Driver</th><th style="text-align:center;">Cost</th><th style="text-align:center;">Points</th>
                                  {% for driver in f1drivers.all %}
                                  <tr>
-                                    <!--
-                                    <td><img src="{{driver.mugshot.url}}" height="20px" class = "image-fluid rounded-circle" alt="" loading="lazy"></td>
-                                    -->
+                                    <td><img src="{{driver.mugshot.url}}" class = "image-fluid rounded-circle-xs"></td>
                                     <td style="text-align:left;">{{driver.firstname}} {{driver.surname}}
                                     </td><td style="padding-left:5px;">
                                        ${{driver.value}}m
@@ -431,12 +429,10 @@ My Team
                            <!--- Formula 1 --->
                            <div class="col-sm-6">
                               <table class="pickertable">
-                                 <tr><!--<th></th>--><th>Driver</th><th style="text-align:center;">Cost</th><th style="text-align:center;">Points</th>
+                                 <tr><th colspan = "2" class = "pl-5">Driver</th><th style="text-align:center;">Cost</th><th style="text-align:center;">Points</th>
                                  {% for driver in f2drivers.all %}
                                  <tr>
-                                    <!--<td>
-                                    <img src="{{driver.mugshot.url}}" height='50px;' class="d-inline-block" alt="" loading="lazy">
-                                    </td>-->
+                                 <td><img src="{{driver.mugshot.url}}" class = "image-fluid rounded-circle-xs"></td>
                                  <td style="text-align:left;"><label for="{{driver.surname}}"> {{driver.firstname}} {{driver.surname}} </label>
                                  </td><td style="padding-left:5px;">
                                     ${{driver.value}}m
@@ -517,12 +513,10 @@ My Team
                            <!--- Formula 3 --->
                            <div class="col-sm-6">
                               <table class="pickertable">
-                                 <tr><!--<th></th>--><th>Driver</th><th style="text-align:center;">Cost</th><th style="text-align:center;">Points</th>
+                                 <tr><th colspan = "2" class = "pl-5">Driver</th><th style="text-align:center;">Cost</th><th style="text-align:center;">Points</th>
                                  {% for driver in f3drivers.all %}
                                  <tr>
-                                    <!--<td>
-                                    <img src="{{driver.mugshot.url}}" height='50px;' class="d-inline-block" alt="" loading="lazy">
-                                    </td>-->
+                                 <td><img src="{{driver.mugshot.url}}" class = "image-fluid rounded-circle-xs"></td>
                                  <td style="text-align:left;"><label for="{{driver.surname}}"> {{driver.firstname}} {{driver.surname}} </label>
                                  </td><td style="padding-left:5px;">
                                     ${{driver.value}}m
@@ -603,12 +597,10 @@ My Team
                            <!--- W Series --->
                            <div class="col-sm-6">
                               <table class="pickertable">
-                                 <tr><!--<th></th>--><th>Driver</th><th style="text-align:center;">Cost</th><th style="text-align:center;">Points</th>
+                                 <tr><th colspan = "2" class = "pl-5">Driver</th><th style="text-align:center;">Cost</th><th style="text-align:center;">Points</th>
                                  {% for driver in wsdrivers.all %}
                                  <tr>
-                                    <!--<td>
-                                    <img src="{{driver.mugshot.url}}" height='50px;' class="d-inline-block" alt="" loading="lazy">
-                                    </td>-->
+                                 <td><img src="{{driver.mugshot.url}}" class = "image-fluid rounded-circle-xs"></td>
                                  <td style="text-align:left;"><label for="{{driver.surname}}"> {{driver.firstname}} {{driver.surname}} </label>
                                  </td><td style="padding-left:5px;">
                                     ${{driver.value}}m
