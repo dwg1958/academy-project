@@ -154,7 +154,7 @@
 
                <li>
                   <a href="javascript: void(0);" class="">
-                     <i class="mdi mdi-briefcase-check text-white"></i>
+                     <i class="mdi mdi mdi-contacts text-white"></i>
                      <span>My Team</span>
                   </a>
                   <ul class="sub-menu" aria-expanded="false">
@@ -174,7 +174,7 @@
                {% endif %}
                <li>
                   <a href="{% url 'leagueposition' %}" class="">
-                     <i class="mdi mdi-chart-arc text-white"></i>
+                     <i class="mdi mdi mdi-trophy text-white"></i>
                      <span>League Table</span>
                   </a>
                </li>
@@ -193,7 +193,7 @@
                </li>
                <li>
                   <a href="{% url 'showevents' %}" class="">
-                     <i class="mdi mdi-chart-arc text-white"></i>
+                     <i class="mdi mdi mdi-calendar-clock text-white"></i>
                      <span>Race Calendar</span>
                   </a>
                </li>
@@ -211,7 +211,7 @@
                {% if request.user.is_staff %}
                <li>
                   <a href="javascript: void(0);" class="">
-                     <i class="mdi mdi-spin mdi-settings text-white"></i>
+                     <i class="mdi mdi-account-search text-white"></i>
                      <span>Admin</span>
                   </a>
                   <ul class="sub-menu" aria-expanded="false">
@@ -228,7 +228,7 @@
                {% if user.is_authenticated %}
                <li>
                   <a href="javascript: void(0);" class="">
-                     <i class="mdi mdi-settings text-white"></i>
+                     <i class="mdi mdi-spin mdi-settings text-white"></i>
                      <span>Settings</span>
                   </a>
                   <ul class="sub-menu" aria-expanded="false">
@@ -276,8 +276,11 @@
    <!-- Start right Content here -->
    <!-- ==================================================================================================================================================== -->
    <div class="main-content">
-
       <div class="page-content">
+
+         <!-- top bar message -->
+         <h3 class = "text-warning text-center"> {% TeamUpdatesOK %}<h3>
+
          <div class="container-fluid">
             <!-- start page title -->
             <div class="row">

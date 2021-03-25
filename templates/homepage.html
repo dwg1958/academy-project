@@ -11,7 +11,7 @@
       background-color: #DA6020;
    }
    p{
-      font-size: 1.1rem;
+      font-size: 1.0rem;
    }
 </style>
 {% endblock %}
@@ -39,7 +39,9 @@
 
                {% if user.is_authenticated %}
                <p>
+                  <center>
                   {{ front_page_news |markdown }}
+                  </center>
                </p>
 
                {% else %}
@@ -67,7 +69,7 @@
             </div>
          </div>
          <div class="col-lg-4 col-sm-10 m-2">
-               {% show_next_race_sidebar 5 %}
+               {% tag_show_next_race_sidebar 5 %}
          </div>
    </div>
 

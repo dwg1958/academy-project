@@ -20,15 +20,16 @@
                    {% static 'season/siteimages/W.png' %}
                {% endif%}
                " height="40px;" alt="" class="img-activity" >
+
             <div class="time-item">
                 <div class="item-info">
                     <div class="text-muted float-right font-size-10"> {{ race.startDateTime | daysuntil  }}  days to go</div>
                     <h5 class="mt-0 mb-1">{{ race.name }}</h5>
                     <p class="text-muted font-size-13">{{race.startDateTime}}
-                        <!--<a href="#" class="text-info">[more info]</a>-->
                     </p>
                 </div>
             </div>
+
             {% endfor %}
 
       </div>

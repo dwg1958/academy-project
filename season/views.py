@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from .forms import EventForm, TeamProfileForm, TeamProfileForm
 from django.contrib.auth.models import User
 from django.db.models import Sum, Count
+from django.utils import timezone
+from datetime import datetime, timedelta, time
 import time
 
 # Create your views here.
@@ -133,6 +135,8 @@ def monitor(request):
 def teamview(request):
     returnmessage = ""
 
+
+
     if(request.method == "POST"):
         # Go find the record we want to update
         recordtoedit = TeamProfile.objects.get(pk=request.user.team.id) # still using our 1to1 field relation
@@ -140,8 +144,7 @@ def teamview(request):
 ########## ToDo - SAVE OLD VERSION TO ARCHIVE ###
 
         # Check whether we are in a Scoring Event weekend ##
-        updateallowed =  get_object_or_404(Parameter, name = 'update_team_allowed').text
-
+        updateallowed =  get_object_or_404(Parameter, name = 'update_team_allowed').value
 
         # Now change relevant fields
         if 'F1_submit' in request.POST:
@@ -159,7 +162,7 @@ def teamview(request):
                 returnmessage = 'You have exceeded your budget - please choose again'
             elif ( arg1 == arg2 ):
                 returnmessage = 'You have chosen the same driver twice - please choose again'
-            elif ( updateallowed == "NO" ):
+            elif ( updateallowed == 0 ):
                 returnmessage = 'Sorry - No update allowed during a Scoring-Event weekend'
             else:
                 recordtoedit.p1_1 = new_p1_1
@@ -188,7 +191,7 @@ def teamview(request):
                 returnmessage = 'You have exceeded your budget - please choose again'
             elif ( arg1 == arg2 ):
                 returnmessage = 'You have chosen the same driver twice - please choose again'
-            elif ( updateallowed == "NO" ):
+            elif ( updateallowed == 0 ):
                 returnmessage = 'Sorry - No update allowed during a Scoring-Event weekend'
             else:
                 recordtoedit.p2_1 = new_p2_1
@@ -216,7 +219,7 @@ def teamview(request):
                 returnmessage = 'You have exceeded your budget - please choose again'
             elif ( arg1 == arg2 ):
                 returnmessage = 'You have chosen the same driver twice - please choose again'
-            elif ( updateallowed == "NO" ):
+            elif ( updateallowed == 0 ):
                 returnmessage = 'Sorry - No update allowed during a Scoring-Event weekend'
             else:
                 recordtoedit.p3_1 = new_p3_1
@@ -244,7 +247,7 @@ def teamview(request):
                 returnmessage = 'You have exceeded your budget - please choose again'
             elif ( arg1 == arg2 ):
                 returnmessage = 'You have chosen the same driver twice - please choose again'
-            elif ( updateallowed == "NO" ):
+            elif ( updateallowed == 0 ):
                 returnmessage = 'Sorry - No update allowed during a Scoring-Event weekend'
             else:
                 recordtoedit.pw_1 = new_pw_1
@@ -556,6 +559,12 @@ def scoreevents(request):
             scoringevent_detail.resultsArray = resultsArray
             scoringevent_detail.save()
 
+            # Set team_update_on parameter back to OK (it will reset if there is another event)
+            para = Parameter.objects.get(name="update_team_allowed")
+            para.value = 1
+            para.text = ""
+            para.save()
+
         # Close timer
         toc = time.perf_counter()
         time_taken = round(toc - tic,4)
@@ -737,6 +746,8 @@ def rebuildleagues(request):
                 "points_total" : 0 \
              }})
 
+    league_total_teams  =  len(allteams)
+
     #Get scores
     resultset = TeamProfile.objects.filter(team__formula = '1').annotate(f1_points = Sum('team__academyPoints')).distinct()
     for driver in resultset:
@@ -764,7 +775,7 @@ def rebuildleagues(request):
         team_record.points_total = scores_dict[team.id]['points_f1'] + scores_dict[team.id]['points_f2'] + scores_dict[team.id]['points_f3']+ scores_dict[team.id]['points_ws']
         team_record.save()
 
-    # Finally put league position into tem records so we can find 5 above and below
+    # Finally put league position into team records so we can find 5 above and below
     league_list = TeamProfile.objects.all().order_by('-points_total')
     place = 1
     for team in league_list:
@@ -772,6 +783,11 @@ def rebuildleagues(request):
         team_details.league_position = place
         team_details.save()
         place = place+1
+
+    # Update parameter totals for static reports
+    para = Parameter.objects.get(name="league_total_teams")
+    para.value = league_total_teams
+    para.save()
 
     #Just to check - compare total points in competitorScores with total points in cometitor table
     tcheck = TeamProfile.objects.aggregate(team_points = Sum('points_total'))
