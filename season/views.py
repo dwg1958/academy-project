@@ -73,7 +73,7 @@ def showresults(request):
 ####################################
 def leagueposition(request):
 
-    league_list = TeamProfile.objects.all().order_by('-points_total')
+    league_list = TeamProfile.objects.all().order_by('league_position')
     return render(request, 'season/leagueposition.html', {'league_list':league_list})
 
 
