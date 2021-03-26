@@ -46,6 +46,11 @@ My Team
       width: 33px;
       margin:0px 5px 0px 15px;
    }
+   .academy_tab img{
+      height: 88px;
+      width: 88px;
+      margin:15px 15px 0px 15%;
+   }
    .btn{
       float: right;
    }
@@ -145,7 +150,7 @@ My Team
                    <!--- Formula 1 --->
                    <div class=" col-xl-3 col-md-6 teamdiv" >
                       <h4 class = "formula">Formula 1</h4>
-                      <table>
+                      <table class = "academy_tab">
                          <tr>
                             <td>
                               <img class = "image-fluid rounded-circle" src="{% if user.team.p1_1.id %} {{ user.team.p1_1.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
@@ -183,7 +188,7 @@ My Team
                    <!--- Formula 2 --->
                    <div class="col-xl-3 col-md-6 col-md-6 teamdiv" >
                       <h4 class = "formula">Formula 2</h4>
-                      <table>
+                      <table class = "academy_tab">
                          <tr>
                             <td>
                               <img class = "image-fluid rounded-circle" src="{{ user.team.p2_1.mugshot.url}}" />
@@ -221,7 +226,7 @@ My Team
                    <!--- Formula 3 --->
                    <div class="col-xl-3 col-md-6 teamdiv" >
                       <h4 class = "formula">Formula 3</h4>
-                      <table>
+                      <table class = "academy_tab">
                          <tr>
                             <td>
                               <img class = "image-fluid rounded-circle" src="{% if user.team.p3_1.id %} {{ user.team.p3_1.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
@@ -259,7 +264,7 @@ My Team
                    <!--- W Series--->
                    <div class="col-xl-3 col-md-6 teamdiv">
                       <h4 class = "formula">W Series</h4>
-                      <table>
+                      <table class = "academy_tab">
                          <tr>
                             <td>
                               <img class = "image-fluid rounded-circle" src="{% if user.team.pw_1.id %} {{ user.team.pw_1.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
