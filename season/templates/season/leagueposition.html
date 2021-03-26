@@ -47,13 +47,7 @@
                {% endif %}
 
                   <!--<td class="name"> <a href = " {% url 'showscoringevents' %}?event={{event.id}}">{{event.name}}</a> </td> -->
-                  <td class="text-center align-middle pr-3">
-                     {% if team.points_total == 0 %}
-                        -
-                     {% else %}
-                        {{team.league_position}}
-                     {% endif %}
-                   </td>
+                  <td class="text-center align-middle pr-3">{{team.league_position}}</td>
                   <td> <center><img class="rounded-circle" src=" {{team.teamLogo.url}}" height="50px"></center> </td>
                   <td class="align-middle text-left"> {{team.teamName}} </td>
                   <td class="align-middle text-right"> {{team.points_f1 |floatformat:0 }} </td>
