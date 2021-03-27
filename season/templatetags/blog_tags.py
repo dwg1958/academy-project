@@ -38,11 +38,11 @@ def team_update_on():
     # If there are, update the parameter
     for event in next_event:
         if event.startDateTime < now:
-            print('\n Overdue event: ',event.startDateTime, '\n')
+            #print('\n Overdue event: ',event.startDateTime, ' ', event.event_ID,  '\n')
             para.value = 0
-            para.text = ">>> Team Updates Paused for Live Event <<<"
+            para.text = ">>> Team Updates Paused for " + str(event.event_ID) + " <<<"
             para.save()
-
+            
     return para.text
 
 #################################################

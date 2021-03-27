@@ -73,7 +73,7 @@ Drivers
                <div class="row">
                   <div class="col-sm-4">
                      <div class="card" style="">
-                        <img class="card-img-top text-center pt-4" src="{{person.mugshot.url}}" alt="Card image cap" style="margin:auto; width:250px;">
+                        <img class="card-img-top text-center pt-4" src="{{person.mugshot.url}}" alt="Card image cap" style="margin:auto; width:80%;">
                         <div class="card-body">
                            <h5 class="card-title text-center">{{ person.firstname }} {{ person.surname }}</h5>
 
@@ -147,10 +147,11 @@ Drivers
                               <td>&nbsp;&nbsp;&nbsp;Twitter</td>
                               <td>{{ person.twitterHandle }}</td>
                            </tr>
+                           <!--
                            <tr>
-                              <td><p> </p></td><td><p> </p></td><!--<td colspan="2"><br />{{ person.short_bio|markdown }}</td>-->
+                              <td><p> </p></td><td><p> </p></td><td colspan="2"><br />{{ person.short_bio|markdown }}</td>
                            </tr>
-
+                           -->
                         </tbody>
                      </table>
                   </div>
@@ -182,7 +183,7 @@ Drivers
                   </thead>
                   <tbody>
                      {% for driver in competitors.all %}
-                        <tr class='clickable-row' onclick="window.location='/season/tables/{{formula}}?per={{driver.surname}}'">
+                        <tr class='clickable-row' onclick="window.location='/season/tables/{{formula}}?per={{driver.id}}'">
                         <td><img class = "image-fluid rounded-circle" src="{{driver.mugshot.url}}"  height=50px /></td>
                         <td> <b> {{driver.surname}}, {{driver.firstname}} </b> </td>
                         <td> {{driver.team}}</td>
@@ -204,62 +205,7 @@ Drivers
 <br /><br /><br />
 {% endblock %}
 
-
 {% block javascript %}
    <script>
-      /* globals Chart:false, feather:false */
-
-      (function () {
-        'use strict'
-
-        feather.replace()
-
-        // Graphs
-        var ctx = document.getElementById('myChart')
-        // eslint-disable-next-line no-unused-vars
-        var myChart = new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: [
-              'Abu Dhabi',
-              'Argentina',
-              'Mexico',
-              'USA',
-              'Austria',
-              'British',
-              'Dutch'
-            ],
-            datasets: [{
-              data: [
-                25,
-                20,
-                0,
-                4,
-                10,
-                6,
-                15
-              ],
-              lineTension: 0,
-              backgroundColor: 'transparent',
-              borderColor: '#007bff',
-              borderWidth: 4,
-              pointBackgroundColor: '#007bff'
-            }]
-          },
-          options: {
-            scales: {
-              yAxes: [{
-                ticks: {
-                  beginAtZero: false
-                }
-              }]
-            },
-            legend: {
-              display: false
-            }
-          }
-        })
-      })()
-
    </script>
 {% endblock %}

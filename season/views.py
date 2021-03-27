@@ -106,7 +106,8 @@ def tableformula(request, formula):
     ## Find personality dataset
     try:
         per = request.GET['per']
-        pers_data = Competitor.objects.filter(surname=per)
+
+        pers_data = Competitor.objects.filter(pk=per)
         showPersonal = "show"
     except:
         pers_data = list(competitors[:1])
