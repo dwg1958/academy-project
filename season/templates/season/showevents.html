@@ -18,6 +18,9 @@ Events
       padding-top:10px;
       padding-left:20px;
    }
+   th{
+      font-size:1.1rem;
+   }
    .bigtable td, .bigtable th{
       border: 1px solid black;
       border-collapse: collapse;
@@ -29,12 +32,15 @@ Events
    p, td{
       font-size:1rem;
    }
+   .f_badges{
+      height: 25px;
+   }
 </style>
 {% endblock %}
 
 <!--------------------------------------------------------------->
 {% block content %}
-<div style = "padding: 0% 5% 2% 5%;">
+<div style = "padding: 0% 5% 0% 5%;">
    <!-- FOR MAPS. -->
    <div class="row">
        <div class="col-lg-12">
@@ -52,14 +58,14 @@ Events
 
 <!-- FOR MAPS. -->
    <br />
-   <div>
-      <table class="table table-sm">
-         <tr class="text-uppercase font-weight-bold h5">
-            <th> Name<br /><br /></th>
-            <th> Date </th>
-            <th> Circuit </th>
-            <th> Country </th>
-            <th> Formulas </th>
+   <div class = "card m-3">
+      <table class="table table-sm table-hover table-responsive-md">
+         <tr class="text-uppercase font-weight-bold h5 ">
+            <th class = "pt-2 pb-2"> Name     </th>
+            <th class = "pt-2 pb-2"> Date     </th>
+            <th class = "pt-2 pb-2"> Circuit  </th>
+            <th class = "pt-2 pb-2"> Country  </th>
+            <th class = "pt-2 pb-2"> Formulas </th>
          </tr>
          {% for event in allevents%}
          <tr>
@@ -67,7 +73,12 @@ Events
             <td> {{event.date}} </td>
             <td> {{event.circuit}} </td>
             <td> {{event.country}} </td>
-            <td> {{event.formulas}} </td>
+            <td>
+               {% if '1' in event.formulas %} <img src="{% static 'season/siteimages/F1.png' %}" class="f_badges" > {% endif %}
+               {% if '2' in event.formulas %} <img src="{% static 'season/siteimages/F2.png' %}" class="f_badges" > {% endif %}
+               {% if '3' in event.formulas %} <img src="{% static 'season/siteimages/F3.png' %}" class="f_badges" > {% endif %}
+               {% if 'W' in event.formulas %} <img src="{% static 'season/siteimages/W.png' %}" class="f_badges" >  {% endif %}
+            </td>
          </tr>
          {% endfor %}
       </table>

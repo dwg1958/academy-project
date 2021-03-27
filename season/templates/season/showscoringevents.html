@@ -32,45 +32,45 @@
 <div style = "padding: 2% 5% 2% 5%;">
    <h1> {{ eventname }} Events </h1>
    <br />
-   <div >
-         <table class="table table-sm" >
-            <tr>
-               <th> Name </th>
-               <th> Date / Time </th>
-               <th> Formula </th>
-               <th> Type </th>
-            </tr>
-            {% for event in allevents%}
-            <tr>
-               <td>
-                  {% if event.results_in %}
-                     <a href = "{% url 'showresults' %}?scoringevent={{event.id}}" >{{event.name}}</a>
-                  {% else%}
-                     {{ event.name }}
-                  {% endif %}
-               </td>
-               <td> {{event.startDateTime}} </td>
-               <td><img src="
-                  {% if event.formula == '1' %}
-                     {% static 'season/siteimages/F1.png' %}
-                  {% elif event.formula == '2' %}
-                     {% static 'season/siteimages/F2.png' %}
-                  {% elif event.formula == '3' %}
-                     {% static 'season/siteimages/F3.png' %}
-                  {% else%}
-                     {% static 'season/siteimages/W.png' %}
-                  {% endif%}
-                  " height = "30px" >
-                </td>
-               <td> {{event.get_eventType}} </td>
-            </tr>
-            {% endfor %}
-         </table>
-      </div>
-     <br />
-     <center><input type="button" onclick="window.location.href = '{% url 'showevents' %} ';" value="Back to Calendar"></center>
-     <br />
-  </div>
+   <div class = "card m-3">
+      <table class="table table-sm table-hover table-responsive-md">
+         <tr class="text-uppercase font-weight-bold h5 ">
+            <th class = "pt-2 pb-2"> Name </th>
+            <th class = "pt-2 pb-2"> Date / Time </th>
+            <th class = "pt-2 pb-2"> Formula </th>
+            <th class = "pt-2 pb-2"> Type </th>
+         </tr>
+         {% for event in allevents%}
+         <tr>
+            <td>
+               {% if event.results_in %}
+                  <a href = "{% url 'showresults' %}?scoringevent={{event.id}}" >{{event.name}}</a>
+               {% else%}
+                  {{ event.name }}
+               {% endif %}
+            </td>
+            <td> {{event.startDateTime}} </td>
+            <td><img src="
+               {% if event.formula == '1' %}
+                  {% static 'season/siteimages/F1.png' %}
+               {% elif event.formula == '2' %}
+                  {% static 'season/siteimages/F2.png' %}
+               {% elif event.formula == '3' %}
+                  {% static 'season/siteimages/F3.png' %}
+               {% else%}
+                  {% static 'season/siteimages/W.png' %}
+               {% endif%}
+               " height = "30px" >
+             </td>
+            <td> {{event.get_eventType}} </td>
+         </tr>
+         {% endfor %}
+      </table>
+   </div>
+  <br />
+  <center><input type="button" onclick="window.location.href = '{% url 'showevents' %} ';" value="Back to Calendar"></center>
+  <br />
 </div>
+
 
 {% endblock %}

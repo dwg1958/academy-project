@@ -13,9 +13,8 @@
    td{
       text-align: center;
    }
-   table td:nth-child(3)
-   {
-      text-align: left;
+   th:nth-child(2){
+      text-align: center;
    }
    tr:first-child, tr:nth-child(2)
    {
@@ -45,28 +44,27 @@
    <h3>{{scoringevent.startDateTime}}</h3>
    <div class="text-right"><input type="button" onclick="history.go(-1);" value="Back"></div>
    <br />
-
-         <table class="table table-responsive table-bordered">
-            <tr>
-               <th>Position</th>
-               <th>Driver</th>
-               <th colspan = 2>Result</th>
-               <th colspan = 5>Lead Driver Points- -></th>
-               <th colspan = 5>2nd Driver Points- -></th>
-            </tr>
-            <tr><th></th><th></th><th>+/- places</th><th>Laps Behind</th>
-               <th>Position</th><th>Fastest Lap</th><th>Disqualified</th><th>+/- Places</th><th>Laps Lost</th>
-               <th>Position</th><th>Fastest Lap</th><th>Disqualified</th><th>+/- Places</th><th>Laps Lost</th></tr>
-               {% for array in newarray %}
-                  <tr>
-                     {% for item in array %}
-                        <td> {% if item == 0 %} <center>-</center> {% else %} {{item}} {% endif %} </td>
-                     {% endfor %}
-                  <tr />
-               {% endfor %}
-         </table>
-
-
+   <div class = "card m-3">
+      <table class="table table-sm table-hover table-responsive-md">
+         <tr class="text-uppercase font-weight-bold h5 ">
+            <th class = "pt-2 pb-2 pl-2">Position</th>
+            <th class = "pt-2 pb-2">Driver</th>
+            <th class = "pt-2 pb-2" colspan = 2>Result--></th>
+            <th class = "pt-2 pb-2" colspan = 5>Lead Driver Points--></th>
+            <th class = "pt-2 pb-2" colspan = 5>2nd Driver Points--></th>
+         </tr>
+         <tr><th></th><th></th><th>+/- places</th><th>Laps Behind</th>
+            <th>Position</th><th>Fastest Lap</th><th>Disqualified</th><th>+/- Places</th><th>Laps Lost</th>
+            <th>Position</th><th>Fastest Lap</th><th>Disqualified</th><th>+/- Places</th><th>Laps Lost</th></tr>
+            {% for array in newarray %}
+               <tr>
+                  {% for item in array %}
+                     <td> {% if item == 0 %} <center>-</center> {% else %} {{item}} {% endif %} </td>
+                  {% endfor %}
+               <tr />
+            {% endfor %}
+      </table>
+   </div>
 </div>
 
 {% endblock %}
