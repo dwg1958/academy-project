@@ -25,14 +25,16 @@
 {% block content %}
 
 <div class="container">
-   <div class="row">
-      <img src="{% static 'academy/webPageImages/FFDAcademy_Logo.png' %}" alt="" width="40%" class = "mb-5">
+
+      <im g src="{% static 'academy/webPageImages/FFDAcademy_Logo.png' %}" alt="" width="40%" class = "mb-5">
+      <h1>League Standings - {{ heading }} </h1>
+      <br /><br />
       <!-- tabs div -->
-      <div class="tabs-menu ml-5">
+      <div class="row col-12">
+         <div class="tabs-menu col-lg-10 mb-3">
           <ul class="nav nav-pills">
               <li class="nav-item">
-            <!--   <a href="#academy" class="nav-link active" data-toggle="tab">Academy</a>-->
-              <a href="{% url 'leagueposition'%}#asd" class="nav-link {% if heading == 'Overall' %}active{% endif%}" >Overall</a>
+                 <a href="{% url 'leagueposition'%}" class="nav-link {% if heading == 'Overall' %}active{% endif%}" >Overall</a>
               </li>
               <li class="nav-item">
                   <a href="{% url 'leagueposition'%}?tab=F1" class="nav-link {% if heading == 'Formula 1 only' %}active{% endif%}">Formula 1</a>
@@ -47,13 +49,19 @@
                   <a href="{% url 'leagueposition'%}?tab=WS" class="nav-link {% if heading == 'W Series only' %}active{% endif%}">W Series</a>
               </li>
           </ul>
-          <hr/>
-          <br/>
       </div>
       <!-- end tabs div -->
 
-      <div class="card col-md-10 col-sm-10 offset-1 pt-3">
-         <h2>League Standings - {{ heading }}</h2>
+      <div class="tabs-menu  col-lg-2 text-right">
+         <ul class="nav nav-pills">
+             <li class="nav-item">
+                <a href = "#myteam" class="nav-link active">My Team</a>
+            </li>
+         </ul>
+      </div>
+
+      <div class="card col-12 pt-3">
+
          <p></p>
          <div>
             <table class="table table-sm table-hover table-responsive-md">
@@ -78,12 +86,12 @@
                   <!--<td class="name"> <a href = " {% url 'showscoringevents' %}?event={{event.id}}">{{event.name}}</a> </td> -->
                   <td class="text-center align-middle pr-3"><b style="font-size:1.2rem;">{{ forloop.counter }}</b>&nbsp; ({{team.league_position}})</td>
                   <td> <center><img class="rounded-circle" src=" {{team.teamLogo.url}}" height="50px"></center> </td>
-                  <td class="align-middle text-left"> {{team.teamName}} </td>
-                  <td class="align-middle text-right {% if heading == 'Formula 1 only' %} h5 text-danger{% endif%}"> {{team.points_f1 |floatformat:0 }} </td>
-                  <td class="align-middle text-right {% if heading == 'Formula 2 only' %} h5 text-danger{% endif%}"> {{team.points_f2 |floatformat:0 }} </td>
-                  <td class="align-middle text-right {% if heading == 'Formula 3 only' %} h5 text-danger{% endif%}"> {{team.points_f3 |floatformat:0 }} </td>
-                  <td class="align-middle text-right {% if heading == 'W Series only' %} h5 text-danger{% endif%}"> {{team.points_ws |floatformat:0 }} </td>
-                  <td class="align-middle text-right {% if heading == 'Overall' %} h5 text-danger{% endif%}"> {{team.points_total |floatformat:0 }} </td>
+                  <td class="align-middle text-left"> {{team.teamName}} {% if user.team.teamName  ==  team.teamName %}  <a name = "myteam">!</a>  {% endif %}  </td>
+                  <td class="align-middle text-right {% if heading == 'Formula 1 only' %} h5 text-bold{% endif%}"> {{team.points_f1 |floatformat:0 }} </td>
+                  <td class="align-middle text-right {% if heading == 'Formula 2 only' %} h5 text-bold{% endif%}"> {{team.points_f2 |floatformat:0 }} </td>
+                  <td class="align-middle text-right {% if heading == 'Formula 3 only' %} h5 text-bold{% endif%}"> {{team.points_f3 |floatformat:0 }} </td>
+                  <td class="align-middle text-right {% if heading == 'W Series only'  %} h5 text-bold{% endif%}"> {{team.points_ws |floatformat:0 }} </td>
+                  <td class="align-middle text-right {% if heading == 'Overall'        %} h5 text-bold{% endif%}"> {{team.points_total |floatformat:0 }} </td>
                </tr>
                {% endfor %}
             </table>
