@@ -73,8 +73,27 @@ def showresults(request):
 ####################################
 def leagueposition(request):
 
-    league_list = TeamProfile.objects.all().order_by('league_position')
-    return render(request, 'season/leagueposition.html', {'league_list':league_list})
+    try:
+        tab = request.GET['tab']
+    except:
+        tab = 'overall'
+    if tab == 'F1':
+        league_list  = TeamProfile.objects.all().order_by('-points_f1')
+        heading      = "Formula 1 only"
+    elif tab == 'F2':
+        league_list  = TeamProfile.objects.all().order_by('-points_f2')
+        heading      = "Formula 2 only"
+    elif tab == 'F3':
+        league_list  = TeamProfile.objects.all().order_by('-points_f3')
+        heading      = "Formula 3 only"
+    elif tab == 'WS':
+        league_list  = TeamProfile.objects.all().order_by('-points_ws')
+        heading      = "W Series only"
+    else:
+        league_list = TeamProfile.objects.all().order_by('league_position')
+        heading      = "Overall"
+
+    return render(request, 'season/leagueposition.html', {'league_list':league_list, 'heading':heading})
 
 
 ####################################

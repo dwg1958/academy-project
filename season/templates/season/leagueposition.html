@@ -14,6 +14,10 @@
    td:nth-child(2) img{
       max-width: 100px;
    }
+   a, a:hover, a:visited, a:active {
+      color: inherit;
+      text-decoration: none;
+   }
 </style>
 {% endblock %}
 
@@ -23,20 +27,45 @@
 <div class="container">
    <div class="row">
       <img src="{% static 'academy/webPageImages/FFDAcademy_Logo.png' %}" alt="" width="40%" class = "mb-5">
+      <!-- tabs div -->
+      <div class="tabs-menu ml-5">
+          <ul class="nav nav-pills">
+              <li class="nav-item">
+            <!--   <a href="#academy" class="nav-link active" data-toggle="tab">Academy</a>-->
+              <a href="{% url 'leagueposition'%}#asd" class="nav-link {% if heading == 'Overall' %}active{% endif%}" >Overall</a>
+              </li>
+              <li class="nav-item">
+                  <a href="{% url 'leagueposition'%}?tab=F1" class="nav-link {% if heading == 'Formula 1 only' %}active{% endif%}">Formula 1</a>
+              </li>
+              <li class="nav-item">
+                  <a href="{% url 'leagueposition'%}?tab=F2" class="nav-link {% if heading == 'Formula 2 only' %}active{% endif%}">Formula 2</a>
+              </li>
+              <li class="nav-item">
+                  <a href="{% url 'leagueposition'%}?tab=F3" class="nav-link {% if heading == 'Formula 3 only' %}active{% endif%}">Formula 3</a>
+              </li>
+              <li class="nav-item">
+                  <a href="{% url 'leagueposition'%}?tab=WS" class="nav-link {% if heading == 'W Series only' %}active{% endif%}">W Series</a>
+              </li>
+          </ul>
+          <hr/>
+          <br/>
+      </div>
+      <!-- end tabs div -->
+
       <div class="card col-md-10 col-sm-10 offset-1 pt-3">
-         <h2>League table</h2>
+         <h2>League Standings - {{ heading }}</h2>
          <p></p>
          <div>
             <table class="table table-sm table-hover table-responsive-md">
                <tr>
-                  <th class="pr-3">Pos.</th>
+                  <th class="pr-3">Pos. (overall)</th>
                   <th> </th>
                   <th> Team </th>
-                  <th class="text-right"> F1 Points </th>
-                  <th class="text-right"> F2 Points </th>
-                  <th class="text-right"> F3 Points </th>
-                  <th class="text-right"> WS Points </th>
-                  <th class="text-right"> Total Points </th>
+                  <th class="text-right {% if heading == 'Formula 1 only' %} h5 text-danger{% endif%}"> <a href="{% url 'leagueposition'%}?tab=F1">F1 Points</a> </th>
+                  <th class="text-right {% if heading == 'Formula 2 only' %} h5 text-danger{% endif%}"> <a href="{% url 'leagueposition'%}?tab=F2">F2 Points</a></th>
+                  <th class="text-right {% if heading == 'Formula 3 only' %} h5 text-danger{% endif%}"> <a href="{% url 'leagueposition'%}?tab=F3">F3 Points</a></th>
+                  <th class="text-right {% if heading == 'W Series only' %} h5 text-danger{% endif%}" > <a href="{% url 'leagueposition'%}?tab=WS">WS Points</a></th>
+                  <th class="text-right {% if heading == 'Overall' %} h5 text-danger{% endif%}"       > <a href="{% url 'leagueposition'%}">Total Points</a></th>
                </tr>
 
                {% for team in league_list %}
@@ -47,14 +76,14 @@
                {% endif %}
 
                   <!--<td class="name"> <a href = " {% url 'showscoringevents' %}?event={{event.id}}">{{event.name}}</a> </td> -->
-                  <td class="text-center align-middle pr-3">{{team.league_position}}</td>
+                  <td class="text-center align-middle pr-3"><b style="font-size:1.2rem;">{{ forloop.counter }}</b>&nbsp; ({{team.league_position}})</td>
                   <td> <center><img class="rounded-circle" src=" {{team.teamLogo.url}}" height="50px"></center> </td>
                   <td class="align-middle text-left"> {{team.teamName}} </td>
-                  <td class="align-middle text-right"> {{team.points_f1 |floatformat:0 }} </td>
-                  <td class="align-middle text-right"> {{team.points_f2 |floatformat:0 }} </td>
-                  <td class="align-middle text-right"> {{team.points_f3 |floatformat:0 }} </td>
-                  <td class="align-middle text-right"> {{team.points_ws |floatformat:0 }} </td>
-                  <td class="align-middle text-right"> {{team.points_total |floatformat:0 }} </td>
+                  <td class="align-middle text-right {% if heading == 'Formula 1 only' %} h5 text-danger{% endif%}"> {{team.points_f1 |floatformat:0 }} </td>
+                  <td class="align-middle text-right {% if heading == 'Formula 2 only' %} h5 text-danger{% endif%}"> {{team.points_f2 |floatformat:0 }} </td>
+                  <td class="align-middle text-right {% if heading == 'Formula 3 only' %} h5 text-danger{% endif%}"> {{team.points_f3 |floatformat:0 }} </td>
+                  <td class="align-middle text-right {% if heading == 'W Series only' %} h5 text-danger{% endif%}"> {{team.points_ws |floatformat:0 }} </td>
+                  <td class="align-middle text-right {% if heading == 'Overall' %} h5 text-danger{% endif%}"> {{team.points_total |floatformat:0 }} </td>
                </tr>
                {% endfor %}
             </table>
