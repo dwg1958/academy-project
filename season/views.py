@@ -98,22 +98,18 @@ def tableformula(request, formula):
             formula = "1"
             formulaname = "Formula 1"
 
-
-
     competitors = Competitor.objects.filter(formula=formula, role="D")
-
 
     ## Find personality dataset
     try:
         per = request.GET['per']
-
-        pers_data = Competitor.objects.filter(pk=per)
+        pers_data = Competitor.objects.get(pk=per)
         showPersonal = "show"
     except:
-        pers_data = list(competitors[:1])
+        pers_data = competitors.first()
         showPersonal = " "
 
-    return render(request, 'season/tables.html', {'personality':pers_data, 'competitors': competitors,'formulaname':formulaname, 'formula':formula, 'showPersonal':showPersonal})
+    return render(request, 'season/tables.html', {'person':pers_data, 'competitors': competitors,'formulaname':formulaname, 'formula':formula, 'showPersonal':showPersonal})
 
 
 ####################################

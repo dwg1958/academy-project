@@ -68,7 +68,7 @@ Drivers
             </div>
             <!--  Top Driver details area ----------------------->
 
-            {% for person in personality %}
+
             <div class="container collapse multi-collapse {{showPersonal}}" id = "PersonalData">
                <div class="row">
                   <div class="col-sm-4">
@@ -76,31 +76,12 @@ Drivers
                         <img class="card-img-top text-center pt-4" src="{{person.mugshot.url}}" alt="Card image cap" style="margin:auto; width:80%;">
                         <div class="card-body">
                            <h5 class="card-title text-center">{{ person.firstname }} {{ person.surname }}</h5>
-
                         </div>
                      </div>
                   </div>
                   <div class="table-responsive col-sm-8">
                      <table class="table table-sm">
                         <tbody>
-<!--
-                           <tr>
-                              <td colspan = 2 class="bg-dark" ><b>Previous Years Stats</b></td>
-                           </tr>
-                           <tr>
-                              <td>&nbsp;&nbsp;&nbsp;Wins</td>
-                              <td class = "text-right pr-5">{{ person.winsPreviousSeasons }}</td>
-                           </tr>
-                           <tr>
-                              <td>&nbsp;&nbsp;&nbsp;Poles</td>
-                              <td class = "text-right pr-5">{{ person.pointsPreviousSeasons }}</td>
-                           </tr>
-                           <tr>
-                              <td>&nbsp;&nbsp;&nbsp;Championships</td>
-                              <td class = "text-right pr-5">{{ person.championships }}</td>
-                           </tr>
--->
-
                            <tr>
                               <td colspan = 2 class="bg-dark"><b>This Season</b></td>
                            </tr>
@@ -147,19 +128,11 @@ Drivers
                               <td>&nbsp;&nbsp;&nbsp;Twitter</td>
                               <td>{{ person.twitterHandle }}</td>
                            </tr>
-                           <!--
-                           <tr>
-                              <td><p> </p></td><td><p> </p></td><td colspan="2"><br />{{ person.short_bio|markdown }}</td>
-                           </tr>
-                           -->
                         </tbody>
                      </table>
                   </div>
                </div>
             </div>
-            {%endfor%}
-
-
 
             <!-- --- TABLES ------------>
 
