@@ -128,17 +128,6 @@ def leagueposition(request):
     return render(request, 'season/leagueposition.html', {'league_list':league_list, 'sublist': sublist, 'heading':heading})
 
 
-
-
-
-
-
-
-
-
-
-
-
 ####################################
 def tables(request):
 #	textreceived = request.GET['fname']
@@ -351,7 +340,7 @@ def teamscores(request):
         elif score.pointsType == 'D':
             type='Disqualified'
         else: type='--'
-        score_data.append( [  data[0], data[1], score.teamPosition, type, score.academyPoints   ] )
+        score_data.append( [  data[0], data[1], score.teamPosition, type, score.academyPoints, score.formula  ] )
         total_score+= score.academyPoints
 
     return render(request, 'season/teamscores.html', {'teamdata': teamdata, 'score_data': score_data, 'total_score': total_score})
