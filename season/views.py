@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from django.db.models import Sum, Count
 from django.utils import timezone
 from datetime import datetime, timedelta, time
+from django.db.models import Window, F
+from django.db.models.functions import DenseRank
 import time
 
 # Create your views here.
@@ -73,27 +75,68 @@ def showresults(request):
 ####################################
 def leagueposition(request):
 
+    #See if we requested a pecific league tab ("?tab=F1")
     try:
         tab = request.GET['tab']
     except:
         tab = 'overall'
+
+
     if tab == 'F1':
-        league_list  = TeamProfile.objects.all().order_by('-points_f1')
+        order_field  = '-points_f1'
+        points_field = 'points_f1'
         heading      = "Formula 1 only"
     elif tab == 'F2':
-        league_list  = TeamProfile.objects.all().order_by('-points_f2')
+        order_field  = '-points_f2'
+        points_field = 'points_f2'
         heading      = "Formula 2 only"
     elif tab == 'F3':
-        league_list  = TeamProfile.objects.all().order_by('-points_f3')
+        order_field  = '-points_f3'
+        points_field = 'points_f3'
         heading      = "Formula 3 only"
     elif tab == 'WS':
-        league_list  = TeamProfile.objects.all().order_by('-points_ws')
+        order_field  = '-points_ws'
+        points_field = 'points_ws'
         heading      = "W Series only"
     else:
-        league_list = TeamProfile.objects.all().order_by('league_position')
+        order_field  = '-points_total'
+        points_field = 'points_total'
         heading      = "Overall"
 
-    return render(request, 'season/leagueposition.html', {'league_list':league_list, 'heading':heading})
+    #Get Top 5
+    league_list  = TeamProfile.objects.all().order_by(order_field)[:5]
+
+    #Get my local list
+    # Add the rank to each record
+    ranklist = TeamProfile.objects.annotate(                                                        # add a new field to the resultset
+            place=Window(                                                                           # call it 'place' and open another window on the data to find it
+                expression=DenseRank(), order_by=[F(points_field).desc(),F('points_total').desc(),]  # use the rank function to order based on F1 points field
+                )).filter(f1_cashpot__lt=50)                                                                                  # and if a match, use the total points to decide order
+
+    # Find our position
+    sublist = []
+    count   = 0
+    for team in ranklist:
+        if team.teamName == request.user.team.teamName:
+            count = team.place
+
+    # Pull out 5 above and below
+    for team in ranklist:
+        if team.place > count-6 and team.place < count+6:
+            sublist.append([team.place, team.teamLogo.url, team.teamName, team.points_f1, team.points_f2, team.points_f3, team.points_ws, team.points_total, team.league_position ])
+
+    return render(request, 'season/leagueposition.html', {'league_list':league_list, 'sublist': sublist, 'heading':heading})
+
+
+
+
+
+
+
+
+
+
+
 
 
 ####################################
@@ -839,7 +882,30 @@ def rebuildleagues(request):
 @login_required
 ##############################################################################################
 def test(request):
-    return render(request, 'season/test.html')
+
+    #Formula Specific data:
+    heading      = "Formula 1 only"
+    points_field = 'points_f1'
+
+    # Add the rank to each record
+    ranklist = TeamProfile.objects.annotate(                                                        # add a new field to the resultset
+            place=Window(                                                                           # call it 'place' and open another window on the data to find it
+                expression=DenseRank(), order_by=[F(points_field).desc(),F('points_total').desc(),]  # use the rank function to order based on F1 points field
+                )).filter(f1_cashpot__lt=50)                                                                                  # and if a match, use the total points to decide order
+
+    # Find our position
+    sublist = []
+    count   = 0
+    for team in ranklist:
+        if team.teamName == request.user.team.teamName:
+            count = team.place
+
+    # Pull out 5 above and below
+    for team in ranklist:
+        if team.place > count-6 and team.place < count+6:
+            sublist.append([team.place, team.teamLogo.url, team.teamName, team.points_f1, team.points_f2, team.points_f3, team.points_ws, team.points_total ])
+
+    return render(request, 'season/test.html', {'league_list': sublist, "heading":heading})
 
 
 
