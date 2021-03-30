@@ -78,7 +78,7 @@
             </tr>
             {% for team in league_list %}
             {% if user.team.teamName  ==  team.teamName %}
-            <tr class = "myteam">
+            <tr data-toggle="collapse" data-target="#accordionTop{{ forloop.counter }}" class="clickable myteam">
             {% else %}
             <tr data-toggle="collapse" data-target="#accordionTop{{ forloop.counter }}" class="clickable">
             {% endif %}
@@ -176,7 +176,7 @@
 
                {% for team in sublist %}
                {% if user.team.teamName  ==  team.2 %}
-               <tr class = "myteam">
+               <tr data-toggle="collapse" data-target="#accordion{{ forloop.counter }}" class="clickable myteam">
                {% else %}
                <tr data-toggle="collapse" data-target="#accordion{{ forloop.counter }}" class="clickable">
                {% endif %}
