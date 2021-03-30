@@ -172,12 +172,14 @@
                   </a>
                </li>
                {% endif %}
+               {% if user.is_authenticated %}
                <li>
                   <a href="{% url 'leagueposition' %}" class="">
                      <i class="mdi mdi mdi-trophy text-white"></i>
                      <span>League Table</span>
                   </a>
                </li>
+               {% endif %}
                <li>
                   <a href="javascript: void(0);">
                      <i class="mdi mdi-account-multiple text-white"></i>
