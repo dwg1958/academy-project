@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load static %}
 
 <!--- TITLE -------->
 {% block title      %}Logged Out{% endblock %}
@@ -12,7 +12,11 @@
    p{
       font-size:1.0rem;
    }
+   body {
+      background-image: url({% static 'season/siteimages/magicCar.jpg' %});
+   }
 </style>
+
 {% endblock %}
 
 <!--- BODY CONTENT -------->

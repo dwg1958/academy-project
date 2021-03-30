@@ -1,5 +1,6 @@
 
 {% extends "base.html" %}
+{% load static %}
 
 <!--- TITLE -------->
 {% block title      %}Create an account{% endblock %}
@@ -17,6 +18,9 @@
       vertical-align:top;
    }
    th{width:30%;}
+   body {
+        background-image: url({% static 'season/siteimages/magicCar.jpg' %});
+      }
 </style>
 {% endblock %}
 

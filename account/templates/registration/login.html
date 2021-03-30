@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 <!--- TITLE -------->
 {% block title %}
@@ -16,6 +17,9 @@ Log in
       padding:0px 10px 15px 15%;
       vertical-align: middle;
    }
+   body {
+        background-image: url({% static 'season/siteimages/magicCar.jpg' %});
+      }
 </style>
 {% endblock %}
 
