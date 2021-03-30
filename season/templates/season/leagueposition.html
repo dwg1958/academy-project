@@ -18,6 +18,15 @@
       color: inherit;
       text-decoration: none;
    }
+   .table-sm th, .table-sm td {
+       padding: 0.3rem;
+   }
+   td.teamInfo{
+      padding: 0rem;
+   }
+   div.collapse{
+      background-color: #DA6020;
+   }
 </style>
 {% endblock %}
 
@@ -69,11 +78,10 @@
             </tr>
             {% for team in league_list %}
             {% if user.team.teamName  ==  team.teamName %}
-               <tr class = "myteam">
+            <tr class = "myteam">
             {% else %}
-               <tr>
+            <tr data-toggle="collapse" data-target="#accordionTop{{ forloop.counter }}" class="clickable">
             {% endif %}
-
                <td style="width:10%" class="text-center align-middle pr-3"><b style="font-size:1.2rem;">{{ forloop.counter }}</b>&nbsp; ({{team.league_position}})</td>
                <td style="width:20%"> <center><img class="rounded-circle" src=" {{team.teamLogo.url}}" height="50px"></center> </td>
                <td style="width:30%" class="align-middle text-left"> {{team.teamName}} {% if user.team.teamName  ==  team.teamName %}  <a name = "myteam">!</a>  {% endif %}  </td>
@@ -83,10 +91,84 @@
                <td class="align-middle text-right {% if heading == 'W Series only'  %} h5 text-bold{% endif%}"> {{team.points_ws |floatformat:0 }} </td>
                <td class="align-middle text-right {% if heading == 'Overall'        %} h5 text-bold{% endif%}"> {{team.points_total |floatformat:0 }} </td>
             </tr>
+            <tr>
+               <td colspan="8" class = "teamInfo">
+                  <div id="accordionTop{{ forloop.counter }}" class="collapse" >
+                     <div class="row p-2">
+                         <div class="col-md-6 col-xl-6">
+                             <div class="card text-white bg-info pb-0 mb-2">
+                                 <div class="card-body" >
+                                    <span style="float:left; width:70%">
+                                       <blockquote class="card-bodyquote mb-0">
+                                         <h3 class = "mb-3">{{team.teamName}} - F1</h3>
+                                         <h5 class = "pl-3 pr-3"><b>Driver 1 :</b> {{team.p1_1}}</h5>
+                                         <h5 class = "pl-3 pr-3"><b>Driver 2:</b>  {{team.p1_2}}</h5>
+                                       </blockquote>
+                                    </span>
+                                    <span class = "pl-3" style="width:25%">
+                                       <img src="{% static 'season/siteimages/F1.png' %}" height="100px" >
+                                    </span>
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="col-md-6 col-xl-6">
+                             <div class="card text-white bg-info pb-0 mb-2">
+                                 <div class="card-body">
+                                    <span style="float:left; width:70%">
+                                       <blockquote class="card-bodyquote mb-0">
+                                         <h3 class = "mb-3">F2</h3>
+                                         <h5 class = "pl-3 pr-3"><b>Driver 1 :</b> {{team.p2_1}}</h5>
+                                         <h5 class = "pl-3 pr-3"><b>Driver 2:</b>  {{team.p2_2}}</h5>
+                                       </blockquote>
+                                    </span>
+                                    <span class = "pl-3" style="width:25%">
+                                       <img src="{% static 'season/siteimages/F2.png' %}" height="100px" >
+                                    </span>
+                                 </div>
+                             </div>
+                         </div>
+
+                         <div class="col-md-6 col-xl-6">
+                             <div class="card text-white bg-info pb-0 mb-1">
+                                 <div class="card-body">
+                                    <span style="float:left; width:70%">
+                                       <blockquote class="card-bodyquote mb-0">
+                                         <h3 class = "mb-3">F3</h3>
+                                         <h5 class = "pl-3 pr-3"><b>Driver 1 :</b> {{team.p3_1}}</h5>
+                                         <h5 class = "pl-3 pr-3"><b>Driver 2:</b>  {{team.p3_2}}</h5>
+                                       </blockquote>
+                                    </span>
+                                    <span class = "pl-3" style="width:25%">
+                                       <img src="{% static 'season/siteimages/F3.png' %}" height="100px" >
+                                    </span>
+                                 </div>
+                             </div>
+                         </div>
+
+                         <div class="col-md-6 col-xl-6">
+                             <div class="card text-white bg-info pb-0 mb-1">
+                                 <div class="card-body">
+                                    <span style="float:left; width:70%">
+                                       <blockquote class="card-bodyquote mb-0">
+                                         <h3 class = "mb-3">W Series</h3>
+                                         <h5 class = "pl-3 pr-3"><b>Driver 1 :</b> {{team.pw_1}}</h5>
+                                         <h5 class = "pl-3 pr-3"><b>Driver 2:</b>  {{team.pw_2}}</h5>
+                                       </blockquote>
+                                    </span>
+                                    <span class = "pl-3" style="width:25%">
+                                       <img src="{% static 'season/siteimages/W.png' %}" height="100px" >
+                                    </span>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                  </div>
+               </td>
+            </tr>
             {% endfor %}
          </table>
       </div>
-      <!-- Srollable table --->
+      <!-- Scrollable table --->
       <div class="card overflow-auto col-12" style="max-height: 800px;">
          <h3>My Closest Rivals: </h3>
          <div>
@@ -94,9 +176,9 @@
 
                {% for team in sublist %}
                {% if user.team.teamName  ==  team.2 %}
-                  <tr class = "myteam">
+               <tr class = "myteam">
                {% else %}
-                  <tr>
+               <tr data-toggle="collapse" data-target="#accordion{{ forloop.counter }}" class="clickable">
                {% endif %}
 
                   <td style="width:10%" class="text-center align-middle pr-3"><b style="font-size:1.2rem;"><b style="font-size:1.2rem;">{{ team.0 }}</b>&nbsp; ({{ team.8 }})</b></td>
@@ -107,6 +189,80 @@
                   <td class="align-middle text-right {% if heading == 'Formula 3 only' %} h5 text-bold{% endif%}"> {{team.5 |floatformat:0 }} </td>
                   <td class="align-middle text-right {% if heading == 'W Series only'  %} h5 text-bold{% endif%}"> {{team.6 |floatformat:0 }} </td>
                   <td class="align-middle text-right {% if heading == 'Overall'        %} h5 text-bold{% endif%}"> {{team.7 |floatformat:0 }} </td>
+               </tr>
+               <tr>
+                  <td colspan="8" class = "teamInfo">
+                     <div id="accordion{{ forloop.counter }}" class="collapse" >
+                        <div class="row p-2">
+                            <div class="col-md-6 col-xl-6">
+                                <div class="card text-white bg-info pb-0 mb-2">
+                                    <div class="card-body" >
+                                       <span style="float:left; width:70%">
+                                          <blockquote class="card-bodyquote mb-0">
+                                            <h3 class = "mb-3">{{team.2}} - F1</h3>
+                                            <h5 class = "pl-3 pr-3"><b>Driver 1 :</b> {{team.9}}</h5>
+                                            <h5 class = "pl-3 pr-3"><b>Driver 2:</b>  {{team.10}}</h5>
+                                          </blockquote>
+                                       </span>
+                                       <span class = "pl-3" style="width:25%">
+                                          <img src="{% static 'season/siteimages/F1.png' %}" height="100px" >
+                                       </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-6">
+                                <div class="card text-white bg-info pb-0 mb-2">
+                                    <div class="card-body">
+                                       <span style="float:left; width:70%">
+                                          <blockquote class="card-bodyquote mb-0">
+                                            <h3 class = "mb-3">F2</h3>
+                                            <h5 class = "pl-3 pr-3"><b>Driver 1 :</b> {{team.11}}</h5>
+                                            <h5 class = "pl-3 pr-3"><b>Driver 2:</b>  {{team.12}}</h5>
+                                          </blockquote>
+                                       </span>
+                                       <span class = "pl-3" style="width:25%">
+                                          <img src="{% static 'season/siteimages/F2.png' %}" height="100px" >
+                                       </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-xl-6">
+                                <div class="card text-white bg-info pb-0 mb-1">
+                                    <div class="card-body">
+                                       <span style="float:left; width:70%">
+                                          <blockquote class="card-bodyquote mb-0">
+                                            <h3 class = "mb-3">F3</h3>
+                                            <h5 class = "pl-3 pr-3"><b>Driver 1 :</b> {{team.13}}</h5>
+                                            <h5 class = "pl-3 pr-3"><b>Driver 2:</b>  {{team.14}}</h5>
+                                          </blockquote>
+                                       </span>
+                                       <span class = "pl-3" style="width:25%">
+                                          <img src="{% static 'season/siteimages/F3.png' %}" height="100px" >
+                                       </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-xl-6">
+                                <div class="card text-white bg-info pb-0 mb-1">
+                                    <div class="card-body">
+                                       <span style="float:left; width:70%">
+                                          <blockquote class="card-bodyquote mb-0">
+                                            <h3 class = "mb-3">W Series</h3>
+                                            <h5 class = "pl-3 pr-3"><b>Driver 1 :</b> {{team.15}}</h5>
+                                            <h5 class = "pl-3 pr-3"><b>Driver 2:</b>  {{team.16}}</h5>
+                                          </blockquote>
+                                       </span>
+                                       <span class = "pl-3" style="width:25%">
+                                          <img src="{% static 'season/siteimages/W.png' %}" height="100px" >
+                                       </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+                  </td>
                </tr>
                {% endfor %}
             </table>

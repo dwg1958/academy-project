@@ -14,57 +14,57 @@
 <!---- BODY CONTENT --------->
 {% block content %}
 <div class="container">
-  <div class="row">
-    <div class="col-md-12  col-sm-12">
+   <div class="row">
+      <div class="col-md-12  col-sm-12">
 
-       <img src = "{{teamdata.teamLogo.url}} " height= "200" >
-       <h1>{{teamdata.teamName}} Scores</h1>
-       <br /><br />
+         <img src = "{{teamdata.teamLogo.url}} " height= "200" >
+         <h1>{{teamdata.teamName}} Scores</h1>
+         <br /><br />
          <div class="table-responsive">
-             <table id="datatable" class="table table-bordered">
-                 <thead>
-                 <tr>
-                    <th> Event </th><th></th>
-                    <th> Driver </th>
-                    <th> Team Position </th>
-                    <th> Event Type</th>
-                    <th class="text-right"> Points </th>
-                 </tr>
-                 </thead>
+            <table id="datatable" class="table table-bordered">
+               <thead>
+                  <tr>
+                     <th> Event </th><th></th>
+                     <th> Driver </th>
+                     <th> Team Position </th>
+                     <th> Event Type</th>
+                     <th class="text-right"> Points </th>
+                  </tr>
+               </thead>
 
-                 <tbody>
-                    {% for team in score_data %}
-                     <tr>
-                        <td > {{ team.1 }} </td>
-                        <td > <img src="
-                           {% if team.5 == '1' %}
-                              {% static 'season/siteimages/F1.png' %}
-                           {% elif team.5 == '2' %}
-                              {% static 'season/siteimages/F2.png' %}
-                           {% elif team.5 == '3' %}
-                              {% static 'season/siteimages/F3.png' %}
-                           {% else%}
-                              {% static 'season/siteimages/W.png' %}
-                           {% endif%}
-                           " height = "30px" >
-                        </td>
-                        <td > {{ team.0 }} </td>
-                        <td > {% if team.2 == "1" %} Lead Driver {% else %} Second Driver {% endif %}  </td>
-                        <td > {{ team.3 }} </td>
-                        <td class="text-right"> {{ team.4 }} </td>
-                     </tr>
-                     {% endfor %}
+               <tbody>
+                  {% for team in score_data %}
+                  <tr>
+                     <td > {{ team.1 }} </td>
+                     <td > <img src="
+                        {% if team.5 == '1' %}
+                        {% static 'season/siteimages/F1.png' %}
+                        {% elif team.5 == '2' %}
+                        {% static 'season/siteimages/F2.png' %}
+                        {% elif team.5 == '3' %}
+                        {% static 'season/siteimages/F3.png' %}
+                        {% else%}
+                        {% static 'season/siteimages/W.png' %}
+                        {% endif%}
+                        " height = "30px" >
+                     </td>
+                     <td > {{ team.0 }} </td>
+                     <td > {% if team.2 == "1" %} Lead Driver {% else %} Second Driver {% endif %}  </td>
+                     <td > {{ team.3 }} </td>
+                     <td class="text-right"> {{ team.4 }} </td>
+                  </tr>
+                  {% endfor %}
 
-                 </tbody>
-                 <tr>
-               <td colspan = '4'></td>
-               <td><h4>TOTAL</h4></td>
-               <td class="text-right"><h4>{{total_score}}</h4></td>
-            </tr>
-             </table>
+               </tbody>
+               <tr>
+                  <td colspan = '4'></td>
+                  <td><h4>TOTAL</h4></td>
+                  <td class="text-right"><h4>{{total_score}}</h4></td>
+               </tr>
+            </table>
+         </div>
       </div>
    </div>
-</div>
 <br /><br /><br /><br /><br />
 {% endblock %}
 <!---- BODY CONTENT BLOCK --------->

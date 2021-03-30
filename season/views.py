@@ -123,7 +123,8 @@ def leagueposition(request):
     # Pull out 5 above and below
     for team in ranklist:
         if team.place > count-6 and team.place < count+6:
-            sublist.append([team.place, team.teamLogo.url, team.teamName, team.points_f1, team.points_f2, team.points_f3, team.points_ws, team.points_total, team.league_position ])
+            sublist.append([team.place, team.teamLogo.url, team.teamName, team.points_f1, team.points_f2, team.points_f3, \
+            team.points_ws, team.points_total, team.league_position, team.p1_1, team.p1_2, team.p2_1, team.p2_2, team.p3_1, team.p3_2, team.pw_1, team.pw_2  ])
 
     return render(request, 'season/leagueposition.html', {'league_list':league_list, 'sublist': sublist, 'heading':heading})
 
