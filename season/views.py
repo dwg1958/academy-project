@@ -128,6 +128,50 @@ def leagueposition(request):
 
     return render(request, 'season/leagueposition.html', {'league_list':league_list, 'sublist': sublist, 'heading':heading})
 
+####################################
+def leaguetop20(request):
+
+    #See if we requested a pecific league tab ("?tab=F1")
+    try:
+        tab = request.GET['tab']
+    except:
+        tab = 'overall'
+
+
+    if tab == 'F1':
+        order_field  = '-points_f1'
+        points_field = 'points_f1'
+        heading      = "Formula 1 only"
+    elif tab == 'F2':
+        order_field  = '-points_f2'
+        points_field = 'points_f2'
+        heading      = "Formula 2 only"
+    elif tab == 'F3':
+        order_field  = '-points_f3'
+        points_field = 'points_f3'
+        heading      = "Formula 3 only"
+    elif tab == 'WS':
+        order_field  = '-points_ws'
+        points_field = 'points_ws'
+        heading      = "W Series only"
+    else:
+        order_field  = '-points_total'
+        points_field = 'points_total'
+        heading      = "Overall"
+
+    #Get Top 5
+    league_list  = TeamProfile.objects.all().order_by(order_field)[:20]
+
+    #Get my local list
+    # Add the rank to each record
+    ranklist = TeamProfile.objects.annotate(                                                        # add a new field to the resultset
+            place=Window(                                                                           # call it 'place' and open another window on the data to find it
+                expression=DenseRank(), order_by=[F(points_field).desc(),F('points_total').desc(),]  # use the rank function to order based on F1 points field
+                )).filter(f1_cashpot__lt=50)                                                                                  # and if a match, use the total points to decide order
+
+
+    return render(request, 'season/leaguetop20.html', {'league_list':league_list, 'heading':heading})
+
 
 ####################################
 def tables(request):
