@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 <!---- TITLE --------->
 {% block title.     %}League {% endblock %}
@@ -27,6 +28,10 @@
    div.collapse{
       background-color: #DA6020;
    }
+   div #myteamcard{
+      background-color:#DA6020;
+      color: white;
+   }
 </style>
 {% endblock %}
 
@@ -35,33 +40,56 @@
 
 <div class="container">
 
-      <im g src="{% static 'academy/webPageImages/FFDAcademy_Logo.png' %}" alt="" width="40%" class = "mb-5">
-      <h1>League Standings - {{ heading }} </h1>
-      <br /><br />
-      <!-- tabs div -->
-      <div class="row col-12">
-         <div class="tabs-menu col-lg-10 mb-3">
-             <ul class="nav nav-pills">
-                 <li class="nav-item">
-                     <a href="{% url 'leagueposition'%}?tab=F1" class="nav-link {% if heading == 'Formula 1 only' %}active{% endif%}">Formula 1</a>
-                 </li>
-                 <li class="nav-item">
-                     <a href="{% url 'leagueposition'%}?tab=F2" class="nav-link {% if heading == 'Formula 2 only' %}active{% endif%}">Formula 2</a>
-                 </li>
-                 <li class="nav-item">
-                     <a href="{% url 'leagueposition'%}?tab=F3" class="nav-link {% if heading == 'Formula 3 only' %}active{% endif%}">Formula 3</a>
-                 </li>
-                 <li class="nav-item">
-                     <a href="{% url 'leagueposition'%}?tab=WS" class="nav-link {% if heading == 'W Series only' %}active{% endif%}">W Series</a>
-                 </li>
-                 <li class="nav-item">
-                    <a href="{% url 'leagueposition'%}" class="nav-link {% if heading == 'Overall' %}active{% endif%}" >Overall</a>
-                 </li>
-             </ul>
-          </div>
-          <!-- end tabs div -->
-      </div>
+   <!-- top row divs -->
+   <im g src="{% static 'academy/webPageImages/FFDAcademy_Logo.png' %}" alt="" width="40%" class = "mb-5">
+   <div class="row col-12">
 
+      <div class="tabs-menu col-lg-6 mb-3">
+         <h1>League Standings - {{ heading }} </h1>
+         <br /><br />
+          <ul class="nav nav-pills">
+              <li class="nav-item">
+                  <a href="{% url 'leagueposition'%}?tab=F1" class="nav-link {% if heading == 'F1 only' %}active{% endif%}">Formula 1</a>
+              </li>
+              <li class="nav-item">
+                  <a href="{% url 'leagueposition'%}?tab=F2" class="nav-link {% if heading == 'F2 only' %}active{% endif%}">Formula 2</a>
+              </li>
+              <li class="nav-item">
+                  <a href="{% url 'leagueposition'%}?tab=F3" class="nav-link {% if heading == 'F3 only' %}active{% endif%}">Formula 3</a>
+              </li>
+              <li class="nav-item">
+                  <a href="{% url 'leagueposition'%}?tab=WS" class="nav-link {% if heading == 'W Series' %}active{% endif%}">W Series</a>
+              </li>
+              <li class="nav-item">
+                 <a href="{% url 'leagueposition'%}" class="nav-link {% if heading == 'Overall' %}active{% endif%}" >Overall</a>
+              </li>
+          </ul>
+       </div>
+
+       <div class="card col-lg-6" id="myteamcard">
+          <div class = "row col-12">
+             <div class = "col-lg-5 col-xs-5 pt-2">
+                <center>
+                   <span style = "font-size:70px;">
+                   {{boxtext.0 | floatformat:0 | ordinal}}
+                   </span>
+                   <span style = "position: relative; top: -45px; font-size:30px; margin-left:-12px;">*</span>
+               </center>
+             </div>
+             <div class = "col-lg-7 col-xs-7 pt-4">
+                <center>
+                   <h2 class = "pt-1 pb-1" style="margin-top:-12px;">{{boxtext.1}}</h2>
+                   <p style="padding-top: 8px; font-size:11px;">* your percentile position in the league</p>
+                   <p style="margin-top:-12px; font-size:11px;">(actually {{boxtext.2 | ordinal }} after {{boxtext.3}} of {{boxtext.4}} events)</p>
+
+                </center>
+             </div>
+          </div>
+       </div>
+       <!-- end tabs div -->
+   </div>
+
+   <div class="row col-12">
       <!-- Fixed table headings -->
       <div class="card overflow-auto col-12 pt-3">
          <h3>Top 5: </h3>

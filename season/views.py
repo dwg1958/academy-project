@@ -85,19 +85,19 @@ def leagueposition(request):
     if tab == 'F1':
         order_field  = '-points_f1'
         points_field = 'points_f1'
-        heading      = "Formula 1 only"
+        heading      = "F1 only"
     elif tab == 'F2':
         order_field  = '-points_f2'
         points_field = 'points_f2'
-        heading      = "Formula 2 only"
+        heading      = "F2 only"
     elif tab == 'F3':
         order_field  = '-points_f3'
         points_field = 'points_f3'
-        heading      = "Formula 3 only"
+        heading      = "F3 only"
     elif tab == 'WS':
         order_field  = '-points_ws'
         points_field = 'points_ws'
-        heading      = "W Series only"
+        heading      = "W Series"
     else:
         order_field  = '-points_total'
         points_field = 'points_total'
@@ -126,7 +126,16 @@ def leagueposition(request):
             sublist.append([team.place, team.teamLogo.url, team.teamName, team.points_f1, team.points_f2, team.points_f3, \
             team.points_ws, team.points_total, team.league_position, team.p1_1, team.p1_2, team.p2_1, team.p2_2, team.p3_1, team.p3_2, team.pw_1, team.pw_2  ])
 
-    return render(request, 'season/leagueposition.html', {'league_list':league_list, 'sublist': sublist, 'heading':heading})
+    #Data for team position box
+
+    events_scored = 12
+    total_events  = 133
+    position      = request.user.team.league_position
+    percentile    = position / len(TeamProfile.objects.all()) * 100
+
+    boxtext = [percentile, request.user.team.teamName, position, events_scored, total_events]
+
+    return render(request, 'season/leagueposition.html', {'league_list':league_list, 'sublist': sublist, 'heading':heading, 'boxtext':boxtext})
 
 ####################################
 def leaguetop20(request):
