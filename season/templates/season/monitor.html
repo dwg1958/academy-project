@@ -25,7 +25,7 @@
         <div class="container-fluid">
             <div class="row justify-content-md-center">
 
-               <div class="col-xl-3">
+               <div class="col-xl-4">
                    {% tag_player_card %}
                </div>
 
@@ -33,7 +33,7 @@
                  {% tag_pi_formula_points %}
                </div>
 
-               <div class="col-xl-3">
+               <div class="col-xl-4">
                    {% tag_show_next_race_sidebar 5 %}
               </div>
 
@@ -279,112 +279,83 @@
 <!---------------------- JAVASCRIPT BLOCK  ------------------->
 {% block javascript %}
 
-   <!--Morris Chart-->
-   <script src="{% static 'season/assets/libs/morris.js/morris.min.js' %}"></script>
-   <script src="{% static 'season/assets/libs/raphael/raphael.min.js' %}"></script>
-   <script src="{% static 'season/assets/libs/jquery-knob/jquery.knob.min.js' %}"></script>
-   <script src="{% static 'season/assets/libs/metrojs/release/MetroJs.Full/MetroJs.min.js' %}"></script>
-<script>
-   //  Morris Area chart
-   $( function () {
-       "use strict";
-/*
        Morris.Area( {
-           element: 'extra-area-chart', data: [
-               {y: '2018-02', a: 0, b: 0, c:0},
-               {y: '2018-03', a: 150, b: 45, c:15},
-               {y: '2018-04', a: 60, b: 150, c:195},
-               {y: '2018-05', a: 180, b: 36, c:21},
-               {y: '2018-06', a: 90, b: 60, c:360},
-               {y: '2018-07', a: 75, b: 240, c:120},
-               {y: '2018-08', a: 30, b: 30, c:30}
-           ],
-           lineColors: [ '#009688', '#fdb93e', '#148cca'],
-           xkey: 'y',
-           ykeys: [ 'a', 'b', 'c'],
-           labels: [ 'a', 'b', 'c'],
-           pointSize: 0, lineWidth: 0,
-           resize: true,
-           fillOpacity: 0.8,
-           behaveLikeLine: true,
-           gridLineColor: 'rgba(108, 120, 151, 0.2)',
-           hideHover: 'auto'
-       }
-    );
- */
-          Morris.Area( {
-             element: 'extra-area-chart', data: [
-                  {y: 'BAH', a: 10  , b: 0},
-                  {y: 'EMI', a: 0   , b: 0},
-                  {y: 'POR', a: 25  , b: 0},
-                  {y: 'SPA', a: 20  , b: 0},
-                  {y: 'MON', a: 18  , b: 10},
-                  {y: 'AZE', a: 25  , b: 0},
-                  {y: 'CAN', a: 6   , b: 0},
-                  {y: 'FRE', a: 20  , b: 0},
-                  {y: 'AUS', a: 20  , b: 0},
-                  {y: 'BRI', a: 20  , b: 0},
-                  {y: 'HUN', a: 20  , b: 0},
-                  {y: 'BEL', a: 20  , b: 0},
-                  {y: 'DUT', a: 20  , b: 0},
-                  {y: 'ITA', a: 20  , b: 0},
-                  {y: 'RUS', a: 20  , b: 0},
-                  {y: 'SIN', a: 20  , b: 0},
-                  {y: 'JAP', a: 20  , b: 0},
-                  {y: 'USA', a: 20  , b: 0},
-                  {y: 'MEX', a: 20  , b: 0},
-                  {y: 'BRA', a: 20  , b: 0},
-                  {y: 'AUS', a: 20  , b: 0},
-                  {y: 'SAU', a: 20  , b: 0},
-                  {y: 'ABU', a: 20  , b: 0}
-             ],
-             lineColors: [ '#009688', '#fdb93e', '#148cca'],
-             xkey: 'y',
-             ykeys: [ 'a', 'b', 'c'],
-             ymax: 25,
-             parseTime: false,                          //Stops the date formatting
-             labels: [ 'Hamilton', 'Vettel', 'Norris'],
-             pointSize: 0, lineWidth: 0,
-             resize: true,
-             fillOpacity: 0.8,
-             behaveLikeLine: true,
-             gridLineColor: 'rgba(108, 120, 151, 0.2)',
-             hideHover: 'auto'
-         }
-         );
-    // Knob Chart
-       $(".knob").knob({
-           'format' : function (value) {
-              return value + '%';
-           }
-         });
+          element: 'extra-area-chart', data: [
+               {y: 'BAH', a: 10  , b: 0},
+               {y: 'EMI', a: 0   , b: 0},
+               {y: 'POR', a: 25  , b: 0},
+               {y: 'SPA', a: 20  , b: 0},
+               {y: 'MON', a: 18  , b: 10},
+               {y: 'AZE', a: 25  , b: 0},
+               {y: 'CAN', a: 6   , b: 0},
+               {y: 'FRE', a: 20  , b: 0},
+               {y: 'AUS', a: 20  , b: 0},
+               {y: 'BRI', a: 20  , b: 0},
+               {y: 'HUN', a: 20  , b: 0},
+               {y: 'BEL', a: 20  , b: 0},
+               {y: 'DUT', a: 20  , b: 0},
+               {y: 'ITA', a: 20  , b: 0},
+               {y: 'RUS', a: 20  , b: 0},
+               {y: 'SIN', a: 20  , b: 0},
+               {y: 'JAP', a: 20  , b: 0},
+               {y: 'USA', a: 20  , b: 0},
+               {y: 'MEX', a: 20  , b: 0},
+               {y: 'BRA', a: 20  , b: 0},
+               {y: 'AUS', a: 20  , b: 0},
+               {y: 'SAU', a: 20  , b: 0},
+               {y: 'ABU', a: 20  , b: 0}
+          ],
+          lineColors: [ '#009688', '#fdb93e', '#148cca'],
+          xkey: 'y',
+          ykeys: [ 'a', 'b', 'c'],
+          ymax: 25,
+          parseTime: false,                          //Stops the date formatting
+          labels: [ 'Hamilton', 'Vettel', 'Norris'],
+          pointSize: 0, lineWidth: 0,
+          resize: true,
+          fillOpacity: 0.8,
+          behaveLikeLine: true,
+          gridLineColor: 'rgba(108, 120, 151, 0.2)',
+          hideHover: 'auto'
+      }
+      );
+ // Knob Chart
+    $(".knob").knob({
+        'format' : function (value) {
+           return value + '%';
+        }
+      });
 
-         $('.knob').each(function () {
+      $('.knob').each(function () {
 
-           var $this = $(this);
-           var myVal = $this.attr("rel");
-           $this.knob();
+        var $this = $(this);
+        var myVal = $this.attr("rel");
+        $this.knob();
 
-           $({
-               value: 0
-           }).animate({
-               value: myVal
-           }, {
-               duration: 2000,
-               easing: 'swing',
-               step: function () {
-                   $this.val(Math.ceil(this.value)).trigger('change');
+        $({
+            value: 0
+        }).animate({
+            value: myVal
+        }, {
+            duration: 2000,
+            easing: 'swing',
+            step: function () {
+                $this.val(Math.ceil(this.value)).trigger('change');
 
-               },
-           })
-       });
+            },
+        })
+    });
 
-   // Metro
-       $(".live-tile, .flip-list").not(".exclude").liveTile();
-
-   });
-</script>
-
+// Metro
+    $(".live-tile, .flip-list").not(".exclude").liveTile();
 
 {% endblock %}
 <!---------------------- JAVASCRIPT BLOCK  ------------------->
+
+{% block pagescripts %}
+<!--Morris Chart-->
+<script src="{% static 'season/assets/libs/morris.js/morris.min.js' %}"></script>
+<script src="{% static 'season/assets/libs/raphael/raphael.min.js' %}"></script>
+<script src="{% static 'season/assets/libs/jquery-knob/jquery.knob.min.js' %}"></script>
+<script src="{% static 'season/assets/libs/metrojs/release/MetroJs.Full/MetroJs.min.js' %}"></script>
+{% endblock %}

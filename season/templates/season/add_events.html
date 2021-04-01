@@ -76,24 +76,25 @@
       </table>
    </div>
 
-   
+
 
 {% endblock %}
 <!--   <input type="button" onclick="alert('Hello World!')" value="Click Me!">  -->
 
 {% block javascript%}
-   <script src="{% static '/academy/js/datetimepicker.js' %}"></script>
-   <script>
-      $(function () {
-         $("#id_endDateTime").datetimepicker({
-            format: 'd/m/Y H:i',
-         });
-         $("#id_startDateTime").datetimepicker({
-            format: 'd/m/Y H:i',
-         });
-         $("#id_date").datetimepicker({
-            format: 'd/m/Y',
-         });
+
+      $("#id_endDateTime").datetimepicker({
+         format: 'd/m/Y H:i',
       });
-   </script>
+      $("#id_startDateTime").datetimepicker({
+         format: 'd/m/Y H:i',
+      });
+      $("#id_date").datetimepicker({
+         format: 'd/m/Y',
+      });
+
 {% endblock %}
+
+{% block pagescripts %}
+<script src="{% static '/academy/js/datetimepicker.js' %}"></script>
+{% endblock%}

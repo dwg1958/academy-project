@@ -127,11 +127,10 @@ def leagueposition(request):
             team.points_ws, team.points_total, team.league_position, team.p1_1, team.p1_2, team.p2_1, team.p2_2, team.p3_1, team.p3_2, team.pw_1, team.pw_2  ])
 
     #Data for team position box
-
     events_scored = 12
     total_events  = 133
-    position      = request.user.team.league_position
-    percentile    = position / len(TeamProfile.objects.all()) * 100
+    position      = count
+    percentile    = count / len(TeamProfile.objects.all()) * 100
 
     boxtext = [percentile, request.user.team.teamName, position, events_scored, total_events]
 

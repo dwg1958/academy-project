@@ -7,6 +7,7 @@ from ..models import TeamProfile, ScoringEvent, Parameter, User
 from account.models import Profile
 from django.utils import timezone
 from datetime import datetime, timedelta, time
+from django.db.models import F
 import time
 
 # Set text fields to use Markdown #
@@ -42,7 +43,7 @@ def team_update_on():
             para.value = 0
             para.text = ">>> Team Updates Paused for " + str(event.event_ID) + " <<<"
             para.save()
-            
+
     return para.text
 
 #################################################
@@ -52,11 +53,16 @@ def team_update_on():
 # Plain Text event calendar
 @register.inclusion_tag('season/tag_player_card.html', takes_context=True)
 def tag_player_card(context):
-    user = context['request'].user  # you have to pass the environment vars into this codeblock #
-    myTeam    = TeamProfile.objects.get(pk=user.team.id)
-    myProfile = Profile.objects.get(pk=user.id)
+    user               = context['request'].user  # you have to pass the environment vars into this codeblock #
+    myTeam             = TeamProfile.objects.get(pk=user.team.id)
+    myProfile          = Profile.objects.get(pk=user.id)
     league_total_teams = Parameter.objects.get(name="league_total_teams")
-    return {'user': user, 'myProfile': myProfile, 'myTeam': myTeam , 'league_total_teams': league_total_teams}
+    position           = user.team.league_position
+    percentile         = position / len(TeamProfile.objects.all()) * 100
+    print(percentile)
+
+
+    return {'user': user, 'myProfile': myProfile, 'myTeam': myTeam , 'league_total_teams': league_total_teams, 'percentile':percentile}
 
 
 # Sidebar event calendar ################
@@ -73,6 +79,11 @@ def tag_pi_formula_points(context):
     myteam = TeamProfile.objects.get(pk=user.team.id)
     return {'scores':[myteam.points_f1, myteam.points_f2, myteam.points_f3, myteam.points_ws, ]}
 
+# Sidebar event calendar ################
+@register.inclusion_tag('season/tag_hall_of_fame.html', takes_context=True)
+def tag_hall_of_fame(context):
+    league_list  = TeamProfile.objects.all().order_by('-points_total')[:5]
+    return {'league_list':league_list}
 
 
 

@@ -1,13 +1,13 @@
-
+{% load static %}
 <!---------------------- CSS BLOCK  ------------------->
-<link href="/static/academy/css/bootstrap-dark.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
-<link href="/static/academy/css/icons.css" rel="stylesheet" type="text/css" />
+<link href="{% static '/static/academy/css/bootstrap-dark.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static '/static/academy/css/icons.css' %}"          rel="stylesheet" type="text/css" />
 <!---------------------- CSS BLOCK  ------------------->
 
 <div class="card">
    <div class="card-body">
        <span class="float-right text-muted font-size-13">23/80 Scoring Events</span>
-       <h5 class="card-title mb-3">Point by Formula</h5>
+       <h5 class="card-title mb-3">Points by Formula</h5>
        <div id="donut-example" class="morris-charts workloed-chart" style="height: 273px;" dir="ltr"></div>
        <ul class="list-unstyled text-center text-muted mb-0">
            <li class="list-inline-item font-size-13"><i class="mdi mdi-album font-size-16 text-warning mr-2"></i>F1</li>
@@ -18,20 +18,13 @@
    </div>
 </div>
 
-
-
-<!-- JAVASCRIPT -->
-<script src="/static/academy/libs/jquery/jquery.min.js" ></script>
-<script src="/static/academy/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="/static/academy/libs/metismenu/metisMenu.min.js"></script>
-<script src="/static/academy/libs/simplebar/simplebar.min.js"></script>
-<script src="/static/academy/js/app.js"></script>
+<!-- JAVASCRIPT-->
+<script src="{% static '/academy/libs/jquery/jquery.min.js'   %}"></script>
 
 <!--Morris Chart-->
-<script src="/static/season/assets/libs/morris.js/morris.min.js"></script>
-<script src="/static/season/assets/libs/raphael/raphael.min.js"></script>
-<script src="/static/season/assets/libs/jquery-knob/jquery.knob.min.js"></script>
-<script src="/static/season/assets/libs/metrojs/release/MetroJs.Full/MetroJs.min.js"></script>
+<script src="{% static 'season/assets/libs/morris.js/morris.min.js' %}"></script>
+<script src="{% static 'season/assets/libs/raphael/raphael.min.js' %}"></script>
+
 <script>
    //  Morris Area chart
    $( function () {
@@ -44,8 +37,6 @@
              {label: "F2", value: {{scores.1}} },
              {label: "F1", value: {{scores.0}} },
              {label: "WS", value: {{scores.3}} }
-
-
            ],
            resize: true,
            colors:[ '#0ACF97', '#FF679B', '#F9BC09', '#44A2D2'],

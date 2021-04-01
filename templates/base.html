@@ -342,25 +342,26 @@
 
 </div>
 <!-- END layout-wrapper -->
-
+</body>
 <!-- JAVASCRIPT -->
-<script src="{% static '/academy/libs/jquery/jquery.min.js'                 %}" ></script>
+<script src="{% static '/academy/libs/jquery/jquery.min.js'                 %}"></script>
 <script src="{% static '/academy/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <script src="{% static '/academy/libs/metismenu/metisMenu.min.js'           %}"></script>
 <script src="{% static '/academy/libs/simplebar/simplebar.min.js'           %}"></script>
 <script src="{% static '/academy/js/app.js'                                 %}"></script>
+<!---------------------- JAVASCRIPT BLOCK  ------------------->
 <script>
    $(document).ready(function(){
       $("#vertical-menu-btn").click(function(){
          $("#hideMe").toggle();
       });
+
+      {% block javascript %}
+      {% endblock %}
+
    });
 </script>
-</body>
-</html>
-
-
 <!---------------------- JAVASCRIPT BLOCK  ------------------->
-{% block javascript %}
+{% block pagescripts %}
 {% endblock %}
-<!---------------------- JAVASCRIPT BLOCK  ------------------->
+</html>

@@ -1,0 +1,95 @@
+{% load static %}
+{% load humanize %}
+
+<h3>Hall of Fame Top 5: </h3>
+<div class="text-center">
+   <div class="card overflow-auto col-12 pt-3">
+
+      <table class="table table-sm table-hover">
+         <tr>
+            <th class="pr-3">Pos. (overall)</th>
+            <th> </th>
+            <th> Team </th>
+            <th class="text-right " >F1 Points </th>
+            <th class="text-right " >F2 Points </th>
+            <th class="text-right " >F3 Points </th>
+            <th class="text-right " >WS Points</th>
+            <th class="text-right " >Total Points</th>
+         </tr>
+         {% for team in league_list %}
+         <tr data-toggle="collapse" data-target="#accordionTop{{ forloop.counter }}" class="clickable">
+            <td style="width:10%" class="text-center align-middle pr-3"><b style="font-size:1.2rem;">{{ forloop.counter }}</b></td>
+            <td style="width:20%"> <center><img class="rounded-circle" src=" {{team.teamLogo.url}}" height="50px" style="max-width:90px;"></center> </td>
+            <td style="width:30%" class="align-middle text-left"> {{team.teamName}}  </td>
+            <td class="align-middle text-right "> {{team.points_f1    |floatformat:0 }} </td>
+            <td class="align-middle text-right "> {{team.points_f2    |floatformat:0 }} </td>
+            <td class="align-middle text-right "> {{team.points_f3    |floatformat:0 }} </td>
+            <td class="align-middle text-right "> {{team.points_ws    |floatformat:0 }} </td>
+            <td class="align-middle text-right "> {{team.points_total |floatformat:0 }} </td>
+         </tr>
+         <tr>
+            <td colspan="8" class = "teamInfo">
+               <div id="accordionTop{{ forloop.counter }}" class="collapse" >
+                  <div class="row p-2">
+                      <div class=" col-xl-6">
+                          <div class="card text-white bg-info pb-0 mb-2">
+                              <div class="card-body">
+                                 <span style="float:left; width:70%">
+                                      <p class = "pl-3 pr-3 text-left"><b>  1 :</b> {{team.p1_1}}</p>
+                                      <p class = "pl-3 pr-3 text-left"><b>  2 :</b> {{team.p1_2}}</p>
+                                 </span>
+                                 <span class = "pl-3" style="width:25%">
+                                    <img src="{% static 'season/siteimages/F1.png' %}" height="60px" >
+                                 </span>
+                              </div>
+                          </div>
+                      </div>
+                      <div class=" col-xl-6">
+                          <div class="card text-white bg-info pb-0 mb-2">
+                              <div class="card-body">
+                                 <span style="float:left; width:70%">
+                                      <p class = "pl-3 pr-3 text-left"><b>  1 :</b> {{team.p2_1}}</p>
+                                      <p class = "pl-3 pr-3 text-left"><b>  2 :</b> {{team.p2_2}}</p>
+                                 </span>
+                                 <span class = "pl-3" style="width:25%">
+                                    <img src="{% static 'season/siteimages/F2.png' %}" height="60px" >
+                                 </span>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class=" col-xl-6">
+                          <div class="card text-white bg-info pb-0 mb-1">
+                              <div class="card-body">
+                                 <span style="float:left; width:70%">
+                                      <p class = "pl-3 pr-3 text-left"><b>  1 :</b> {{team.p3_1}}</p>
+                                      <p class = "pl-3 pr-3 text-left"><b>  2 :</b> {{team.p3_2}}</p>
+                                 </span>
+                                 <span class = "pl-3" style="width:25%">
+                                    <img src="{% static 'season/siteimages/F3.png' %}" height="60px" >
+                                 </span>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class=" col-xl-6">
+                          <div class="card text-white bg-info pb-0 mb-1">
+                              <div class="card-body">
+                                 <span style="float:left; width:70%">
+                                      <p class = "pl-3 pr-3 text-left"><b>  1 :</b> {{team.pw_1}}</p>
+                                      <p class = "pl-3 pr-3 text-left"><b>  2 :</b> {{team.pw_2}}</p>
+                                 </span>
+                                 <span class = "pl-3" style="width:25%">
+                                    <img src="{% static 'season/siteimages/W.png' %}" height="60px" >
+                                 </span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+               </div>
+            </td>
+         </tr>
+         {% endfor %}
+      </table>
+   </div>
+</div>
