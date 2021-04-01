@@ -61,6 +61,15 @@
       #teamLogo{
          max-width: 180px;
       }
+      .breadcrumb-item > a{
+         color: white;
+      }
+      .breadcrumb-item + .breadcrumb-item::before{
+         color:white;
+      }
+      .page-title-box {
+          padding-bottom: 2px;
+      }
    </style>
    <!---------------------- CSS BLOCK  ------------------->
    {% block css %}
@@ -299,9 +308,9 @@
 
                      <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                           <li class="breadcrumb-item"><a href="javascript: void(0);">GPGrandstand</a></li>
-                           <li class="breadcrumb-item"><a href="javascript: void(0);">Academy</a></li>
-                           <li class="breadcrumb-item active"><a href="javascript: void(0);">{% block breadcrumb %}{% endblock %}</a></li>
+                           <li class="breadcrumb-item"><a href="http://gpgrandstand.com" target="_blank">GPGrandstand</a></li>
+                           <li class="breadcrumb-item"><a href="{% url 'home' %}">Academy</a></li>
+                           <li class="breadcrumb-item active"><a href="#">{% block breadcrumb %}{% endblock %}</a></li>
                         </ol>
                      </div>
                   </div>
