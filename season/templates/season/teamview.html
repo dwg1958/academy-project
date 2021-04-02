@@ -60,6 +60,8 @@ My Team
    .pickertable {
       width:100%;
       margin:10px 5px 10px 0px;
+      overflow-y: auto; height: 100px;
+
    }
    .pickertable td{
       border-collapse: collapse;
@@ -67,11 +69,14 @@ My Team
       height:45px;
       text-align:center;
    }
-   .pickertable th{
+   .pickertable thead th {
+      background-color: #DA6020;
+      color: white;
       border-collapse: collapse;
       border: 1px solid black;
       height:45px;
       padding-left: 8px;
+      position: sticky; top: 0;
    }
    .my-custom-scrollbar {
       position: relative;
@@ -312,28 +317,28 @@ My Team
 
          <dt class=" DriverSection col-lg-1 col-md-0"></dt>
 
-         <dt class=" DriverSection col-lg-3 col-sm-12"><center>
+         <dt class=" DriverSection col-lg-3 col-md-6 col-sm-12"><center>
             <img class = "image-fluid rounded-circle" src="{{ teamdata.p1_1.mugshot.url}}" style="height:150px;"/>
             <h3 class="mt-2">{{ teamdata.p1_1}}</h3>
             <p>Lead Driver</p>
             <p><b>${{ teamdata.p1_1.value}}m </b>(Paid:${{ teamdata.p1_1_cost}}m) </p></center>
          </dt>
 
-         <dt class=" DriverSection col-lg-3 col-sm-12"><center>
+         <dt class=" DriverSection col-lg-3 col-md-6 col-sm-12"><center>
             <img class = "image-fluid rounded-circle" src="{{ teamdata.p1_2.mugshot.url}}" style="height:150px;"/>
             <h3 class="mt-2">{{ teamdata.p1_2}}</h3>
             <p>Second Driver</p>
             <p><b>${{ teamdata.p1_2.value}}m </b>(Paid:${{ teamdata.p1_2_cost}}m) </p></center>
          </dt>
 
-         <dt class=" DriverSection col-lg-4 col-md-12">
+         <dt class=" DriverSection col-lg-4 col-md-6 col-sm-12"><center>
             <table class="budget-table" style="margin-top:100px;">
                <tr><th><h3 id = "f1_budget_title">Current F1 Cash:</h3></th><th></th>
                <tr><td id="f1_p1_name" >{{ teamdata.p1_1}}    </td><td id="f1_p1_cost"        >$</td></tr>
                <tr><td id="f1_p2_name" >{{ teamdata.p1_2}}    </td><td id="f1_p2_cost"        >$</td></tr>
                <tr><td>Total Cost                             </td><td id="f1_total_cost"     >$</td></tr>
                <tr><td>Budget remaining                       </td><td id="f1_total_cash_left">$</td></tr>
-            </table>
+            </table></center>
             <p>
          </dt>
 
@@ -347,11 +352,14 @@ My Team
          <div class="table-wrapper-scroll-y my-custom-scrollbar radio-selector">
             <div class="container-fluid">
                <div class="row justify-content-center">
-                  <div class="col-sm-8">
+                  <div class="col-lg-10">
                      <table class="pickertable table-responsive-md">
-                        <tr><th colspan = "2" class = "pl-5">Driver</th><th style="text-align:center;">Cost</th><th style="text-align:center;">Points</th>
-                            <th style="text-align:center;">Driver #1</th><th style="text-align:center;">Driver #2 </th>
-                        </tr>
+                        <thead>
+                           <tr><th colspan = "2" class = "pl-5">Driver</th><th style="text-align:center;">Cost</th><th style="text-align:center;">Points</th>
+                            <th style="text-align:center;">Driver #1</th><th style="text-align:center;">Driver #2 </th></tr>
+                        </thead>
+                        <tbody>
+
                            {% for driver in f1drivers.all %}
                            <tr>
                               <td><img src="{{driver.mugshot.url}}" class = "image-fluid rounded-circle-xs"></td>
@@ -369,6 +377,8 @@ My Team
                               </td>
                            </tr>
                         {% endfor%}
+
+                        </tbody>
                      </table>
                   </div>
                </div>
@@ -390,28 +400,28 @@ My Team
 
          <dt class=" DriverSection col-lg-1 col-md-0"></dt>
 
-         <dt class=" DriverSection col-lg-3 col-sm-12"><center>
+         <dt class=" DriverSection col-lg-3 col-md-6 col-sm-12"><center>
             <img class = "image-fluid rounded-circle" src="{{ teamdata.p2_1.mugshot.url}}" style="height:150px;"/>
             <h3 class="mt-2">{{ teamdata.p2_1}}</h3>
             <p>Lead Driver</p>
             <p><b>${{ teamdata.p2_1.value}}m </b>(Paid:${{ teamdata.p2_1_cost}}m) </p></center>
          </dt>
 
-         <dt class=" DriverSection col-lg-3 col-sm-12"><center>
+         <dt class=" DriverSection col-lg-3 col-md-6 col-sm-12"><center>
             <img class = "image-fluid rounded-circle" src="{{ teamdata.p2_2.mugshot.url}}" style="height:150px;"/>
             <h3 class="mt-2">{{ teamdata.p2_2}}</h3>
             <p>Second Driver</p>
             <p><b>${{ teamdata.p2_2.value}}m </b>(Paid:${{ teamdata.p2_2_cost}}m) </p></center>
          </dt>
 
-         <dt class=" DriverSection col-lg-4 col-md-12">
+         <dt class=" DriverSection col-lg-4 col-md-6 col-md-12 col-md-12"><center>
             <table class="budget-table" style="margin-top:100px;">
                <tr><th><h3 id = "f2_budget_title">Current F2 Cash:</h3></th><th></th>
                <tr><td id="f2_p1_name" >{{ teamdata.p2_1}}    </td><td id="f2_p1_cost"        >$</td></tr>
                <tr><td id="f2_p2_name" >{{ teamdata.p2_2}}    </td><td id="f2_p2_cost"        >$</td></tr>
                <tr><td>Total Cost                             </td><td id="f2_total_cost"     >$</td></tr>
                <tr><td>Budget remaining                       </td><td id="f2_total_cash_left">$</td></tr>
-            </table>
+            </table></center>
             <p>
          </dt>
 
@@ -428,9 +438,12 @@ My Team
                   <!--- Formula 2 --->
                   <div class="col-sm-8">
                      <table class="pickertable table-responsive-md">
-                        <tr><th colspan = "2" class = "pl-5">Driver</th><th style="text-align:center;">Cost</th><th style="text-align:center;">Points</th>
-                            <th style="text-align:center;">Driver #1</th><th style="text-align:center;">Driver #2 </th>
-                        </tr>
+                        <thead>
+                              <tr><th colspan = "2" class = "pl-5">Driver</th><th style="text-align:center;">Cost</th><th style="text-align:center;">Points</th>
+                               <th style="text-align:center;">Driver #1</th><th style="text-align:center;">Driver #2 </th>
+                           </tr>
+                        </thead>
+                        <tbody>
                            {% for driver in f2drivers.all %}
                            <tr>
                               <td><img src="{{driver.mugshot.url}}" class = "image-fluid rounded-circle-xs"></td>
@@ -448,6 +461,7 @@ My Team
                               </td>
                            </tr>
                         {% endfor%}
+                        </tbody>
                      </table>
                   </div>
                </div>
@@ -468,28 +482,28 @@ My Team
 
          <dt class=" DriverSection col-lg-1 col-md-0"></dt>
 
-         <dt class=" DriverSection col-lg-3 col-sm-12"><center>
+         <dt class=" DriverSection col-lg-3 col-md-6 col-sm-12"><center>
             <img class = "image-fluid rounded-circle" src="{{ teamdata.p3_1.mugshot.url}}" style="height:150px;"/>
             <h3 class="mt-2">{{ teamdata.p3_1}}</h3>
             <p>Lead Driver</p>
             <p><b>${{ teamdata.p3_1.value}}m </b>(Paid:${{ teamdata.p3_1_cost}}m) </p></center>
          </dt>
 
-         <dt class=" DriverSection col-lg-3 col-sm-12"><center>
+         <dt class=" DriverSection col-lg-3 col-md-6 col-sm-12"><center>
             <img class = "image-fluid rounded-circle" src="{{ teamdata.p3_2.mugshot.url}}" style="height:150px;"/>
             <h3 class="mt-2">{{ teamdata.p3_2}}</h3>
             <p>Second Driver</p>
             <p><b>${{ teamdata.p3_2.value}}m </b>(Paid:${{ teamdata.p3_2_cost}}m) </p></center>
          </dt>
 
-         <dt class=" DriverSection col-lg-4 col-md-12">
+         <dt class=" DriverSection col-lg-4 col-md-6 col-md-12"><center>
             <table class="budget-table" style="margin-top:100px;">
                <tr><th><h3 id = "f3_budget_title">Current F3 Cash:</h3></th><th></th>
                <tr><td id="f3_p1_name" >{{ teamdata.p3_1}}    </td><td id="f3_p1_cost"        >$</td></tr>
                <tr><td id="f3_p2_name" >{{ teamdata.p3_2}}    </td><td id="f3_p2_cost"        >$</td></tr>
                <tr><td>Total Cost                             </td><td id="f3_total_cost"     >$</td></tr>
                <tr><td>Budget remaining                       </td><td id="f3_total_cash_left">$</td></tr>
-            </table>
+            </table></center>
             <p>
          </dt>
 
@@ -505,9 +519,12 @@ My Team
                <div class="row justify-content-center">
                   <div class="col-sm-8">
                      <table class="pickertable table-responsive-md">
-                        <tr><th colspan = "2" class = "pl-5">Driver</th><th style="text-align:center;">Cost</th><th style="text-align:center;">Points</th>
+                        <thead>
+                           <tr><th colspan = "2" class = "pl-5">Driver</th><th style="text-align:center;">Cost</th><th style="text-align:center;">Points</th>
                             <th style="text-align:center;">Driver #1</th><th style="text-align:center;">Driver #2 </th>
                         </tr>
+                        </thead>
+                        <tbody>
                            {% for driver in f3drivers.all %}
                            <tr>
                               <td><img src="{{driver.mugshot.url}}" class = "image-fluid rounded-circle-xs"></td>
@@ -525,6 +542,7 @@ My Team
                               </td>
                            </tr>
                         {% endfor%}
+                        </tbody>
                      </table>
                   </div>
                </div>
@@ -545,28 +563,28 @@ My Team
 
          <dt class=" DriverSection col-lg-1 col-md-0"></dt>
 
-         <dt class=" DriverSection col-lg-3 col-sm-12"><center>
+         <dt class=" DriverSection col-lg-3 col-md-6 col-sm-12"><center>
             <img class = "image-fluid rounded-circle" src="{{ teamdata.pw_1.mugshot.url}}" style="height:150px;"/>
             <h3 class="mt-2">{{ teamdata.pw_1}}</h3>
             <p>Lead Driver</p>
             <p><b>${{ teamdata.pw_1.value}}m </b>(Paid:${{ teamdata.pw_1_cost}}m) </p></center>
          </dt>
 
-         <dt class=" DriverSection col-lg-3 col-sm-12"><center>
+         <dt class=" DriverSection col-lg-3 col-md-6 col-sm-12"><center>
             <img class = "image-fluid rounded-circle" src="{{ teamdata.pw_2.mugshot.url}}" style="height:150px;"/>
             <h3 class="mt-2">{{ teamdata.pw_2}}</h3>
             <p>Second Driver</p>
             <p><b>${{ teamdata.pw_2.value}}m </b>(Paid:${{ teamdata.pw_2_cost}}m) </p></center>
          </dt>
 
-         <dt class=" DriverSection col-lg-4 col-md-12">
+         <dt class=" DriverSection col-lg-4 col-md-6 col-md-12"><center>
             <table class="budget-table" style="margin-top:100px;">
                <tr><th><h3 id = "ws_budget_title">Current W Series Cash:</h3></th><th></th>
                <tr><td id="ws_p1_name" >{{ teamdata.pw_1}}    </td><td id="ws_p1_cost"        >$</td></tr>
                <tr><td id="ws_p2_name" >{{ teamdata.pw_2}}    </td><td id="ws_p2_cost"        >$</td></tr>
                <tr><td>Total Cost                             </td><td id="ws_total_cost"     >$</td></tr>
                <tr><td>Budget remaining                       </td><td id="ws_total_cash_left">$</td></tr>
-            </table>
+            </table></center>
             <p>
          </dt>
 
@@ -582,9 +600,12 @@ My Team
                <div class="row justify-content-center">
                   <div class="col-sm-8">
                      <table class="pickertable table-responsive-md">
-                        <tr><th colspan = "2" class = "pl-5">Driver</th><th style="text-align:center;">Cost</th><th style="text-align:center;">Points</th>
+                        <thead>
+                           <tr><th colspan = "2" class = "pl-5">Driver</th><th style="text-align:center;">Cost</th><th style="text-align:center;">Points</th>
                             <th style="text-align:center;">Driver #1</th><th style="text-align:center;">Driver #2 </th>
                         </tr>
+                        </thead>
+                        <tbody>
                            {% for driver in wsdrivers.all %}
                            <tr>
                               <td><img src="{{driver.mugshot.url}}" class = "image-fluid rounded-circle-xs"></td>
@@ -602,6 +623,7 @@ My Team
                               </td>
                            </tr>
                         {% endfor%}
+                        </tbody>
                      </table>
                   </div>
                </div>

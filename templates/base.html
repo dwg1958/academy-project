@@ -20,6 +20,7 @@
    <link href="{% static '/academy/css/academy.css' %}" rel="stylesheet">
    <link href="{% static '/academy/css/dashboard.css' %}" rel="stylesheet">
    <style>
+
       .navbar-header {
          /* background-color: #333333; */
          background-image:url("{% static 'academy/webPageImages/GPGHeader.jpg' %}");
@@ -70,6 +71,59 @@
       .page-title-box {
           padding-bottom: 2px;
       }
+
+     p {
+         color:white;
+         font-size: 1.2rem;
+     }
+
+     /********************************************/
+     /********** RESPONSIVE ELEMENTS *************/
+     /********************************************/
+     /*-- MOBILE ----*/
+      th           { font-size: 0.7rem; font-weight:600;}
+      td           { font-size: 0.7rem; }
+      td img       { height: 30px; max-width:60px;}
+      h1, .h2      { font-size: 1.2rem; }
+      h2, .h2      { font-size: 1.1rem; }
+      h3, .h3      { font-size: 1.0rem; }
+      h4, .h4      { font-size: 0.9rem; }
+      h5, .h5      { font-size: 0.8rem; }
+      h6, .h6      { font-size: 0.8rem; }
+      p            { font-size: 0.8rem; }
+      #headerImage { height:25px; }
+      #page-topbar { position: static; }
+
+      /*-- TABLET ----*/
+      @media (min-width: 768px) {
+         th           { font-size: 0.9rem; font-weight:600;}
+         td           { font-size: 0.8rem; }
+         td img       { height: 40px; max-width:80px;}
+         h1, .h2      { font-size: 1.8rem; }
+         h2, .h2      { font-size: 1.6rem; }
+         h3, .h3      { font-size: 1.4rem; }
+         h4, .h4      { font-size: 1.0rem; }
+         h5, .h5      { font-size: 1.0rem; }
+         h6, .h6      { font-size: 1.0rem; }
+         p            { font-size: 1rem; }
+         #headerImage { height:50px; }
+         #page-topbar { position: static; }
+      }
+      /*-- DESKTOP --->*/
+      @media (min-width: 1024px) {
+         th           { font-size: 1.1rem; font-weight:600;}
+         td           { font-size: 1rem; }
+         td img       { height: 50px; max-width:100px;}
+         h1, .h2      { font-size: 2.2rem; }
+         h2, .h2      { font-size: 1.8rem; }
+         h3, .h3      { font-size: 1.4rem; }
+         h4, .h4      { font-size: 1.2rem; }
+         h5, .h5      { font-size: 1.0rem; }
+         h6, .h6      { font-size: 0.8rem; }
+         p            { font-size: 1.1rem; }
+         #headerImage { height:50px; }
+         #page-topbar { position: fixed; }
+  }
    </style>
    <!---------------------- CSS BLOCK  ------------------->
    {% block css %}
@@ -93,11 +147,8 @@
                <!-- LOGO -->
                <div class="navbar-brand-box">
                   <a href="{% url 'home' %}" class="logo logo-light">
-                     <span class="logo-sm">
-                        <img src="{% static 'season/siteimages/FFDABetaLogoWide.png' %}" alt="" height="30">
-                     </span>
-                     <span class="logo-lg">
-                        <img src="{% static 'season/siteimages/FFDABetaLogoWide.png' %}" alt="" height="50">
+                     <span class="logo">
+                        <img src="{% static 'season/siteimages/FFDABetaLogoWide.png' %}" alt="" id="headerImage">
                      </span>
 
                   </a>

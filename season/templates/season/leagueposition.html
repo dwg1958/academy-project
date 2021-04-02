@@ -12,9 +12,9 @@
    .myteam{
       background-color: #DA6020;
    }
-   td:nth-child(2) img{
+   /*td:nth-child(2) img{
       max-width: 100px;
-   }
+   }*/
    a, a:hover, a:visited, a:active {
       color: inherit;
       text-decoration: none;
@@ -32,6 +32,26 @@
       background-color:#DA6020;
       color: white;
    }
+
+
+   .top5table {
+      width:100%;
+      margin:10px 5px 10px 0px;
+   }
+   .top5table td{
+      border-collapse: collapse;
+      text-align:center;
+   }
+   .top5table thead th {
+      background-color: #DA6020;
+      color: white;
+      border-collapse: collapse;
+      border: 1px solid black;
+      padding-left: 8px;
+
+   }
+
+
 </style>
 {% endblock %}
 
@@ -93,17 +113,19 @@
       <!-- Fixed table headings -->
       <div class="card overflow-auto col-12 pt-3">
          <h3>Top 5: </h3>
-         <table class="table table-sm table-hover">
-            <tr>
-               <th class="pr-3">Pos. (overall)</th>
-               <th> </th>
-               <th> Team </th>
-               <th class="text-right {% if heading == 'Formula 1 only' %} h5 text-danger{% endif%}"> <a href="{% url 'leagueposition'%}?tab=F1">F1 Points</a> </th>
-               <th class="text-right {% if heading == 'Formula 2 only' %} h5 text-danger{% endif%}"> <a href="{% url 'leagueposition'%}?tab=F2">F2 Points</a></th>
-               <th class="text-right {% if heading == 'Formula 3 only' %} h5 text-danger{% endif%}"> <a href="{% url 'leagueposition'%}?tab=F3">F3 Points</a></th>
-               <th class="text-right {% if heading == 'W Series only' %} h5 text-danger{% endif%}" > <a href="{% url 'leagueposition'%}?tab=WS">WS Points</a></th>
-               <th class="text-right {% if heading == 'Overall' %} h5 text-danger{% endif%}"       > <a href="{% url 'leagueposition'%}">Total Points</a></th>
-            </tr>
+         <table class="table table-sm table-hover top5table" >
+            <thead>
+               <tr>
+                  <th class="pr-3">Pos. (overall)</th>
+                  <th> </th>
+                  <th> Team </th>
+                  <th class="text-right {% if heading == 'F1 only'  %} h4 text-bold{% endif%}" > <a href="{% url 'leagueposition'%}?tab=F1">F1 Points</a> </th>
+                  <th class="text-right {% if heading == 'F2 only'  %} h4 text-bold{% endif%}" > <a href="{% url 'leagueposition'%}?tab=F2">F2 Points</a></th>
+                  <th class="text-right {% if heading == 'F3 only'  %} h4 text-bold{% endif%}" > <a href="{% url 'leagueposition'%}?tab=F3">F3 Points</a></th>
+                  <th class="text-right {% if heading == 'W Series' %} h4 text-bold{% endif%}"> <a href="{% url 'leagueposition'%}?tab=WS">WS Points</a></th>
+                  <th class="text-right {% if heading == 'Overall'  %} h4 text-bold{% endif%}" > <a href="{% url 'leagueposition'%}">Total Points</a></th>
+               </tr>
+            </thead>
             {% for team in league_list %}
             {% if user.team.teamName  ==  team.teamName %}
             <tr data-toggle="collapse" data-target="#accordionTop{{ forloop.counter }}" class="clickable myteam">
@@ -111,13 +133,13 @@
             <tr data-toggle="collapse" data-target="#accordionTop{{ forloop.counter }}" class="clickable">
             {% endif %}
                <td style="width:10%" class="text-center align-middle pr-3"><b style="font-size:1.2rem;">{{ forloop.counter }}</b>&nbsp; ({{team.league_position}})</td>
-               <td style="width:20%"> <center><img class="rounded-circle" src=" {{team.teamLogo.url}}" height="50px"></center> </td>
+               <td style="width:20%"> <center><img class="rounded-circle" src=" {{team.teamLogo.url}}"></center> </td>
                <td style="width:30%" class="align-middle text-left"> {{team.teamName}} {% if user.team.teamName  ==  team.teamName %}  <a name = "myteam">!</a>  {% endif %}  </td>
-               <td class="align-middle text-right {% if heading == 'Formula 1 only' %} h5 text-bold{% endif%}"> {{team.points_f1 |floatformat:0 }} </td>
-               <td class="align-middle text-right {% if heading == 'Formula 2 only' %} h5 text-bold{% endif%}"> {{team.points_f2 |floatformat:0 }} </td>
-               <td class="align-middle text-right {% if heading == 'Formula 3 only' %} h5 text-bold{% endif%}"> {{team.points_f3 |floatformat:0 }} </td>
-               <td class="align-middle text-right {% if heading == 'W Series only'  %} h5 text-bold{% endif%}"> {{team.points_ws |floatformat:0 }} </td>
-               <td class="align-middle text-right {% if heading == 'Overall'        %} h5 text-bold{% endif%}"> {{team.points_total |floatformat:0 }} </td>
+               <td class="align-middle text-right {% if heading == 'F1 only' %} h4 text-bold{% endif%}"> {{team.points_f1 |floatformat:0    }} </td>
+               <td class="align-middle text-right {% if heading == 'F2 only' %} h4 text-bold{% endif%}"> {{team.points_f2 |floatformat:0    }} </td>
+               <td class="align-middle text-right {% if heading == 'F3 only' %} h4 text-bold{% endif%}"> {{team.points_f3 |floatformat:0    }} </td>
+               <td class="align-middle text-right {% if heading == 'W Series'%} h4 text-bold{% endif%}"> {{team.points_ws |floatformat:0    }} </td>
+               <td class="align-middle text-right {% if heading == 'Overall' %} h4 text-bold{% endif%}"> {{team.points_total |floatformat:0 }} </td>
             </tr>
             <tr>
                <td colspan="8" class = "teamInfo">
@@ -210,13 +232,13 @@
                {% endif %}
 
                   <td style="width:10%" class="text-center align-middle pr-3"><b style="font-size:1.2rem;"><b style="font-size:1.2rem;">{{ team.0 }}</b>&nbsp; ({{ team.8 }})</b></td>
-                  <td style="width:20%"> <center><img class="rounded-circle" src=" {{team.1}}" height="50px"></center> </td>
+                  <td style="width:20%"> <center><img class="rounded-circle" src=" {{team.1}}"></center> </td>
                   <td style="width:30%"class="align-middle text-left"> {{team.2}}   </td>
-                  <td class="align-middle text-right {% if heading == 'Formula 1 only' %} h5 text-bold{% endif%}"> {{team.3 |floatformat:0 }} </td>
-                  <td class="align-middle text-right {% if heading == 'Formula 2 only' %} h5 text-bold{% endif%}"> {{team.4 |floatformat:0 }} </td>
-                  <td class="align-middle text-right {% if heading == 'Formula 3 only' %} h5 text-bold{% endif%}"> {{team.5 |floatformat:0 }} </td>
-                  <td class="align-middle text-right {% if heading == 'W Series only'  %} h5 text-bold{% endif%}"> {{team.6 |floatformat:0 }} </td>
-                  <td class="align-middle text-right {% if heading == 'Overall'        %} h5 text-bold{% endif%}"> {{team.7 |floatformat:0 }} </td>
+                  <td class="align-middle text-right {% if heading == 'F1 only' %} h4 text-bold{% endif%}"> {{team.3 |floatformat:0 }} </td>
+                  <td class="align-middle text-right {% if heading == 'F2 only' %} h4 text-bold{% endif%}"> {{team.4 |floatformat:0 }} </td>
+                  <td class="align-middle text-right {% if heading == 'F3 only' %} h4 text-bold{% endif%}"> {{team.5 |floatformat:0 }} </td>
+                  <td class="align-middle text-right {% if heading == 'W Series'%} h4 text-bold{% endif%}"> {{team.6 |floatformat:0 }} </td>
+                  <td class="align-middle text-right {% if heading == 'Overall' %} h4 text-bold{% endif%}"> {{team.7 |floatformat:0 }} </td>
                </tr>
                <tr>
                   <td colspan="8" class = "teamInfo">

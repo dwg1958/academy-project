@@ -6,12 +6,13 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 
 def homepage(request):
-	front_page_news =  get_object_or_404(Parameter, name = 'front_page_news').long_text
+	front_page_news     =  get_object_or_404(Parameter, name = 'front_page_news').long_text
+	front_page_unsigned =  get_object_or_404(Parameter, name = 'front_page_unsigned').long_text
 	try:
 		teamname    =  get_object_or_404(TeamProfile, pk=request.user.team.id).teamName
 	except:
 		teamname = " "
-	return render(request, 'homepage.html', {'section': 'home', 'front_page_news':front_page_news, 'teamname':teamname})
+	return render(request, 'homepage.html', {'section': 'home', 'front_page_news':front_page_news, 'front_page_unsigned':front_page_unsigned, 'teamname':teamname})
 
 def aboutpage(request):
 	#textreceived = request.GET['fname']

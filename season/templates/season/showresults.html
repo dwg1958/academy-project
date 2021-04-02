@@ -7,11 +7,9 @@
 
 {% block css%}
 <style>
-   p, td{
-      font-size:1.0rem;
-   }
    td{
       text-align: center;
+      vertical-align: middle !important;
    }
    th:nth-child(2){
       text-align: center;
@@ -32,6 +30,19 @@
    {
       min-width: 200px;
    }
+   /********************************************/
+   /********** RESPONSIVE ELEMENTS *************/
+   /********************************************/
+   /*-- MOBILE ----*/
+      td{ height: 35px; }
+   /*-- TABLET ----*/
+   @media (min-width: 768px) {
+      td{ height: 40px; }
+   }
+   /*-- DESKTOP --->*/
+   @media (min-width: 1024px) {
+      td{ height: 45px; }
+   {
 </style>
 
 {% endblock %}
