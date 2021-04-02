@@ -18,12 +18,13 @@ def dashboard(request):
     #return render(request, 'account/dashboard.html', {'section': 'dashboard'})
     return redirect('teamview')
 
+
 ## LOGOUT ##############################################
 @login_required
 def logout(request):
-	if request.method == 'POST':
-			auth.logout(request)
-			return redirect('home')
+    if request.method == 'POST':
+        auth.logout(request)
+        return redirect('home')
 
 
 # EMAIL FORM ##########################################
@@ -69,6 +70,7 @@ def register(request):
     return render(request,
                   'account/register.html',
                   {'user_form': user_form})
+
 
 ## Edit User record and Profile ###########################
 @login_required
