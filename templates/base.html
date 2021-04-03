@@ -89,9 +89,14 @@
       h5, .h5      { font-size: 0.8rem; color: white; }
       h6, .h6      { font-size: 0.8rem; color: white; }
       p            { font-size: 0.8rem; color: white; }
-      #headerImage { height:25px; }
+      #headerImage { height:40px; }
       #page-topbar { position: static; }
       .page-content{ padding: 8px 12px 10px 0px; }
+      .navbar-brand-box { display:inline; width:200px}
+
+      @media (min-width: 465px){
+         #headerImage { height:25px; }
+      }
 
       /*-- TABLET ----*/
       @media (min-width: 768px) {
@@ -105,7 +110,7 @@
          h5, .h5      { font-size: 1.0rem; color: white; }
          h6, .h6      { font-size: 1.0rem; color: white; }
          p            { font-size: 1rem;   color: white;}
-         #headerImage { height:50px; }
+         #headerImage { height:40px; }
          #page-topbar { position: static; }
          .page-content{ padding: 20px 12px 10px 0px; }
       }
@@ -121,10 +126,11 @@
          h5, .h5      { font-size: 1.0rem; color: white; }
          h6, .h6      { font-size: 0.8rem; color: white; }
          p            { font-size: 1.1rem; color: white; }
-         #headerImage { height:50px; }
+         #headerImage { height:45px; }
          #page-topbar { position: fixed; }
          .page-content{ padding: 94px 12px 10px 0px; }
-  }
+   }
+
    </style>
    <!---------------------- CSS BLOCK  ------------------->
    {% block css %}
@@ -151,7 +157,6 @@
                      <span class="logo">
                         <img src="{% static 'season/siteimages/FFDABetaLogoWide.png' %}" alt="" id="headerImage">
                      </span>
-
                   </a>
                </div>
 
@@ -415,8 +420,22 @@
 <!---------------------- JAVASCRIPT BLOCK  ------------------->
 <script>
    $(document).ready(function(){
+
       $("#vertical-menu-btn").click(function(){
          $("#hideMe").toggle();
+      });
+
+      if($(window).width() < 465) {
+         $("#headerImage").attr("src","{% static 'season/siteimages/FFDABetaLogo.png' %}");
+      }
+
+      $(window).resize(function(e){
+         if($(window).width() < 465) {
+            $("#headerImage").attr("src","{% static 'season/siteimages/FFDABetaLogo.png' %}");
+         }
+         else{
+            $("#headerImage").attr("src","{% static 'season/siteimages/FFDABetaLogoWide.png' %}");
+         }
       });
 
       {% block javascript %}
