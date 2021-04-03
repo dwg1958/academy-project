@@ -82,13 +82,13 @@
       th           { font-size: 0.7rem; font-weight:600;}
       td           { font-size: 0.7rem; }
       td img       { height: 30px; max-width:60px;}
-      h1, .h2      { font-size: 1.2rem; }
-      h2, .h2      { font-size: 1.1rem; }
-      h3, .h3      { font-size: 1.0rem; }
-      h4, .h4      { font-size: 0.9rem; }
-      h5, .h5      { font-size: 0.8rem; }
-      h6, .h6      { font-size: 0.8rem; }
-      p            { font-size: 0.8rem; }
+      h1, .h2      { font-size: 1.2rem; color: white; }
+      h2, .h2      { font-size: 1.1rem; color: white; }
+      h3, .h3      { font-size: 1.0rem; color: white; }
+      h4, .h4      { font-size: 0.9rem; color: white; }
+      h5, .h5      { font-size: 0.8rem; color: white; }
+      h6, .h6      { font-size: 0.8rem; color: white; }
+      p            { font-size: 0.8rem; color: white; }
       #headerImage { height:25px; }
       #page-topbar { position: static; }
       .page-content{ padding: 8px 12px 10px 0px; }
@@ -98,13 +98,13 @@
          th           { font-size: 0.9rem; font-weight:600;}
          td           { font-size: 0.8rem; }
          td img       { height: 40px; max-width:80px;}
-         h1, .h2      { font-size: 1.8rem; }
-         h2, .h2      { font-size: 1.6rem; }
-         h3, .h3      { font-size: 1.4rem; }
-         h4, .h4      { font-size: 1.0rem; }
-         h5, .h5      { font-size: 1.0rem; }
-         h6, .h6      { font-size: 1.0rem; }
-         p            { font-size: 1rem; }
+         h1, .h2      { font-size: 1.8rem; color: white; }
+         h2, .h2      { font-size: 1.6rem; color: white; }
+         h3, .h3      { font-size: 1.4rem; color: white; }
+         h4, .h4      { font-size: 1.0rem; color: white; }
+         h5, .h5      { font-size: 1.0rem; color: white; }
+         h6, .h6      { font-size: 1.0rem; color: white; }
+         p            { font-size: 1rem;   color: white;}
          #headerImage { height:50px; }
          #page-topbar { position: static; }
          .page-content{ padding: 20px 12px 10px 0px; }
@@ -114,13 +114,13 @@
          th           { font-size: 1.1rem; font-weight:600;}
          td           { font-size: 1rem; }
          td img       { height: 50px; max-width:100px;}
-         h1, .h2      { font-size: 2.2rem; }
-         h2, .h2      { font-size: 1.8rem; }
-         h3, .h3      { font-size: 1.4rem; }
-         h4, .h4      { font-size: 1.2rem; }
-         h5, .h5      { font-size: 1.0rem; }
-         h6, .h6      { font-size: 0.8rem; }
-         p            { font-size: 1.1rem; }
+         h1, .h2      { font-size: 2.2rem; color: white; }
+         h2, .h2      { font-size: 1.8rem; color: white; }
+         h3, .h3      { font-size: 1.4rem; color: white; }
+         h4, .h4      { font-size: 1.2rem; color: white; }
+         h5, .h5      { font-size: 1.0rem; color: white; }
+         h6, .h6      { font-size: 0.8rem; color: white; }
+         p            { font-size: 1.1rem; color: white; }
          #headerImage { height:50px; }
          #page-topbar { position: fixed; }
          .page-content{ padding: 94px 12px 10px 0px; }
@@ -210,7 +210,9 @@
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
                {% if user.is_authenticated %}
-               <li class="menu-title text-center" style="padding-bottom:-10px; margin-bottom:-10px;"><img src="{{user.team.teamLogo.url}}" class = "rounded-circle" id = "teamLogo" /></li>
+               <a href="{% url 'home' %}">
+                  <li class="menu-title text-center" style="padding-bottom:-10px; margin-bottom:-10px;"><img src="{{user.team.teamLogo.url}}" class = "rounded-circle" id = "teamLogo" /></li>
+               </a>
                <li class="menu-title text-center">{{user.team.teamName}}</li>
 
                <li>

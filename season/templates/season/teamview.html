@@ -47,9 +47,10 @@ My Team
       margin:0px 5px 0px 15px;
    }
    .academy_tab img{
+      width: 88px !important;
+      max-width:88px;
       height: 88px;
-      width: 88px;
-      margin:15px 15px 0px 15%;
+      margin:15px 15px 0px 15px;
    }
    .btn{
       float: right;
@@ -60,8 +61,7 @@ My Team
    .pickertable {
       width:100%;
       margin:10px 5px 10px 0px;
-      overflow-y: auto; height: 100px;
-
+      overflow-y: auto; height: 600px;
    }
    .pickertable td{
       border-collapse: collapse;
@@ -77,6 +77,7 @@ My Team
       height:45px;
       padding-left: 8px;
       position: sticky; top: 0;
+      margin: 0 auto;
    }
    .my-custom-scrollbar {
       position: relative;
@@ -148,14 +149,16 @@ My Team
        <hr/>
        <br/>
        <div class="tab-content">
+ <!--- ACADEMY TAB ----------->
           <div class="tab-pane fade show active" id="academy">
                <!------------------ TEAM DIVS ------------------------>
                <div class="container-fluid">
                  <div class="row">
+
                    <!--- Formula 1 --->
-                   <div class=" col-xl-3 col-md-6 teamdiv" >
+                   <div class=" col-xl-3 col-sm-6 teamdiv" >
                       <h4 class = "formula">Formula 1</h4>
-                      <table class = "academy_tab">
+                      <table class = "academy_tab" width="100%">
                          <tr>
                             <td>
                               <img class = "image-fluid rounded-circle" src="{% if user.team.p1_1.id %} {{ user.team.p1_1.mugshot.url}} {% else %} /static/academy/webPageImages/blankUser.jpg {% endif %}" />
@@ -175,23 +178,16 @@ My Team
                            </td>
                         </tr>
                      </table>
-                     <!----- results Table ----------->
-                     <table>
-                        <tr>
-                           <td class = "results-l pt-4">
-                              F1 Points
-                           </td>
-                           <td class = "results-r pt-4">
-                              {{ teamdata.points_f1 |floatformat:0 }}
-                           </td>
-                        </tr>
-                     </table>
+
+                     <p class="pt-5 pl-4 pr-4">F1 Points : {{ teamdata.points_f1 |floatformat:0 }}</p>
                      <a href="/season/teamview?tab=F1" class="btn btn-primary mr-1 mt-3" role="button" >Edit</a>
                      <!----- end results Table ----------->
                      <br/>
                    </div>
+
+
                    <!--- Formula 2 --->
-                   <div class="col-xl-3 col-md-6 col-md-6 teamdiv" >
+                   <div class="col-xl-3 col-sm-6 teamdiv" >
                       <h4 class = "formula">Formula 2</h4>
                       <table class = "academy_tab">
                          <tr>
@@ -214,22 +210,15 @@ My Team
                         </tr>
                      </table>
                      <!----- results Table ----------->
-                     <table>
-                        <tr>
-                           <td class = "results-l pt-4">
-                              F2 Points
-                           </td>
-                           <td class = "results-r pt-4">
-                              {{ teamdata.points_f2 |floatformat:0 }}
-                           </td>
-                        </tr>
-                     </table>
+                     <p class="pt-5 pl-4 pr-4">F2 Points : {{ teamdata.points_f2 |floatformat:0 }}</p>
+
                      <a href="/season/teamview?tab=F2" class="btn btn-primary mr-1 mt-3" role="button" >Edit</a>
                      <!----- end results Table ----------->
                      <br/>
                    </div>
+
                    <!--- Formula 3 --->
-                   <div class="col-xl-3 col-md-6 teamdiv" >
+                   <div class="col-xl-3 col-sm-6 teamdiv" >
                       <h4 class = "formula">Formula 3</h4>
                       <table class = "academy_tab">
                          <tr>
@@ -252,22 +241,15 @@ My Team
                         </tr>
                      </table>
                      <!----- results Table ----------->
-                     <table>
-                        <tr>
-                           <td class = "results-l pt-4">
-                              F3 Points
-                           </td>
-                           <td  class = "results-r pt-4">
-                              {{ teamdata.points_f3 |floatformat:0 }}
-                           </td>
-                        </tr>
-                     </table>
+                     <p class="pt-5 pl-4 pr-4">F3 Points : {{ teamdata.points_f3 |floatformat:0 }}</p>
+
                      <a href="/season/teamview?tab=F3" class="btn btn-primary mr-1 mt-3" role="button" >Edit</a>
                      <!----- end results Table ----------->
                      <br/>
                    </div>
+
                    <!--- W Series--->
-                   <div class="col-xl-3 col-md-6 teamdiv">
+                   <div class="col-xl-3 col-sm-6 teamdiv">
                       <h4 class = "formula">W Series</h4>
                       <table class = "academy_tab">
                          <tr>
@@ -290,20 +272,13 @@ My Team
                         </tr>
                      </table>
                      <!----- results Table ----------->
-                     <table>
-                        <tr>
-                           <td class = "results-l pt-4">
-                              W Series Points
-                           </td>
-                           <td class = "results-r pt-4">
-                              {{ teamdata.points_ws |floatformat:0 }}
-                           </td>
-                        </tr>
-                     </table>
+                     <p class="pt-5 pl-4 pr-4">W Series Points : {{ teamdata.points_ws |floatformat:0 }}</p>
+
                      <a href="/season/teamview?tab=WS" class="btn btn-primary mr-1 mt-3" role="button" >Edit</a>
                      <!----- end results Table ----------->
                      <br/>
                    </div>
+
                  </div>
                </div>
 <!------------------ TEAM DIVS ------------------------>

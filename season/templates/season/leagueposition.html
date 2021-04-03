@@ -12,9 +12,6 @@
    .myteam{
       background-color: #DA6020;
    }
-   /*td:nth-child(2) img{
-      max-width: 100px;
-   }*/
    a, a:hover, a:visited, a:active {
       color: inherit;
       text-decoration: none;
@@ -32,8 +29,6 @@
       background-color:#DA6020;
       color: white;
    }
-
-
    .top5table {
       width:100%;
       margin:10px 5px 10px 0px;
@@ -48,10 +43,7 @@
       border-collapse: collapse;
       border: 1px solid black;
       padding-left: 8px;
-
    }
-
-
 </style>
 {% endblock %}
 
@@ -64,7 +56,7 @@
    <im g src="{% static 'academy/webPageImages/FFDAcademy_Logo.png' %}" alt="" width="40%" class = "mb-5">
    <div class="row col-12">
 
-      <div class="tabs-menu col-lg-6 mb-3">
+      <div class="tabs-menu col-lg-7 mb-3">
          <h1>League Standings - {{ heading }} </h1>
          <br /><br />
           <ul class="nav nav-pills">
@@ -86,17 +78,17 @@
           </ul>
        </div>
 
-       <div class="card col-lg-6" id="myteamcard">
+       <div class="card col-lg-5" id="myteamcard">
           <div class = "row col-12">
-             <div class = "col-lg-5 col-xs-5 pt-2">
+             <div class = "col-lg-6 col-xs-5 pt-2">
                 <center>
-                   <span style = "font-size:70px;">
+                   <span style = "font-size:60px;">
                    {{boxtext.0 | floatformat:0 | ordinal}}
                    </span>
                    <span style = "position: relative; top: -30px; font-size:30px; margin-left:-12px;">*</span>
                </center>
              </div>
-             <div class = "col-lg-7 col-xs-7 pt-4">
+             <div class = "col-lg-6 col-xs-7 pt-4">
                 <center>
                    <h2 class = "pt-1 pb-1" style="margin-top:-12px;">{{boxtext.1}}</h2>
                    <p style="padding-top: 8px; font-size:11px;">* your percentile position in the league</p>
@@ -219,19 +211,29 @@
          </table>
       </div>
       <!-- Scrollable table --->
-      <div class="card overflow-auto col-12 pt-3" style="max-height: 800px;">
+      <div class="card overflow-auto col-12 pt-3" >
          <h3>My Closest Rivals: </h3>
          <div>
-            <table class="table table-sm table-hover">
-
+            <table class="table table-sm table-hover top5table">
+               <thead>
+                  <tr>
+                     <th class="pr-3">Pos. (overall)</th>
+                     <th> </th>
+                     <th> Team </th>
+                     <th class="text-right {% if heading == 'F1 only'  %} h4 text-bold{% endif%}" > <a href="{% url 'leagueposition'%}?tab=F1">F1 Points</a> </th>
+                     <th class="text-right {% if heading == 'F2 only'  %} h4 text-bold{% endif%}" > <a href="{% url 'leagueposition'%}?tab=F2">F2 Points</a></th>
+                     <th class="text-right {% if heading == 'F3 only'  %} h4 text-bold{% endif%}" > <a href="{% url 'leagueposition'%}?tab=F3">F3 Points</a></th>
+                     <th class="text-right {% if heading == 'W Series' %} h4 text-bold{% endif%}"> <a href="{% url 'leagueposition'%}?tab=WS">WS Points</a></th>
+                     <th class="text-right {% if heading == 'Overall'  %} h4 text-bold{% endif%}" > <a href="{% url 'leagueposition'%}">Total Points</a></th>
+                  </tr>
+               </thead>
                {% for team in sublist %}
                {% if user.team.teamName  ==  team.2 %}
                <tr data-toggle="collapse" data-target="#accordion{{ forloop.counter }}" class="clickable myteam">
                {% else %}
                <tr data-toggle="collapse" data-target="#accordion{{ forloop.counter }}" class="clickable">
                {% endif %}
-
-                  <td style="width:10%" class="text-center align-middle pr-3"><b style="font-size:1.2rem;"><b style="font-size:1.2rem;">{{ team.0 }}</b>&nbsp; ({{ team.8 }})</b></td>
+                  <td style="width:10%" class="text-center align-middle pr-3"><b style="font-size:1.2rem;">{{ team.0 }}</b>&nbsp; ({{ team.8 }})</td>
                   <td style="width:20%"> <center><img class="rounded-circle" src=" {{team.1}}"></center> </td>
                   <td style="width:30%"class="align-middle text-left"> {{team.2}}   </td>
                   <td class="align-middle text-right {% if heading == 'F1 only' %} h4 text-bold{% endif%}"> {{team.3 |floatformat:0 }} </td>
