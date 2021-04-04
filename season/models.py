@@ -104,9 +104,16 @@ class TeamProfile(models.Model):
     points_f3              = models.DecimalField(max_digits=5, decimal_places=1, default = 0)
     points_ws              = models.DecimalField(max_digits=5, decimal_places=1, default = 0)
     league_position        = models.IntegerField(default=0)
+    position_f1            = models.IntegerField(default=0)
+    position_f2            = models.IntegerField(default=0)
+    position_f3            = models.IntegerField(default=0)
+    position_ws            = models.IntegerField(default=0)
 
     def __str__(self):
         return self.teamName
+
+    class Meta:
+        ordering = ('-points_total',)
 
 
 class Event(models.Model):

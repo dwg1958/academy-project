@@ -137,13 +137,14 @@ LOGOUT_REDIRECT_URL = 'home'
 #Live system connected to GMail
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'gp@gpgrandstand.com'
-EMAIL_HOST_PASSWORD = 'mM3rce>Yzdbu'
+EMAIL_HOST_PASSWORD = 'k!injHB1K5h?Hwjzzh'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 CONTENT_TYPES = ['image', 'video']
 MAX_UPLOAD_SIZE = "1100000"  # 1Mb
 
+DG_CATEGORIES = ['F1', 'F2', 'F3', 'WS']
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
