@@ -18,7 +18,7 @@
                      <img src="{{myProfile.photo.url}}" alt="" class="rounded-circle img-thumbnail avatar" style="width:70px; height:70px;">
                   </div>
                   <div class="col-4 align-top">
-                     <p style = "font-size: 2rem;" >{{ percentile |  floatformat:0 | ordinal }}</p>
+                     <p><span style = "font-size: 2rem;" >{{ percentile |  floatformat:0 }}</span>%</p>
                      <p style = "font-size: 0.6rem; margin-top:-16px;">percentile <br /> ({{myTeam.league_position | ordinal }} of {{league_total_teams.value}})</p>
                   </div>
                </div>

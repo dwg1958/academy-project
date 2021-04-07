@@ -3,7 +3,7 @@
 from django import template
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
-from ..models import TeamProfile, ScoringEvent, Parameter, User
+from ..models import TeamProfile, ScoringEvent, Parameter, User, Event
 from account.models import Profile
 from django.utils import timezone
 from datetime import datetime, timedelta, time
@@ -79,13 +79,54 @@ def tag_pi_formula_points(context):
     myteam = TeamProfile.objects.get(pk=user.team.id)
     return {'scores':[myteam.points_f1, myteam.points_f2, myteam.points_f3, myteam.points_ws, ]}
 
-# Sidebar event calendar ################
+# Hall of Fame ################
 @register.inclusion_tag('season/tag_hall_of_fame.html', takes_context=True)
 def tag_hall_of_fame(context):
     league_list  = TeamProfile.objects.all().order_by('-points_total')[:5]
     return {'league_list':league_list}
 
+# Hall of Fame ################
+@register.inclusion_tag('season/tag_events_so_far.html', takes_context=True)
+def tag_events_so_far(context):
 
+    progress_list=[]
+    progress_list.append( Parameter.objects.get(name="events_in_1").value )
+    progress_list.append( Parameter.objects.get(name="events_total_1").value )
+    progress_list.append( Parameter.objects.get(name="events_in_2").value )
+    progress_list.append( Parameter.objects.get(name="events_total_2").value )
+    progress_list.append( Parameter.objects.get(name="events_in_3").value )
+    progress_list.append( Parameter.objects.get(name="events_total_3").value )
+    progress_list.append( Parameter.objects.get(name="events_in_W").value )
+    progress_list.append( Parameter.objects.get(name="events_total_W").value )
+    progress_list.append( Parameter.objects.get(name="events_in_ALL").value )
+    progress_list.append( Parameter.objects.get(name="events_total_ALL").value )
+
+    data = []
+    data.append(progress_list[0]/progress_list[1]*100)
+    data.append(progress_list[2]/progress_list[3]*100)
+    data.append(progress_list[4]/progress_list[5]*100)
+    data.append(progress_list[6]/progress_list[7]*100)
+
+    next = []
+    date = []
+
+    next_race_1 = Event.objects.filter(startDateTime__gt = timezone.now()).filter(formulas__contains='1')[:1][0]
+    next.append(next_race_1.name)
+    date.append(next_race_1.startDateTime)
+    next_race_2 = Event.objects.filter(startDateTime__gt = timezone.now()).filter(formulas__contains='2')[:1][0]
+    next.append(next_race_2.name)
+    date.append(next_race_2.startDateTime)
+    next_race_3 = Event.objects.filter(startDateTime__gt = timezone.now()).filter(formulas__contains='3')[:1][0]
+    next.append(next_race_3.name)
+    date.append(next_race_3.startDateTime)
+    next_race_w = Event.objects.filter(startDateTime__gt = timezone.now()).filter(formulas__contains='W')[:1][0]
+    next.append(next_race_w.name)
+    date.append(next_race_w.startDateTime)
+
+
+
+
+    return { 'progress_list':progress_list, 'data':data, 'next':next, 'date':date }
 
 
 

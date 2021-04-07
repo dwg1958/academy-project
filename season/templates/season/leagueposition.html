@@ -54,7 +54,7 @@
 
    <!-- top row divs -->
    <im g src="{% static 'academy/webPageImages/FFDAcademy_Logo.png' %}" alt="" width="40%" class = "mb-5">
-   <div class="row col-12">
+   <div class="row col-12 justify-content-md-center">
 
       <div class="tabs-menu col-lg-7 mb-3">
          <h1>League Standings - {{ heading }} </h1>
@@ -79,20 +79,23 @@
        </div>
 
        <div class="card col-lg-5" id="myteamcard">
+          <div class = "row justify-content-md-center">
+             <div class = "col-11 pt-2 text-center">
+                <h2 class = "pt-3" style="margin-top:-12px;">{{boxtext.1}}</h2>
+             </div>
+          </div> <!--row-->
           <div class = "row col-12">
-             <div class = "col-lg-6 col-xs-5 pt-2">
+              <div class = "col-6">
                 <center>
                    <span style = "font-size:60px;">
-                   {{boxtext.0 | floatformat:0 | ordinal}}
-                   </span>
+                   {{boxtext.0 | floatformat:0}}
+                   </span>%
                    <span style = "position: relative; top: -30px; font-size:30px; margin-left:-12px;">*</span>
                </center>
              </div>
-             <div class = "col-lg-6 col-xs-7 pt-4">
+             <div class = "col-6 pt-3">
                 <center>
-                   <h2 class = "pt-1 pb-1" style="margin-top:-12px;">{{boxtext.1}}</h2>
-                   <p style="padding-top: 8px; font-size:11px;">* your percentile position in the league</p>
-                   <p style="margin-top:-12px; font-size:11px;">(actually {{boxtext.2 | ordinal }} after {{boxtext.3}} of {{boxtext.4}} events)</p>
+                   <p style="font-size:11px;">* your percentile position in the league (actually {{boxtext.2 | ordinal }} after {{boxtext.3}} of {{boxtext.4}} events)</p>
 
                 </center>
              </div>

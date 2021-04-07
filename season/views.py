@@ -9,7 +9,6 @@ from django.utils import timezone
 from datetime import datetime, timedelta, time
 from django.db.models import Window, F
 from django.db.models.functions import DenseRank
-from django.conf import settings
 import time
 
 # Create your views here.
@@ -406,12 +405,20 @@ def leagueposition(request):
             break
 
     #Data for team position box
-    events_scored = 999
+    if   tab == 'F1': i='1'
+    elif tab == "F2": i='2'
+    elif tab == "F3": i='3'
+    elif tab == "WS": i='W'
+    else: i = 'ALL'
+
+    total  = eval( 'get_object_or_404(Parameter, name="events_total_'+i + '")' )
+    scored = eval( 'get_object_or_404(Parameter, name="events_in_'+i + '")' )
+
     total_events  = 999
     percentile    = our_position / len(full_league) * 100
 
     #Package up the vbls for the position box
-    boxtext = [percentile, request.user.team.teamName, our_position, events_scored, total_events]
+    boxtext = [percentile, request.user.team.teamName, our_position, scored.value, total.value]
 
     return render(request, 'season/leagueposition.html', {'league_list':league_list, 'sublist': sublist, 'heading':heading, 'boxtext':boxtext})
 
@@ -927,14 +934,7 @@ def rebuildleagues(request):
         place = place+1
 
 
-
-
 ###################### [END] ADD POSITIONS TO TEAM RECORDS ############################################
-
-    # Update parameter totals for static reports
-    para = Parameter.objects.get(name="league_total_teams")
-    para.value = league_total_teams
-    para.save()
 
 
     #Just to check - compare total points in competitorScores with total points in cometitor table
@@ -942,6 +942,28 @@ def rebuildleagues(request):
     scheck = TeamScore.objects.aggregate(score_points = Sum('academyPoints'))
 
     message_2   = 'Points in team table = ' + str(tcheck['team_points']) + ' versus points in scores table = ' + str(scheck['score_points'])
+
+    # Update parameter totals for static reports
+    para = Parameter.objects.get(name="league_total_teams")
+    para.value = league_total_teams
+    para.save()
+
+    #Add events totals and already_in_totals to parameter records
+    for i in ('1','2','3','W'):
+        total = eval( 'get_object_or_404(Parameter, name="events_total_'+i + '")' )
+        total.value = eval("ScoringEvent.objects.filter(formula ='" + i + "').count()")
+        total.save()
+        scored = eval( 'get_object_or_404(Parameter, name="events_in_'+i + '")' )
+        scored.value = eval("ScoringEvent.objects.filter(formula ='" + i + "').filter(results_in=True).count()")
+        scored.save()
+
+    # Do it for all events (good to check)
+    total = eval( 'get_object_or_404(Parameter, name="events_total_ALL")' )
+    total.value = eval("ScoringEvent.objects.count()")
+    total.save()
+    scored = eval( 'get_object_or_404(Parameter, name="events_in_ALL")' )
+    scored.value = eval("ScoringEvent.objects.filter(results_in=True).count()")
+    scored.save()
 
     # Close timer
     toc = time.perf_counter()
@@ -971,21 +993,16 @@ def rebuildleagues(request):
 ##############################################################################################
 def test(request):
 
-    print(settings.DG_CATEGORIES)
+    for t in ('1','2','3','W'):
+        print('\n**********\n')
+        count =1
+        list = eval('Competitor.objects.filter(formula="' + t + '")[:5]' )
+        for record in list:
+           print(t, count, record.firstname, record.surname)
+           count+=1
 
-######################################  TO DO - PUT THESE INTO PARAMETERS #########################################
+    print('\n**********\n')
 
-    total_events = ScoringEvent.objects.all().count()
-    print("total_events = ", total_events)
-
-    All_events_in = ScoringEvent.objects.filter(results_in=True).count()
-    print('All_events_in = ', All_events_in)
-
-    F1_events = ScoringEvent.objects.filter(formula = '1').count()
-    print("F1_events = ", F1_events)
-
-    F1_results_in = ScoringEvent.objects.filter(formula = '1').filter(results_in=True).count()
-    print('F1_results_in = ', F1_results_in)
 
 
     return render(request, 'season/test.html')#, {'league_list': sublist, "heading":heading})

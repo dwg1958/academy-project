@@ -137,7 +137,7 @@ LOGOUT_REDIRECT_URL = 'home'
 #Live system connected to GMail
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'gp@gpgrandstand.com'
-EMAIL_HOST_PASSWORD = 'k!injHB1K5h?Hwjzzh'
+EMAIL_HOST_PASSWORD = 'yefoalutxeydlafv'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
