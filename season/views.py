@@ -104,15 +104,14 @@ def leaguetop20(request):
         heading      = "Overall"
 
     #Get Top 5
-    league_list  = TeamProfile.objects.all().order_by(order_field)[:20]
+    league_list  = TeamProfile.objects.all().filter(points_total__gt=0).order_by(order_field)[:20]
 
     #Get my local list
     # Add the rank to each record
     ranklist = TeamProfile.objects.annotate(                                                        # add a new field to the resultset
             place=Window(                                                                           # call it 'place' and open another window on the data to find it
-                expression=DenseRank(), order_by=[F(points_field).desc(),F('points_total').desc(),]  # use the rank function to order based on F1 points field
-                )).filter(f1_cashpot__lt=50)                                                                                  # and if a match, use the total points to decide order
-
+                expression=DenseRank(), order_by=[F(points_field).desc(),F('points_total').desc(),] # use the rank function to order based on F1 points field
+                )).filter(f1_cashpot__lt=50)                                                        # and if a match, use the total points to decide order
 
     return render(request, 'season/leaguetop20.html', {'league_list':league_list, 'heading':heading})
 
@@ -384,7 +383,7 @@ def leagueposition(request):
         position_field = 'league_position'
 
     #Get full league list ordered by chosen formula / overall
-    full_league = TeamProfile.objects.all().order_by(position_field)
+    full_league = TeamProfile.objects.all().filter(points_total__gt=0).order_by(position_field)
 
     #Get Top 5
     league_list = full_league[:5]
