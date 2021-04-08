@@ -231,6 +231,7 @@
                      <span>My Team</span>
                   </a>
                   <ul class="sub-menu" aria-expanded="false">
+                     <li><a href="{% url 'monitor'        %}">Team Dashboard</a></li>
                      <li><a href="{% url 'teamview'       %}">Manage My Team</a></li>
                      <li><a href="{% url 'teamscores'     %}">Team Scores</a></li>
                      <li><a href="{% url 'teamnamepicker' %}">Team Name & Image</a></li>
@@ -297,7 +298,6 @@
                      <span>Admin</span>
                   </a>
                   <ul class="sub-menu" aria-expanded="false">
-                     <li><a href="{% url 'monitor' %}">Monitor</a></li>
                      <li><a href="{% url 'addresults' %}">Add results</a></li>
                      <li><a href="{% url 'scoreevents' %}">Score Events</a></li>
                      <li><a href="{% url 'rebuildleagues' %}">Rebuild leagues</a></li>

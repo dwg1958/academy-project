@@ -163,7 +163,73 @@ def scoring(request):
 @login_required
 ##############################################################################################
 def monitor(request):
-    return render(request, 'season/monitor.html')
+    #See if we requested a specific league tab ("?tab=F1")
+    try:
+        tab = request.GET['tab']
+    except:
+        tab = 'overall'
+
+
+    if tab == 'F1':
+        points_field   = 'points_f1'
+        heading        = "F1 only"
+        position_field = 'position_f1'
+    elif tab == 'F2':
+        points_field = 'points_f2'
+        heading      = "F2 only"
+        position_field = 'position_f2'
+    elif tab == 'F3':
+        points_field = 'points_f3'
+        heading      = "F3 only"
+        position_field = 'position_f3'
+    elif tab == 'WS':
+        points_field = 'points_ws'
+        heading      = "W Series"
+        position_field = 'position_ws'
+    else:
+        points_field = 'points_total'
+        heading      = "Overall"
+        position_field = 'league_position'
+
+    #Get full league list ordered by chosen formula / overall
+    full_league = TeamProfile.objects.all().filter(points_total__gt=0).order_by(position_field)
+
+    #Get Top 5
+    league_list = full_league[:5]
+
+    #Get my local list
+    # Find our position
+    our_team = request.user.team
+    our_position = eval('our_team.'+position_field)  #indirection!!
+
+    # Get the 5 above and below us
+    sublist = []
+    for team in full_league:
+        team_place = eval('team.'+position_field)
+        if team_place > our_position-6 and team_place < our_position+6:
+            sublist.append([team_place, team.teamLogo.url, team.teamName, team.points_f1, team.points_f2, team.points_f3, \
+            team.points_ws, team.points_total, team.league_position, team.p1_1, team.p1_2, team.p2_1, team.p2_2, team.p3_1, team.p3_2, team.pw_1, team.pw_2  ])
+        if team_place > our_position+6:
+            break
+
+    #Data for team position box
+    if   tab == 'F1': i='1'
+    elif tab == "F2": i='2'
+    elif tab == "F3": i='3'
+    elif tab == "WS": i='W'
+    else: i = 'ALL'
+
+    total  = eval( 'get_object_or_404(Parameter, name="events_total_'+i + '")' )
+    scored = eval( 'get_object_or_404(Parameter, name="events_in_'+i + '")' )
+
+    total_events  = 999
+    percentile    = our_position / len(full_league) * 100
+
+    #Package up the vbls for the position box
+    boxtext = [percentile, request.user.team.teamName, our_position, scored.value, total.value]
+
+
+    return render(request, 'season/monitor.html', {'league_list':league_list, 'sublist': sublist, 'heading':heading, 'boxtext':boxtext})
 
 
 @login_required
