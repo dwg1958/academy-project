@@ -179,4 +179,9 @@ Drivers
 {% endblock %}
 
 {% block javascript %}
+
+   //Collapse LHS menu bar to show more screen
+   if($(window).width() > 992) {
+     $("#vertical-menu-btn").click();
+   }
 {% endblock %}

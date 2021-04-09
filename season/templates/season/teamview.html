@@ -686,8 +686,10 @@ My Team
        }
 
        $(document).ready(function(){
-          //Collpase LHS menu bar to show team boxes
-          $("#vertical-menu-btn").click();
+          //Collapse LHS menu bar to show team boxes
+          if($(window).width() > 992) {
+             $("#vertical-menu-btn").click();
+         }
 
           //show modal if no team name selected
           if('{{teamdata.teamName}}' == 'My Team') {
