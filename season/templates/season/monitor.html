@@ -3,8 +3,8 @@
 {% load blog_tags %}
 
 <!---- TITLE --------->
-{% block title.     %}Test {% endblock %}
-{% block breadcrumb %}Tester {% endblock %}
+{% block title.     %}DashBoard {% endblock %}
+{% block breadcrumb %}DashBoard {% endblock %}
 
 <!---- STYLE --------->
 {% block css %}
@@ -61,15 +61,15 @@
   <div class="container-fluid">
       <div class="row justify-content-md-center">
 
-         <div class="col-xl-4" >
+         <div class="col-xl-4 col-md-6" >
               {% tag_events_so_far %}
          </div>
 
-         <div class="col-xl-4" >
+         <div class="col-xl-4 col-md-6" >
              {% tag_player_card %}
          </div>
 
-         <div class="col-xl-4">
+         <div class="col-xl-4 col-md-6">
               {% tag_pi_formula_points %}
          </div>
 

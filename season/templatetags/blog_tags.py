@@ -75,9 +75,12 @@ def tag_show_next_race_sidebar(count=10):
 # Sidebar event calendar ################
 @register.inclusion_tag('season/tag_pi_formula_points.html', takes_context=True)
 def tag_pi_formula_points(context):
+
+    events_in   = Parameter.objects.get(name="events_in_ALL").value
+    events_all  = Parameter.objects.get(name="events_total_ALL").value
     user = context['request'].user
     myteam = TeamProfile.objects.get(pk=user.team.id)
-    return {'scores':[myteam.points_f1, myteam.points_f2, myteam.points_f3, myteam.points_ws, ]}
+    return {'scores':[myteam.points_f1, myteam.points_f2, myteam.points_f3, myteam.points_ws], 'events_in':events_in, 'events_all':events_all}
 
 # Hall of Fame ################
 @register.inclusion_tag('season/tag_hall_of_fame.html', takes_context=True)

@@ -479,7 +479,6 @@ def leagueposition(request):
     total  = eval( 'get_object_or_404(Parameter, name="events_total_'+i + '")' )
     scored = eval( 'get_object_or_404(Parameter, name="events_in_'+i + '")' )
 
-    total_events  = 999
     percentile    = our_position / len(full_league) * 100
 
     #Package up the vbls for the position box
