@@ -155,6 +155,9 @@ def tableformula(request, formula):
 def scoring(request):
     return render(request, 'season/scoring.html')
 
+####################################
+def gettingstarted(request):
+    return render(request, 'season/gettingstarted.html')
 
 ##############################################################################################
 ############################### USER PAGES ###################################################

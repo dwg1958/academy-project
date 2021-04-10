@@ -26,6 +26,7 @@ urlpatterns = [
     path( 'teamscores',        views.teamscores            , name = "teamscores"),
     path( 'rebuildleagues',    views.rebuildleagues        , name = "rebuildleagues"),
     path( 'scoring',           views.scoring               , name = "scoring"),
+    path( 'gettingstarted',    views.gettingstarted        , name = "gettingstarted"),
     path( 'monitor',           views.monitor               , name = "monitor"),
     path( 'test',              views.test                  , name = "test"),
 
