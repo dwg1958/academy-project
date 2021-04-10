@@ -300,11 +300,11 @@ class AcademyScoringMatrix(models.Model):
 class TeamArchive(models.Model):
     user_ID                = models.ForeignKey(User, on_delete = models.DO_NOTHING, related_name='archive')
     teamName               = models.CharField(max_length=30, default='My Team Archive')
-    dateArchived           = models.DateTimeField(auto_now=True)
-    f1_cashpot             = models.DecimalField(max_digits=4, decimal_places=1)
-    f2_cashpot             = models.DecimalField(max_digits=4, decimal_places=1)
-    f3_cashpot             = models.DecimalField(max_digits=4, decimal_places=1)
-    ws_cashpot             = models.DecimalField(max_digits=4, decimal_places=1)
+    dateSelected           = models.DateTimeField(auto_now=True)
+    f1_cashpot             = models.DecimalField(max_digits=4, decimal_places=1, default = 0)
+    f2_cashpot             = models.DecimalField(max_digits=4, decimal_places=1, default = 0)
+    f3_cashpot             = models.DecimalField(max_digits=4, decimal_places=1, default = 0)
+    ws_cashpot             = models.DecimalField(max_digits=4, decimal_places=1, default = 0)
     p1_1                   = models.ForeignKey(Competitor , null=True, on_delete = models.DO_NOTHING, related_name='a_p1_1', default=1)
     p1_1_cost              = models.DecimalField(max_digits=4, decimal_places=1, default = 0)
     p1_2                   = models.ForeignKey(Competitor , null=True, on_delete = models.DO_NOTHING, related_name='a_p1_2', default=1)
@@ -332,4 +332,4 @@ class TeamArchive(models.Model):
     points_total           = models.DecimalField(max_digits=5, decimal_places=1, default = 0)
 
     def __str__(self):
-        return self.teamName + " - Archived on : " + self.dateArchived
+        return self.teamName

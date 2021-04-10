@@ -10,6 +10,7 @@ from .models import CompetitorScore
 from .models import TeamProfile
 from .models import TeamScore
 from .models import Parameter
+from .models import TeamArchive
 
 #Show record details in admin table
 #https://www.geeksforgeeks.org/customize-django-admin-interface/
@@ -95,6 +96,15 @@ class TeamScoreAdmin(admin.ModelAdmin):
 
     active.boolean = True
 
+class TeamArchiveAdmin(admin.ModelAdmin):
+    list_display  = ( 'id','user_ID', 'teamName', 'dateSelected')#, 'is_active')
+    search_fields = ('teamName',)
+
+    def active(self, obj):
+        return obj.is_active == 1
+
+    active.boolean = True
+
 ############################################################
 # Add active/inactive flags in table list to change record field 'is_active'
 #    def make_active(modeladmin, request, queryset):
@@ -119,3 +129,4 @@ admin.site.register(Result, ResultAdmin)
 admin.site.register(AcademyScoringMatrix, AcademyScoringMatrixAdmin)
 admin.site.register(TeamScore, TeamScoreAdmin)
 admin.site.register(Parameter, ParameterAdmin)
+admin.site.register(TeamArchive, TeamArchiveAdmin)

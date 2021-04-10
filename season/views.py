@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
-from .models import Competitor, Event, ScoringEvent, Result, TeamProfile, AcademyScoringMatrix, CompetitorScore, TeamScore, Parameter
+from .models import Competitor, Event, ScoringEvent, Result, TeamProfile, AcademyScoringMatrix, CompetitorScore, TeamScore, Parameter, TeamArchive
 from django.contrib.auth.decorators import login_required
 from .forms import EventForm, TeamProfileForm, TeamProfileForm
 from django.contrib.auth.models import User
@@ -270,11 +270,21 @@ def teamview(request):
             elif ( updateallowed == 0 ):
                 returnmessage = 'Sorry - No update allowed during a Scoring-Event weekend'
             else:
+                #Archive old teamProfile
+                oldteam = TeamArchive()
+                for field in oldteam.__dict__.keys():
+                    if field not in ['_state', 'id', 'dateSelected']:
+                        oldteam.__dict__[field] = recordtoedit.__dict__[field]
+                oldteam.dateSelected= timezone.now()
+                oldteam.save()
+
+                #Update new team details
                 recordtoedit.p1_1 = new_p1_1
                 recordtoedit.p1_1_cost = new_p1_1.value
                 recordtoedit.p1_2 = new_p1_2
                 recordtoedit.p1_2_cost = new_p1_2.value
                 recordtoedit.f1_cashpot = new_cash_pot
+
                 #Save data to table
                 recordtoedit.save()
 
@@ -299,6 +309,14 @@ def teamview(request):
             elif ( updateallowed == 0 ):
                 returnmessage = 'Sorry - No update allowed during a Scoring-Event weekend'
             else:
+                #Archive old teamProfile
+                oldteam = TeamArchive()
+                for field in oldteam.__dict__.keys():
+                    if field not in ['_state', 'id', 'dateSelected']:
+                        oldteam.__dict__[field] = recordtoedit.__dict__[field]
+                oldteam.dateSelected= timezone.now()
+                oldteam.save()
+
                 recordtoedit.p2_1 = new_p2_1
                 recordtoedit.p2_1_cost = new_p2_1.value
                 recordtoedit.p2_2 = new_p2_2
@@ -327,6 +345,14 @@ def teamview(request):
             elif ( updateallowed == 0 ):
                 returnmessage = 'Sorry - No update allowed during a Scoring-Event weekend'
             else:
+                #Archive old teamProfile
+                oldteam = TeamArchive()
+                for field in oldteam.__dict__.keys():
+                    if field not in ['_state', 'id', 'dateSelected']:
+                        oldteam.__dict__[field] = recordtoedit.__dict__[field]
+                oldteam.dateSelected= timezone.now()
+                oldteam.save()
+
                 recordtoedit.p3_1 = new_p3_1
                 recordtoedit.p3_1_cost = new_p3_1.value
                 recordtoedit.p3_2 = new_p3_2
@@ -355,6 +381,14 @@ def teamview(request):
             elif ( updateallowed == 0 ):
                 returnmessage = 'Sorry - No update allowed during a Scoring-Event weekend'
             else:
+                #Archive old teamProfile
+                oldteam = TeamArchive()
+                for field in oldteam.__dict__.keys():
+                    if field not in ['_state', 'id', 'dateSelected']:
+                        oldteam.__dict__[field] = recordtoedit.__dict__[field]
+                oldteam.dateSelected= timezone.now()
+                oldteam.save()
+
                 recordtoedit.pw_1 = new_pw_1
                 recordtoedit.pw_1_cost = new_pw_1.value
                 recordtoedit.pw_2 = new_pw_2
