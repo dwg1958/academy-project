@@ -295,3 +295,41 @@ class AcademyScoringMatrix(models.Model):
 
     def __str__(self):
         return  self.formula + " - " + self.teamPosition
+
+
+class TeamArchive(models.Model):
+    user_ID                = models.ForeignKey(User, on_delete = models.DO_NOTHING, related_name='archive')
+    teamName               = models.CharField(max_length=30, default='My Team Archive')
+    dateArchived           = models.DateTimeField(auto_now=True)
+    f1_cashpot             = models.DecimalField(max_digits=4, decimal_places=1)
+    f2_cashpot             = models.DecimalField(max_digits=4, decimal_places=1)
+    f3_cashpot             = models.DecimalField(max_digits=4, decimal_places=1)
+    ws_cashpot             = models.DecimalField(max_digits=4, decimal_places=1)
+    p1_1                   = models.ForeignKey(Competitor , null=True, on_delete = models.DO_NOTHING, related_name='a_p1_1', default=1)
+    p1_1_cost              = models.DecimalField(max_digits=4, decimal_places=1, default = 0)
+    p1_2                   = models.ForeignKey(Competitor , null=True, on_delete = models.DO_NOTHING, related_name='a_p1_2', default=1)
+    p1_2_cost              = models.DecimalField(max_digits=4, decimal_places=1, default = 0)
+    p1_m                   = models.ForeignKey(Competitor , null=True, on_delete = models.DO_NOTHING, related_name='a_p1_m', default=1)
+    p1_m_cost              = models.DecimalField(max_digits=4, decimal_places=1, default = 0)
+    p2_1                   = models.ForeignKey(Competitor , null=True, on_delete = models.DO_NOTHING, related_name='a_p2_1', default=1)
+    p2_1_cost              = models.DecimalField(max_digits=4, decimal_places=1, default = 0)
+    p2_2                   = models.ForeignKey(Competitor , null=True, on_delete = models.DO_NOTHING, related_name='a_p2_2', default=1)
+    p2_2_cost              = models.DecimalField(max_digits=4, decimal_places=1, default = 0)
+    p2_m                   = models.ForeignKey(Competitor , null=True, on_delete = models.DO_NOTHING, related_name='a_p2_m', default=1)
+    p2_m_cost              = models.DecimalField(max_digits=4, decimal_places=1, default = 0)
+    p3_1                   = models.ForeignKey(Competitor , null=True, on_delete = models.DO_NOTHING, related_name='a_p3_1', default=1)
+    p3_1_cost              = models.DecimalField(max_digits=4, decimal_places=1, default = 0)
+    p3_2                   = models.ForeignKey(Competitor , null=True, on_delete = models.DO_NOTHING, related_name='a_p3_2', default=1)
+    p3_2_cost              = models.DecimalField(max_digits=4, decimal_places=1, default = 0)
+    p3_m                   = models.ForeignKey(Competitor , null=True, on_delete = models.DO_NOTHING, related_name='a_p3_m', default=1)
+    p3_m_cost              = models.DecimalField(max_digits=4, decimal_places=1, default = 0)
+    pw_1                   = models.ForeignKey(Competitor , null=True, on_delete = models.DO_NOTHING, related_name='a_pw_1', default=1)
+    pw_1_cost              = models.DecimalField(max_digits=4, decimal_places=1, default = 0)
+    pw_2                   = models.ForeignKey(Competitor , null=True, on_delete = models.DO_NOTHING, related_name='a_pw_2', default=1)
+    pw_2_cost              = models.DecimalField(max_digits=4, decimal_places=1, default = 0)
+    pw_m                   = models.ForeignKey(Competitor , null=True, on_delete = models.DO_NOTHING, related_name='a_pw_m', default=1)
+    pw_m_cost              = models.DecimalField(max_digits=5, decimal_places=1, default = 0)
+    points_total           = models.DecimalField(max_digits=5, decimal_places=1, default = 0)
+
+    def __str__(self):
+        return self.teamName + " - Archived on : " + self.dateArchived
