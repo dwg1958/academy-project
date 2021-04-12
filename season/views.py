@@ -408,7 +408,10 @@ def teamview(request):
     f2drivers = Competitor.objects.filter(formula = 2, role = 'D')
     f3drivers = Competitor.objects.filter(formula = 3, role = 'D')
     wsdrivers = Competitor.objects.filter(formula = 'W', role = 'D')
-    return render(request, 'season/teamview.html',{ 'returnmessage':returnmessage, 'teamdata':teamdata, 'f1drivers':f1drivers, 'f2drivers':f2drivers, 'f3drivers':f3drivers, 'wsdrivers':wsdrivers})
+
+    graphdata = [ (request.user.team.f1_cashpot/50)*100,(request.user.team.f2_cashpot/30)*100,(request.user.team.f3_cashpot/20)*100,(request.user.team.ws_cashpot/20)*100 ]
+
+    return render(request, 'season/teamview.html',{ 'returnmessage':returnmessage, 'teamdata':teamdata, 'f1drivers':f1drivers, 'f2drivers':f2drivers, 'f3drivers':f3drivers, 'wsdrivers':wsdrivers, 'graphdata': graphdata})
 
 @login_required
 ##############################################################################################

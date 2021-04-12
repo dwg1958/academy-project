@@ -9,10 +9,16 @@
 <!---- STYLE --------->
 {% block css %}
 <!---This css makes scroller in process box stay in shape -->
-<link href="{% static 'season/assets/libs/metrojs/release/MetroJs.Full/MetroJs.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="/static/season/assets/libs/metrojs/release/MetroJs.Full/MetroJs.min.css" rel="stylesheet" type="text/css" />
 
 <style>
-
+   .progress{
+      background-color: #444;
+   }
+   .f_badges{
+      height:45px;
+      width: 45px;
+   }
 </style>
 {% endblock %}
 
@@ -22,23 +28,7 @@
 <!-- Start right Content here -->
 <!-- ============================================================== -->
 
-        <div class="container-fluid">
-            <div class="row justify-content-md-center">
-
-               <div class="col-xl-4">
-                   {% tag_player_card %}
-               </div>
-
-               <div class="col-xl-4">
-                 {% tag_pi_formula_points %}
-               </div>
-
-               <div class="col-xl-4">
-                   {% tag_show_next_race_sidebar 5 %}
-              </div>
-
-            </div>
-<!--end row 1-->
+        <div class="container-fluid"> <!---Graph -->
             <div class="row justify-content-md-center" id="tour1">
                 <div class="col-xl-10">
                     <div class="card">
@@ -75,58 +65,15 @@
 <!--end row 2 -->
 
 <!--end row 3 -->
-            <div class="row justify-content-md-center">
-               <div class="col-lg-6">
-                   <div class="card" id="tour2">
-                       <div class="card-body">
-                           <h5 class="card-title mb-3">Season Progress</h5>
-                           <div class="row">
-                              <div class="col-md-12">
-                                   <div class="mb-0">
-                                       <img src="{% static 'season/siteimages/F1.png'%}" alt="" class="avatar-xs rounded-circle mr-1">
-                                       <span><strong>Next: Russian GP - July 8th</strong></span>
-                                   </div>
-                                   <small class="float-right text-muted ml-3 font-size-14">6/18 races</small>
-                                   <div class="progress mt-2 mb-4 bg-transparent" style="height:6px;">
-                                       <div class="progress-bar bg-primary" role="progressbar" style="width: 33%; border-radius:5px;" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
-                                   </div>
-                                   <div class="mb-0">
-                                       <img src="{% static 'season/siteimages/F2.png'%}" alt="" class="avatar-xs rounded-circle mr-1">
-                                       <span><strong>Next: Russian GP - July 8th</strong></span>
-                                   </div>
-                                   <small class="float-right text-muted ml-3 font-size-14">6/14 races</small>
-                                   <div class="progress mt-2 mb-4 bg-transparent" style="height:6px;">
-                                       <div class="progress-bar bg-primary" role="progressbar" style="width: 60%; border-radius:5px;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                   </div>
-                                   <div class="mb-0">
-                                       <img src="{% static 'season/siteimages/F3.png'%}" alt="" class="avatar-xs rounded-circle mr-1">
-                                       <span><strong>Next: Austrian GP - July 20th</strong></span>
-                                   </div>
-                                   <small class="float-right text-muted ml-3 font-size-14">6/14 races</small>
-                                   <div class="progress mt-2 mb-4 bg-transparent" style="height:6px;">
-                                       <div class="progress-bar bg-primary" role="progressbar" style="width: 45%; border-radius:5px;" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
-                                   </div>
-                                   <div class="mb-0">
-                                       <img src="{% static 'season/siteimages/W.png'%}" alt="" class="avatar-xs rounded-circle mr-1">
-                                       <span><strong>Next: Russian GP - July 8th</strong></span>
-                                   </div>
-                                   <small class="float-right text-muted ml-3 font-size-14">2/8 races</small>
-                                   <div class="progress mt-2 bg-transparent" style="height:6px;">
-                                       <div class="progress-bar bg-primary" role="progressbar" style="width: 30%; border-radius:5px;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                                   </div>
-                              </div>
 
-                           </div>
-                       </div>
-                   </div>
-               </div>
 <!---- KNOB CHART ------------------------>
-                <div class="col-xl-4">
+            <div class="row row justify-content-md-center">
+                <div class="col-xl-4 col-md-6"> <!-- Knob chart -->
                     <div class="card">
                         <div class="card-body">
                             <h5 class="mt-0">Team Progress</h5>
                             <div class="row">
-                                <div class="col-sm-6 align-self-center">
+                                <div class="col-md-6 align-self-center">
                                     <div class="live-tile text-center" data-mode="carousel" data-direction="vertical" data-delay="3500" data-height="10">
                                         <div class="mt-2">
                                             <h5 class="text-primary pt-2">F1 Score</h5>
@@ -150,7 +97,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-md-6">
                                     <div class="text-center knob-Prosess mt-4 mt-sm-0" dir="ltr">
                                         <input class="knob animated" value="0" rel="25" data-width="120" data-height="120" data-linecap=round
                                         data-fgColor="#44a2d2"  data-skin="tron" data-angleOffset="180"
@@ -166,103 +113,8 @@
                             </div>
                         </div>
                     </div>
+                 </div> <!-- End Knob chart -->
 <!---- KNOB CHART ------------------------>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card"  id="tour3">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-4 align-self-center">
-                                            <div class="icon-info">
-                                                <i class="mdi mdi-diamond text-warning"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col-8 align-self-center text-center">
-                                            <div class="ml-2 text-right">
-                                                <p class="mb-1 text-muted font-size-13">Projects</p>
-                                                <h4 class="mt-0 mb-1 font-20">95%</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="progress mt-2" style="height:3px;">
-                                        <div class="progress-bar progress-animated  bg-warning" role="progressbar" style="max-width: 95%;" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-4 align-self-center">
-                                            <div class="icon-info">
-                                                <i class="mdi mdi-account-multiple text-purple"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col-8 align-self-center text-center">
-                                            <div class="ml-2 text-right">
-                                                <p class="mb-1 text-muted font-size-13">Member</p>
-                                                <h4 class="mt-0 mb-1 font-20">12</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="progress mt-2" style="height:3px;">
-                                        <div class="progress-bar progress-animated  bg-purple" role="progressbar" style="max-width: 55%;" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-4 align-self-center">
-                                            <div class="icon-info">
-                                                <i class="mdi mdi-playlist-check text-success"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col-8 align-self-center text-center">
-                                            <div class="ml-2 text-right">
-                                                <p class="mb-0 text-muted font-size-13">Tasks</p>
-                                                <span class="mt-0 font-20"><strong>40</strong></span>
-                                                <span class="badge badge-soft-success mt-1 shadow-none">Active</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="progress mt-2" style="height:3px;">
-                                        <div class="progress-bar progress-animated  bg-success" role="progressbar" style="max-width: 35%;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-xl-6 ">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-sm-4 col-4 align-self-center">
-                                            <div class="icon-info">
-                                                <i class="mdi mdi-coin text-pink"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-8 col-8 align-self-center text-center">
-                                            <div class="ml-2 text-right">
-                                                <p class="mb-1 text-muted font-size-13">Budget</p>
-                                                <h4 class="mt-0 mb-1 font-20">$18090</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="progress mt-2" style="height:3px;">
-                                        <div class="progress-bar progress-animated  bg-pink" role="progressbar" style="max-width: 35%;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
             </div><!--end row-->
         </div> <!-- container-fluid -->
 
@@ -383,7 +235,7 @@
     tour.init();
 
     // Start the tour
-    tour.start();
+//    tour.start();
 
 
     {% endblock %}
@@ -391,8 +243,8 @@
 <!---------------------- JAVASCRIPT BLOCK  ------------------->
 
 {% block pagescripts %}
-<script src="{% static 'season/assets/libs/bootstrap-tour/build/js/bootstrap-tour.min.js' %} "></script>
-<script src="{% static 'season/assets/libs/bootstrap-tour/build/js/bootstrap-tour-standalone.min.js' %} "></script>
+<sc  ript src="{% static 'season/assets/libs/bootstrap-tour/build/js/bootstrap-tour.min.js' %} "></script>
+<sc  ript src="{% static 'season/assets/libs/bootstrap-tour/build/js/bootstrap-tour-standalone.min.js' %} "></script>
 
 <!--Morris Chart-->
 <script src="{% static 'season/assets/libs/morris.js/morris.min.js' %}"></script>
