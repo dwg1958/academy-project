@@ -9,7 +9,7 @@
 <!---- STYLE --------->
 {% block css %}
 <!---This css makes scroller in process box stay in shape -->
-<link href="/static/season/assets/libs/metrojs/release/MetroJs.Full/MetroJs.min.css" rel="stylesheet" type="text/css" />
+<link href= {% static "/season/assets/libs/metrojs/release/MetroJs.Full/MetroJs.min.css" %} rel="stylesheet" type="text/css" />
 
 <style>
    .progress{
@@ -18,6 +18,22 @@
    .f_badges{
       height:45px;
       width: 45px;
+   }
+   #step-0, #step-1{
+       margin-top: 20px;
+   }
+   #step-2, #step-3, #step-4, #step-5, #step-6, #step-7 {
+      margin: 50px 0px 0px 30px;
+   }
+   div.popover-content{
+      margin:5px;
+   }
+   .tour-tour, .tour-tour .popover-title, div.popover-content {
+      background-color: #DA6020;
+      padding: 5px;
+      border-color:white;
+      border-width:2px;
+      color: white;
    }
 </style>
 {% endblock %}
@@ -67,7 +83,27 @@
 <!--end row 3 -->
 
 <!---- ROW 2 ------------------------>
+
+
+
+
 <div class="row row justify-content-md-center">
+   <div class="col-xl-3 col-sm-4"> <!-- Tour -->
+      <div class="card">
+         <div class="card-body" id="tour2">
+            <h5 class="mt-0 ml-2">How does this all work?</h5>
+            <br /><br />
+            <div class = "row justify-content-md-center">
+               <div class="text-center knob-prosess-btn">
+                  <a class="btn btn-sm  btn-primary text-white px-3 mt-2 mb-0" id="tourStart">Take the guided tour</a>
+               </div>
+            </div>
+            <br /><br />
+         </div>
+      </div>
+   </div>
+
+
    <div class="col-xl-3 col-sm-4"> <!-- Scroller -->
       <div class="card">
          <div class="card-body" id="tour2">
@@ -107,13 +143,13 @@
       <div class="card" id="tour3">
          <div class="card-body">
             <div class="text-center knob-Prosess mt-4 mt-sm-0" dir="ltr">
-               <input class="knob animated" value="0" rel="35" data-width="120" data-height="120" data-linecap=round
+               <input class="knob animated" id="fuelgauge" value="0" rel="35" data-width="80" data-height="80" data-linecap=round
                data-fgColor="#44a2d2"  data-skin="tron" data-angleOffset="180"
                data-readOnly=true data-thickness=".1"/>
                <h4 class="text-dark mt-1">Budget Remaining</h4>
 
                <div class="text-center knob-prosess-btn">
-                  <a class="btn btn-sm  btn-primary text-white px-3 mt-2 mb-0">Refresh</a>
+                  <a class="btn btn-sm  btn-primary text-white px-3 mt-2 mb-0" id="fire">Refresh</a>
                </div>
 
             </div>
@@ -124,6 +160,8 @@
 <!---- ROW 2 ------------------------>
             </div><!--end row-->
         </div> <!-- container-fluid -->
+
+
 
 <br /><br /><br /><br />
 <!-- end main content-->
@@ -178,6 +216,7 @@
           hideHover: 'auto'
       }
       );
+
  // Knob Chart
     $(".knob").knob({
         'format' : function (value) {
@@ -205,46 +244,95 @@
         })
     });
 
-// Metro
+// Metro ////////////////
     $(".live-tile, .flip-list").not(".exclude").liveTile();
 
+//Tour /////////////////
       var tour = new Tour({
         steps: [{
-            element: "#tour1",
-            title: "1/3. A Graph",
-            content: "This is a graph",
-            placement: 'left'
+            element: "#vertical-menu-btn",
+            title: "<---- 1: Menu Bar ",
+            content: "This is the menu expander, click to toggle the menu bar in and out<br/><br/>",
+            placement: 'right'
           },
           {
-            element: "#tour2",
-            title: "2/3. A Scroller",
-            content: "This is a scroller",
+            element: "#fullscreenbutton",
+            title: "<center>&nbsp;&nbsp;&nbsp;2: Full Screen ----></center>",
+            content: "Click here make this window fill the screen",
             placement: 'left'
           },
+          {% if user.is_authenticated %}
           {
-            element: "#tour3",
-            title: "3/3. A Gauge",
-            content: "This is a gauge, Jim, <br />but not as we know it..",
+            element: "#MyTeamHeader",
+            title: "<---- 3. My Team",
+            content: "Here you can select your team and see how well they are doing",
+            placement: 'right'
+          },
+          {% else %}
+          {
+            element: "#Register",
+            title: "<---- 3. Register",
+            content: "When you're ready, start here by setting up your account",
+            placement: 'right'
+          },
+          {% endif %}
+          {
+            element: "#LeagueHeader",
+            title: "<---- 4. League Table",
+            content: "See where your team is placed in the League",
+            placement: 'right'
+          },
+          {
+            element: "#Drivers_tour",
+            title: "<---- 5. Drivers",
+            content: "Study the drivers and their form",
+            placement: 'right'
+          },
+          {
+            element: "#Calendar_tour",
+            title: "<---- 6. Race Calendar",
+            content: "See whats on and where, with results as they come in",
+            placement: 'right'
+          },
+          {
+            element: "#Guides_tour",
+            title: "<---- 7. Guides and Rules",
+            content: "See how we score the races and pick up tips on strategy..",
+            placement: 'right'
+          },
+          {
+            element: "#GPG_tour",
+            title: "<---- 8. GP GrandStand",
+            content: "..and lastly, don't forget to keep up to date on the latest news with GP Grandstand",
             placement: 'right'
           }
         ],
         template:
-        "<div class='popover tour-active tour'><div class='arrow'></div><h5 class='popover-title'></h5><div class='popover-content'></div><div class='popover-navigation'><button class='btn btn-info ml-1' data-role='next'>Next »</button><button class='btn btn-danger ml-2' data-role='end'><i class='mdi mdi-power mr-2'></i>End</button></div></div>",
+        "<div class='popover tour-active tour'><h5 class='popover-title'></h5><div class='popover-content'></div><div class='popover-navigation'><center><button class='btn btn-info ml-1' data-role='next'>Next »</button><button class='btn btn-danger ml-2' data-role='end'><i class='mdi mdi-power mr-2'></i>End</button></center></div></div>",
         backdrop: 'true',
         autoscroll: 'false',
         orphan:'true',
       });
 
+    // Tour Button Activate
+    $("#tourStart").click(function(){
 
-    // Clear session data
-    localStorage.clear();
+      // Clear session data
+      localStorage.clear();
 
-    // Initialize the tour
-    tour.init();
+      // Initialize the tour
+      tour.init();
 
-    // Start the tour
-    tour.start();
+      // Start the tour
+      tour.start();
+    });
 
+// END TOUR ////////////////
+
+    $("#fire").click(function(){
+       x = 80
+       $("#fuelgauge").val(x).trigger('change');  //.trigger('draw');
+    });
 
     {% endblock %}
 
