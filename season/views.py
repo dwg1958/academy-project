@@ -439,6 +439,113 @@ def teamscores(request):
 
     return render(request, 'season/teamscores.html', {'teamdata': teamdata, 'score_data': score_data, 'total_score': total_score})
 
+@login_required
+##############################################################################################
+def teamhistory(request):
+
+    #See if we requested a specific league tab ("?tab=1")
+    try:
+        tab = request.GET['tab']
+    except:
+        tab = '1'
+
+    #Get list of GPs for this formula
+    gps = Event.objects.all() #filter(formulas__contains=tab)
+
+    #Get list of team versions
+    team_history = TeamArchive.objects.filter(user_ID = request.user.id)
+
+    row_list = []
+    start    = 1
+
+    #for gp in gps:
+    #    print (gp.startDateTime)
+    #    row_list.append(gp.startDateTime, gp.name, gp.circuit)
+    '''
+    #Print list - check if drivers in THIS formula are the same as last iteration
+    for version in team_history:
+        if start == 1:
+            #Check if date of event is before next change, if so print GP details
+        #while version.dateSelected < gp.startDateTime:
+            row_list.append(eval( "[version.dateSelected, version.p" + tab + "_1, version.p" + tab + "_2 ]"))
+            oldrecord = eval( "[version.p" + tab + "_1, version.p" + tab + "_2 ]")
+            start = 0
+
+        newrecord = eval( "[version.p" + tab + "_1, version.p" + tab + "_2 ]")
+        if newrecord != oldrecord:
+            #Check if date of event is before next change, if so print GP details
+
+            row_list.append(eval( "[version.dateSelected, version.p" + tab + "_1, version.p" + tab + "_2 ]"))
+            oldrecord = newrecord
+    '''
+
+    #Get First GP
+    gp = gps[0]
+    gp_num = 1
+
+    #Get First Team Profile
+    th = team_history[0]
+    th_num = 1
+
+    #Break tags
+    loop1 = loop2 = True
+
+    for i in range(0,100): #while True:
+
+        #print ('th_num = ', th_num, len(team_history), "====", 'gp_num = ', gp_num, len(gps))
+
+        if loop1 == False:
+            print('TH',th.dateSelected.date())
+            row_list.append(eval( "['TH', th.dateSelected, th.p1_1, th.p1_2 , [th.p1_1, th.p1_2,th.p2_1, th.p2_2,th.p3_1, th.p3_2,th.pw_1, th.pw_2]]"))
+            #Go to next Team Profile
+            if th_num < len(team_history):
+                th = team_history[th_num]
+                th_num+=1
+            else:
+                loop2 = False
+
+        elif loop2 == False:
+            print('GP',gp.startDateTime.date())
+            row_list.append(eval( "['GP', gp.startDateTime, gp.name, gp.formulas ]"))
+            #Go to next GP
+            if gp_num < len(gps):
+                gp = gps[gp_num]
+                gp_num +=1
+            else:
+                loop1 = False
+
+        elif gp.startDateTime < th.dateSelected:
+            print('GP',gp.startDateTime.date())
+            row_list.append(eval( "['GP', gp.startDateTime, gp.name, gp.formulas ]"))
+            #Go to next GP
+            if gp_num < len(gps):
+                gp = gps[gp_num]
+                gp_num +=1
+            else:
+                loop1 = False
+
+        elif gp.startDateTime > th.dateSelected:
+            print('TH',th.dateSelected.date())
+            row_list.append(eval( "['TH', th.dateSelected, th.p1_1, th.p1_2, [th.p1_1, th.p1_2,th.p2_1, th.p2_2,th.p3_1, th.p3_2,th.pw_1, th.pw_2] ]"))
+            #Go to next Team Profile
+            if th_num < len(team_history):
+                th = team_history[th_num]
+                th_num+=1
+            else:
+                loop2 = False
+
+
+        ##Check we haven't reached the end
+        if loop1 == loop2 == False:
+            break
+
+
+
+    formula  = tab
+    teamdata = TeamProfile.objects.get(pk = request.user.team.id)
+
+    return render(request, 'season/teamhistory.html', {'teamdata': teamdata, 'row_list': row_list})
+
 
 @login_required
 ### EDIT MY TEAM NAME ########################################################################
@@ -1106,6 +1213,7 @@ def test(request):
            count+=1
 
     print('\n**********\n')
+
 
 
 

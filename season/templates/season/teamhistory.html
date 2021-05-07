@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+<!---- TITLE --------->
+{% block title.     %}Team History {% endblock %}
+{% block breadcrumb %}Team History{% endblock %}
+
+<!---- STYLE --------->
+{% block css %}
+<style>
+   .table-sm th, .table-sm td {
+       padding: 0.3rem;
+   }
+   td.teamInfo{
+      padding: 0rem;
+   }
+   a, a:hover, a:visited, a:active {
+      text-decoration: none;
+   }
+   div .teamProfile{
+      background-color:#DA6020;
+      color: white;
+   }
+   div.collapse{
+      background-color: #DA6020;
+      border-radius:25px;
+   }
+   .tablevalue {
+      width:100%;
+      margin:10px 5px 10px 0px;
+   }
+   .tablevalue td{
+      border-collapse: collapse;
+      text-align:center;
+   }
+   .tablevalue thead th {
+      background-color: #DA6020;
+      color: white;
+      border-collapse: collapse;
+      border: 1px solid black;
+      padding-left: 8px;
+   }
+</style>
+{% endblock %}
+
+<!---- BODY CONTENT --------->
+{% block content %}
+
+<div class="container">
+
+   <h2>{{ teamdata.teamName }} - Driver Changes</h2>
+   <p>(click team for details)</p>
+
+   <div class="row col-12">
+      <!-- Fixed table headings -->
+      <div class="card overflow-auto col-12 pt-3">
+         <table class="table table-sm table-hover tablevalue" >
+
+            {% for row in row_list %}
+               <tr {% if row.0 == "TH" %} data-toggle="collapse" data-target="#accordionTop{{ forloop.counter }}" class = "teamProfile" {% endif %}>
+                  <td class="text-left"> {{ row.1 }} </td>
+                  <td class="text-left"> {{ row.2 }} </td>
+                  <td class="text-left"> {{ row.3 }} </td>
+               </tr>
+
+               {% if row.0 == "TH" %}
+               <tr>
+                  <td colspan="8" class = "teamInfo">
+                     <div id="accordionTop{{ forloop.counter }}" class="collapse" >
+                        <div class="row p-2">
+                            <div class="col-md-6 col-xl-6">
+                                <div class="card text-white bg-info pb-0 mb-2">
+                                    <div class="card-body" >
+                                       <span style="float:left; width:70%">
+                                          <blockquote class="card-bodyquote mb-0">
+                                            <h3 class = "mb-3">{{teamdata.teamName}} - F1</h3>
+                                            <h5 class = "pl-3 pr-3"><b>Driver 1 :</b> {{row.4.0}}</h5>
+                                            <h5 class = "pl-3 pr-3"><b>Driver 2:</b>  {{row.4.1}}</h5>
+                                          </blockquote>
+                                       </span>
+                                       <span class = "pl-3" style="width:25%">
+                                          <img src="{% static 'season/siteimages/F1.png' %}" height="100px" >
+                                       </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-6">
+                                <div class="card text-white bg-info pb-0 mb-2">
+                                    <div class="card-body">
+                                       <span style="float:left; width:70%">
+                                          <blockquote class="card-bodyquote mb-0">
+                                            <h3 class = "mb-3">F2</h3>
+                                            <h5 class = "pl-3 pr-3"><b>Driver 1 :</b> {{row.4.2}}</h5>
+                                            <h5 class = "pl-3 pr-3"><b>Driver 2:</b>  {{row.4.3}}</h5>
+                                          </blockquote>
+                                       </span>
+                                       <span class = "pl-3" style="width:25%">
+                                          <img src="{% static 'season/siteimages/F2.png' %}" height="100px" >
+                                       </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-xl-6">
+                                <div class="card text-white bg-info pb-0 mb-1">
+                                    <div class="card-body">
+                                       <span style="float:left; width:70%">
+                                          <blockquote class="card-bodyquote mb-0">
+                                            <h3 class = "mb-3">F3</h3>
+                                            <h5 class = "pl-3 pr-3"><b>Driver 1 :</b> {{row.4.4}}</h5>
+                                            <h5 class = "pl-3 pr-3"><b>Driver 2:</b>  {{row.4.5}}</h5>
+                                          </blockquote>
+                                       </span>
+                                       <span class = "pl-3" style="width:25%">
+                                          <img src="{% static 'season/siteimages/F3.png' %}" height="100px" >
+                                       </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-xl-6">
+                                <div class="card text-white bg-info pb-0 mb-1">
+                                    <div class="card-body">
+                                       <span style="float:left; width:70%">
+                                          <blockquote class="card-bodyquote mb-0">
+                                            <h3 class = "mb-3">W Series</h3>
+                                            <h5 class = "pl-3 pr-3"><b>Driver 1 :</b> {{row.4.6}}</h5>
+                                            <h5 class = "pl-3 pr-3"><b>Driver 2:</b>  {{row.4.7}}</h5>
+                                          </blockquote>
+                                       </span>
+                                       <span class = "pl-3" style="width:25%">
+                                          <img src="{% static 'season/siteimages/W.png' %}" height="100px" >
+                                       </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+                  </td>
+               </tr>
+               {% endif %}
+
+
+
+            {% endfor %}
+         </table>
+      </div>
+   </div>
+</div>
+<br /><br /><br /><br /><br />
+{% endblock %}
+<!---- BODY CONTENT BLOCK --------->
+
+<!---------------------- FOOTER BLOCK  ------------------->
+{% block footer %}
+{% endblock %}
+<!---------------------- FOOTER BLOCK  ------------------->
+
+<!---------------------- JAVASCRIPT BLOCK  ------------------->
+{% block javascript %}
+{% endblock %}
+<!---------------------- JAVASCRIPT BLOCK  ------------------->
+
+{% block pagescripts %}
+{% endblock %}

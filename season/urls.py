@@ -14,6 +14,7 @@ urlpatterns = [
     path('tables/<formula>/',  views.tableformula          , name = "tableformula"),
     path( 'teamview',          views.teamview              , name = "teamview"),
     path( 'teamnamepicker',    views.teamnamepicker        , name = "teamnamepicker"),
+    path( 'teamhistory',       views.teamhistory           , name = "teamhistory"),
     path( 'addcompetitors',    views.addcompetitors        , name = "addcompetitors"),
     path( 'addevents',         views.addevents             , name = "addevents"),
     path( 'scoreevents',       views.scoreevents           , name = "scoreevents"),
