@@ -35,6 +35,11 @@
       border-width:2px;
       color: white;
    }
+   .card{
+      border-width:2px;
+      border-color:#DA6020;
+   }
+
 </style>
 {% endblock %}
 
@@ -44,43 +49,48 @@
 <!-- Start right Content here -->
 <!-- ============================================================== -->
 
-        <div class="container-fluid"> <!---Graph -->
-            <div class="row justify-content-md-center">
-                <div class="col-xl-10">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title mb-3">Driver Results</h5>
-                            <div class="row justify-content-end">
-                                <div class="col-xl-12 align-self-center">
-                                    <ul class="list-unstyled list-inline float-right" id="tour1">
-                                        <li class="list-inline-item px-3">
-                                            <h5 class="mt-0">$ 42,000 </h5>
-                                            <small class="font-size-14 text-muted">Total Budget</small>
-                                        </li>
-                                        <li class="list-inline-item px-3">
-                                            <h5 class="mb-2">$ 7,200 </h5>
-                                            <small class="font-size-14 text-muted">Remaining</small>
-                                        </li>
-                                        <li class="list-inline-item px-3">
-                                            <h5 class="text-danger mb-2"><i class="mdi mdi-arrow-down-bold font-size-14 text-danger"></i> 7.9% </h5>
-                                            <span class="font-size-14 text-danger">Over Target Currently</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div id="extra-area-chart" class="morris-charts project-budget-chart" style="height: 322px;" dir="ltr" ></div>
-                            <ul class="list-unstyled text-center text-muted mb-0 mt-2">
-                                <li class="list-inline-item font-size-13"><i class="mdi mdi-album font-size-16 text-primary mr-2"></i>Total Budget</li>
-                                <li class="list-inline-item font-size-13"><i class="mdi mdi-album font-size-16 text-success mr-2"></i>Amount Used</li>
-                                <li class="list-inline-item font-size-13"><i class="mdi mdi-album font-size-16 text-secondary mr-2"></i>Target Amount</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-<!--end row 2 -->
+<div class="container-fluid"> <!---Graph -->
+   <div class="row justify-content-md-center">
+       <div class="col-xl-9">
+           <div class="card">
+               <div class="card-body">
+                   <h5 class="card-title mb-3">Driver Results</h5>
 
-<!--end row 3 -->
+                   <!--Top RHS legends -->
+                   <div class="row justify-content-end">
+                       <div class="col-xl-12 align-self-center">
+                           <ul class="list-unstyled list-inline float-right" id="tour1">
+                               <li class="list-inline-item px-3">
+                                   <h5 class="mt-0">$ 42,000 </h5>
+                                   <small class="font-size-14 text-muted">Total Budget</small>
+                               </li>
+                               <li class="list-inline-item px-3">
+                                   <h5 class="mb-2">$ 7,200 </h5>
+                                   <small class="font-size-14 text-muted">Remaining</small>
+                               </li>
+                               <li class="list-inline-item px-3">
+                                   <h5 class="text-danger mb-2"><i class="mdi mdi-arrow-down-bold font-size-14 text-danger"></i> 7.9% </h5>
+                                   <span class="font-size-14 text-danger">Over Target Currently</span>
+                               </li>
+                           </ul>
+                       </div>
+                   </div>
+
+                   <!-- THE GRAPH -->
+                   <div id="extra-area-chart" class="morris-charts project-budget-chart" style="height: 322px;" dir="ltr" ></div>
+
+                   <!-- Bottom Key -->
+                   <ul class="list-unstyled text-center text-muted mb-0 mt-2">
+                       <li class="list-inline-item font-size-13"><i class="mdi mdi-album font-size-16 text-primary mr-2"></i>Total Budget</li>
+                       <li class="list-inline-item font-size-13"><i class="mdi mdi-album font-size-16 text-success mr-2"></i>Amount Used</li>
+                       <li class="list-inline-item font-size-13"><i class="mdi mdi-album font-size-16 text-secondary mr-2"></i>Target Amount</li>
+                   </ul>
+
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
 
 <!---- ROW 2 ------------------------>
 
@@ -102,7 +112,6 @@
          </div>
       </div>
    </div>
-
 
    <div class="col-xl-3 col-sm-4"> <!-- Scroller -->
       <div class="card">
@@ -156,10 +165,111 @@
          </div>
       </div>
    </div>
+
+   <div class="col-xl-4 col-md-6">
+        {% tag_pi_formula_points %}
+   </div>
 </div> <!-- End Knob chart -->
-<!---- ROW 2 ------------------------>
-            </div><!--end row-->
-        </div> <!-- container-fluid -->
+
+<!---- ROW 3 ------------------------>
+<div class="row row justify-content-md-center pl-3 pr-3">
+   <div class="col-xl-3 col-md-6 sm-12">
+      <div class="card">
+         <div class="card-body">
+            <h3 class="mt-0 ml-2">F1 LeaderBoard</h3>
+            <br /><br />
+            <table class="table table-sm table-hover table-responsive-md">
+               <tr class="text-uppercase font-weight-bold h5 ">
+                  <th class = "pt-2 pb-2 text-center" style = "color:#DA6020;"> Position    </th>
+                  <th class = "pt-2 pb-2" style = "color:#DA6020;"> Driver     </th>
+                  <th class = "pt-2 pb-2 text-center" style = "color:#DA6020;"> Points    </th>
+               </tr>
+               {% for driver in F1 %}
+               <tr>
+                  <td class = "text-center">{{ forloop.counter }}</td>
+                  <td>{{driver.firstname}} {{driver.surname}}</td>
+                  <td class = "text-center">{{driver.todate_points}}</td>
+               </tr>
+               {% endfor %}
+            </table>
+            <br /><br />
+         </div>
+      </div>
+   </div> <!--end column -->
+
+   <div class="col-xl-3 col-md-6 sm-12">
+      <div class="card">
+         <div class="card-body">
+            <h3 class="mt-0 ml-2">F2 LeaderBoard</h3>
+            <br /><br />
+            <table class="table table-sm table-hover table-responsive-md">
+               <tr class="text-uppercase font-weight-bold h5 ">
+                  <th class = "pt-2 pb-2 text-center" style = "color:#DA6020;"> Position    </th>
+                  <th class = "pt-2 pb-2" style = "color:#DA6020;"> Driver     </th>
+                  <th class = "pt-2 pb-2 text-center" style = "color:#DA6020;"> Points    </th>
+               </tr>
+               {% for driver in F2 %}
+               <tr>
+                  <td class = "text-center">{{ forloop.counter }}</td>
+                  <td>{{driver.firstname}} {{driver.surname}}</td>
+                  <td class = "text-center">{{driver.todate_points}}</td>
+               </tr>
+               {% endfor %}
+            </table>
+            <br /><br />
+         </div>
+      </div>
+   </div> <!--end column -->
+
+   <div class="col-xl-3 col-md-6 sm-12">
+      <div class="card">
+         <div class="card-body">
+            <h3 class="mt-0 ml-2">F3 LeaderBoard</h3>
+            <br /><br />
+            <table class="table table-sm table-hover table-responsive-md">
+               <tr class="text-uppercase font-weight-bold h5" style = "color:#DA6020;">
+                  <th class = "pt-2 pb-2 text-center" style = "color:#DA6020;"> Position    </th>
+                  <th class = "pt-2 pb-2" style = "color:#DA6020;"> Driver     </th>
+                  <th class = "pt-2 pb-2 text-center" style = "color:#DA6020;"> Points    </th>
+               </tr>
+               {% for driver in F3 %}
+               <tr>
+                  <td class = "text-center">{{ forloop.counter }}</td>
+                  <td>{{driver.firstname}} {{driver.surname}}</td>
+                  <td class = "text-center">{{driver.todate_points}}</td>
+               </tr>
+               {% endfor %}
+            </table>
+            <br /><br />
+         </div>
+      </div>
+   </div> <!--end column -->
+   <div class="col-xl-3 col-md-6 sm-12">
+      <div class="card">
+         <div class="card-body">
+            <h3 class="mt-0 ml-2">WS LeaderBoard</h3>
+            <br /><br />
+            <table class="table table-sm table-hover table-responsive-md">
+               <tr class="text-uppercase font-weight-bold h5 ">
+                  <th class = "pt-2 pb-2 text-center" style = "color:#DA6020;"> Position    </th>
+                  <th class = "pt-2 pb-2" style = "color:#DA6020;"> Driver     </th>
+                  <th class = "pt-2 pb-2 text-center" style = "color:#DA6020;"> Points    </th>
+               </tr>
+               {% for driver in FW %}
+               <tr>
+                  <td class = "text-center">{{ forloop.counter }}</td>
+                  <td>{{driver.firstname}} {{driver.surname}}</td>
+                  <td class = "text-center">{{driver.todate_points}}</td>
+               </tr>
+               {% endfor %}
+            </table>
+            <br /><br />
+         </div>
+      </div>
+   </div> <!--end column -->
+
+</div><!--end row-->
+
 
 
 
@@ -178,13 +288,13 @@
 
        Morris.Area( {
           element: 'extra-area-chart', data: [
-               {y: 'BAH', a: 10  , b: 0},
-               {y: 'EMI', a: 0   , b: 0},
-               {y: 'POR', a: 25  , b: 0},
+               {y: 'BAH', a: 10  , b: 0, c:15},
+               {y: 'EMI', a: 0   , b: 0, c:15},
+               {y: 'POR', a: 25  , b: 0, c:5},
                {y: 'SPA', a: 20  , b: 0},
-               {y: 'MON', a: 18  , b: 10},
+               {y: 'MON', a: -18  , b: 10},
                {y: 'AZE', a: 25  , b: 0},
-               {y: 'CAN', a: 6   , b: 0},
+               {y: 'CAN', a: -6   , b: 0},
                {y: 'FRE', a: 20  , b: 0},
                {y: 'AUS', a: 20  , b: 0},
                {y: 'BRI', a: 20  , b: 0},

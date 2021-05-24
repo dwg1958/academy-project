@@ -121,9 +121,15 @@ class Event(models.Model):
     date                 = models.DateField(auto_now=False, auto_now_add=False)
     circuit              = models.CharField(max_length=30)
     country              = models.CharField(max_length=20)
+    tla                  = models.CharField(max_length=3, default = "")
     formulas             = models.CharField(max_length=45)
     startDateTime        = models.DateTimeField(auto_now=False, auto_now_add=False)
     endDateTime          = models.DateTimeField(auto_now=False, auto_now_add=False)
+    topF1DriverScore     = models.DecimalField(max_digits=6, decimal_places=2, default = 0)
+    topF2DriverScore     = models.DecimalField(max_digits=6, decimal_places=2, default = 0)
+    topF3DriverScore     = models.DecimalField(max_digits=6, decimal_places=2, default = 0)
+    topWSDriverScore     = models.DecimalField(max_digits=6, decimal_places=2, default = 0)
+    topTeamScore         = models.DecimalField(max_digits=6, decimal_places=2, default = 0)
 
     class Meta:
         ordering = ('date',)
@@ -333,3 +339,42 @@ class TeamArchive(models.Model):
 
     def __str__(self):
         return self.teamName
+
+
+class DriverWeekendScore(models.Model):
+    FORMULA = (
+    ('1', 'Formula 1'),
+    ('2', 'Formula 2'),
+    ('3', 'Formula 3'),
+    ('W', 'W Series' ),
+    )
+    driver_ID           = models.ForeignKey(Competitor, null=True, on_delete = models.DO_NOTHING)
+    formula             = models.CharField(max_length=1, choices=FORMULA)
+    weekend             = models.ForeignKey(Event, null=True, on_delete = models.DO_NOTHING)
+    points_this_weekend = models.DecimalField(max_digits=6, decimal_places=2, default = 0)
+    posn_this_weekend   = models.IntegerField(default = 0)
+
+
+class TeamWeekendScore(models.Model):
+    team_ID               = models.ForeignKey(TeamProfile, null=True, on_delete = models.DO_NOTHING)
+    weekend               = models.ForeignKey(Event, null=True, on_delete = models.DO_NOTHING)
+    points_f1             = models.DecimalField(max_digits=6, decimal_places=2, default = 0)
+    points_f2             = models.DecimalField(max_digits=6, decimal_places=2, default = 0)
+    points_f3             = models.DecimalField(max_digits=6, decimal_places=2, default = 0)
+    points_ws             = models.DecimalField(max_digits=6, decimal_places=2, default = 0)
+    points_total          = models.DecimalField(max_digits=6, decimal_places=2, default = 0)
+    position_f1           = models.IntegerField(default = 0)
+    position_f2           = models.IntegerField(default = 0)
+    position_f3           = models.IntegerField(default = 0)
+    position_ws           = models.IntegerField(default = 0)
+    position_total        = models.IntegerField(default = 0)
+    points_f1_since       = models.DecimalField(max_digits=6, decimal_places=2, default = 0)
+    points_f2_since       = models.DecimalField(max_digits=6, decimal_places=2, default = 0)
+    points_f3_since       = models.DecimalField(max_digits=6, decimal_places=2, default = 0)
+    points_ws_since       = models.DecimalField(max_digits=6, decimal_places=2, default = 0)
+    points_total_since    = models.DecimalField(max_digits=6, decimal_places=2, default = 0)
+    position_f1_since     = models.IntegerField(default = 0)
+    position_f2_since     = models.IntegerField(default = 0)
+    position_f3_since     = models.IntegerField(default = 0)
+    position_ws_since     = models.IntegerField(default = 0)
+    position_total_since  = models.IntegerField(default = 0)

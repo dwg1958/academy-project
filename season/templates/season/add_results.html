@@ -32,12 +32,12 @@
 
 {% if eventName %}
 
-<div class = "container card">
+<div class = "container card col-xl-10">
    <br />
    <h1> {{event.name }} ({{ event.eventType }} - #{{ event.id }}) </h1>
    <br /><br />
    <div class = "row justify-content-center" >
-      <div class = "col-lg-5">
+      <div class = "col-lg-4">
          <h3>Add Results</h3>
          <br />
          <form action="{% url 'addresults' %}"  method="post">
@@ -64,11 +64,13 @@
                      <br /><br />
                      <input type="hidden" id="event_id" name="event_id" value="{{ event.id }}">
                      <center><input type="submit" name="submit" value="ADD"></center>
+                     <br />
+                     <center><a href="{% url 'resultsadmin' %}" class="btn btn-primary btn-primary" role="button" aria-pressed="true">Back to Results Admin</a></center>
 
          </form>
       </div>
 
-      <div class = "col-lg-7">
+      <div class = "col-lg-8">
          <h3 style="padding-bottom:20px;"> Results So Far </h3>
          <table class="bigtable">
             <tr>
@@ -116,11 +118,15 @@
                </select>
                <br /><br /><br />
                <center><input type="submit" name="submit" value="SELECT"></center>
+               <br /><br /><br /><br /><br /><br />
+               <center><a href="{% url 'resultsadmin' %}" class="btn btn-primary btn-primary" role="button" aria-pressed="true">Back to Results Admin</a></center>
             </form>
          </div>
+
       <div class="col"> </div>
    </div>
 </div>
+
 {% endif %}
 
 {% endblock %}

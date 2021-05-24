@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% load static %}
+
+<!---- TITLE --------->
+{% block title.     %}Results admin  {% endblock %}
+{% block breadcrumb %}Results admin  {% endblock %}
+
+<!---- STYLE --------->
+{% block css %}
+<style>
+   #admin-card{
+      border-width:2px;
+      border-color:#DA6020;
+
+   }
+</style>
+{% endblock %}
+
+<!---- BODY CONTENT --------->
+{% block content %}
+<br />
+<div class = "container">
+    <div class="row col-12 justify-content-md-center">
+        <div class = "card col-lg-12 p-3 mt-5" id="admin-card">
+
+            <h2 class = "pb-3">Results admin</h2>
+
+            <h4 class = "mt-2">1. Add results</h4>
+            <p>This screen allows you to select a scoring event and add results.
+            First it offers you the earliest unscored events - triggered by “results-in”
+            in the scoringEvent table. It shows a list of un-scored drivers and allows
+            you to pick them in finish position. You can also add fastest lap,
+            places-lost-or-won and disqualification points.</p>
+
+            <center><a href="{% url 'addresults' %}" class="btn btn-primary btn-lg col-4" role="button" aria-pressed="true">Add results</a></center>
+
+            <h4 class = "mt-2">2. Score Events</h4>
+            <p>Once a set of results for an event have been added, use this screen to score
+            those events.  <br /><span style="color:#DA6020;"> This adds new team-score and competitor score records and
+            finally changes “results-in” in the ScoringEvent table to TRUE to stop repeats.</span></p>
+            <br />
+
+            <center><a href="{% url 'scoreevents' %}" class="btn btn-primary btn-lg col-4" role="button" aria-pressed="true">Score Events</a></center>
+
+            <br />
+            <h4 class = "mt-2">3. Rebuild Leagues</h4>
+            <p>After you have scored all scoring events for a weekend use this screen to
+            rebuild the league tables for all teams. 
+            <br /><span style="color:#DA6020;"> NB: This screen will reset the team-update-blocker which is set on by the TeamUpdatesOK
+            tag in base.html</span></p>
+            <br />
+
+            <center><button type="button" class="btn btn-primary btn-lg col-4" data-toggle="modal" data-target="#rebuildLeaguesModal">
+               Rebuild Leagues
+            </button></center>
+
+            <h4 class = "mt-2">4. Season-to-Date totals</h4>
+            <p>Finally, use this screen to rebuild the DriverWeekendScore and TeamWeekendScore
+            files which create the driver and team  scores-by-weekend graphs  and the
+            “season from a date” league tables.  <br /><span style="color:#DA6020;">NB:This  will work for every weekend before
+            todays date where "topF1DriverScore" = 0 in the Event table.</span></p>
+            <br />
+
+            <center><button type="button" class="btn btn-primary btn-lg col-4" data-toggle="modal" data-target="#updateSeasonModal">
+               Update Season-to-Date
+            </button></center>
+            <br />
+
+         </div>
+     </div>
+ </div>
+
+ <!-- Modal -->
+ <div class="modal fade" id="rebuildLeaguesModal" tabindex="-1" role="dialog" aria-labelledby="rebuildLeaguesModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="exampleModalLabel">Rebuild Leagues</h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="modal-body">
+         This may take some time.  Are you sure you want to do this now?
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-danger" data-dismiss="modal">Go Back</button>
+
+         <a href="{% url 'rebuildleagues' %}" class="btn btn-primary btn-primary" role="button" aria-pressed="true">Rebuild Leagues</a>
+
+       </div>
+     </div>
+   </div>
+ </div>
+
+ <!-- Modal -->
+ <div class="modal fade" id="updateSeasonModal" tabindex="-1" role="dialog" aria-labelledby="updateSeasonModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="exampleModalLabel">Update Season-to-Date</h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="modal-body">
+         This will create new records and may take some time.  Are you sure you want to do this now?
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-danger" data-dismiss="modal">Go Back</button>
+
+         <a href="{% url 'seasonupdate' %}" class="btn btn-primary btn-primary" role="button" aria-pressed="true">Update Season-to-Date</a>
+
+       </div>
+     </div>
+   </div>
+ </div>
+
+
+
+
+
+
+
+<br /><br /><br /><br /><br />
+{% endblock %}
+<!---- BODY CONTENT BLOCK --------->
+
+<!---------------------- FOOTER BLOCK  ------------------->
+{% block footer %}
+
+{% endblock %}
+<!---------------------- FOOTER BLOCK  ------------------->
+
+<!---------------------- JAVASCRIPT BLOCK  ------------------->
+{% block javascript %}
+
+
+
+{% endblock %}
+<!---------------------- JAVASCRIPT BLOCK  ------------------->

@@ -144,7 +144,6 @@ EMAIL_USE_TLS = True
 CONTENT_TYPES = ['image', 'video']
 MAX_UPLOAD_SIZE = "1100000"  # 1Mb
 
-DG_CATEGORIES = ['F1', 'F2', 'F3', 'WS']
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/

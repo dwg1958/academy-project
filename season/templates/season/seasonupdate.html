@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% load static %}
+
 
 <!---- TITLE --------->
-{% block title%}Build Leagues{% endblock %}
-{% block breadcrumb%}Build Leagues{% endblock %}
+{% block title.     %}Season Update   {% endblock %}
+{% block breadcrumb %}Season Update   {% endblock %}
 
 <!---- STYLE --------->
 {% block css %}
@@ -14,27 +14,21 @@
 <!---- BODY CONTENT --------->
 {% block content %}
 <br /><br /><br /><br /><br />
-<div class="row">
+   <div class="row">
       <div class="container">
         <div class="row">
           <div class="col-md-10 col-sm-10 offset-1">
-
-             <h3>Driver Tables rebuilt..</h3><br />
-
-             <p>{{message}}</p><br />
-
-             <h3>Team Tables rebuilt..</h3><br />
-
-             <p>{{message_2}}</p>
-
-             <p>{{message_3}}</p>
-
-             <br /><br /><br />
-            <center><a href="{% url 'resultsadmin' %}" class="btn btn-primary btn-primary" role="button" aria-pressed="true">Back to Results Admin</a></center>
-          </div>
-        </div>
+            <h2>Season Update</h2>
+            <p>{{ message1 }}</p>
+            <p>{{ message2 }}</p>
+            <p>{{ message3 }}</p>
+         </div>
       </div>
- </div>
+     </div>
+   </div>
+   <br />
+   <center><a href="{% url 'resultsadmin' %}" class="btn btn-primary btn-primary" role="button" aria-pressed="true">Back to Results Admin</a></center>
+
 <br /><br /><br /><br /><br />
 {% endblock %}
 <!---- BODY CONTENT BLOCK --------->

@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
-from .models import Competitor, Event, ScoringEvent, Result, TeamProfile, AcademyScoringMatrix, CompetitorScore, TeamScore, Parameter, TeamArchive
+from .models import Competitor, Event, ScoringEvent, Result, TeamProfile, AcademyScoringMatrix, CompetitorScore, TeamScore, Parameter, TeamArchive, DriverWeekendScore, TeamWeekendScore
 from django.contrib.auth.decorators import login_required
 from .forms import EventForm, TeamProfileForm, TeamProfileForm
 from django.contrib.auth.models import User
@@ -10,6 +10,7 @@ from datetime import datetime, timedelta, time
 from django.db.models import Window, F
 from django.db.models.functions import DenseRank
 import time
+
 
 # Create your views here.
 
@@ -137,7 +138,7 @@ def tableformula(request, formula):
             formula = "1"
             formulaname = "Formula 1"
 
-    competitors = Competitor.objects.filter(formula=formula, role="D")
+    competitors = Competitor.objects.filter(formula=formula, role="D").order_by('-points_total')
 
     ## Find personality dataset
     try:
@@ -145,10 +146,34 @@ def tableformula(request, formula):
         pers_data = Competitor.objects.get(pk=per)
         showPersonal = "show"
     except:
-        pers_data = competitors.first()
+        pers_data = competitors.first()  #If not specified, default to first driver in list
         showPersonal = " "
 
-    return render(request, 'season/tables.html', {'person':pers_data, 'competitors': competitors,'formulaname':formulaname, 'formula':formula, 'showPersonal':showPersonal})
+    #Build graph dataset
+    eventlist = Event.objects.filter(formulas__contains = formula)
+
+    #get drivers scores for each weekend
+    pers_season   = DriverWeekendScore.objects.filter(driver_ID = pers_data.id)
+
+    #Now add a record for each formula/weekend and see if he has a score for each weekend
+    weekend_posns = []
+    for e in eventlist:
+        try:
+            dws = pers_season.get(weekend = e.id)
+            points = dws.points_this_weekend
+        except:
+            points = 0
+
+        if formula == '1': topwkendscore = e.topF1DriverScore
+        if formula == '2': topwkendscore = e.topF2DriverScore
+        if formula == '3': topwkendscore = e.topF3DriverScore
+        if formula == 'W': topwkendscore = e.topWSDriverScore
+
+        weekend_posns.append( [ e.tla, str(points), str(topwkendscore) ])
+
+    print(weekend_posns)
+
+    return render(request, 'season/tables.html', {'person':pers_data, 'competitors': competitors,'formulaname':formulaname, 'formula':formula, 'showPersonal':showPersonal, "weekend_posns":weekend_posns})
 
 
 ####################################
@@ -164,7 +189,7 @@ def gettingstarted(request):
 ##############################################################################################
 
 @login_required
-##############################################################################################
+################################
 def monitor(request):
     #See if we requested a specific league tab ("?tab=F1")
     try:
@@ -236,7 +261,7 @@ def monitor(request):
 
 
 @login_required
-##### SHOW AND EDIT MY TEAM ##################################################################
+##### SHOW AND EDIT MY TEAM ###
 def teamview(request):
     returnmessage = ""
 
@@ -270,13 +295,6 @@ def teamview(request):
             elif ( updateallowed == 0 ):
                 returnmessage = 'Sorry - No update allowed during a Scoring-Event weekend'
             else:
-                #Archive old teamProfile
-                oldteam = TeamArchive()
-                for field in oldteam.__dict__.keys():
-                    if field not in ['_state', 'id', 'dateSelected']:
-                        oldteam.__dict__[field] = recordtoedit.__dict__[field]
-                oldteam.dateSelected= timezone.now()
-                oldteam.save()
 
                 #Update new team details
                 recordtoedit.p1_1 = new_p1_1
@@ -287,6 +305,14 @@ def teamview(request):
 
                 #Save data to table
                 recordtoedit.save()
+
+                #Add this teamProfile to Archive
+                oldteam = TeamArchive()
+                for field in oldteam.__dict__.keys():
+                    if field not in ['_state', 'id', 'dateSelected']:
+                        oldteam.__dict__[field] = recordtoedit.__dict__[field]
+                oldteam.dateSelected= timezone.now()
+                oldteam.save()
 
             returnURL = 'season/teamview.html?tab=F1'
 
@@ -309,14 +335,6 @@ def teamview(request):
             elif ( updateallowed == 0 ):
                 returnmessage = 'Sorry - No update allowed during a Scoring-Event weekend'
             else:
-                #Archive old teamProfile
-                oldteam = TeamArchive()
-                for field in oldteam.__dict__.keys():
-                    if field not in ['_state', 'id', 'dateSelected']:
-                        oldteam.__dict__[field] = recordtoedit.__dict__[field]
-                oldteam.dateSelected= timezone.now()
-                oldteam.save()
-
                 recordtoedit.p2_1 = new_p2_1
                 recordtoedit.p2_1_cost = new_p2_1.value
                 recordtoedit.p2_2 = new_p2_2
@@ -324,6 +342,14 @@ def teamview(request):
                 recordtoedit.f2_cashpot = new_cash_pot
                 #Save data to table
                 recordtoedit.save()
+
+                #Add this teamProfile to Archive
+                oldteam = TeamArchive()
+                for field in oldteam.__dict__.keys():
+                    if field not in ['_state', 'id', 'dateSelected']:
+                        oldteam.__dict__[field] = recordtoedit.__dict__[field]
+                oldteam.dateSelected= timezone.now()
+                oldteam.save()
 
             returnURL = 'season/teamview.html?tab=F2'
 
@@ -345,14 +371,6 @@ def teamview(request):
             elif ( updateallowed == 0 ):
                 returnmessage = 'Sorry - No update allowed during a Scoring-Event weekend'
             else:
-                #Archive old teamProfile
-                oldteam = TeamArchive()
-                for field in oldteam.__dict__.keys():
-                    if field not in ['_state', 'id', 'dateSelected']:
-                        oldteam.__dict__[field] = recordtoedit.__dict__[field]
-                oldteam.dateSelected= timezone.now()
-                oldteam.save()
-
                 recordtoedit.p3_1 = new_p3_1
                 recordtoedit.p3_1_cost = new_p3_1.value
                 recordtoedit.p3_2 = new_p3_2
@@ -360,6 +378,14 @@ def teamview(request):
                 recordtoedit.f3_cashpot = new_cash_pot
                 #Save data to table
                 recordtoedit.save()
+
+                #Add this teamProfile to Archive
+                oldteam = TeamArchive()
+                for field in oldteam.__dict__.keys():
+                    if field not in ['_state', 'id', 'dateSelected']:
+                        oldteam.__dict__[field] = recordtoedit.__dict__[field]
+                oldteam.dateSelected= timezone.now()
+                oldteam.save()
 
             returnURL = 'season/teamview.html?tab=F3'
 
@@ -381,14 +407,6 @@ def teamview(request):
             elif ( updateallowed == 0 ):
                 returnmessage = 'Sorry - No update allowed during a Scoring-Event weekend'
             else:
-                #Archive old teamProfile
-                oldteam = TeamArchive()
-                for field in oldteam.__dict__.keys():
-                    if field not in ['_state', 'id', 'dateSelected']:
-                        oldteam.__dict__[field] = recordtoedit.__dict__[field]
-                oldteam.dateSelected= timezone.now()
-                oldteam.save()
-
                 recordtoedit.pw_1 = new_pw_1
                 recordtoedit.pw_1_cost = new_pw_1.value
                 recordtoedit.pw_2 = new_pw_2
@@ -396,6 +414,14 @@ def teamview(request):
                 recordtoedit.ws_cashpot = new_cash_pot
                 #Save data to table
                 recordtoedit.save()
+
+                #Add this teamProfile to Archive
+                oldteam = TeamArchive()
+                for field in oldteam.__dict__.keys():
+                    if field not in ['_state', 'id', 'dateSelected']:
+                        oldteam.__dict__[field] = recordtoedit.__dict__[field]
+                oldteam.dateSelected= timezone.now()
+                oldteam.save()
 
             returnURL = 'season/teamview.html?tab=WS'
 
@@ -414,7 +440,7 @@ def teamview(request):
     return render(request, 'season/teamview.html',{ 'returnmessage':returnmessage, 'teamdata':teamdata, 'f1drivers':f1drivers, 'f2drivers':f2drivers, 'f3drivers':f3drivers, 'wsdrivers':wsdrivers, 'graphdata': graphdata})
 
 @login_required
-##############################################################################################
+#################################
 def teamscores(request):
     score_data = []
     total_score = 0
@@ -440,14 +466,8 @@ def teamscores(request):
     return render(request, 'season/teamscores.html', {'teamdata': teamdata, 'score_data': score_data, 'total_score': total_score})
 
 @login_required
-##############################################################################################
+#################################
 def teamhistory(request):
-
-    #See if we requested a specific league tab ("?tab=1")
-    try:
-        tab = request.GET['tab']
-    except:
-        tab = '1'
 
     #Get list of GPs for this formula
     gps = Event.objects.all() #filter(formulas__contains=tab)
@@ -456,28 +476,6 @@ def teamhistory(request):
     team_history = TeamArchive.objects.filter(user_ID = request.user.id)
 
     row_list = []
-    start    = 1
-
-    #for gp in gps:
-    #    print (gp.startDateTime)
-    #    row_list.append(gp.startDateTime, gp.name, gp.circuit)
-    '''
-    #Print list - check if drivers in THIS formula are the same as last iteration
-    for version in team_history:
-        if start == 1:
-            #Check if date of event is before next change, if so print GP details
-        #while version.dateSelected < gp.startDateTime:
-            row_list.append(eval( "[version.dateSelected, version.p" + tab + "_1, version.p" + tab + "_2 ]"))
-            oldrecord = eval( "[version.p" + tab + "_1, version.p" + tab + "_2 ]")
-            start = 0
-
-        newrecord = eval( "[version.p" + tab + "_1, version.p" + tab + "_2 ]")
-        if newrecord != oldrecord:
-            #Check if date of event is before next change, if so print GP details
-
-            row_list.append(eval( "[version.dateSelected, version.p" + tab + "_1, version.p" + tab + "_2 ]"))
-            oldrecord = newrecord
-    '''
 
     #Get First GP
     gp = gps[0]
@@ -488,67 +486,57 @@ def teamhistory(request):
     th_num = 1
 
     #Break tags
-    loop1 = loop2 = True
+    th_eof = gp_eof = True
 
     for i in range(0,100): #while True:
-
-        #print ('th_num = ', th_num, len(team_history), "====", 'gp_num = ', gp_num, len(gps))
-
-        if loop1 == False:
-            print('TH',th.dateSelected.date())
+##WORKING##
+        if gp_eof == False:
             row_list.append(eval( "['TH', th.dateSelected, th.p1_1, th.p1_2 , [th.p1_1, th.p1_2,th.p2_1, th.p2_2,th.p3_1, th.p3_2,th.pw_1, th.pw_2]]"))
             #Go to next Team Profile
             if th_num < len(team_history):
                 th = team_history[th_num]
                 th_num+=1
             else:
-                loop2 = False
+                th_eof = False
 
-        elif loop2 == False:
-            print('GP',gp.startDateTime.date())
+        elif th_eof == False:
             row_list.append(eval( "['GP', gp.startDateTime, gp.name, gp.formulas ]"))
             #Go to next GP
             if gp_num < len(gps):
                 gp = gps[gp_num]
                 gp_num +=1
             else:
-                loop1 = False
+                gp_eof = False
 
         elif gp.startDateTime < th.dateSelected:
-            print('GP',gp.startDateTime.date())
             row_list.append(eval( "['GP', gp.startDateTime, gp.name, gp.formulas ]"))
             #Go to next GP
             if gp_num < len(gps):
                 gp = gps[gp_num]
                 gp_num +=1
             else:
-                loop1 = False
+                gp_eof = False
 
         elif gp.startDateTime > th.dateSelected:
-            print('TH',th.dateSelected.date())
             row_list.append(eval( "['TH', th.dateSelected, th.p1_1, th.p1_2, [th.p1_1, th.p1_2,th.p2_1, th.p2_2,th.p3_1, th.p3_2,th.pw_1, th.pw_2] ]"))
             #Go to next Team Profile
             if th_num < len(team_history):
                 th = team_history[th_num]
                 th_num+=1
             else:
-                loop2 = False
-
+                th_eof = False
 
         ##Check we haven't reached the end
-        if loop1 == loop2 == False:
+        if th_eof == gp_eof == False:
             break
 
-
-
-    formula  = tab
     teamdata = TeamProfile.objects.get(pk = request.user.team.id)
 
     return render(request, 'season/teamhistory.html', {'teamdata': teamdata, 'row_list': row_list})
 
 
 @login_required
-### EDIT MY TEAM NAME ########################################################################
+### EDIT MY TEAM NAME ############
 def teamnamepicker(request):
     if request.method == 'POST':
         team_form = TeamProfileForm(
@@ -564,7 +552,7 @@ def teamnamepicker(request):
 
 
 @login_required
-####################################
+##################################
 def leagueposition(request):
 
     #See if we requested a pecific league tab ("?tab=F1")
@@ -645,7 +633,7 @@ def addcompetitors(request):
 
 
 @login_required
-####### ADD/VIEW EVENTS #######################################################################
+####### ADD/VIEW EVENTS ###########
 def addevents(request):
     new_event = None
     if request.method == 'POST':
@@ -669,7 +657,7 @@ def addevents(request):
 
 
 @login_required
-##############################################################################################
+##################################
 def scoreevents(request):
     #1. Select event to score
     if "scoringevent" in request.GET:
@@ -899,7 +887,7 @@ def scoreevents(request):
         return render(request, 'season/score_events.html',{'scoringevents': scoringevents,})
 
 @login_required
-##############################################################################################
+###################################
 def addresults(request):
 
     # If event specified, ask for result details
@@ -989,7 +977,7 @@ def addresults(request):
 
 
 @login_required
-##############################################################################################
+###################################
 def rebuildleagues(request):
 
 
@@ -1184,6 +1172,131 @@ def rebuildleagues(request):
 
     return render(request, 'season/rebuildleagues.html', {'message': message, 'message_2': message_2, 'message_3': message_3})
 
+@login_required
+###################################
+def resultsadmin(request):
+
+    return render(request, 'season/resultsadmin.html')
+
+@login_required
+###################################
+def seasonupdate(request):
+
+    #Start Timer
+    tic = time.perf_counter()
+
+    ######## Build Driver Weekend Scores ################################
+    records_created = cs_points = dws_points = 0
+    #For each past weekend not yet scored #
+    weekends = Event.objects.filter(startDateTime__date__lte = timezone.now(), topF1DriverScore = 0 )
+    for w in weekends:
+        #print('\n\nWEEKEND == ',w.name, w.id) #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        #for each formula in that weekend
+        for f in ['1','2','3','W']:
+
+            # 1/3. for each scoring event in that formula in that weekend
+            fscoringEvents = ScoringEvent.objects.filter(event_ID=w.id).filter(formula=f)
+            firsttime = True  # Catch multiple events results
+            if(len(fscoringEvents)):
+                #print('====== FORMULA',f, ' with ', len(fscoringEvents), 'events') #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                for i in fscoringEvents:
+                    if firsttime:         #If the first scoring event of the weeked in this formula
+                        dpoints = CompetitorScore.objects.filter(scoringevent_ID = i.id)
+                        #print("\n",len(dpoints), "results for ",i.name, i.event_ID.name, i.event_ID.startDateTime)
+                        firsttime = False
+                    else:
+                        dpoints2 = CompetitorScore.objects.filter(scoringevent_ID = i.id)
+                        #print("\n",len(dpoints2), "results for ",i.name, i.event_ID.name, i.event_ID.startDateTime)
+                        dpoints = dpoints | dpoints2
+                        #print("\nCombo: ",len(dpoints), "results for ",i.name, i.event_ID.name, i.event_ID.startDateTime)
+
+                # 2/3. parse all scoring events for this weekend / formula and make 1 DWS record per driver
+                this_driver_id = this_driver_points = 0
+                list_length = len(dpoints)
+                #print("records: ", list_length) #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                for index, d in enumerate( dpoints.order_by('competitor_ID_id')):
+                    cs_points+= d.t2_score
+
+                    if d.competitor_ID_id == this_driver_id:
+                        this_driver_points += d.t2_score
+
+                    else:
+                        if this_driver_id != 0: #not the same driver (and not first record) so make DWS record
+                            ## Make new DriverWeekendScore record
+                            dws = DriverWeekendScore()
+                            dws.driver_ID            = this_driver
+                            dws.formula              = f
+                            dws.weekend              = w
+                            dws.points_this_weekend  = this_driver_points
+                            dws.save()
+                            records_created += 1
+                            #print("*" , dws.driver_ID , dws.points_this_weekend)  #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                            dws_points += dws.points_this_weekend
+
+                        #Set up new record
+                        this_driver_id           = d.competitor_ID_id
+                        this_driver              = d.competitor_ID
+                        this_driver_points       = d.t2_score
+
+                    #print("d = " , d)            #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+                    if index == list_length-1:   #Last record
+                        dws = DriverWeekendScore()
+                        dws.driver_ID            = this_driver
+                        dws.formula              = f
+                        dws.weekend              = w
+                        dws.points_this_weekend  = this_driver_points
+                        dws.save()
+                        records_created += 1
+                        #print("*" , dws.driver_ID , dws.points_this_weekend)  #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                        dws_points += dws.points_this_weekend
+
+
+
+
+    # 3/3. Now add position to each Driver Weekend Score record
+    for w in weekends:
+        for f in ['1','2','3','W']:
+            position        = 1
+            previous_points = 0
+            equal_position  = 0  # ensure equal points gives equal position..
+
+            scores = DriverWeekendScore.objects.filter(weekend = w, formula = f).order_by('-points_this_weekend')
+            for s in scores:
+                if s.points_this_weekend == previous_points:   # equal score = equal position
+                    s.posn_this_weekend = equal_position
+                else:
+                    s.posn_this_weekend = position
+                    previous_points = s.points_this_weekend
+
+                s.save()
+
+                # Now update weekend top driver scores if this is the top driver:
+                if position == 1:
+                    if f == '1':
+                        w.topF1DriverScore = s.points_this_weekend
+                    if f == '2':
+                        w.topF2DriverScore = s.points_this_weekend
+                    if f == '3':
+                        w.topF3DriverScore = s.points_this_weekend
+                    if f == 'W':
+                        w.topWSDriverScore = s.points_this_weekend
+                    w.save()
+
+                equal_position  = position
+                position += 1
+
+    # Close timer
+    toc = time.perf_counter()
+    time_taken = round(toc - tic,4)
+    message1 = "1. Driver Weekend Scores updated - "+ str(records_created) + " DriverWeekendScore records created"
+
+    message2 = "2. " + "Competitor Score points processed : " + str(cs_points) + " .vs. " + str(dws_points) + " DriverWeekendScore point allocated"
+    message3 = "3. " + str(time_taken) + "seconds taken"
+
+
+    return render(request, 'season/seasonupdate.html', {'message1': message1, 'message2': message2, 'message3': message3})
+
 
 ##############################################################################################
 ##############################################################################################
@@ -1204,22 +1317,16 @@ def rebuildleagues(request):
 ##############################################################################################
 def test(request):
 
-    for t in ('1','2','3','W'):
-        print('\n**********\n')
-        count =1
-        list = eval('Competitor.objects.filter(formula="' + t + '")[:5]' )
-        for record in list:
-           print(t, count, record.firstname, record.surname)
-           count+=1
-
-    print('\n**********\n')
 
 
+    #Formula Leaderboards
+    for f in ('1','2','3','W'):
+        globals()['F%s' % f] = Competitor.objects.filter(formula =f , role = "D").annotate(todate_points = Sum('cscore_driver__t2_score')).order_by('-todate_points')
 
+    return render(request, 'season/test.html', {'F1': F1, "F2":F2, "F3":F3, "FW":FW})
 
-    return render(request, 'season/test.html')#, {'league_list': sublist, "heading":heading})
+#######################################################################################
 
-######################################  PUT THESE INTO PARAMETERS #################################################
 
 
 

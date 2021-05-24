@@ -11,6 +11,9 @@ from .models import TeamProfile
 from .models import TeamScore
 from .models import Parameter
 from .models import TeamArchive
+from .models import DriverWeekendScore
+from .models import TeamWeekendScore
+
 
 #Show record details in admin table
 #https://www.geeksforgeeks.org/customize-django-admin-interface/
@@ -105,6 +108,24 @@ class TeamArchiveAdmin(admin.ModelAdmin):
 
     active.boolean = True
 
+class DriverWeekendScoreAdmin(admin.ModelAdmin):
+    list_display  = ( 'id','driver_ID', 'formula', 'weekend','points_this_weekend','posn_this_weekend')#, 'is_active')
+    search_fields = ('driver_ID', 'weekend')
+
+    def active(self, obj):
+        return obj.is_active == 1
+
+    active.boolean = True
+
+class TeamWeekendScoreAdmin(admin.ModelAdmin):
+    list_display  = ( 'id','team_ID', 'weekend', 'points_f1', 'points_total')#, 'is_active')
+    search_fields = ('teamName',)
+
+    def active(self, obj):
+        return obj.is_active == 1
+
+    active.boolean = True
+
 ############################################################
 # Add active/inactive flags in table list to change record field 'is_active'
 #    def make_active(modeladmin, request, queryset):
@@ -130,3 +151,5 @@ admin.site.register(AcademyScoringMatrix, AcademyScoringMatrixAdmin)
 admin.site.register(TeamScore, TeamScoreAdmin)
 admin.site.register(Parameter, ParameterAdmin)
 admin.site.register(TeamArchive, TeamArchiveAdmin)
+admin.site.register(DriverWeekendScore, DriverWeekendScoreAdmin)
+admin.site.register(TeamWeekendScore, TeamWeekendScoreAdmin)

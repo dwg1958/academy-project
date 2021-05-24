@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load blog_tags %}
 {% block title %}
 Drivers
@@ -60,15 +61,38 @@ Drivers
                </div>
             </div>
 
-            <!-- THIS IS THE GRAPH -->
-            <div class="container collapse multi-collapse" id = "PersonalChart">
-               <canvas class="my-4 w-100" id="myChart" width="900" height="380">
+            <!---Graph ------------------------------------>
+            <div class="container-fluid collapse multi-collapse {{showPersonal}}" id = "PersonalChart">
+               <div class="row justify-content-md-center">
+                   <div class="col-sm-12">
+                       <div class="card">
+                           <div class="card-body">
+                               <h5 class="card-title mb-3">Season Results So Far - {{ person.firstname }} {{ person.surname }}</h5>
 
-               </canvas>
+                               <!--Top RHS legends -->
+                               <div class="row justify-content-end">
+                                   <div class="col-xl-12 align-self-center">
+                                       <ul class="list-unstyled list-inline float-right" id="tour1">
+                                           <li class="list-inline-item px-3">
+                                               <h5 class="mt-0">Season Points Total: </h5>
+                                               <h5 class="mt-0 text-right">{{person.points_total |floatformat:0 }}</h5>
+
+                                           </li>
+                                       </ul>
+                                   </div>
+                               </div>
+
+                               <!-- THE ACTUAL GRAPH -->
+                               <div id="extra-area-chart" class="morris-charts project-budget-chart" style="height: 322px;" dir="ltr" ></div>
+
+
+
+                           </div>
+                       </div>
+                   </div>
+               </div>
             </div>
             <!--  Top Driver details area ----------------------->
-
-
             <div class="container collapse multi-collapse {{showPersonal}}" id = "PersonalData">
                <div class="row">
                   <div class="col-sm-4">
@@ -184,4 +208,41 @@ Drivers
    if($(window).width() > 992) {
      $("#vertical-menu-btn").click();
    }
+
+   Morris.Area( {
+      element: 'extra-area-chart', data:
+      [
+      {% for w in weekend_posns %}
+         {y: '{{w.0}}  ' , a: {{w.2}} , b: {{w.1}} },
+      {% endfor %}
+      ],                                         //   [{y: 'BAH', a: 10},{y: 'EMI', a: 15},{y: 'POR', a: 25},{y: 'SPA', a: 20}],
+      lineColors: [ '#009688','#fdb93e' ] ,       // , '#148cca'],
+      xkey: 'y',
+      ykeys: [ 'a', 'b'],                        //, 'c'],
+      //ymax:50,
+      //ymin:-20,
+      parseTime: false,                          //Stops the date formatting
+      labels: [ 'Best Score', '{{ person.firstname }} {{ person.surname }}' ],
+      pointSize: 0, lineWidth: 0,
+      resize: true,
+      fillOpacity: 0.8,
+      behaveLikeLine: true,
+      gridLineColor: 'rgba(108, 120, 151, 0.6)',
+      hideHover: 'auto'
+}
+);
+
+{% endblock %}
+
+<!---------------------- JAVASCRIPT LIBRARIES BLOCK  ------------------->
+
+{% block pagescripts %}
+<script src="{% static 'season/assets/libs/bootstrap-tour/build/js/bootstrap-tour.min.js' %} "></script>
+<script src="{% static 'season/assets/libs/bootstrap-tour/build/js/bootstrap-tour-standalone.min.js' %} "></script>
+
+<!--Morris Chart-->
+<script src="{% static 'season/assets/libs/morris.js/morris.min.js' %}"></script>
+<script src="{% static 'season/assets/libs/raphael/raphael.min.js' %}"></script>
+<script src="{% static 'season/assets/libs/jquery-knob/jquery.knob.min.js' %}"></script>
+<script src="{% static 'season/assets/libs/metrojs/release/MetroJs.Full/MetroJs.min.js' %}"></script>
 {% endblock %}

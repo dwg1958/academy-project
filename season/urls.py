@@ -29,6 +29,8 @@ urlpatterns = [
     path( 'scoring',           views.scoring               , name = "scoring"),
     path( 'gettingstarted',    views.gettingstarted        , name = "gettingstarted"),
     path( 'monitor',           views.monitor               , name = "monitor"),
+    path( 'resultsadmin',      views.resultsadmin          , name = "resultsadmin"),
+    path( 'seasonupdate',      views.seasonupdate          , name = "seasonupdate"),
     path( 'test',              views.test                  , name = "test"),
 
 #    path( '<int:blog_id>/', views.oneblog, name = "oneblog"),
