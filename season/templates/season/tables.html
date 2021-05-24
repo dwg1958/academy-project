@@ -54,10 +54,12 @@ Drivers
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                <h1 class="h2">Competitors - {{ formulaname }} </h1>
                <div class="btn-toolbar mb-2 mb-md-0">
+                  {% if showPersonal == "show" %}
                   <div class="btn-group mr-2">
-                     <a class="btn btn-sm btn-outline-secondary" data-toggle="collapse" href="#PersonalData" role="button" aria-expanded="false" aria-controls="PersonalData">Driver Details</a>
-                     <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#PersonalChart" aria-expanded="false" aria-controls="PersonalChart">Season's Progress</button>
+                     <a class="btn btn-sm btn-outline-secondary" data-toggle="collapse" href="#PersonalData" role="button" aria-expanded="false" aria-controls="PersonalData">Hide Driver Details</a>
+                     <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#PersonalChart" aria-expanded="false" aria-controls="PersonalChart">Hide Season's Progress</button>
                   </div>
+                  {% endif %}
                </div>
             </div>
 
@@ -85,15 +87,13 @@ Drivers
                                <!-- THE ACTUAL GRAPH -->
                                <div id="extra-area-chart" class="morris-charts project-budget-chart" style="height: 322px;" dir="ltr" ></div>
 
-
-
                            </div>
                        </div>
                    </div>
                </div>
             </div>
             <!--  Top Driver details area ----------------------->
-            <div class="container collapse multi-collapse {{showPersonal}}" id = "PersonalData">
+            <div class="container collapse multi-collapse {{showPersonal}}" id = "PersonalData"> <!-- "showPersonal" makes graphs visible if driver chosen -->
                <div class="row">
                   <div class="col-sm-4">
                      <div class="card" style="">
@@ -161,6 +161,7 @@ Drivers
             <!-- --- TABLES ------------>
 
             <h2>Drivers</h2>
+            <span class = "text-right"> <i>(Click on a driver to see his details and results)</i></span>
             <div class="table-responsive">
                <table class="table table-hover table-sm table-responsive-sm">
                   <thead>
@@ -237,12 +238,7 @@ Drivers
 <!---------------------- JAVASCRIPT LIBRARIES BLOCK  ------------------->
 
 {% block pagescripts %}
-<script src="{% static 'season/assets/libs/bootstrap-tour/build/js/bootstrap-tour.min.js' %} "></script>
-<script src="{% static 'season/assets/libs/bootstrap-tour/build/js/bootstrap-tour-standalone.min.js' %} "></script>
-
 <!--Morris Chart-->
 <script src="{% static 'season/assets/libs/morris.js/morris.min.js' %}"></script>
 <script src="{% static 'season/assets/libs/raphael/raphael.min.js' %}"></script>
-<script src="{% static 'season/assets/libs/jquery-knob/jquery.knob.min.js' %}"></script>
-<script src="{% static 'season/assets/libs/metrojs/release/MetroJs.Full/MetroJs.min.js' %}"></script>
 {% endblock %}

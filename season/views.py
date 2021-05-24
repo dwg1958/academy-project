@@ -147,7 +147,7 @@ def tableformula(request, formula):
         showPersonal = "show"
     except:
         pers_data = competitors.first()  #If not specified, default to first driver in list
-        showPersonal = " "
+        showPersonal = ""
 
     #Build graph dataset
     eventlist = Event.objects.filter(formulas__contains = formula)
@@ -170,8 +170,6 @@ def tableformula(request, formula):
         if formula == 'W': topwkendscore = e.topWSDriverScore
 
         weekend_posns.append( [ e.tla, str(points), str(topwkendscore) ])
-
-    print(weekend_posns)
 
     return render(request, 'season/tables.html', {'person':pers_data, 'competitors': competitors,'formulaname':formulaname, 'formula':formula, 'showPersonal':showPersonal, "weekend_posns":weekend_posns})
 
