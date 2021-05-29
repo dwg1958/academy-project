@@ -18,7 +18,7 @@
 
 <!---- BODY CONTENT --------->
 {% block content %}
-<br />
+
 <div class = "container">
     <div class="row col-12 justify-content-md-center">
         <div class = "card col-lg-12 p-3 mt-5" id="admin-card">
@@ -45,23 +45,33 @@
             <br />
             <h4 class = "mt-2">3. Rebuild Leagues</h4>
             <p>After you have scored all scoring events for a weekend use this screen to
-            rebuild the league tables for all teams. 
-            <br /><span style="color:#DA6020;"> NB: This screen will reset the team-update-blocker which is set on by the TeamUpdatesOK
-            tag in base.html</span></p>
+            rebuild the league tables for all teams.
+            <br /><span style="color:#DA6020;"> NB: This screen will reset the team-update-blocker
+            which is set on by the TeamUpdatesOK tag in base.html</span></p>
             <br />
 
             <center><button type="button" class="btn btn-primary btn-lg col-4" data-toggle="modal" data-target="#rebuildLeaguesModal">
                Rebuild Leagues
             </button></center>
 
-            <h4 class = "mt-2">4. Season-to-Date totals</h4>
-            <p>Finally, use this screen to rebuild the DriverWeekendScore and TeamWeekendScore
-            files which create the driver and team  scores-by-weekend graphs  and the
+            <h4 class = "mt-2">4. Whole-Weekend Score records</h4>
+            <p>Use this screen to build the DriverWeekendScore and TeamWeekendScore
+            files which will be used to create the driver and team scores-by-weekend graphs and the
             “season from a date” league tables.  <br /><span style="color:#DA6020;">NB:This  will work for every weekend before
-            todays date where "topF1DriverScore" = 0 in the Event table.</span></p>
+            todays date where "topF1DriverScore" = 0 or "topTeamScore" = 0 in the Event table before running. </span></p>
             <br />
 
             <center><button type="button" class="btn btn-primary btn-lg col-4" data-toggle="modal" data-target="#updateSeasonModal">
+               Build Whole-Weekend Records
+            </button></center>
+
+            <h4 class = "mt-2">5. Season-to-Date totals</h4>
+            <p>Use this screen to add the 'season-to-date-from-this-weekend' totals to the TeamWeekendScore records..
+            <br /><span style="color:#DA6020;">NB:This  will work for every weekend before
+            todays date. It will run for each past weekend every time but may take  little time to finish</span></p>
+            <br />
+
+            <center><button type="button" class="btn btn-primary btn-lg col-4" data-toggle="modal" data-target="#SeasonToDateModal">
                Update Season-to-Date
             </button></center>
             <br />
@@ -98,7 +108,7 @@
    <div class="modal-dialog" role="document">
      <div class="modal-content">
        <div class="modal-header">
-         <h5 class="modal-title" id="exampleModalLabel">Update Season-to-Date</h5>
+         <h5 class="modal-title" id="exampleModalLabel">Create Whole-Weekend Records</h5>
          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
            <span aria-hidden="true">&times;</span>
          </button>
@@ -109,7 +119,7 @@
        <div class="modal-footer">
          <button type="button" class="btn btn-danger" data-dismiss="modal">Go Back</button>
 
-         <a href="{% url 'seasonupdate' %}" class="btn btn-primary btn-primary" role="button" aria-pressed="true">Update Season-to-Date</a>
+         <a href="{% url 'weekendrecords' %}" class="btn btn-primary btn-primary" role="button" aria-pressed="true">Build Weekend Records</a>
 
        </div>
      </div>
@@ -117,8 +127,28 @@
  </div>
 
 
+<!-- Modal -->
+<div class="modal fade" id="SeasonToDateModal" tabindex="-1" role="dialog" aria-labelledby="SeasonToDateModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Season-to-Date</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This will update a lot of records and may take some time.  Are you sure you want to do this now?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Go Back</button>
 
+        <a href="{% url 'seasonupdate' %}" class="btn btn-primary btn-primary" role="button" aria-pressed="true">Update Season-to-Date</a>
 
+      </div>
+    </div>
+  </div>
+</div>
 
 
 

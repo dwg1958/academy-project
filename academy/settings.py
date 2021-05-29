@@ -132,7 +132,7 @@ LOGOUT_URL = 'logout'
 
 LOGOUT_REDIRECT_URL = 'home'
 
-#FOR EMAIL TESTING
+#FOR EMAIL TESTING - NB: Actual settings in local_settings.py
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #Live system connected to GMail
 EMAIL_HOST = 'smtp.gmail.com'

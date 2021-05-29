@@ -30,8 +30,11 @@ urlpatterns = [
     path( 'gettingstarted',    views.gettingstarted        , name = "gettingstarted"),
     path( 'monitor',           views.monitor               , name = "monitor"),
     path( 'resultsadmin',      views.resultsadmin          , name = "resultsadmin"),
+    path( 'weekendrecords',    views.weekendrecords        , name = "weekendrecords"),
     path( 'seasonupdate',      views.seasonupdate          , name = "seasonupdate"),
     path( 'test',              views.test                  , name = "test"),
+
+
 
 #    path( '<int:blog_id>/', views.oneblog, name = "oneblog"),
 

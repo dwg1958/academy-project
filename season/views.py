@@ -11,8 +11,8 @@ from django.db.models import Window, F
 from django.db.models.functions import DenseRank
 import time
 
+from django.contrib.auth.decorators import user_passes_test
 
-# Create your views here.
 
 ##############################################################################################
 ############################### GUEST PAGES ##################################################
@@ -24,7 +24,6 @@ def showevents(request):
     allevents = Event.objects.all()
     return render(request, 'season/showevents.html',{'allevents':allevents})
 
-
 ####################################
 def showscoringevents(request):
     if request.method == 'GET' and 'event' in request.GET:
@@ -35,7 +34,6 @@ def showscoringevents(request):
     else:
         allevents = Event.objects.all()
         return render(request, 'season/showevents.html',{'allevents':allevents})
-
 
 ####################################
 def showresults(request):
@@ -116,13 +114,11 @@ def leaguetop20(request):
 
     return render(request, 'season/leaguetop20.html', {'league_list':league_list, 'heading':heading})
 
-
 ####################################
 def tables(request):
 #	textreceived = request.GET['fname']
     competitors = Competitor.objects
     return render(request, 'season/tables.html', {'competitors': competitors})
-
 
 #### SHOW COMPETITOR TABLES #######
 def tableformula(request, formula):
@@ -172,7 +168,6 @@ def tableformula(request, formula):
         weekend_posns.append( [ e.tla, str(points), str(topwkendscore) ])
 
     return render(request, 'season/tables.html', {'person':pers_data, 'competitors': competitors,'formulaname':formulaname, 'formula':formula, 'showPersonal':showPersonal, "weekend_posns":weekend_posns})
-
 
 ####################################
 def scoring(request):
@@ -256,7 +251,6 @@ def monitor(request):
 
 
     return render(request, 'season/monitor.html', {'league_list':league_list, 'sublist': sublist, 'heading':heading, 'boxtext':boxtext})
-
 
 @login_required
 ##### SHOW AND EDIT MY TEAM ###
@@ -532,7 +526,6 @@ def teamhistory(request):
 
     return render(request, 'season/teamhistory.html', {'teamdata': teamdata, 'row_list': row_list})
 
-
 @login_required
 ### EDIT MY TEAM NAME ############
 def teamnamepicker(request):
@@ -547,7 +540,6 @@ def teamnamepicker(request):
     else:
         team_form = TeamProfileForm(instance=request.user.team)
     return render(request,'season/teamnamepicker.html', {'team_form': team_form})
-
 
 @login_required
 ##################################
@@ -624,13 +616,12 @@ def leagueposition(request):
 ############################### ADMIN PAGES ##################################################
 ##############################################################################################
 
-@login_required
+@user_passes_test(lambda u:u.is_staff, login_url='login')
 ####################################
 def addcompetitors(request):
     return render(request, 'season/add_competitors.html')
 
-
-@login_required
+@user_passes_test(lambda u:u.is_staff, login_url='login')
 ####### ADD/VIEW EVENTS ###########
 def addevents(request):
     new_event = None
@@ -653,8 +644,7 @@ def addevents(request):
 
     return render(request, 'season/add_events.html',{'new_event': new_event,'event_form': event_form, 'allevents':allevents})
 
-
-@login_required
+@user_passes_test(lambda u:u.is_staff, login_url='login')
 ##################################
 def scoreevents(request):
     #1. Select event to score
@@ -884,7 +874,7 @@ def scoreevents(request):
         scoringevents = ScoringEvent.objects.all().filter(results_in = False).order_by('startDateTime')[:10]
         return render(request, 'season/score_events.html',{'scoringevents': scoringevents,})
 
-@login_required
+@user_passes_test(lambda u:u.is_staff, login_url='login')
 ###################################
 def addresults(request):
 
@@ -973,8 +963,7 @@ def addresults(request):
         scoringevents = ScoringEvent.objects.all().filter(results_in = False).order_by('startDateTime')[:10]
         return render(request, 'season/add_results.html',{'scoringevents': scoringevents})
 
-
-@login_required
+@user_passes_test(lambda u:u.is_staff, login_url='login')
 ###################################
 def rebuildleagues(request):
 
@@ -1170,20 +1159,22 @@ def rebuildleagues(request):
 
     return render(request, 'season/rebuildleagues.html', {'message': message, 'message_2': message_2, 'message_3': message_3})
 
-@login_required
+@user_passes_test(lambda u:u.is_staff, login_url='login')
 ###################################
 def resultsadmin(request):
 
     return render(request, 'season/resultsadmin.html')
 
-@login_required
+@user_passes_test(lambda u:u.is_staff, login_url='login')
 ###################################
-def seasonupdate(request):
+def weekendrecords(request):
 
     #Start Timer
     tic = time.perf_counter()
 
-    ######## Build Driver Weekend Scores ################################
+    ###################################################################
+    # Build Driver Weekend Scores
+    ###################################################################
     records_created = cs_points = dws_points = 0
     #For each past weekend not yet scored #
     weekends = Event.objects.filter(startDateTime__date__lte = timezone.now(), topF1DriverScore = 0 )
@@ -1249,9 +1240,6 @@ def seasonupdate(request):
                         #print("*" , dws.driver_ID , dws.points_this_weekend)  #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                         dws_points += dws.points_this_weekend
 
-
-
-
     # 3/3. Now add position to each Driver Weekend Score record
     for w in weekends:
         for f in ['1','2','3','W']:
@@ -1284,17 +1272,231 @@ def seasonupdate(request):
                 equal_position  = position
                 position += 1
 
+
+    ###################################################################
+    # Build Team Weekend Scores
+    ###################################################################
+
+    records_created = cs_points = dws_points = 0
+
+    #Get a list of teams
+    teams = TeamProfile.objects.all()
+
+    #Make array for new records to batch upload at the end
+    tws_list = []
+
+    #For each past weekend not yet scored #
+    weekends = Event.objects.filter(startDateTime__date__lte = timezone.now(), topTeamScore = 0 ) ##(This bit only runs once)
+    #1. Make Competitor Score records
+    for w in weekends:
+        #print('\n\nWEEKEND == ', 'Round', w.round, w.name, w.id) #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+        #For each scoring event #
+        fscoringEvents = ScoringEvent.objects.filter(event_ID=w.id)
+        firsttime = True  # Catch multiple events results
+        if(len(fscoringEvents)):
+
+            #Get all scores for each scoring event for this weekend #
+            for i in fscoringEvents:
+                if firsttime:         #If the first scoring event of the weekend
+                    tpoints = TeamScore.objects.filter(scoringevent_ID = i.id)
+                    firsttime = False
+                else:
+                    tpoints2 = TeamScore.objects.filter(scoringevent_ID = i.id)
+                    tpoints = tpoints | tpoints2
+
+            # For each team filter scores by formula #
+            for t in teams:
+                this_team_points = tpoints.filter(team_ID = t.id)
+
+                team_wknd_total_1 = team_wknd_total_2 = team_wknd_total_3 = team_wknd_total_w = 0
+                for ttp in this_team_points:
+                    if ttp.formula == '1' : team_wknd_total_1 += ttp.academyPoints
+                    if ttp.formula == '2' : team_wknd_total_2 += ttp.academyPoints
+                    if ttp.formula == '3' : team_wknd_total_3 += ttp.academyPoints
+                    if ttp.formula == 'W' : team_wknd_total_w += ttp.academyPoints
+
+                points_total = team_wknd_total_1 + team_wknd_total_2 + team_wknd_total_3 + team_wknd_total_w
+
+                # Make Team Weeknd Scores records #
+                tws_rec = TeamWeekendScore()
+                tws_rec.team_ID      = t
+                tws_rec.weekend      = w
+                tws_rec.points_f1    = team_wknd_total_1
+                tws_rec.points_f2    = team_wknd_total_2
+                tws_rec.points_f3    = team_wknd_total_3
+                tws_rec.points_ws    = team_wknd_total_w
+                tws_rec.points_total = points_total
+                #tws_rec.save()  ## individual record save - now batch
+                tws_list.append(tws_rec)
+
+    # batch save
+    # Create Competitor Score records from array
+    if len(tws_list) > 0:
+        batch = 100
+        TeamWeekendScore.objects.bulk_create(tws_list, batch)
+
+
+    # 2. Now put team weekend scores in order for each weekend for each formula
+    tws_records_created = 0
+    for w in weekends:
+        print('\n\nEVENT == ', 'Round', w.round, w.name, w.id) #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+        #Position_total
+        tws = TeamWeekendScore.objects.filter(weekend = w).order_by('-points_total')
+
+        position        = 1
+        previous_points = equal_position  = 0  # ensure equal points gives equal position..
+
+        for t in tws:
+            if t.points_total == previous_points:   # equal score = equal position
+                t.position_total = equal_position
+            else:
+                t.position_total = position
+                previous_points = t.points_total
+                equal_position  = position
+
+                # Update event with top team score (also stops recalc)
+                if position == 1:
+                    w.topTeamScore = t.points_total
+                    w.save()
+
+            position += 1
+
+        #Save all team Weekend Score records with places updated
+        for t in tws:
+            t.save()
+        tws_records_created += len(tws)
+
+        #Position_f1 ###################################################################
+        if "1" in w.formulas:
+            tws = TeamWeekendScore.objects.filter(weekend = w).order_by('-points_f1')
+
+            position        = 1
+            previous_points = equal_position  = 0  # ensure equal points gives equal position..
+
+            for t in tws:
+                if t.points_f1 == previous_points:   # equal score = equal position
+                    t.position_f1 = equal_position
+                else:
+                    t.position_f1 = position
+                    previous_points = t.points_f1
+                    equal_position  = position
+
+                position += 1
+
+            #Save all team Weekend Score records with places updated
+            for t in tws:
+                t.save()
+
+        #Position_f2 ###################################################################
+        if "2" in w.formulas:
+            tws = TeamWeekendScore.objects.filter(weekend = w).order_by('-points_f2')
+
+            position        = 1
+            previous_points = equal_position  = 0  # ensure equal points gives equal position..
+
+            for t in tws:
+                if t.points_f2 == previous_points:   # equal score = equal position
+                    t.position_f2 = equal_position
+                else:
+                    t.position_f2 = position
+                    previous_points = t.points_f2
+                    equal_position  = position
+
+                position += 1
+
+            #Save all team Weekend Score records with places updated
+            for t in tws:
+                t.save()
+
+        #Position_f3 ###################################################################
+        if "3" in w.formulas:
+            tws = TeamWeekendScore.objects.filter(weekend = w).order_by('-points_f3')
+
+            position        = 1
+            previous_points = equal_position  = 0  # ensure equal points gives equal position..
+
+            for t in tws:
+                if t.points_f3 == previous_points:   # equal score = equal position
+                    t.position_f3 = equal_position
+                else:
+                    t.position_f3 = position
+                    previous_points = t.points_f3
+                    equal_position  = position
+
+                position += 1
+
+            #Save all team Weekend Score records with places updated
+            for t in tws:
+                t.save()
+
+        #Position_ws ###################################################################
+        if "W" in w.formulas:
+            tws = TeamWeekendScore.objects.filter(weekend = w).order_by('-points_ws')
+
+            position        = 1
+            previous_points = equal_position  = 0  # ensure equal points gives equal position..
+
+            for t in tws:
+                if t.points_ws == previous_points:   # equal score = equal position
+                    t.position_ws = equal_position
+                else:
+                    t.position_ws = position
+                    previous_points = t.points_ws
+                    equal_position  = position
+
+                position += 1
+
+            #Save all team Weekend Score records with places updated
+            for t in tws:
+                t.save()
+
     # Close timer
     toc = time.perf_counter()
     time_taken = round(toc - tic,4)
     message1 = "1. Driver Weekend Scores updated - "+ str(records_created) + " DriverWeekendScore records created"
-
     message2 = "2. " + "Competitor Score points processed : " + str(cs_points) + " .vs. " + str(dws_points) + " DriverWeekendScore point allocated"
-    message3 = "3. " + str(time_taken) + "seconds taken"
+    message3 = "3. Team Weekend Scores updated - "+ str(tws_records_created) + " TeamWeekendScore records created"
+    message4 = "4. " + str(time_taken) + " seconds taken"
+
+    return render(request, 'season/weekendrecords.html', {'message1': message1, 'message2': message2, 'message3': message3, 'message4': message4})
+
+@user_passes_test(lambda u:u.is_staff, login_url='login')
+###################################
+def seasonupdate(request):
+
+    ########################################################
+    #CUMULATIVE SCORES FOR PART SEASONS
+    ########################################################
+
+    #Start Timer
+    tic = time.perf_counter()
+
+    #TODO - 3. Now calculate total score SINCE each weekend
 
 
-    return render(request, 'season/seasonupdate.html', {'message1': message1, 'message2': message2, 'message3': message3})
 
+    # Which was the last past weekend?
+
+    # For each past weekend
+
+    #   Get all TeamWeekend Scores since then
+
+    #   Accululate into that weekends score records
+
+    #   Finally, put Scores_Since scores in order for league tables
+
+
+
+
+
+    # Show timer
+    toc = time.perf_counter()
+    time_taken = round(toc - tic,4)
+    message1 = "4. " + str(time_taken) + " seconds taken"
+
+    return render(request, 'season/seasonupdate.html', {'message1': message1})#, 'message2': message2, 'message3': message3, 'message4': message4})
 
 ##############################################################################################
 ##############################################################################################
@@ -1311,15 +1513,14 @@ def seasonupdate(request):
 ##############################################################################################
 ##############################################################################################
 
-#@login_required
+@user_passes_test(lambda u:u.is_staff, login_url='login')
 ##############################################################################################
 def test(request):
-
-
 
     #Formula Leaderboards
     for f in ('1','2','3','W'):
         globals()['F%s' % f] = Competitor.objects.filter(formula =f , role = "D").annotate(todate_points = Sum('cscore_driver__t2_score')).order_by('-todate_points')
+
 
     return render(request, 'season/test.html', {'F1': F1, "F2":F2, "F3":F3, "FW":FW})
 

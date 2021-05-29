@@ -118,6 +118,7 @@ class TeamProfile(models.Model):
 
 class Event(models.Model):
     name                 = models.CharField(max_length=50)
+    round                = models.IntegerField(default=0)
     date                 = models.DateField(auto_now=False, auto_now_add=False)
     circuit              = models.CharField(max_length=30)
     country              = models.CharField(max_length=20)

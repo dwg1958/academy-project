@@ -37,8 +37,8 @@ def email(request):#, post_id):
             # Form fields passed validation
             cd = form.cleaned_data
             subject = f"{cd['subject']}"
-            message = f"Message reads: {cd['message']}"
-            sentOK = send_mail(subject, message, 'gp@gpgrandstand.com', [cd['to']])
+            message = f"{cd['message']}"
+            sentOK = send_mail(subject, message, 'gp@gpgrandstand.com', [cd['to']]) #Uses GMAIL (see settings.py for pwd)
     else:
         form    = EmailPostForm()
         subject = ""  #placeholder to allow render below before data received
