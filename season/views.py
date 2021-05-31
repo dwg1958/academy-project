@@ -1465,7 +1465,7 @@ def weekendrecords(request):
 @user_passes_test(lambda u:u.is_staff, login_url='login')
 ###################################
 def seasonupdate(request):
-
+    from django.db.models import Avg
     ########################################################
     #CUMULATIVE SCORES FOR PART SEASONS
     ########################################################
@@ -1475,28 +1475,168 @@ def seasonupdate(request):
 
     #TODO - 3. Now calculate total score SINCE each weekend
 
+    #Find all weekends so far
+    weekends = Event.objects.filter(startDateTime__date__lte = timezone.now()).order_by('startDateTime')
 
-
-    # Which was the last past weekend?
+    #Find all TWS records so far with round numbers added
+    tws = TeamWeekendScore.objects.all().select_related('weekend')
 
     # For each past weekend
+    for w in weekends:
+        print('>>>>>>>', w.round, w.startDateTime, w.name)
 
-    #   Get all TeamWeekend Scores since then
+        # Find all records from this round to today
+        tws_since_this = tws.filter(weekend__round__gte = w.round).order_by('team_ID')
+        #print( 'TWS records from this event to now = ', len(tws_since_this) )
 
-    #   Accululate into that weekends score records
+        # Find all TWS records for ths weekend (to add data to)
+        tws_this_round = tws.filter(weekend__round = w.round).order_by('team_ID')
+        #print('TWS records this round = ', len(tws_this_round))
 
-    #   Finally, put Scores_Since scores in order for league tables
+        # For each team, get cumulative scores from this weeknd onwards
+        tws_list = []
+        for t in tws_this_round:
+            #print('++',t.team_ID)
+            trecs = tws_since_this.filter(team_ID = t.team_ID)
+
+            #Get cumulative scores for each formula
+            toDate_total = trecs.aggregate(Sum('points_total'))
+            toDate_f1 = trecs.aggregate(Sum('points_f1'))
+            toDate_f2 = trecs.aggregate(Sum('points_f2'))
+            toDate_f3 = trecs.aggregate(Sum('points_f3'))
+            toDate_ws = trecs.aggregate(Sum('points_ws'))
+
+            #print('trecs = ', len(trecs), t.team_ID, toDate_total['points_total__sum'], toDate_f1['points_f1__sum'], toDate_f2['points_f2__sum'], toDate_f3['points_f3__sum'], toDate_ws['points_ws__sum'])
+
+            #Update TWS record with cumulative scores for this team for this weekend
+            this_team_this_wknd = TeamWeekendScore.objects.get(pk = t.id)
+
+            this_team_this_wknd.points_total_since = toDate_total['points_total__sum']
+            this_team_this_wknd.points_f1_since    = toDate_f1['points_f1__sum']
+            this_team_this_wknd.points_f2_since    = toDate_f2['points_f2__sum']
+            this_team_this_wknd.points_f3_since    = toDate_f3['points_f3__sum']
+            this_team_this_wknd.points_ws_since    = toDate_ws['points_ws__sum']
+
+            #this_team_this_wknd.save()
+            tws_list.append(this_team_this_wknd)
+
+        # batch save
+        if len(tws_list) > 0:
+            batch = 100
+            TeamWeekendScore.objects.bulk_update(tws_list, ['points_total_since','points_f1_since','points_f2_since','points_f3_since','points_ws_since'], batch)
 
 
+        # Finally, put Scores_Since scores in order and update TWS records with positions for league tables
+        # Find all TWS records for this weekend (again, now with points totals)
+
+        #Overall######################################
+        tws_list       = []
+        position        = 1
+        previous_points = equal_position  = 0
+        for t in  tws.filter(weekend__round = w.round).order_by('-points_total_since'):
+            if t.points_total_since == previous_points:
+                t.position_total_since = equal_position
+            else:
+                t.position_total_since = equal_position  = position
+                previous_points = t.points_total_since
+            position += 1
+            #t.save()
+            tws_list.append(t)
+
+        #Now bulk save these changes
+        if len(tws_list) > 0:
+            batch = 100
+            TeamWeekendScore.objects.bulk_update(tws_list, ['position_total_since'], batch) #'position_f1_since','position_f2_since','position_f3_since','position_ws_since'
+
+
+
+        #F1########################################
+        tws_list       = []
+        position        = 1
+        previous_points = equal_position  = 0
+        for t in  tws.filter(weekend__round = w.round).order_by('-points_f1_since'):
+            if t.points_f1_since == previous_points:
+                t.position_f1_since = equal_position
+            else:
+                t.position_f1_since = equal_position  = position
+                previous_points = t.points_f1_since
+            position += 1
+            #t.save()
+            tws_list.append(t)
+
+        #Now bulk save these changes
+        if len(tws_list) > 0:
+            batch = 100
+            TeamWeekendScore.objects.bulk_update(tws_list, ['position_f1_since'], batch)
+
+
+        #f2##########################################
+        tws_list       = []
+        position        = 1
+        previous_points = equal_position  = 0
+        for t in  tws.filter(weekend__round = w.round).order_by('-points_f2_since'):
+            if t.points_f2_since == previous_points:
+                t.position_f2_since = equal_position
+            else:
+                t.position_f2_since = equal_position  = position
+                previous_points = t.points_f2_since
+            position += 1
+            #t.save()
+            tws_list.append(t)
+
+        #Now bulk save these changes
+        if len(tws_list) > 0:
+            batch = 100
+            TeamWeekendScore.objects.bulk_update(tws_list, ['position_f2_since'], batch)
+
+        #F3##########################################
+        tws_list       = []
+        position        = 1
+        previous_points = equal_position  = 0
+        for t in  tws.filter(weekend__round = w.round).order_by('-points_f3_since'):
+            if t.points_f3_since == previous_points:
+                t.position_f3_since = equal_position
+            else:
+                t.position_f3_since = equal_position  = position
+                previous_points = t.points_f3_since
+            position += 1
+            #t.save()
+            tws_list.append(t)
+
+        #Now bulk save these changes
+        if len(tws_list) > 0:
+            batch = 100
+            TeamWeekendScore.objects.bulk_update(tws_list, ['position_f3_since'], batch)
+
+
+        #WS##########################################
+        tws_list       = []
+        position        = 1
+        previous_points = equal_position  = 0
+        for t in  tws.filter(weekend__round = w.round).order_by('-points_ws_since'):
+            if t.points_ws_since == previous_points:
+                t.position_ws_since = equal_position
+            else:
+                t.position_ws_since = equal_position  = position
+                previous_points = t.points_ws_since
+            position += 1
+            #t.save()
+            tws_list.append(t)
+
+        #Now bulk save these changes
+        if len(tws_list) > 0:
+            batch = 100
+            TeamWeekendScore.objects.bulk_update(tws_list, ['position_ws_since'], batch)
 
 
 
     # Show timer
     toc = time.perf_counter()
     time_taken = round(toc - tic,4)
-    message1 = "4. " + str(time_taken) + " seconds taken"
+    message1 = "Completed -  " + str(time_taken) + " seconds taken"
 
-    return render(request, 'season/seasonupdate.html', {'message1': message1})#, 'message2': message2, 'message3': message3, 'message4': message4})
+    return render(request, 'season/seasonupdate.html', {'message1': message1})
+
 
 ##############################################################################################
 ##############################################################################################
@@ -1522,26 +1662,10 @@ def test(request):
         globals()['F%s' % f] = Competitor.objects.filter(formula =f , role = "D").annotate(todate_points = Sum('cscore_driver__t2_score')).order_by('-todate_points')
 
 
+    #TODO - graph of team weekend positions / scores
+    #TODO - graph of team drivers weekend positions / scores
+
     return render(request, 'season/test.html', {'F1': F1, "F2":F2, "F3":F3, "FW":FW})
 
-#######################################################################################
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-################################################################################################
+##############################################################################################
+##############################################################################################

@@ -119,7 +119,7 @@ class DriverWeekendScoreAdmin(admin.ModelAdmin):
 
 class TeamWeekendScoreAdmin(admin.ModelAdmin):
     list_display  = ( 'id','team_ID', 'weekend', 'points_f1', 'points_total')#, 'is_active')
-    search_fields = ('teamName',)
+    search_fields = ('team_ID', 'weekend')
 
     def active(self, obj):
         return obj.is_active == 1
