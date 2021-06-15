@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.db.models import Sum, Count
 from django.utils import timezone
 from datetime import datetime, timedelta, time
-from django.db.models import Window, F
+from django.db.models import Window, F, Q
 from django.db.models.functions import DenseRank
 import time
 
@@ -184,36 +184,9 @@ def gettingstarted(request):
 @login_required
 ################################
 def monitor(request):
-    #See if we requested a specific league tab ("?tab=F1")
-    try:
-        tab = request.GET['tab']
-    except:
-        tab = 'overall'
-
-
-    if tab == 'F1':
-        points_field   = 'points_f1'
-        heading        = "F1 only"
-        position_field = 'position_f1'
-    elif tab == 'F2':
-        points_field = 'points_f2'
-        heading      = "F2 only"
-        position_field = 'position_f2'
-    elif tab == 'F3':
-        points_field = 'points_f3'
-        heading      = "F3 only"
-        position_field = 'position_f3'
-    elif tab == 'WS':
-        points_field = 'points_ws'
-        heading      = "W Series"
-        position_field = 'position_ws'
-    else:
-        points_field = 'points_total'
-        heading      = "Overall"
-        position_field = 'league_position'
 
     #Get full league list ordered by chosen formula / overall
-    full_league = TeamProfile.objects.all().filter(points_total__gt=0).order_by(position_field)
+    full_league = TeamProfile.objects.all().filter(points_total__gt=0).order_by('league_position')
 
     #Get Top 5
     league_list = full_league[:5]
@@ -221,36 +194,27 @@ def monitor(request):
     #Get my local list
     # Find our position
     our_team = request.user.team
-    our_position = eval('our_team.'+position_field)  #indirection!!
+    our_position = eval('our_team.'+'league_position')  #indirection!!
 
     # Get the 5 above and below us
     sublist = []
     for team in full_league:
-        team_place = eval('team.'+position_field)
+        team_place = eval('team.'+'league_position')
         if team_place > our_position-6 and team_place < our_position+6:
             sublist.append([team_place, team.teamLogo.url, team.teamName, team.points_f1, team.points_f2, team.points_f3, \
             team.points_ws, team.points_total, team.league_position, team.p1_1, team.p1_2, team.p2_1, team.p2_2, team.p3_1, team.p3_2, team.pw_1, team.pw_2  ])
         if team_place > our_position+6:
             break
 
-    #Data for team position box
-    if   tab == 'F1': i='1'
-    elif tab == "F2": i='2'
-    elif tab == "F3": i='3'
-    elif tab == "WS": i='W'
-    else: i = 'ALL'
+    total  = eval( 'get_object_or_404(Parameter, name="events_total_ALL")' )
+    scored = eval( 'get_object_or_404(Parameter, name="events_in_ALL")' )
 
-    total  = eval( 'get_object_or_404(Parameter, name="events_total_'+i + '")' )
-    scored = eval( 'get_object_or_404(Parameter, name="events_in_'+i + '")' )
-
-    total_events  = 999
     percentile    = our_position / len(full_league) * 100
 
     #Package up the vbls for the position box
     boxtext = [percentile, request.user.team.teamName, our_position, scored.value, total.value]
 
-
-    return render(request, 'season/monitor.html', {'league_list':league_list, 'sublist': sublist, 'heading':heading, 'boxtext':boxtext})
+    return render(request, 'season/monitor.html', {'league_list':league_list, 'sublist': sublist, 'heading':"Overall", 'boxtext':boxtext})
 
 @login_required
 ##### SHOW AND EDIT MY TEAM ###
@@ -545,7 +509,7 @@ def teamnamepicker(request):
 ##################################
 def leagueposition(request):
 
-    #See if we requested a pecific league tab ("?tab=F1")
+    #See if we requested a specific league tab (e.g. "?tab=F1")
     try:
         tab = request.GET['tab']
     except:
@@ -574,7 +538,8 @@ def leagueposition(request):
         position_field = 'league_position'
 
     #Get full league list ordered by chosen formula / overall
-    full_league = TeamProfile.objects.all().filter(points_total__gt=0).order_by(position_field)
+    #full_league = TeamProfile.objects.all().filter(points_total__gt=0).order_by(position_field)
+    full_league = TeamProfile.objects.all().filter(~Q(points_total=0)).order_by(position_field) # Q gives quant, ~ gives not equal to
 
     #Get Top 5
     league_list = full_league[:5]
@@ -610,6 +575,89 @@ def leagueposition(request):
     boxtext = [percentile, request.user.team.teamName, our_position, scored.value, total.value]
 
     return render(request, 'season/leagueposition.html', {'league_list':league_list, 'sublist': sublist, 'heading':heading, 'boxtext':boxtext})
+
+@login_required
+##################################
+def leaguefromevent(request):
+
+    #See if we requested a specific league tab (e.g. "?tab=F1")
+    try:
+        tab = request.GET['tab']
+    except:
+        tab = 'overall'
+
+    if tab == 'F1':
+        points_field   = 'points_f1'
+        position_field = 'position_f1_since'
+        tabhead        = 'F1 only'
+    elif tab == 'F2':
+        points_field = 'points_f2'
+        position_field = 'position_f2_since'
+        tabhead        = 'F2 only'
+    elif tab == 'F3':
+        points_field = 'points_f3'
+        position_field = 'position_f3_since'
+        tabhead        = 'F3 only'
+    elif tab == 'WS':
+        points_field = 'points_ws'
+        position_field = 'position_ws_since'
+        tabhead        = 'W Series'
+    else:
+        points_field = 'points_total'
+        position_field = 'position_total_since'
+        tabhead        = 'Overall'
+
+    #See if we requested a specific Event start (e.g. "?event=3")
+    try:
+        event   = request.GET['event']
+        round   = get_object_or_404(Event, round=event )
+        heading = "Since " + round.name
+    except:
+        event   = 1
+        heading = "- Full Season"
+
+
+    #Get full league list ordered by chosen formula since chosen round
+    full_league = TeamWeekendScore.objects.filter(weekend=round).order_by(position_field).select_related('team_ID')
+
+    #Get Top 5
+    league_list = full_league[:5]
+
+    #Get my local list
+    # Find our position
+    our_team_ID = request.user.team
+    our_TWS_rec =   get_object_or_404(TeamWeekendScore,weekend=round, team_ID=our_team_ID)
+
+    our_position = eval('our_TWS_rec.'+position_field)  #indirection!!
+
+
+    # Get the 5 above and below us
+    sublist = []
+    for team in full_league:
+        team_place = eval('team.'+position_field)
+        if team_place > our_position-6 and team_place < our_position+6:
+            sublist.append([team_place, team.team_ID.teamLogo.url, team.team_ID.teamName, team.points_f1_since, team.points_f2_since, team.points_f3_since, \
+            team.points_ws_since, team.points_total_since, team.position_total_since, team.team_ID.p1_1, team.team_ID.p1_2, team.team_ID.p2_1, team.team_ID.p2_2, team.team_ID.p3_1, team.team_ID.p3_2, team.team_ID.pw_1, team.team_ID.pw_2  ])
+        if team_place > our_position+6:
+            break
+
+    #Data for team position box
+    if   tab == 'F1': i='1'
+    elif tab == "F2": i='2'
+    elif tab == "F3": i='3'
+    elif tab == "WS": i='W'
+    else: i = 'ALL'
+
+    total  = eval( 'get_object_or_404(Parameter, name="events_total_'+i + '")' )
+    scored = eval( 'get_object_or_404(Parameter, name="events_in_'+i + '")' )
+
+    percentile    = our_position / len(full_league) * 100
+
+    #Package up the vbls for the position box
+    boxtext = [percentile, request.user.team.teamName, our_position, scored.value, total.value]
+
+    return render(request, 'season/leaguefromevent.html', {'league_list':league_list, 'sublist': sublist, 'heading':heading, 'boxtext':boxtext, 'tabhead':tabhead, 'eventID':event})
+
 
 
 ##############################################################################################
@@ -1664,6 +1712,7 @@ def test(request):
 
     #TODO - graph of team weekend positions / scores
     #TODO - graph of team drivers weekend positions / scores
+    #TODO - league table since each weekend
 
     return render(request, 'season/test.html', {'F1': F1, "F2":F2, "F3":F3, "FW":FW})
 

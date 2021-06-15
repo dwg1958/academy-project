@@ -23,6 +23,7 @@ urlpatterns = [
     path( 'showscoringevents', views.showscoringevents     , name = "showscoringevents"),
     path( 'showresults',       views.showresults           , name = "showresults"),
     path( 'leagueposition',    views.leagueposition        , name = "leagueposition"),
+    path( 'leaguefromevent',   views.leaguefromevent       , name = "leaguefromevent"),
     path( 'leaguetop20',       views.leaguetop20           , name = "leaguetop20"),
     path( 'teamscores',        views.teamscores            , name = "teamscores"),
     path( 'rebuildleagues',    views.rebuildleagues        , name = "rebuildleagues"),
@@ -33,7 +34,6 @@ urlpatterns = [
     path( 'weekendrecords',    views.weekendrecords        , name = "weekendrecords"),
     path( 'seasonupdate',      views.seasonupdate          , name = "seasonupdate"),
     path( 'test',              views.test                  , name = "test"),
-
 
 
 #    path( '<int:blog_id>/', views.oneblog, name = "oneblog"),
