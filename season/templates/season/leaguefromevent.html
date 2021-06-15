@@ -117,7 +117,7 @@
                </tr>
             </thead>
             {% for team in league_list %}
-            {% if user.team.teamName  ==  team.teamName %}
+            {% if user.team.teamName  ==  team.team_ID.teamName %}
             <tr data-toggle="collapse" data-target="#accordionTop{{ forloop.counter }}" class="clickable myteam">
             {% else %}
             <tr data-toggle="collapse" data-target="#accordionTop{{ forloop.counter }}" class="clickable">
@@ -125,11 +125,11 @@
                <td style="width:10%" class="text-center align-middle pr-3"><b style="font-size:1.2rem;">{{ forloop.counter }}</b></td>
                <td style="width:20%"> <center><img class="rounded-circle" src=" {{team.team_ID.teamLogo.url}}"></center> </td>
                <td style="width:30%" class="align-middle text-left"> {{team.team_ID.teamName}} </td>
-               <td class="align-middle text-right {% if tabhead == 'F1 only' %} text-bold text-white{% endif%}"> {{team.points_f1 |floatformat:0    }} </td>
-               <td class="align-middle text-right {% if tabhead == 'F2 only' %} text-bold text-white{% endif%}"> {{team.points_f2 |floatformat:0    }} </td>
-               <td class="align-middle text-right {% if tabhead == 'F3 only' %} text-bold text-white{% endif%}"> {{team.points_f3 |floatformat:0    }} </td>
-               <td class="align-middle text-right {% if tabhead == 'W Series'%} text-bold text-white{% endif%}"> {{team.points_ws |floatformat:0    }} </td>
-               <td class="align-middle text-right {% if tabhead == 'Overall' %} text-bold text-white{% endif%}"> {{team.points_total |floatformat:0 }} </td>
+               <td class="align-middle text-right {% if tabhead == 'F1 only' %} text-bold text-white{% endif%}"> {{team.points_f1_since |floatformat:0    }} </td>
+               <td class="align-middle text-right {% if tabhead == 'F2 only' %} text-bold text-white{% endif%}"> {{team.points_f2_since |floatformat:0    }} </td>
+               <td class="align-middle text-right {% if tabhead == 'F3 only' %} text-bold text-white{% endif%}"> {{team.points_f3_since |floatformat:0    }} </td>
+               <td class="align-middle text-right {% if tabhead == 'W Series'%} text-bold text-white{% endif%}"> {{team.points_ws_since |floatformat:0    }} </td>
+               <td class="align-middle text-right {% if tabhead == 'Overall' %} text-bold text-white{% endif%}"> {{team.points_total_since |floatformat:0 }} </td>
             </tr>
             <tr>
                <td colspan="8" class = "teamInfo">
