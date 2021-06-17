@@ -658,7 +658,24 @@ def leaguefromevent(request):
 
     return render(request, 'season/leaguefromevent.html', {'league_list':league_list, 'sublist': sublist, 'heading':heading, 'boxtext':boxtext, 'tabhead':tabhead, 'eventID':event})
 
+@login_required
+##################################
+def leaguefromsetup(request):
+    #Find events that user has been live for
+    myLiveEvents = TeamWeekendScore.objects.filter(team_ID=request.user.team).select_related('weekend') #NB Can't order or related table field (i.e. date)
 
+    myEventList = []
+    for m in myLiveEvents:
+        myEventList.append({'Round' : m.weekend.round, 'RoundName' : m.weekend.name, 'RoundDate' : m.weekend.date, 'RoundCountry': m.weekend.country.upper()} )
+
+    #Custom function to get list fields
+    def get_round(myEventList):
+        return myEventList.get('Round')
+
+    #Now sort list into date order
+    myEventList.sort(key = get_round)
+
+    return render(request, 'season/leaguefromsetup.html', {'myEventList':myEventList} )
 
 ##############################################################################################
 ############################### ADMIN PAGES ##################################################

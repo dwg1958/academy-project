@@ -24,6 +24,7 @@ urlpatterns = [
     path( 'showresults',       views.showresults           , name = "showresults"),
     path( 'leagueposition',    views.leagueposition        , name = "leagueposition"),
     path( 'leaguefromevent',   views.leaguefromevent       , name = "leaguefromevent"),
+    path( 'leaguefromsetup',   views.leaguefromsetup       , name = "leaguefromsetup"),
     path( 'leaguetop20',       views.leaguetop20           , name = "leaguetop20"),
     path( 'teamscores',        views.teamscores            , name = "teamscores"),
     path( 'rebuildleagues',    views.rebuildleagues        , name = "rebuildleagues"),
