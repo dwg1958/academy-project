@@ -253,6 +253,13 @@
                      <span id="LeagueHeader">League Table</span>
                   </a>
                </li>
+               <li>
+                  <a href="{% url 'leaguefromsetup' %}">
+                     <i class="mdi mdi mdi-trophy text-white"></i>
+                     <span id="LeagueHeader">Part-Season League</span>
+                     <span class="badge badge-primary float-right">NEW</span>
+                  </a>
+               </li>
                {% else %}
                <li>
                   <a href="{% url 'leaguetop20' %}" class="">

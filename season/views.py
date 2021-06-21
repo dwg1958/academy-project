@@ -214,7 +214,26 @@ def monitor(request):
     #Package up the vbls for the position box
     boxtext = [percentile, request.user.team.teamName, our_position, scored.value, total.value]
 
-    return render(request, 'season/monitor.html', {'league_list':league_list, 'sublist': sublist, 'heading':"Overall", 'boxtext':boxtext})
+    #Build graph dataset
+    eventlist = Event.objects.all()
+
+    #get drivers scores for each weekend
+    team_season   = TeamWeekendScore.objects.filter(team_ID = our_team)
+
+    #Now add a record for each formula/weekend and see if he has a score for each weekend
+    weekend_posns = []
+    for e in eventlist:
+        try:
+            tws = team_season.get(weekend = e.id)
+            points = tws.points_total
+            topwkendscore = e.topTeamScore
+        except:
+            points = 0
+            topwkendscore = 0
+
+        weekend_posns.append( [ e.tla, str(points), str(topwkendscore) ])
+
+    return render(request, 'season/monitor.html', {'league_list':league_list, 'sublist': sublist, 'heading':"Overall", 'boxtext':boxtext, "weekend_posns":weekend_posns})
 
 @login_required
 ##### SHOW AND EDIT MY TEAM ###
@@ -1725,11 +1744,6 @@ def test(request):
     #Formula Leaderboards
     for f in ('1','2','3','W'):
         globals()['F%s' % f] = Competitor.objects.filter(formula =f , role = "D").annotate(todate_points = Sum('cscore_driver__t2_score')).order_by('-todate_points')
-
-
-    #TODO - graph of team weekend positions / scores
-    #TODO - graph of team drivers weekend positions / scores
-    #TODO - league table since each weekend
 
     return render(request, 'season/test.html', {'F1': F1, "F2":F2, "F3":F3, "FW":FW})
 

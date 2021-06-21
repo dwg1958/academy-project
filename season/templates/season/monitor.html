@@ -189,8 +189,38 @@
            </div>
          </div>
 
+         <!---Graph ------------------------------------>
+         <div class="container-fluid" id = "PersonalChart">
+            <div class="row justify-content-md-center">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title mb-3">Season Results So Far - {{ user.team.teamName }}</h3>
+
+                            <!--Top RHS legends -->
+                            <div class="row justify-content-end">
+                                <div class="col-xl-12 align-self-center">
+                                    <ul class="list-unstyled list-inline float-right" id="tour1">
+                                        <li class="list-inline-item px-3">
+                                            <h5 class="mt-0">Season Points Total: </h5>
+                                            <h5 class="mt-0 text-right">{{person.points_total |floatformat:0 }}</h5>
+
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- THE ACTUAL GRAPH -->
+                            <div id="extra-area-chart" class="morris-charts project-budget-chart" style="height: 322px;" dir="ltr" ></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>
+
          <!-- League table --->
-         <div class="card overflow-auto col-12 pt-3 pl-3 pr-3" >
+         <div class="card  col-12 pt-3 pl-3 pr-3" >
             <h3>My Closest Rivals: </h3>
             <div>
                <table class="table table-sm table-hover top5table">
@@ -315,9 +345,41 @@
 
 <!---------------------- JAVASCRIPT BLOCK  ------------------->
 {% block javascript %}
+
+
    //Collapse LHS menu bar to show more screen
    if($(window).width() > 992) {
      $("#vertical-menu-btn").click();
    }
 
+   Morris.Area( {
+      element: 'extra-area-chart', data:
+      [
+      {% for w in weekend_posns %}
+         {y: '{{w.0}}  ' , a: {{w.2}} , b: {{w.1}} },
+      {% endfor %}
+      ],                                         //   [{y: 'BAH', a: 10},{y: 'EMI', a: 15},{y: 'POR', a: 25},{y: 'SPA', a: 20}],
+      lineColors: [ '#009688','#fdb93e' ] ,       // , '#148cca'],
+      xkey: 'y',
+      ykeys: [ 'a', 'b'],                        //, 'c'],
+      //ymax:50,
+      //ymin:-20,
+      parseTime: false,                          //Stops the date formatting
+      labels: [ 'Best Score', '{{ user.team.teamName }}' ],
+      pointSize: 0, lineWidth: 0,
+      resize: true,
+      fillOpacity: 0.8,
+      behaveLikeLine: true,
+      gridLineColor: 'rgba(108, 120, 151, 0.6)',
+      hideHover: 'auto'
+   }
+);
+{% endblock %}
+
+<!---------------------- JAVASCRIPT LIBRARIES BLOCK  ------------------->
+
+{% block pagescripts %}
+<!--Morris Chart-->
+<script src="{% static 'season/assets/libs/morris.js/morris.min.js' %}"></script>
+<script src="{% static 'season/assets/libs/raphael/raphael.min.js' %}"></script>
 {% endblock %}
